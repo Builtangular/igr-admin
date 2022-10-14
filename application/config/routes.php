@@ -55,6 +55,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['admin/login'] ='admin/login/index';
 // $route['admin/dashboard'] ='admin/dashboard/dashboard';
-$route['admin/scope'] ='admin/dashboard/scope';
+$route['admin/scope'] ='admin/scope/index';
+$route['admin/scope/add'] ='admin/scope/add';
+$route['admin/scope/scope_delete'] ='admin/scope/scope_delete';
 $route['admin/category'] ='admin/dashboard/category';
 $route['admin/scope_register'] ='admin/dashboard/scope_register';

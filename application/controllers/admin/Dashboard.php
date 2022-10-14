@@ -20,6 +20,9 @@ class Dashboard extends CI_Controller
         if($this->session->userdata('logged_in')){
             $data = $this->session->userdata('logged_in');
             $data['global_count'] = $this->Data_model->count_global_report();
+			$data['country_count'] = $this->Data_model->count_country_report();
+            $data['region_count'] = $this->Data_model->count_region_report();
+            $data['info_count'] = $this->Data_model->count_infographics_report();
 		    $this->load->view("admin/dashboard",$data);
         }else{
             $this->load->view("admin/login");

@@ -26,6 +26,13 @@
                         <form action="<?php echo base_url('admin/login'); ?>" class="form-horizontal" method="post">
                             <div class="card-body">
                                 <center><h4 class="card-title">Login</h4></center>
+                                <?php
+                                    echo form_open('admin/login');
+                                    // echo validation_errors();
+                                    if ($msg){
+                                    echo '<p><code>'.$msg.'</code></p>';
+                                    }
+                                    ?>
                                 <div class="form-group row">
                                     <label for="username" class="col-sm-3 text-end control-label col-form-label">User Name
                                         </label>
