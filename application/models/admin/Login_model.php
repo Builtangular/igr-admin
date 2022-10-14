@@ -6,20 +6,10 @@ class Login_model extends CI_Model {
      {
            parent::__construct(); 
            $this->load->database();
-<<<<<<< HEAD
 		   // $this->admindb=$this->load->database('admindb', TRUE);
      }
-	
-	function login($username,$password)
-    {			
-=======
-		  
-     }
-	
 	function login($username,$password)
     {	
-		
->>>>>>> 78d248fca7081c48070384f73d07be1d2955ace8
 		$this->db->select('*');
 		$this->db->from('tbl_user_login_details as ULD');
 		$this->db->join('tbl_user_details as UD', 'UD.user_id = ULD.user_id');
