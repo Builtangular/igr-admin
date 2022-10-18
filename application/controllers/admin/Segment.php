@@ -2,7 +2,7 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Company extends CI_Controller 
+class Segment extends CI_Controller 
 {    
 	public function __construct()
 	{		
@@ -14,8 +14,7 @@ class Company extends CI_Controller
 		$this->load->helper(array('form', 'url'));				
 	}
 	public function index($id)
-	{
-		
+	{		
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
@@ -23,8 +22,9 @@ class Company extends CI_Controller
 			// var_dump($data['success_code']); die;
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
-			$data['Companies']= $this->Data_Model->get_rd_companies($id);
-			$this->load->view('admin/company/list',$data);			
+			$data['segments']= $this->Data_Model->get_rd_segments($id);
+            // var_dump($data['segments']); die;
+			$this->load->view('admin/segment/list',$data);			
 		}		
 		else
 		{			
@@ -39,7 +39,9 @@ class Company extends CI_Controller
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
-			$this->load->view('admin/company/add',$data);			
+            $data['segments']= $this->Data_Model->get_rd_segments($id);
+            // var_dump($data['segments']); die;
+			$this->load->view('admin/segment/add',$data);			
 		}		
 		else
 		{			
@@ -48,26 +50,26 @@ class Company extends CI_Controller
 	}
 	public function insert($id)
 	{
-		
+		// var_dump($_POST); die;
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 
-			$postcomp=array(				
+			$postseg=array(				
 				'name'=>$this->input->post('name'),
+				'parent_id'=>$this->input->post('parent'),
 				'report_id'=>$id,
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
-			$inserted_id = $this->Data_Model->insert_rd_company_data($postcomp);
+			$inserted_id = $this->Data_Model->insert_rd_segment($postseg);
 			if($inserted_id){
-				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");				
-				redirect('admin/company/'.$id);
+				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");	
 			}else{
-				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");				
-				redirect('admin/company/'.$id);
+				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");		
 			}
+            redirect('admin/segment/'.$id);
 		}		
 		else
 		{			

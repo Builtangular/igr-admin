@@ -59,3 +59,4 @@ $route['admin/scope'] ='admin/dashboard/scope';
 $route['admin/category'] ='admin/dashboard/category';
 $route['admin/scope_register'] ='admin/dashboard/scope_register';
 $route['admin/company/(:any)'] ='admin/company/index/$1';
+$route['admin/segment/(:any)'] ='admin/segment/index/$1';

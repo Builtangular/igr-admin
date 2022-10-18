@@ -11,7 +11,7 @@
         content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Infinium Admin</title>
-    <link href="../assets/admin/css/style.min.css" rel="stylesheet" />
+    <link href="<?php echo base_url(); ?>assets/admin/css/style.min.css" rel="stylesheet" />
 </head>
 <body>
   <!-- ============================================================== -->

@@ -39,7 +39,7 @@
                     <div class="box-body">
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
-                                <tr style="font-size: 13px;">
+                                <tr style="font-size: 14px;">
                                     <th>Id</th>
 									<th>Title</th>
 									<th>Scope</th>
@@ -56,7 +56,7 @@
                             <tbody>
                                 <?php foreach($Global_Rds as $data){ ?>
 
-                                    <tr style="font-size: 13px;">
+                                    <tr style="font-size: 14px;">
                                         <td class="text-center"><?php echo $data->id; ?></td>
                                         <td><?php echo $data->name; ?></td>
                                         <td class="text-center"><?php echo $data->scope_id; ?></td>
@@ -75,7 +75,7 @@
                                     <?php } ?>
                             </tbody>
                             <tfoot>
-                                <tr style="font-size: 13px;">
+                                <tr style="font-size: 14px;">
                                     <th>Id</th>
 									<th>Title</th>
 									<th>Scope</th>

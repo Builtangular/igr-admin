@@ -31,6 +31,17 @@ class Report extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
+	public function title_exist()
+    {
+		
+		$result = $this->Data_Model->title_exists($this->input->get('name'));
+		if($result == true){
+			$data['message']="<p class=\"text-red\">Title already exists</p>";
+		}else{
+			$data['message']="<p class=\"text-red\"></p>";
+		}
+		$this->load->view('admin/report/title_exists_output', $data);
+    }
 	public function add()
 	{
 		if($this->session->userdata('logged_in'))
@@ -65,6 +76,7 @@ class Report extends CI_Controller
 			$new_report_url = str_replace('--','-', $encoded_report_url);
 			// echo"----------new_report_url<-------->".$new_report_url."<--------><br><br>"; die;
 			$postdata=array(
+					'title'=>$this->input->post('title'),
 					'name'=>$this->input->post('name'),
 					'sku'=>$sku,
 					'category_id'=>$this->input->post('category'),
@@ -82,6 +94,7 @@ class Report extends CI_Controller
 					'singleuser_price'=>$this->input->post('single_user'),
 					'enterprise_price'=>$this->input->post('enterprise_user'),
 					'datasheet_price'=>$this->input->post('datasheet'),
+					'market_value'=>$this->input->post('market_value'),
 					'report_definition'=>$this->input->post('Report_definition'),
 					'report_description'=>$this->input->post('Report_description'),
 					'executive_summary_DRO'=>$this->input->post('Executive_summary_DRO'),
@@ -93,13 +106,13 @@ class Report extends CI_Controller
 				);			
 			// var_dump($postdata); die;				
 			$Last_Inserted_id = $this->Data_Model->insert_rd_data($postdata);
-			// var_dump($Last_Inserted_id); die;
 			if($Last_Inserted_id){
-				$this->session->set_flashdata("success_code","Data Inserted Successfully..!!");				
+				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!");				
 				redirect('admin/report');
 			}else{
-			}
-			redirect('admin/report');			
+				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");				
+				redirect('admin/report');
+			}		
 		}		
 		else
 		{			

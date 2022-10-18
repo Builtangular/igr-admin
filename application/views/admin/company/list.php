@@ -28,7 +28,13 @@
                             class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
-                    </div>
+                    </div>                    
+					<?php if($success_code){ ?>
+					<div class="alert alert-success">					
+					<button type="button" class="close" data-dismiss="alert">x</button>
+						<p><?php echo $success_code; ?></p>
+					</div>
+					<?php } ?>
                         <div class="box-body">
                             <table class="table table-striped">
                                 <thead>
@@ -39,9 +45,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-									<?php foreach($Companies as $data){ ?>
+									<?php $i=1; foreach($Companies as $data){ ?>
                                     <tr style="font-size: 14px;">
-                                        <td><?php echo $data->id; ?></td>
+                                        <td><?php echo $i; ?></td>
                                         <td><?php echo $data->name; ?></td>
                                         <td>
                                             <a href="<?php echo base_url(); ?>admin/company/edit/<?php echo $data->id; ?>"
@@ -52,7 +58,7 @@
                                                 class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
-									<?php } ?>
+									<?php $i++; } ?>
                                 </tbody>
                             </table>
                         </div>

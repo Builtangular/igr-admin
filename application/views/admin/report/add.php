@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Scope</label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <select class="form-control" name="scope">
                                             <option value="0">Select</option>
                                             <?php foreach($scopes_data as $scopes){?>
@@ -42,9 +42,16 @@
                                         </select>
                                     </div>
                                 </div>
+								<div class="form-group">
+                                    <label class="control-label col-md-3">Title Case Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="search" name="title" class="form-control">
+										<span class="help-block margin" id="txtHint"></span>
+                                    </div>								
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Forecast From </label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <select class="form-control" name="forecast_from" id="From_forecast_period"
                                             Onchange="changeyear(this.value)" required>
                                             <option value="">Select From Forecast Period</option>
@@ -60,7 +67,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Forecast To </label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <select class="form-control" name="forecast_to" id="forecast_to">
                                             <option value="">Select To Forecast Period</option>
                                             <?php foreach($Period1 as $Period1) { ?>
@@ -71,13 +78,25 @@
                                 </div>
 								<div class="form-group">
                                     <label class="control-label col-md-3">CAGR</label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <input type="text" name="cagr" class="form-control">
                                     </div>
+                                </div>                                
+								<div class="form-group">
+                                    <label class="control-label col-md-3">Report Status</label>
+                                    <div class="col-md-9">
+                                        <div class="radio">
+                                            <label><input type="radio" name="status" value="1" checked />Active</label>
+                                            <label><input type="radio" name="status" value="0" />Inactive</label>
+                                            <label><input type="radio" name="status" value="2" />Draft</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
+                            </div>
+                            <div class="col-md-6">
+								<div class="form-group">
                                     <label class="control-label col-md-3">Category</label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <select class="form-control" name="category">
                                             <option value="0">Select</option>
 											<?php foreach($category_data as $category){?>
@@ -87,26 +106,16 @@
                                         </select>
                                     </div>
                                 </div>
-								<div class="form-group">
-                                    <label class="control-label col-md-3">Report Status</label>
-                                    <div class="col-md-8">
-                                        <div class="radio">
-                                            <label><input type="radio" name="status" value="1" checked />Active</label>
-                                            <label><input type="radio" name="status" value="0" />Inactive</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Name</label>
-                                    <div class="col-md-8">
-                                        <input type="text" name="name" class="form-control">
-                                    </div>
+                                    <label class="control-label col-md-3">Small Case Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="search" name="name" class="form-control">
+										<span class="help-block margin" id="txtHint"></span>
+                                    </div>								
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Analysis From </label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <select class="form-control" name="analysis_form" id="analysis_form">
                                             <option value="">Select From Period</option>
                                             <?php foreach($Period3 as $Period3) { ?>
@@ -117,7 +126,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Analysis To </label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <select class="form-control" name="analysis_to" id="analysis_to">
                                             <option value="">Select To Period</option>
                                             <?php foreach($Period2 as $Period2) { ?>
@@ -129,13 +138,13 @@
                                 
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Value Unit</label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <input type="text" name="value_based_unit" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Volume Based Report?</label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <div class="radio">
                                             <label><input type="radio" name="volume" value="1"
                                                     onclick="return HideVunit(1)" />Yes</label>
@@ -147,14 +156,14 @@
                                 </div>
                                 <div class="form-group" id="div1" style="display: none;">
                                     <label class="control-label col-md-3">Volume CAGR</label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <input type="text" id="volume_cagr" name="volume_cagr" class="form-control"
                                             placeholder="Volume CAGR" />
                                     </div>
                                 </div>
                                 <div class="form-group" id="div3" style="display: none;">
                                     <label class="control-label col-md-3">Volume Unit</label>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <input type="text" id="volume_unit" name="volume_based_unit"
                                             class="form-control" placeholder="Volume Unit" />
                                     </div>
@@ -176,6 +185,12 @@
                             </div>
 						</div>
                         <div class="col-md-12">
+							<div class="form-group">
+                                <label class="control-label col-md-2">CAGR Market Value</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="market_value" name="market_value" class="form-control" placeholder="Market Value During the Forecast Period" />
+                                </div>
+                            </div>
 							<div class="form-group">
                                 <label class="control-label col-md-2">Report Definition</label>
                                 <div class="col-md-10">
@@ -258,5 +273,39 @@ function HideVunit(input) {
         $('#Volume_CAGR').removeAttr('required', '');
     }
 }
+</script>
+<!-- jQuery 2.1.3 -->
+    <script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.2 JS -->
+<script>
+$(document).mouseup(function (e) { 
+	if ($(e.target).closest("#txtHint").length === 0) {										
+		$("#txtHint").hide(); 
+	} 
+});
+$( "#txtHint" ).css("display","none");
+$(document).ready(function(){
+	$("#search").keyup(function(){				
+		var str=  $("#search").val();
+		if(str == "") {
+			$("#txtHint" ).css("display","none");
+		} else {
+			$.get("<?php echo base_url(); ?>admin/report/title_exist?name="+str, function(data){
+				//$("#txtHint" ).html("");
+				if(data == ""){
+					// console.log("in if");
+					$("#txtHint" ).css("display","none");
+					//$("#txtHint").removeClass("search-result");								
+				} else {
+					// console.log("in else");
+					$("#txtHint" ).html( data );
+					$("#txtHint" ).css("display","");
+					//$("#txtHint").addClass("search-result");
+				}
+				
+			});
+		}
+	});
+});
 </script>
 <?php $this->load->view('admin/footer.php'); ?>
