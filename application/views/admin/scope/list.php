@@ -36,102 +36,66 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Parent</th>
+                            <th>Active</th>
                         
                             <th colspan="2">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        
-                                               
+                        <?php
+                        $i=1;
+                         foreach($list_data as $list){ ?>                                               
                         <tr>
-                            <td>1</td>
-                            <td>Global</td>                            
-                            <td>0</td>
+                            <td><?php echo $i++; ?></td>
+                            <td><?php echo $list->name; ?></td>
+                            <td><?php echo $list->parent; ?></td>                            
+                            <td><?php echo $list->active; ?></td>
                             
-                            <td><a href="http://localhost/testapp/public/superadmin/scopes/1/edit" class="btn btn-warning">Edit</a></td>
+                            <td><a href="<?php echo base_url();?>admin/scope/edit/<?php echo $list->id;?>" class="btn btn-warning">Edit</a></td>
                             <td>
-                            <form action="http://localhost/testapp/public/superadmin/scopes/1" method="post">
-                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                                <input type="hidden" name="_method" value="DELETE">
-
-                                <button class="btn btn-danger" type="submit">Delete</button>
+                            <form action="" method="post">
+                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <a href="<?php echo base_url() . "admin/scope/scope_delete/" . $list->id; ?>" class="btn btn-danger" type="submit">Delete</a>
+                                
                             </form>
                             </td>
                         </tr>
-                                               
-                        <tr>
-                            <td>2</td>
-                            <td>North America</td>                            
-                            <td>1</td>
-                            
-                            <td><a href="http://localhost/testapp/public/superadmin/scopes/2/edit" class="btn btn-warning">Edit</a></td>
-                            <td>
-                            <form action="http://localhost/testapp/public/superadmin/scopes/2" method="post">
-                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                                <input type="hidden" name="_method" value="DELETE">
-
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                            </td>
-                        </tr>
-                                               
-                        <tr>
-                            <td>3</td>
-                            <td>Europe</td>                            
-                            <td>1</td>
-                            
-                            <td><a href="http://localhost/testapp/public/superadmin/scopes/3/edit" class="btn btn-warning">Edit</a></td>
-                            <td>
-                            <form action="http://localhost/testapp/public/superadmin/scopes/3" method="post">
-                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                                <input type="hidden" name="_method" value="DELETE">
-
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                            </td>
-                        </tr>
-                                               
-                        <tr>
-                            <td>4</td>
-                            <td>Asia Pacific</td>                            
-                            <td>1</td>
-                            
-                            <td><a href="http://localhost/testapp/public/superadmin/scopes/4/edit" class="btn btn-warning">Edit</a></td>
-                            <td>
-                            <form action="http://localhost/testapp/public/superadmin/scopes/4" method="post">
-                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                                <input type="hidden" name="_method" value="DELETE">
-
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                            </td>
-                        </tr>
-                                               
-                        <tr>
-                            <td>5</td>
-                            <td>RoW</td>                            
-                            <td>1</td>
-                            
-                            <td><a href="http://localhost/testapp/public/superadmin/scopes/5/edit" class="btn btn-warning">Edit</a></td>
-                            <td>
-                            <form action="http://localhost/testapp/public/superadmin/scopes/5" method="post">
-                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                                <input type="hidden" name="_method" value="DELETE">
-
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                            </td>
-                        </tr>
-                                                </tbody>
+                        <?php } ?>
+                        </tbody>
                     </table>
-
-
-
-                    
                 </div>
                 <div class="box-footer">
-                   
                 </div>
+                
             </form>
         </div>
     </div>
 </div>
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-
+<script>
+$("#del_all").on('click', function(e) {
+	e.preventDefault();
+	var checkValues = $('.checkbox1:checked').map(function()
+    {
+		return $(this).val();
+	}).get();
+	console.log(checkValues);
+			
+	$.each( checkValues, function( i, val ) {
+	$("#"+val).remove();
+	});
+//                    return  false;
+	$.ajax({
+	url: '<?php echo base_url(); ?>admin/Master/delete',
+	type: 'post',
+	data: 'ids=' + checkValues
+	}).done(function(data) {
+    $("#respose").html(data);
+	$('#selecctall').attr('checked', false);
+	window.location.reload();
+	});
+});
+</script>
 <?php $this->load->view('admin/footer.php'); ?>

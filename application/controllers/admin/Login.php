@@ -19,9 +19,9 @@ class Login extends CI_Controller
 	public function index()
 	{	
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-        $this->form_validation->set_rules('username', 'username', 'required|min_length[2]|trim');
-        $this->form_validation->set_rules('password', 'password', 'required|min_length[2]');
-		if(!$this->form_validation->run())
+        $this->form_validation->set_rules('username', 'username', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'password', 'required');
+		if($this->form_validation->run() == FALSE)
         {
 			// echo"Here...";
 			// die;
@@ -38,7 +38,7 @@ class Login extends CI_Controller
 			$result = $this->Login_model->login($this->input->post('username'),$this->input->post('password'));
 			// var_dump($insert);
 			// die;
-			if($result)
+			if($result > 0)
 			{	
 				foreach($result as $row)
 				{
@@ -73,9 +73,11 @@ class Login extends CI_Controller
 			else
 			{							
 				/////////// If Auth. is fail //////
-				$data['message'] = "<font class='error'>Invalid username or password..!!</font>";
-				$this->session->set_flashdata("error_code","Invalid username or password..!!");				
-				$this->load->view('admin/login',$data);				
+				// $data['message'] = "<font class='error'>Invalid username or password..!!</font>";
+				// $this->session->set_flashdata("error_code","Invalid username or password..!!");	
+				$data['msg'] = "Invalid username or password.";
+				$this->load->view('admin/login', $data);			
+				// $this->load->view('admin/login',$data);				
 			}
         }	
 	}

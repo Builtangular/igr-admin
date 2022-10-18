@@ -18,85 +18,58 @@
     <!-- Main content -->
     <section class="content">
         <!-- Your Page Content Here -->
-        <div class='row'>
-            <div class='col-md-6'>
-                <!-- Box -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Randomly Generated Tasks</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                title="Collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
-                                title="Remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <h5>
-                            Design New Dashboard
-                            <small class="label label-danger pull-right">87%</small>
-                        </h5>
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-danger" style="width: 87%"></div>
-                        </div>
-                        <h5>
-                            Create Home Page
-                            <small class="label label-warning pull-right">76%</small>
-                        </h5>
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-warning" style="width: 76%"></div>
-                        </div>
-                        <h5>
-                            Some Other Task
-                            <small class="label label-success pull-right">32%</small>
-                        </h5>
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-success" style="width: 32%"></div>
-                        </div>
-                        <h5>
-                            Start Building Website
-                            <small class="label label-info pull-right">56%</small>
-                        </h5>
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-info" style="width: 56%"></div>
-                        </div>
-                        <h5>
-                            Develop an Awesome Algorithm
-                            <small class="label label-success pull-right">10%</small>
-                        </h5>
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-success" style="width: 10%"></div>
-                        </div>
+        <div class="row">
+<div class="col-md-3 col-sm-6 col-xs-12">
+<div class="info-box">
+<span class="info-box-icon bg-aqua"><i class="fa fa-file-pdf-o"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Global Reports</span>
+<span class="info-box-number"><?=$global_count ?><small></small></span>
+</div>
 
-                    </div><!-- /.box-body -->
-                    <div class="box-footer">
-                        <form action='#'>
-                            <input type='text' placeholder='New task' class='form-control input-sm' />
-                        </form>
-                    </div><!-- /.box-footer-->
-                </div><!-- /.box -->
-            </div><!-- /.col -->
-            <div class='col-md-6'>
-                <!-- Box -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Second Box</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                title="Collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
-                                title="Remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        A separate section to add any kind of widget. Feel free
-                        to explore all of AdminLTE widgets by visiting the demo page
-                        on <a href="https://almsaeedstudio.com">Almsaeed Studio</a>.
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col -->
+</div>
 
-        </div><!-- /.row -->
+</div>
+
+<div class="col-md-3 col-sm-6 col-xs-12">
+<div class="info-box">
+<span class="info-box-icon bg-red"><i class="fa fa-file-text-o"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Country Reports</span>
+<span class="info-box-number"><?=$country_count ?></span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="clearfix visible-sm-block"></div>
+<div class="col-md-3 col-sm-6 col-xs-12">
+<div class="info-box">
+<span class="info-box-icon bg-green"><i class="fa fa-file-excel-o"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Region Reports</span>
+<span class="info-box-number"><?=$region_count ?></span>
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3 col-sm-6 col-xs-12">
+<div class="info-box">
+<span class="info-box-icon bg-yellow"><i class="fa fa-file-photo-o"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Infographics</span>
+<span class="info-box-number"><?=$info_count ?></span>
+</div>
+
+</div>
+
+</div>
+
+</div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 

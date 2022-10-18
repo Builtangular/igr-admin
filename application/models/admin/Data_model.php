@@ -170,6 +170,68 @@ class Data_model extends CI_Model {
 		 $res = $result->result();
 		 return $res;
 	}
+<<<<<<< HEAD
 	
+=======
+	public function insert_scope_record()
+	{
+		$data = array(
+			          'name'    =>$this->input->post('name'),
+			          'parent'	=>$this->input->post('parent'),
+			          'active'  =>$this->input->post('status'),
+			        );
+
+		
+			$this->db->insert('tbl_scope', $data);
+			return 1;
+
+    }
+	function scope_delete($id)
+	{
+		//var_dump('hii');die;
+		$this->db->where("id", $id);
+    	$this->db->delete("tbl_scope");
+    	return true;
+	}
+	public function get_single_scope_data($id)
+	{
+
+		$this->db->where('id',$id);
+		$this->db->where('active','1');
+		$result = $this->db->get('tbl_scope');
+		//echo $this->db->last_query();die;
+		return $result->row();
+	}
+	public function update_scope($id)
+    {
+        $update = array(
+            'name'=>$this->input->post('name'),
+			'parent'=>$this->input->post('parent'),
+			'active'=>$this->input->post('status')
+            );
+        $this->db->where('id',$id);
+        return $this->db->update('tbl_scope', $update);
+    }
+	public function get_single_parent($id)
+	{
+
+		$this->db->where('id',$id);
+		$this->db->where('active','1');
+		$result = $this->db->get('tbl_scope');
+		//echo $this->db->last_query();die;
+		return $result->row();
+	}
+
+// function delete_data()
+// {
+// 	$id = $this->uri->segment(3);
+// 	$data = array(
+// 			        'is_deleted' => '1'
+// 		         ); 
+
+// 	$this->db->where("id", $id);
+// 	$this->db->update("tbl_scope", $data);
+// 	}
+>>>>>>> 3e468c157061950568e0a7fc015548efb4a3f16b
 }
 ?>
