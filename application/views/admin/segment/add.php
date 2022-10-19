@@ -4,13 +4,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create Segment Master
+            Create Segment
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Segment</li>
         </ol>
     </section>
 
@@ -22,7 +22,7 @@
             <div class="col-md-8">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h1 class="box-title">Create Segment Master</h1>
+                        <h1 class="box-title">Create Segment</h1>
                     </div>
                     <form action="<?php echo base_url(); ?>admin/segment/insert/<?php echo $report_id; ?>" method="post"
                         class="form-horizontal">

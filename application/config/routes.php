@@ -59,8 +59,6 @@ $route['admin/scope'] ='admin/scope/index';
 $route['admin/scope/add'] ='admin/scope/add';
 $route['admin/scope/scope_delete'] ='admin/scope/scope_delete';
 $route['admin/scope_register'] ='admin/dashboard/scope_register';
-
 $route['admin/company/(:any)'] ='admin/company/index/$1';
 $route['admin/segment/(:any)'] ='admin/segment/index/$1';
-
 $route['admin/category'] ='admin/category/index';
