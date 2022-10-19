@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/report-header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 
@@ -50,6 +50,7 @@
 									<th>Segment</th>
 									<th>Status</th>
 									<th>Image</th>
+									<th>Country</th>
 									<th>Action</th>
                                 </tr>
                             </thead>
@@ -68,6 +69,7 @@
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a></td>
 										<td class="text-center"><?php echo $data->status; ?></td>
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><i class="fa fa-image"></i>  Image</b></a></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/counry_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>
                                         <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
 											<a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
 										</td>
@@ -87,6 +89,7 @@
 									<th>Segment</th>									
 									<th>Status</th>
 									<th>Image</th>
+									<th>Country</th>
 									<th>Action</th>
                                 </tr>
                             </tfoot>

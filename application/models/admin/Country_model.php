@@ -12,7 +12,7 @@ class Country_model extends CI_Model {
 	}
 	public function get_country_master()
 	{
-		$result = $this->db->get('tbl_country');
+		$result = $this->db->get('tbl_country_master');
 		$res = $result->result();
 		return $res;
 	}
@@ -25,7 +25,7 @@ class Country_model extends CI_Model {
 					  );
 
 		 
-		$this->db->insert('tbl_country', $data);
+		$this->db->insert('tbl_country_master', $data);
 		return 1;
 
    }
@@ -33,7 +33,7 @@ class Country_model extends CI_Model {
    {
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_country');
+		$result = $this->db->get('tbl_country_master');
 		//echo $this->db->last_query();die;
 		return $result->row();
    }
@@ -45,13 +45,13 @@ class Country_model extends CI_Model {
 			  'active'=>$this->input->post('status')
 		   );
 	   $this->db->where('id',$id);
-	   return $this->db->update('tbl_country', $update);
+	   return $this->db->update('tbl_country_master', $update);
    }
    public function get_single_parent($id)
    {
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_country');
+		$result = $this->db->get('tbl_country_master');
 		//echo $this->db->last_query();die;
 		return $result->row();
    }
@@ -59,7 +59,7 @@ class Country_model extends CI_Model {
    {
 		//var_dump('hii');die;
 		$this->db->where("id", $id);
-		$this->db->delete("tbl_country");
+		$this->db->delete("tbl_country_master");
 		return true;
    }
    

@@ -75,7 +75,7 @@
 </script>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
     <div class="wrapper">
         <!-- Header -->
         <!-- Main Header -->
@@ -137,7 +137,7 @@
                             <!-- <li><a href="http://localhost/testapp/public/superadmin/codetype"><span>Code Type</span></a></li>
 							<li><a href="http://localhost/testapp/public/superadmin/codedecode"><span>Code Decode</span></a></li> -->
                             <li><a href="<?php echo base_url(); ?>admin/scope"><span>Scope Master</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/category"><span>Category Master</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/category"><span>Category Master</span></a>
                             <li><a href="<?php echo base_url(); ?>admin/country"><span>Country Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/region"><span>Region Master</span></a></li>
                         </ul>

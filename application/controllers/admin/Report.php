@@ -38,7 +38,7 @@ class Report extends CI_Controller
 		if($result == true){
 			$data['message']="<p class=\"text-red\">Title already exists</p>";
 		}else{
-			$data['message']="<p class=\"text-red\"></p>";
+			$data['message']="";
 		}
 		$this->load->view('admin/report/title_exists_output', $data);
     }
@@ -117,9 +117,41 @@ class Report extends CI_Controller
 		else
 		{			
 			$this->load->view('admin/login');
-		}
-		
+		}		
 	}
-	
+	/* Edit Rd Data */
+	public function edit($id){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['scopes_data']= $this->Data_Model->get_scope_master();
+			$data['category_data']= $this->Data_Model->get_category_master();
+			$data['rd_data']= $this->Data_Model->get_rd_data($id);
+			// var_dump($data['rd_data']); die;
+			$this->load->view('admin/report/edit',$data);
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	/* Update Rd Data */
+	public function update(){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function delete(){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
 }
 ?>

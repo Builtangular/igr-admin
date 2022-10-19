@@ -10,7 +10,7 @@ class Region_model extends CI_Model {
 	 }
      function get_region_master()
      {
-        $result = $this->db->get('tbl_region');
+        $result = $this->db->get('tbl_region_master');
         $res = $result->result();
         return $res;
      }
@@ -21,7 +21,7 @@ class Region_model extends CI_Model {
 						'parent'	=>$this->input->post('parent'),
 						'active'  =>$this->input->post('status'),
 					  );
-		$this->db->insert('tbl_region', $data);
+		$this->db->insert('tbl_region_master', $data);
 		return 1;
 
    }
@@ -29,7 +29,7 @@ class Region_model extends CI_Model {
    {
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_region');
+		$result = $this->db->get('tbl_region_master');
 		//echo $this->db->last_query();die;
 		return $result->row();
    }
@@ -41,20 +41,20 @@ class Region_model extends CI_Model {
 			  'active'=>$this->input->post('status')
 		   );
 	   $this->db->where('id',$id);
-	   return $this->db->update('tbl_region', $update);
+	   return $this->db->update('tbl_region_master', $update);
    }
    public function get_single_parent($id)
    {
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_region');
+		$result = $this->db->get('tbl_region_master');
 		//echo $this->db->last_query();die;
 		return $result->row();
    }
    function region_delete($id)
    {
 		$this->db->where("id", $id);
-		$this->db->delete("tbl_region");
+		$this->db->delete("tbl_region_master");
 		return true;
    }
    

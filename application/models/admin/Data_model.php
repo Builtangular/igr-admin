@@ -12,6 +12,7 @@ class Data_model extends CI_Model {
 	public function get_global_rds(){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
+		$this->db->where('status',1);
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -46,7 +47,7 @@ class Data_model extends CI_Model {
 	}
 	public function get_category_master(){
 		$this->db->select("*");
-		$this->db->from("tbl_categories");
+		$this->db->from("tbl_categories_master");
 		$sql = $this->db->get();
 		if($sql->num_rows() > 0)
 		{			
@@ -68,6 +69,22 @@ class Data_model extends CI_Model {
 		// echo $this->db->last_query(); die; 
 		$result = $query->row();		
 		return $result;		
+	}
+	public function get_rd_data($id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('id',$id);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0)
+		{			
+			return $sql->result();
+		}
+		else
+		{
+			return array();
+		}
 	}
 	/* companies */
 	public function get_rd_companies($id){
@@ -187,7 +204,7 @@ class Data_model extends CI_Model {
 	}
 	public function get_scope_master()
 	{
-		 $result = $this->db->get('tbl_scope');
+		 $result = $this->db->get('tbl_scope_master');
 		 $res = $result->result();
 		 return $res;
 	}
@@ -200,7 +217,7 @@ class Data_model extends CI_Model {
 			        );
 
 		
-			$this->db->insert('tbl_scope', $data);
+			$this->db->insert('tbl_scope_master', $data);
 			return 1;
 
     }
@@ -208,14 +225,14 @@ class Data_model extends CI_Model {
 	{
 		//var_dump('hii');die;
 		$this->db->where("id", $id);
-    	$this->db->delete("tbl_scope");
+    	$this->db->delete("tbl_scope_master");
     	return true;
 	}
 	public function get_single_scope_data($id)
 	{
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_scope');
+		$result = $this->db->get('tbl_scope_master');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
@@ -227,13 +244,13 @@ class Data_model extends CI_Model {
 			'active'=>$this->input->post('status')
             );
         $this->db->where('id',$id);
-        return $this->db->update('tbl_scope', $update);
+        return $this->db->update('tbl_scope_master', $update);
     }
 	public function get_single_parent($id)
 	{
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_scope');
+		$result = $this->db->get('tbl_scope_master');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
