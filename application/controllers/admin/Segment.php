@@ -76,16 +76,17 @@ class Segment extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
-	public function edit($id)
+	public function edit($seg_id)
 	{
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$company= $this->Data_Model->get_rd_company($id);
+			$company= $this->Data_Model->get_rd_segment($seg_id);
 			$data['company_id']= $company->id;
 			$data['company_name']= $company->name;
+            $data['report_id']= $company->report_id;
 			// var_dump($data['company']); die;
 			$this->load->view('admin/company/edit',$data);			
 		}		
@@ -94,26 +95,26 @@ class Segment extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
-	public function update($id)
+	public function update($seg_id)
 	{
 		// var_dump($id); die;
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
-			
+			$data['success_code'] = $this->session->userdata('success_code');			
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+            $report_id = $this->input->post('report_id');
 			$postcomp=array(				
 				'name'=>$this->input->post('name'),
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
-			$result = $this->Data_Model->update_rd_company($id,$postcomp);
+			$result = $this->Data_Model->update_rd_company($seg_id,$postcomp);
 			if($result){
 				$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");				
-				redirect('admin/company/'.$id);
+				redirect('admin/segment/'.$report_id);
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Data has not updated");				
-				redirect('admin/company/'.$id);
+				redirect('admin/segment/'.$report_id);
 			}
 		}		
 		else
@@ -121,20 +122,21 @@ class Segment extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
-	public function delete($id)
+	public function delete($seg_id)
 	{
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
-			$data['Login_user_name']=$session_data['Login_user_name'];				
-			$result = $this->Data_Model->delete_rd_company($id);
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+            $report_id = $this->input->post('report_id');			
+			$result = $this->Data_Model->delete_rd_company($seg_id);
 			if($result){
 				$this->session->set_flashdata("success_code","Record has been deleted successfully..!!!");				
-				redirect('admin/company/'.$id);
+				redirect('admin/segment/'.$report_id);
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Record has not deleted");				
-				redirect('admin/company/'.$id);
+				redirect('admin/segment/'.$report_id);
 			}	
 		}		
 		else

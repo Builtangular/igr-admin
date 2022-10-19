@@ -56,10 +56,13 @@
                                         <a href="<?php echo base_url(); ?>admin/segment/edit/<?php echo $data->id; ?>"
                                             class="btn btn-warning">Edit</a>
                                     </td>
-                                    <td>
-                                        <a href="<?php echo base_url(); ?>admin/segment/delete/<?php echo $data->id; ?>"
-                                            class="btn btn-danger">Delete</a>
-                                    </td>
+                                    <form action="<?php echo base_url(); ?>admin/segment/delete/<?php echo $data->id; ?>" method="post"
+                                        class="form-horizontal">
+                                        <td>
+                                            <input type="hidden" name="report_id" value="<?php echo $data->report_id; ?>">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        </td>
+                                    </form>
                                 </tr>
                                 <?php $i++; } ?>
                             </tbody>

@@ -170,9 +170,6 @@ class Data_model extends CI_Model {
 		 $res = $result->result();
 		 return $res;
 	}
-<<<<<<< HEAD
-	
-=======
 	public function insert_scope_record()
 	{
 		$data = array(
@@ -232,6 +229,5 @@ class Data_model extends CI_Model {
 // 	$this->db->where("id", $id);
 // 	$this->db->update("tbl_scope", $data);
 // 	}
->>>>>>> 3e468c157061950568e0a7fc015548efb4a3f16b
 }
 ?>

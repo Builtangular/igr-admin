@@ -60,8 +60,5 @@ $route['admin/scope/add'] ='admin/scope/add';
 $route['admin/scope/scope_delete'] ='admin/scope/scope_delete';
 $route['admin/category'] ='admin/dashboard/category';
 $route['admin/scope_register'] ='admin/dashboard/scope_register';
-<<<<<<< HEAD
 $route['admin/company/(:any)'] ='admin/company/index/$1';
 $route['admin/segment/(:any)'] ='admin/segment/index/$1';
-=======
->>>>>>> 3e468c157061950568e0a7fc015548efb4a3f16b

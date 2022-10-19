@@ -28,43 +28,46 @@
                             class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
-                    </div>                    
-					<?php if($success_code){ ?>
-					<div class="alert alert-success">					
-					<button type="button" class="close" data-dismiss="alert">x</button>
-						<p><?php echo $success_code; ?></p>
-					</div>
-					<?php } ?>
-                        <div class="box-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr style="font-size: 14px;">
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th colspan="2">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-									<?php $i=1; foreach($Companies as $data){ ?>
-                                    <tr style="font-size: 14px;">
-                                        <td><?php echo $i; ?></td>
-                                        <td><?php echo $data->name; ?></td>
+                    </div>
+                    <?php if($success_code){ ?>
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <p><?php echo $success_code; ?></p>
+                    </div>
+                    <?php } ?>
+                    <div class="box-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr style="font-size: 14px;">
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th colspan="2">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i=1; foreach($Companies as $data){ ?>
+                                <tr style="font-size: 14px;">
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $data->name; ?></td>
+                                    <td>
+                                        <a href="<?php echo base_url(); ?>admin/company/edit/<?php echo $data->id; ?>"
+                                            class="btn btn-warning">Edit</a>
+                                    </td>
+                                    <form action="<?php echo base_url(); ?>admin/company/delete/<?php echo $data->id; ?>" method="post"
+                                        class="form-horizontal">
                                         <td>
-                                            <a href="<?php echo base_url(); ?>admin/company/edit/<?php echo $data->id; ?>"
-                                                class="btn btn-warning">Edit</a>
+                                            <input type="hidden" name="report_id" value="<?php echo $data->report_id; ?>">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
                                         </td>
-                                        <td>
-											<a href="<?php echo base_url(); ?>admin/company/delete/<?php echo $data->id; ?>"
-                                                class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-									<?php $i++; } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="box-footer">
+                                    </form>
+                                </tr>
+                                <?php $i++; } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer">
 
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -30,6 +30,7 @@
                                 <label class="control-label col-md-2">Name</label>
                                 <div class="col-md-8">
                                     <input type="text" name="name" value="<?php echo $company_name; ?>" class="form-control">
+                                    <input type="hidden" name="report_id" value="<?php echo $report_id; ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
