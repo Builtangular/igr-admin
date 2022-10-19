@@ -83,12 +83,14 @@ class Segment extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$company= $this->Data_Model->get_rd_segment($seg_id);
-			$data['company_id']= $company->id;
-			$data['company_name']= $company->name;
-            $data['report_id']= $company->report_id;
-			// var_dump($data['company']); die;
-			$this->load->view('admin/company/edit',$data);			
+			$segment = $this->Data_Model->get_rd_segment($seg_id);
+			$data['seg_id']= $segment->id;
+			$data['seg_name']= $segment->name;
+            $data['report_id']= $segment->report_id;
+            $data['parent_id']= $segment->parent_id;
+			$data['segments']= $this->Data_Model->get_rd_segments($data['report_id']);
+			// var_dump($data['segment']); die;
+			$this->load->view('admin/segment/edit',$data);			
 		}		
 		else
 		{			
@@ -97,18 +99,19 @@ class Segment extends CI_Controller
 	}
 	public function update($seg_id)
 	{
-		// var_dump($id); die;
+		// var_dump($_POST); die;
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');			
 			$data['Login_user_name']=$session_data['Login_user_name'];	
             $report_id = $this->input->post('report_id');
-			$postcomp=array(				
+			$postcseg=array(				
 				'name'=>$this->input->post('name'),
+				'parent_id'=>$this->input->post('parent'),
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
-			$result = $this->Data_Model->update_rd_company($seg_id,$postcomp);
+			$result = $this->Data_Model->update_rd_segment($seg_id,$postcseg);
 			if($result){
 				$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");				
 				redirect('admin/segment/'.$report_id);
@@ -130,7 +133,7 @@ class Segment extends CI_Controller
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
             $report_id = $this->input->post('report_id');			
-			$result = $this->Data_Model->delete_rd_company($seg_id);
+			$result = $this->Data_Model->delete_rd_segment($seg_id);
 			if($result){
 				$this->session->set_flashdata("success_code","Record has been deleted successfully..!!!");				
 				redirect('admin/segment/'.$report_id);

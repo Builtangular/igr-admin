@@ -134,6 +134,29 @@ class Data_model extends CI_Model {
 		die; */
 		return $insert_id;
 	}
+	public function get_rd_segment($id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_segments");
+		$this->db->where('id',$id);
+		$query = $this->db->get();
+		// echo $this->db->last_query(); die; 
+		$result = $query->row();		
+		return $result;	
+	}	
+	// Update Query For Selected Segment
+	public function update_rd_segment($id,$data){
+		$this->db->where('id', $id);
+		$result =  $this->db->update('tbl_rd_segments', $data);
+		// echo $this->db->last_query();	die;
+		return $result;
+		// return $this->db->affected_rows();
+	}
+	// Function to Delete selected record from table name students.
+	public function delete_rd_segment($id){
+		$this->db->where('id', $id);
+		$result = $this->db->delete('tbl_rd_segments');
+		return $result;
+	}
 	/******** pooja work ***************/
 	function count_global_report()
 	{
