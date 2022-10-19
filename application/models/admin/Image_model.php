@@ -20,12 +20,12 @@ class Image_model extends CI_Model {
         $result = $this->db->insert('tbl_image',$data);
         return  $result;
      }
-     public function update_image($image_id)
+     public function update_image($id,$file)
      {
          $update = array(
-                'image_file'=>$this->input->post('image_file'),
+                'image_file'=>$file,
              );
-         $this->db->where('id',$image_id);
+         $this->db->where('id',$id);
          return $this->db->update('tbl_image', $update);
      }
      function get_image_data($report_id)

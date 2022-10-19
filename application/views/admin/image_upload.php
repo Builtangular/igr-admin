@@ -38,7 +38,7 @@
                                 <label for="inputImage" class="col-sm-3 control-label">Upload Image</label>
                                 <div class="col-md-9">
                                     <input type="file" name="image_file" class="form-control">
-                                    <input type="hidden" name="image_id" class="form-control"
+                                    <input type="hidden" name="id" class="form-control"
                                         value="<?php echo $image->id;?>">
                                 </div>
                             </div>

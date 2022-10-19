@@ -51,10 +51,10 @@ class Image extends CI_Controller
 				$this->upload->display_errors();
 			}
             // var_dump($this->input->post('image_file')); die;
-            $image_id = $this->input->post('id');
-            //var_dump($image_id);die;
-            if($image_id){
-                $upload_result = $this->Image_model->update_image($image_id);
+            $id = $this->input->post('id');
+            // var_dump($id);die;
+            if($id){
+                $upload_result = $this->Image_model->update_image($id,$file);
             }else{ 
                 $result = $this->Image_model->upload_image($file);	
             }
