@@ -58,7 +58,11 @@ $route['admin/login'] ='admin/login/index';
 $route['admin/scope'] ='admin/scope/index';
 $route['admin/scope/add'] ='admin/scope/add';
 $route['admin/scope/scope_delete'] ='admin/scope/scope_delete';
-$route['admin/category'] ='admin/dashboard/category';
 $route['admin/scope_register'] ='admin/dashboard/scope_register';
+<<<<<<< HEAD
 $route['admin/company/(:any)'] ='admin/company/index/$1';
 $route['admin/segment/(:any)'] ='admin/segment/index/$1';
+=======
+$route['admin/category'] ='admin/category/index';
+
+>>>>>>> b71a458eab20534349636d96ef4a01c007e0111a

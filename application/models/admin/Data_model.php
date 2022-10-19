@@ -151,7 +151,6 @@ class Data_model extends CI_Model {
 	}
 	function count_region_report()
 	{
-		$this->admindb->where('status','1');
 		$result = $this->admindb->get('igr_regional_reports');
 		$result = $result->num_rows();
 		return $result;
@@ -165,7 +164,6 @@ class Data_model extends CI_Model {
 	}
 	public function get_scope_master()
 	{
-	     $this->db->where("active", '1');
 		 $result = $this->db->get('tbl_scope');
 		 $res = $result->result();
 		 return $res;
@@ -194,7 +192,6 @@ class Data_model extends CI_Model {
 	{
 
 		$this->db->where('id',$id);
-		$this->db->where('active','1');
 		$result = $this->db->get('tbl_scope');
 		//echo $this->db->last_query();die;
 		return $result->row();
@@ -213,21 +210,11 @@ class Data_model extends CI_Model {
 	{
 
 		$this->db->where('id',$id);
-		$this->db->where('active','1');
 		$result = $this->db->get('tbl_scope');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
 
-// function delete_data()
-// {
-// 	$id = $this->uri->segment(3);
-// 	$data = array(
-// 			        'is_deleted' => '1'
-// 		         ); 
 
-// 	$this->db->where("id", $id);
-// 	$this->db->update("tbl_scope", $data);
-// 	}
 }
 ?>
