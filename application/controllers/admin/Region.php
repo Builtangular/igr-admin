@@ -2,14 +2,14 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Category extends CI_Controller 
+class Region extends CI_Controller 
 {    
 	public function __construct()
 	{
 		
 		parent::__construct();		
 		$this->load->library('form_validation');		
-		$this->load->model('admin/Category_model');
+		$this->load->model('admin/Region_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));		
@@ -20,10 +20,10 @@ class Category extends CI_Controller
         if($this->session->userdata('logged_in')){
         $data = $this->session->userdata('logged_in');
         $data['massage'] = $this->session->userdata('msg');
-		$data['title'] = "Category Master";
-		$data['list_category'] = $this->Category_model->get_category_master();
+		$data['title'] = "Region Master";
+		$data['list_region'] = $this->Region_model->get_region_master();
 		//print_r($data);exit();
-		$this->load->view("admin/category/list", $data);
+		$this->load->view("admin/region/list", $data);
         }else{
             $this->load->view("admin/login");
         }
@@ -32,23 +32,23 @@ class Category extends CI_Controller
     {
         if($this->session->userdata('logged_in')){
         $data = $this->session->userdata('logged_in');
-        $data['get_category_data'] = $this->Category_model->get_category_master();
-        $this->load->view("admin/category/add",$data);
+        $data['get_region_data'] = $this->Region_model->get_region_master();
+        $this->load->view("admin/region/add",$data);
         }else{
              $this->load->view("admin/login");
         }
     }
-    public function insert_category()
+    public function insert_region()
 	{
 		if($this->session->userdata('logged_in'))
 	 	{
-			$result = $this->Category_model->insert_category_record();
+			$result = $this->Region_model->insert_region_record();
 			//var_dump($result);die;
 			if($result == 1)
 			{
 				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
 			}	
-            redirect('admin/category');
+            redirect('admin/region');
 		}else
         {
 			$this->load->view("admin/login");
@@ -59,29 +59,30 @@ class Category extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$data = $this->session->userdata('logged_in');
-			$data['get_category_data'] = $this->Category_model->get_category_master();
-			$data['single_category_data'] = $this->Category_model->get_single_category_data($id);
-			$this->load->view("admin/category/edit",$data);
+			$data['get_region_data'] = $this->Region_model->get_region_master();
+			$data['single_region_data'] = $this->Region_model->get_single_region_data($id);
+			$this->load->view("admin/region/edit",$data);
 		}else{
 			$this->load->view("admin/login");
 			
 		}
     }
-    public function update_category()
+    public function update_region()
 	{
 		$id = $this->input->post('id');
-		$this->Category_model->update_category($id);
-		$data['parent'] = $this->Category_model->get_single_parent($id);
+		$this->Region_model->update_region($id);
+		$data['parent'] = $this->Region_model->get_single_parent($id);
         $this->session->set_flashdata('msg','Data has been updated successfully');
-		redirect('admin/category');
+		redirect('admin/region');
 	
 	}
-    function category_delete($id)
+    function region_delete($id)
 	{
 		//var_dump($id);die;
-		$data['delete'] = $this->Category_model->category_delete($id);
-        $this->session->set_flashdata('msg','ata has been deleted successfully');
-		redirect('admin/category');
+		$data['delete'] = $this->Region_model->region_delete($id);
+        $this->session->set_flashdata('msg','Data has been deleted successfully');
+		redirect('admin/region');
+		
 
 	}
 

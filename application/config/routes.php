@@ -58,5 +58,6 @@ $route['admin/login'] ='admin/login/index';
 $route['admin/scope'] ='admin/scope/index';
 $route['admin/scope/add'] ='admin/scope/add';
 $route['admin/scope/scope_delete'] ='admin/scope/scope_delete';
-$route['admin/category'] ='admin/dashboard/category';
 $route['admin/scope_register'] ='admin/dashboard/scope_register';
+$route['admin/category'] ='admin/category/index';
+

@@ -67,7 +67,7 @@ class Scope extends CI_Controller
 			$data = $this->session->userdata('logged_in');
 			$data['get_scope_data'] = $this->Data_model->get_scope_master();
 			$data['single_scope_data'] = $this->Data_model->get_single_scope_data($id);
-			$this->load->view("admin/scope/edit_scope_record",$data);
+			$this->load->view("admin/scope/edit",$data);
 		}else{
 			$this->load->view("admin/login");
 			
@@ -90,7 +90,6 @@ class Scope extends CI_Controller
 
 	}
   
-
         
 
 }  

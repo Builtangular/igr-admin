@@ -2,14 +2,14 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Category extends CI_Controller 
+class Country extends CI_Controller 
 {    
 	public function __construct()
 	{
 		
 		parent::__construct();		
 		$this->load->library('form_validation');		
-		$this->load->model('admin/Category_model');
+		$this->load->model('admin/Country_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));		
@@ -21,9 +21,9 @@ class Category extends CI_Controller
         $data = $this->session->userdata('logged_in');
         $data['massage'] = $this->session->userdata('msg');
 		$data['title'] = "Category Master";
-		$data['list_category'] = $this->Category_model->get_category_master();
+		$data['list_country'] = $this->Country_model->get_country_master();
 		//print_r($data);exit();
-		$this->load->view("admin/category/list", $data);
+		$this->load->view("admin/country/list", $data);
         }else{
             $this->load->view("admin/login");
         }
@@ -32,23 +32,23 @@ class Category extends CI_Controller
     {
         if($this->session->userdata('logged_in')){
         $data = $this->session->userdata('logged_in');
-        $data['get_category_data'] = $this->Category_model->get_category_master();
-        $this->load->view("admin/category/add",$data);
+        $data['get_country_data'] = $this->Country_model->get_country_master();
+        $this->load->view("admin/country/add",$data);
         }else{
              $this->load->view("admin/login");
         }
     }
-    public function insert_category()
+    public function insert_country()
 	{
 		if($this->session->userdata('logged_in'))
 	 	{
-			$result = $this->Category_model->insert_category_record();
+			$result = $this->Country_model->insert_country_record();
 			//var_dump($result);die;
 			if($result == 1)
 			{
 				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
 			}	
-            redirect('admin/category');
+            redirect('admin/country');
 		}else
         {
 			$this->load->view("admin/login");
@@ -59,29 +59,30 @@ class Category extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$data = $this->session->userdata('logged_in');
-			$data['get_category_data'] = $this->Category_model->get_category_master();
-			$data['single_category_data'] = $this->Category_model->get_single_category_data($id);
-			$this->load->view("admin/category/edit",$data);
+			$data['get_country_data'] = $this->Country_model->get_country_master();
+			$data['single_country_data'] = $this->Country_model->get_single_country_data($id);
+			$this->load->view("admin/country/edit",$data);
 		}else{
 			$this->load->view("admin/login");
 			
 		}
     }
-    public function update_category()
+    public function update_country()
 	{
 		$id = $this->input->post('id');
-		$this->Category_model->update_category($id);
-		$data['parent'] = $this->Category_model->get_single_parent($id);
+		$this->Country_model->update_country($id);
+		$data['parent'] = $this->Country_model->get_single_parent($id);
         $this->session->set_flashdata('msg','Data has been updated successfully');
-		redirect('admin/category');
+		redirect('admin/country');
 	
 	}
-    function category_delete($id)
+    function country_delete($id)
 	{
 		//var_dump($id);die;
-		$data['delete'] = $this->Category_model->category_delete($id);
-        $this->session->set_flashdata('msg','ata has been deleted successfully');
-		redirect('admin/category');
+		$data['delete'] = $this->Country_model->country_delete($id);
+        $this->session->set_flashdata('msg','Data has been deleted successfully');
+		redirect('admin/country');
+		
 
 	}
 
