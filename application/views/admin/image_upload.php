@@ -24,6 +24,12 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Upload Image</h1>
                     </div>
+                    <?php if($massage){ ?>
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <p><?php echo $massage; ?></p>
+                    </div>
+                    <?php } ?>
                     <form action="<?php echo base_url('admin/image/image_upload');?>" method="post"
                         class="form-horizontal" accept-charset="utf-8" enctype="multipart/form-data">
                         <div class="box-body">

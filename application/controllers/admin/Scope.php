@@ -19,6 +19,7 @@ class Scope extends CI_Controller
 	{	
         if($this->session->userdata('logged_in')){
         $data = $this->session->userdata('logged_in');
+		$data['massage'] = $this->session->userdata('msg');
 		$data['title'] = "Scope Master";
 		$data['list_data'] = $this->Data_model->get_scope_master();
 		//print_r($data);exit();
@@ -48,13 +49,11 @@ class Scope extends CI_Controller
 				//var_dump($result);die;
 				if($result == 1)
 				{
-					$this->session->set_flashdata("success","Data Inserted successfully!");
-				}else
-				{
-					$this->session->set_flashdata("success","Data updated successfully!");
+					$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
 				}
 				redirect('admin/scope');
-	 	}else{
+	 	}else
+		{
 			$this->load->view("admin/login");
 		}
 	}
@@ -68,7 +67,8 @@ class Scope extends CI_Controller
 			$data['get_scope_data'] = $this->Data_model->get_scope_master();
 			$data['single_scope_data'] = $this->Data_model->get_single_scope_data($id);
 			$this->load->view("admin/scope/edit",$data);
-		}else{
+		}else
+		{
 			$this->load->view("admin/login");
 			
 		}
@@ -78,13 +78,15 @@ class Scope extends CI_Controller
 		$id = $this->input->post('id');
 		$this->Data_model->update_scope($id);
 		$data['parent'] = $this->Data_model->get_single_parent($id);
+		$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
 		redirect('admin/scope');
-		echo "Data updated successfully!";
+		
 	}
 	function scope_delete($id)
 	{
 		//var_dump($id);die;
 		$data['delete'] = $this->Data_model->scope_delete($id);
+		$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
 		redirect('admin/scope');
 		
 

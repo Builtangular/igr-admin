@@ -5,7 +5,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Category List
+            Country List
                 <small></small>
             </h1>
             <!-- You can dynamically generate breadcrumbs here -->
@@ -23,12 +23,18 @@
     <div class="col-md-8">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h1 class="box-title">Category List</h1>
+                <h1 class="box-title">Country List</h1>
                 <a href="<?php echo base_url(); ?>admin/country/add" class="btn btn-primary pull-right">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
-                        <form action="http://localhost/testapp/public/scopes" method="post" class="form-horizontal">
+            <?php if($massage){ ?>
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <p><?php echo $massage; ?></p>
+                    </div>
+            <?php } ?>
+            <form action="http://localhost/testapp/public/scopes" method="post" class="form-horizontal">
             <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                <div class="box-body">
                      <table class="table table-striped">
                         <thead>

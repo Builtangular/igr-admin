@@ -28,8 +28,15 @@
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
-                        <form action="http://localhost/testapp/public/scopes" method="post" class="form-horizontal">
-            <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                <div class="box-body">
+            <?php if($massage){ ?>
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <p><?php echo $massage; ?></p>
+                    </div>
+            <?php } ?>
+            <form action="http://localhost/testapp/public/scopes" method="post" class="form-horizontal">
+            <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">                
+            <div class="box-body">
                      <table class="table table-striped">
                         <thead>
                         <tr>
