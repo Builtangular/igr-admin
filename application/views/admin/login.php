@@ -10,8 +10,8 @@
     <meta name="description"
         content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework" />
     <meta name="robots" content="noindex,nofollow" />
-    <title>Matrix Admin Lite Free Versions Template by WrapPixel</title>
-    <link href="../assets/admin/css/style.min.css" rel="stylesheet" />
+    <title>Infinium Admin</title>
+    <link href="<?php echo base_url(); ?>assets/admin/css/style.min.css" rel="stylesheet" />
 </head>
 <body>
   <!-- ============================================================== -->
@@ -21,6 +21,9 @@
     <div class="page-wrapper">
         <div class="container-fluid">
             <div class="row">
+			<div class="error-body text-center">
+				<h1 class="error-title text-cyan">Infinium Admin</h1>
+			</div>
                 <center><div class="col-md-4">
                     <div class="card">
                         <form action="<?php echo base_url('admin/login'); ?>" class="form-horizontal" method="post">

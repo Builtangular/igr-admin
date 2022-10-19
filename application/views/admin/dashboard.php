@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Super Admin Dashboard
+            Admin Dashboard
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->

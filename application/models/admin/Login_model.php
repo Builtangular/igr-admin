@@ -8,7 +8,6 @@ class Login_model extends CI_Model {
            $this->load->database();
 		   // $this->admindb=$this->load->database('admindb', TRUE);
      }
-	
 	function login($username,$password)
     {	
 		$this->db->select('*');
