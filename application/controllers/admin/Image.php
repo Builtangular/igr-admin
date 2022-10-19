@@ -16,13 +16,13 @@ class Image extends CI_Controller
 		$this->load->helper(array('form', 'url'));		
 		
 	}
-    function index()
+    function index($id)
 	{	
         if($this->session->userdata('logged_in')){
         $data = $this->session->userdata('logged_in');
         $data['massage'] = $this->session->userdata('msg');
-        $report_id = 1;
-        $data['image'] = $this->Image_model->get_image_data($report_id); 
+        $data['report_id'] = $id;
+        $data['image'] = $this->Image_model->get_image_data($id); 
         // var_dump($data['image'] );die;
 
 		$this->load->view("admin/image_upload", $data);
@@ -30,7 +30,7 @@ class Image extends CI_Controller
             $this->load->view("admin/login");
         }
 	}
-    function image_upload()
+    public function image_upload()
     {
         // var_dump($_POST); die;
         if($this->session->userdata('logged_in'))
@@ -51,10 +51,11 @@ class Image extends CI_Controller
 				$this->upload->display_errors();
 			}
             // var_dump($this->input->post('image_file')); die;
+            $report_id = $this->input->post('report_id');
             $image_id = $this->input->post('id');
-            //var_dump($image_id);die;
+            // var_dump($image_id);die;
             if($image_id){
-                $upload_result = $this->Image_model->update_image($image_id);
+                $upload_result = $this->Image_model->update_image($image_id, $file);
             }else{ 
                 $result = $this->Image_model->upload_image($file);	
             }
@@ -68,7 +69,7 @@ class Image extends CI_Controller
 			{
 				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
 			}
-			redirect('admin/image');
+			redirect('admin/image/'.$report_id);
         }
         else
         {

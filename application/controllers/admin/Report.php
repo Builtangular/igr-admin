@@ -94,7 +94,7 @@ class Report extends CI_Controller
 					'singleuser_price'=>$this->input->post('single_user'),
 					'enterprise_price'=>$this->input->post('enterprise_user'),
 					'datasheet_price'=>$this->input->post('datasheet'),
-					'market_value'=>$this->input->post('market_value'),
+					'cagr_market_value'=>$this->input->post('market_value'),
 					'report_definition'=>$this->input->post('Report_definition'),
 					'report_description'=>$this->input->post('Report_description'),
 					'executive_summary_DRO'=>$this->input->post('Executive_summary_DRO'),

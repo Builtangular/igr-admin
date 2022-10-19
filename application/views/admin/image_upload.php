@@ -46,6 +46,8 @@
                                     <input type="file" name="image_file" class="form-control">
                                     <input type="hidden" name="id" class="form-control"
                                         value="<?php echo $image->id;?>">
+                                    <input type="hidden" name="report_id" class="form-control"
+                                        value="<?php echo $report_id;?>">
                                 </div>
                             </div>
                         <div class="box-footer">

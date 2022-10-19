@@ -61,4 +61,6 @@ $route['admin/scope/scope_delete'] ='admin/scope/scope_delete';
 $route['admin/scope_register'] ='admin/dashboard/scope_register';
 $route['admin/company/(:any)'] ='admin/company/index/$1';
 $route['admin/segment/(:any)'] ='admin/segment/index/$1';
+$route['admin/image/(:num)'] ='admin/image/index/$1';
+$route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';

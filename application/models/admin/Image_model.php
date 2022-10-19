@@ -6,7 +6,6 @@ class Image_model extends CI_Model {
 	 {
 		   parent::__construct(); 
 		   $this->load->database();
-		   $this->admindb = $this->load->database('admindb', TRUE);
 	 }
      function upload_image($file)
      {
@@ -16,22 +15,24 @@ class Image_model extends CI_Model {
 		}
         $data= array (
             'image_file' 		      => $file,
+            'report_id' 		      => $this->input->post("report_id"),
         );
-        $result = $this->db->insert('tbl_image',$data);
+        $result = $this->db->insert('tbl_rd_image',$data);
         return  $result;
      }
-     public function update_image($image_id)
+     public function update_image($image_id, $file)
      {
+        // echo $image_id; die;
          $update = array(
-                'image_file'=>$this->input->post('image_file'),
+                'image_file'=>$file,
              );
          $this->db->where('id',$image_id);
-         return $this->db->update('tbl_image', $update);
+         return $this->db->update('tbl_rd_image', $update);
      }
      function get_image_data($report_id)
      {
         $this->db->where('report_id', $report_id);
-        $result = $this->db->get('tbl_image');
+        $result = $this->db->get('tbl_rd_image');
         $res = $result->row();
         return $res;
      }
