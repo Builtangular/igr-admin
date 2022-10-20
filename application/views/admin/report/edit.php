@@ -27,19 +27,20 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Update Report</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/report/insert" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/report/update" method="post" class="form-horizontal">
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Scope</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="parent">
-                                            <option value="0">Select</option>
+                                        <select class="form-control" name="scope">
+                                            <!-- <option value="0">Select</option> -->
                                             <?php foreach($scopes_data as $scopes){
-                                            if ($scopes->id == $parent_id){ ?>
-                                                <option value="<?php echo $scopes->id; ?>" Selected><?php echo $scopes->name; ?></option>
+                                            if ($scopes->id == $scope_id){ ?>
+                                            <option value="<?php echo $scopes->id; ?>" Selected>
+                                                <?php echo $scopes->name; ?></option>
                                             <?php }else{ ?>
-                                                <option value="<?php echo $scopes->id; ?>"><?php echo $scopes->name; ?>
+                                            <option value="<?php echo $scopes->id; ?>"><?php echo $scopes->name; ?>
                                             </option>
                                             <?php }} ?>
                                         </select>
@@ -48,7 +49,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Title Case Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="search" name="title" class="form-control">
+                                        <input type="text" id="search" name="title" value="<?php echo $title; ?>"
+                                            class="form-control">
                                         <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
@@ -62,9 +64,13 @@
 												$Period1[]=$Period;
 												$Period2[]=$Period;
 												$Period3[]=$Period;
+                                                if($Period == $forecast_from){
 												?>
+                                            <option value="<?php echo $forecast_from; ?>" Selected>
+                                                <?php echo $forecast_from; ?></option>
+                                            <?php }else{ ?>
                                             <option value="<?php echo $Period; ?>"><?php echo $Period; ?></option>
-                                            <?php } ?>
+                                            <?php } } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -73,25 +79,37 @@
                                     <div class="col-md-9">
                                         <select class="form-control" name="forecast_to" id="forecast_to">
                                             <option value="">Select To Forecast Period</option>
-                                            <?php foreach($Period1 as $Period1) { ?>
+                                            <?php foreach($Period1 as $Period1) { 
+                                                if($Period1 == $forecast_to){
+                                                    ?>
+                                            <option value="<?php echo $forecast_to; ?>" Selected><?php echo $forecast_to; ?></option>
+                                            <?php }else{ ?>
                                             <option value="<?php echo $Period1; ?>"><?php echo $Period1; ?></option>
-                                            <?php } ?>
+                                            <?php } } ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">CAGR</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="cagr" class="form-control">
+                                        <input type="text" name="cagr" value="<?php echo $value_cagr; ?>"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">SKU</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="sku" value="<?php echo $sku; ?>"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Report Status</label>
                                     <div class="col-md-9">
                                         <div class="radio">
-                                            <label><input type="radio" name="status" value="1" checked />Active</label>
-                                            <label><input type="radio" name="status" value="0" />Inactive</label>
-                                            <label><input type="radio" name="status" value="2" />Draft</label>
+                                            <label><input type="radio" name="status" value="1" <?php echo ($status==1)?'checked':'' ?> />Active</label>
+                                            <label><input type="radio" name="status" value="0" <?php echo ($status==0)?'checked':'' ?> />Inactive</label>
+                                            <label><input type="radio" name="status" value="2" <?php echo ($status==2)?'checked':'' ?> />Draft</label>
                                         </div>
                                     </div>
                                 </div>
@@ -102,17 +120,22 @@
                                     <div class="col-md-9">
                                         <select class="form-control" name="category">
                                             <option value="0">Select</option>
-                                            <?php foreach($category_data as $category){?>
+                                            <?php foreach($category_data as $category){
+                                                if($category->id == $category_id){
+                                                    ?>
+                                            <option value="<?php echo $category->id; ?>" Selected><?php echo $category->name; ?></option>
+                                            <?php }else{ ?>
                                             <option value="<?php echo $category->id; ?>"><?php echo $category->name; ?>
                                             </option>
-                                            <?php } ?>
+                                            <?php }} ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Small Case Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="search" name="name" class="form-control">
+                                        <input type="text" id="search" name="name" value="<?php echo $name; ?>"
+                                            class="form-control">
                                         <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
@@ -121,9 +144,14 @@
                                     <div class="col-md-9">
                                         <select class="form-control" name="analysis_form" id="analysis_form">
                                             <option value="">Select From Period</option>
-                                            <?php foreach($Period3 as $Period3) { ?>
+                                            <?php foreach($Period3 as $Period3) { 
+                                             if($Period3 == $analysis_from){
+												?>
+                                            <option value="<?php echo $analysis_from; ?>" Selected>
+                                                <?php echo $analysis_from; ?></option>
+                                            <?php }else{ ?>
                                             <option value="<?php echo $Period3; ?>"><?php echo $Period3; ?></option>
-                                            <?php } ?>
+                                            <?php } } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -132,17 +160,29 @@
                                     <div class="col-md-9">
                                         <select class="form-control" name="analysis_to" id="analysis_to">
                                             <option value="">Select To Period</option>
-                                            <?php foreach($Period2 as $Period2) { ?>
+                                            <?php foreach($Period2 as $Period2) { 
+                                                 if($Period2 == $analysis_to){
+                                                    ?>
+                                                <option value="<?php echo $analysis_to; ?>" Selected>
+                                                    <?php echo $analysis_to; ?></option>
+                                                <?php }else{ ?>
                                             <option value="<?php echo $Period2; ?>"><?php echo $Period2; ?></option>
-                                            <?php } ?>
+                                            <?php } } ?>
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Value Unit</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="value_based_unit" class="form-control">
+                                        <input type="text" name="value_based_unit" value="<?php echo $value_unit; ?>"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">URL Path</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="url" value="<?php echo $url; ?>"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -160,7 +200,8 @@
                                 <div class="form-group" id="div1" style="display: none;">
                                     <label class="control-label col-md-3">Volume CAGR</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="volume_cagr" name="volume_cagr" class="form-control"
+                                        <input type="text" id="volume_cagr" name="volume_cagr"
+                                            value="<?php echo $volume_based_cagr; ?>" class="form-control"
                                             placeholder="Volume CAGR" />
                                     </div>
                                 </div>
@@ -168,7 +209,8 @@
                                     <label class="control-label col-md-3">Volume Unit</label>
                                     <div class="col-md-9">
                                         <input type="text" id="volume_unit" name="volume_based_unit"
-                                            class="form-control" placeholder="Volume Unit" />
+                                            value="<?php echo $volume_based_unit; ?>" class="form-control"
+                                            placeholder="Volume Unit" />
                                     </div>
                                 </div>
                             </div>
@@ -177,15 +219,15 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Report Price</label>
                                 <div class="col-md-4">
-                                    <input type="text" id="single_user" name="single_user" class="form-control"
+                                    <input type="text" id="single_user" name="single_user" value="<?php echo $singleuser_price; ?>" class="form-control"
                                         placeholder="Single User License" />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" id="enterprise_user" name="enterprise_user" class="form-control"
+                                    <input type="text" id="enterprise_user" name="enterprise_user" value="<?php echo $enterprise_price; ?>" class="form-control"
                                         placeholder="Enterprise License" />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" id="datasheet" name="datasheet" class="form-control"
+                                    <input type="text" id="datasheet" name="datasheet" value="<?php echo $datasheet_price; ?>" class="form-control"
                                         placeholder="Data Sheet License" />
                                 </div>
                             </div>
@@ -194,47 +236,50 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">CAGR Market Value</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="market_value" name="market_value" class="form-control"
+                                    <input type="text" id="market_value" name="market_value" class="form-control" value="<?php echo $cagr_market_value; ?>"
                                         placeholder="Market Value During the Forecast Period" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Report Definition</label>
                                 <div class="col-md-10">
-                                    <textarea type="text" name="Report_definition" rows="5"
-                                        class="form-control"></textarea>
+                                    <textarea type="text" name="Report_definition" rows="5" class="form-control"><?php echo $report_definition; ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Report Description</label>
                                 <div class="col-md-10">
-                                    <textarea type="text" name="Report_description" rows="8"
-                                        class="form-control"></textarea>
+                                    <textarea type="text" name="Report_description" rows="8" class="form-control"><?php echo $report_description; ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Executive Summary-DRO</label>
                                 <div class="col-md-10">
-                                    <textarea type="text" name="Executive_summary_DRO" rows="8"
-                                        class="form-control"></textarea>
+                                    <textarea type="text" name="Executive_summary_DRO" rows="8" class="form-control"><?php echo $executive_summary_DRO; ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Executive Summary - Regional Description</label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Executive_summary_regional_description" rows="8"
-                                        class="form-control"></textarea>
+                                        class="form-control"><?php echo $executive_summary_regional_description; ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Largest Region</label>
                                 <div class="col-md-10">
-                                    <input type="text" name="Largest_region" class="form-control">
+                                    <input type="text" name="Largest_region" value="<?php echo $largest_region; ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Publish Date</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="Publish_date" value="<?php echo $updated_at; ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
-
                         <div class="box-footer">
+                            <input type="hidden" name="report_id" class="form-control" value="<?php echo $report_id; ?>">
                             <input type="submit" class="btn btn-info pull-right" value="Submit">
                         </div>
 
