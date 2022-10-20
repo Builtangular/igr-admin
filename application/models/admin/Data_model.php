@@ -45,6 +45,21 @@ class Data_model extends CI_Model {
 		die; */
 		return $insert_id;
 	}
+	// Update Query For RD Data
+	public function update_rd_data($id,$data){
+		$this->db->where('id', $id);
+		$result =  $this->db->update('tbl_rd_data', $data);
+		// echo $this->db->last_query();	die;
+		return $result;
+		// return $this->db->affected_rows();
+	}
+	// Function to Delete selected record from table name.
+	public function delete_rd_data($id){
+		$this->db->where('id', $id);
+		$result = $this->db->delete('tbl_rd_data');
+		return $result;
+	}
+	/* Master Tables */
 	public function get_category_master(){
 		$this->db->select("*");
 		$this->db->from("tbl_categories_master");
@@ -77,13 +92,13 @@ class Data_model extends CI_Model {
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
-		if($sql->num_rows() > 0)
+		if($sql->num_rows() > 1)
 		{			
-			return $sql->result();
+			return $sql->result_array();
 		}
 		else
 		{
-			return array();
+			return $sql->row();
 		}
 	}
 	/* companies */
