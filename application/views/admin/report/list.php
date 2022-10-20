@@ -72,7 +72,7 @@
                                         <?php if($data->country_status == 1){ ?>
                                             <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b> Created</b></td>
                                         <?php }else {?>                                        
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/counry_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/counrty_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>
                                         <?php }?>
                                         <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
 											<a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
