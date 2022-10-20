@@ -146,7 +146,8 @@
                         <a href="#"><i class="fa fa-files-o"></i><span>Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li><a href="<?php echo base_url(); ?>admin/report"><span>Report</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/report"><span>Reports</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/country_rd"><span>Country Reports</span></a></li>
                         </ul>
                     </li>
                     <!-- <li><a href="http://localhost/testapp/public/superadmin/enroll"><span>Enrollment</span></a></li>

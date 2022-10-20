@@ -64,3 +64,6 @@ $route['admin/segment/(:any)'] ='admin/segment/index/$1';
 $route['admin/image/(:num)'] ='admin/image/index/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
+
+// $route['admin/country_rd'] ='admin/country_rd/index';
+// $route['admin/country_rd/create/(:num)'] ='admin/country_rd/create/$1';

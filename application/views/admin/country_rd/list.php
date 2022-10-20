@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/report-header.php'); ?>
+<?php $this->load->view('admin/header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 
@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Report List
+            Country RD List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -24,12 +24,7 @@
         <div class='row'>
             <div class="col-md-12">
                 <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Report List</h3>
-						<a href="<?php echo base_url(); ?>admin/report/add" class="btn btn-primary pull-right">
-                            <i class="fa fa-plus"></i>
-                        </a>
-                    </div>
+                    
 					<?php if($success_code){ ?>
 					<div class="alert alert-success">					
 					<button type="button" class="close" data-dismiss="alert">x</button>
@@ -42,36 +37,27 @@
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
 									<th>Title</th>
-									<th>Scope</th>
-									<th>Cat</th>
-									<th>Forecast</th>
-									<!-- <th>Vol</th> -->
-									<th>Company</th>
-									<th>Segment</th>
-									<th>Status</th>
-									<th>Image</th>
+									<th>Sku</th>
 									<th>Country</th>
+									<th>status</th>
+									<th>Date</th>
 									<th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($Global_Rds as $data){ ?>
+                                <?php foreach($Country_Rds as $data){
+                                        
+                                        ?>
 
                                     <tr style="font-size: 14px;">
                                         <td class="text-center"><?php echo $data->id; ?></td>
-                                        <td><?php echo $data->name; ?></td>
-                                        <td class="text-center"><?php echo $data->scope_id; ?></td>
-                                        <td class="text-center"><?php echo $data->category_id; ?></td>
-                                        <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
-                                        <!--<td><?php echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
-                                        <!-- <td><?php echo $data->is_volume_based; ?></td> -->
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a></td>
-										<td class="text-center"><?php echo $data->status; ?></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><i class="fa fa-image"></i>  Image</b></a></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>
-                                        <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
-											<a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                        <td><?php echo $data->title; ?></td>
+                                        <td class="text-center"><?php echo $data->sku; ?></td>
+                                        <td class="text-center"><?php echo $data->country; ?></td>
+                                        <td class="text-center"><?php echo $data->status; ?></td>
+                                        <td class="text-center"><?php echo $data->updated_at; ?></td>
+                                        <td><a href="<?php echo base_url(); ?>admin/country_rd/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
+											<a href="<?php echo base_url(); ?>admin/country_rd/contry_rd_delete/<?php echo $data->id; ?>"" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
 										</td>
                                     </tr>
                                     <?php } ?>
@@ -80,16 +66,11 @@
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
 									<th>Title</th>
-									<th>Scope</th>
-									<th>Cat</th>
-									<th>Forecast</th>
-									<!-- <th>Analysis</th> -->
-									<!-- <th>Vol</th> -->
-									<th>Company</th>
-									<th>Segment</th>									
-									<th>Status</th>
-									<th>Image</th>
+									<th>Sku</th>
 									<th>Country</th>
+									<th>status</th>
+									<!-- <th>Vol</th> -->
+									<th>Date</th>
 									<th>Action</th>
                                 </tr>
                             </tfoot>
