@@ -58,7 +58,7 @@ class Category_model extends CI_Model {
      {
           //var_dump('hii');die;
           $this->db->where("id", $id);
-          $this->db->delete("tbl_scope");
+          $this->db->delete("tbl_categories_master");
           return true;
      }
 }

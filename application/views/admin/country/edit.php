@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Name</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="name" id="name" value="<?php if(!empty($single_country_data)){echo $single_country_data->name;}?>" class="form-control">
+                                    <input type="text" name="name" id="name" value="<?php echo $single_country_data->name;?>" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">

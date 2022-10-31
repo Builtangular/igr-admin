@@ -34,7 +34,7 @@
                                     <label class="control-label col-md-1">Title</label>
                                     <div class="col-md-11">
                                         <input type="text" id="search" name="title"
-                                            value="<?php if(!empty($single_country_data)){echo $single_country_data->title;}?>"
+                                            value="<?php echo $single_country_data->title;?>"
                                             class="form-control">
                                     </div>
                                 </div>

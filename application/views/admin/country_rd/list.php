@@ -24,7 +24,9 @@
         <div class='row'>
             <div class="col-md-12">
                 <div class="box box-primary">
-                    
+                    <div class="box-header">
+                        <h3 class="box-title">Country RD List</h3>
+                    </div>
 					<?php if($success_code){ ?>
 					<div class="alert alert-success">					
 					<button type="button" class="close" data-dismiss="alert">x</button>
@@ -55,7 +57,7 @@
                                         <td class="text-center"><?php echo $data->sku; ?></td>
                                         <td class="text-center"><?php echo $data->country; ?></td>
                                         <td class="text-center"><?php echo $data->status; ?></td>
-                                        <td class="text-center"><?php echo $data->updated_at; ?></td>
+                                        <td class="text-center"><?php echo date("d-m-Y"); ?></td>
                                         <td><a href="<?php echo base_url(); ?>admin/country_rd/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
 											<a href="<?php echo base_url(); ?>admin/country_rd/contry_rd_delete/<?php echo $data->id; ?>"" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
 										</td>

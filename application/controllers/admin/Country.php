@@ -22,7 +22,6 @@ class Country extends CI_Controller
         $data['massage'] = $this->session->userdata('msg');
 		$data['title'] = "Category Master";
 		$data['list_country'] = $this->Country_model->get_country_master();
-		//print_r($data);exit();
 		$this->load->view("admin/country/list", $data);
         }else{
             $this->load->view("admin/login");
@@ -43,7 +42,6 @@ class Country extends CI_Controller
 		if($this->session->userdata('logged_in'))
 	 	{
 			$result = $this->Country_model->insert_country_record();
-			//var_dump($result);die;
 			if($result == 1)
 			{
 				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
@@ -78,7 +76,6 @@ class Country extends CI_Controller
 	}
     function country_delete($id)
 	{
-		//var_dump($id);die;
 		$data['delete'] = $this->Country_model->country_delete($id);
         $this->session->set_flashdata('msg','Data has been deleted successfully');
 		redirect('admin/country');

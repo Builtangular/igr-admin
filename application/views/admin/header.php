@@ -140,6 +140,8 @@
                             <li><a href="<?php echo base_url(); ?>admin/category"><span>Category Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/country"><span>Country Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/region"><span>Region Master</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/codedecode_type"><span>Codedecode Type</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/codedecode_description"><span>Codedecode Description</span></a></li>
                         </ul>
                     </li>
                     <li class="treeview">

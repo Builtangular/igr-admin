@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create Scope Region Master
+            Create Codedecode Type Master
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -23,32 +23,15 @@
             <div class="col-md-8">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h1 class="box-title">Create Scope Region Master</h1>
+                        <h1 class="box-title">Create Codedecode Type Master</h1>
                     </div>
-                    <form action="<?php echo base_url('admin/scope/update_scope');?>" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url('admin/codedecode_type/insert_codedecode_type');?>" method="post" class="form-horizontal">
                         <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Name</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="name" id="name" value="<?php echo $single_scope_data->name;?>" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Parent</label>
-                                <div class="col-md-8">
-                                    <select class="form-control b-none" name="parent" id="parent" placeholder="">
-                                        <option value="0">Parent</option>
-                                        <?php 						
-                                        foreach($get_scope_data as $data)						
-                                        {						
-                                        ?>
-                                            <?php 
-                                            if($data->id== $single_scope_data->parent){ ?><option value="<?php echo $data->id ?>" selected><?php echo $data->name?> </option> <?php }else{ ?> 
-                                            <option value="<?php echo $data->id ?>"><?php echo $data->name?> </option>
-                                        <?php } }?>					
-                                       
-                                    </select>
+                                    <input type="text" name="name" id="name" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -63,7 +46,7 @@
                             <div class="box-footer">
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>
-                            <input type="hidden" name="id" class="form-control" id="id" value="<?php if(!empty($single_scope_data)){echo $single_scope_data->id;}?>">
+                            
                     </form>
                 </div>
             </div>

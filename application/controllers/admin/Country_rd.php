@@ -20,7 +20,6 @@ class Country_rd extends CI_Controller
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
-			// var_dump($data['success_code']); die;
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
 			$data['Country_Rds']= $this->Country_model->get_country_rds();
@@ -39,9 +38,7 @@ class Country_rd extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-            $data['global_rds']= $this->Country_model->get_global_rd_data($id);		
-			// var_dump($data['global_rds']);die;	
-           
+            $data['global_rds']= $this->Country_model->get_global_rd_data($id);	
             $rd_title = $data['global_rds']->title;
             $rd_name = $data['global_rds']->name;
             $forecast_to = $data['global_rds']->forecast_to;
@@ -52,9 +49,7 @@ class Country_rd extends CI_Controller
             foreach($data['countries'] as $country_data)
 			{
                 $Country_name=$country_data->name;	
-                // var_dump($Country_name);die;		
 				$Country_Report_title= $Country_name.' '.htmlspecialchars(strtolower($rd_title));
-                // var_dump($Country_Report_title);die;
                 if($Country_name == 'Africa'){
 					$sku = 'AF';
 					$pages = 60;
@@ -155,9 +150,6 @@ class Country_rd extends CI_Controller
 				$url = str_replace('--','-', strtolower($encoded_report_url));
 
 				$final_country_rd_title = $Country_Report_title.": Prospects, Trends Analysis, Market Size and Forecasts up to ".$forecast_to;
-               /*  $url_new = str_replace('  ', ' ', strtolower($Country_Report_title));
-				$url = str_replace(' ', '-', strtolower($url_new)); */
-                // var_dump( $final_country_rd_title );die;
 				$post_countrydata = array(
 					'report_id'=>$id,
 					'title'=>ucwords($final_country_rd_title),
@@ -175,12 +167,10 @@ class Country_rd extends CI_Controller
 				{
 					
 					$update_record = $this->Country_model->update_country_status($id);
-					// var_dump($update_record);die;
 				}
-				// var_dump($post_countrydata);die;
             }
            redirect('admin/country_rd');
-            // $this->load->view('admin/country_rd/list',$data);			
+        		
 		}		
 		else
 		{			
@@ -195,7 +185,6 @@ class Country_rd extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['country_rd_data']= $this->Country_model->get_country_rd_record();
 			$data['single_country_data'] = $this->Country_model->get_single_country_rd_data($id);
-			// var_dump($data['single_country_data']);die;
 			$this->load->view('admin/country_rd/edit',$data);
 		}else{			
 			$this->load->view('admin/login');
@@ -203,10 +192,9 @@ class Country_rd extends CI_Controller
 	}
 	public function update_country_rd()
     {
-		// var_dump($_POST);die;
+		
 		$id = $this->input->post('id');
 		$result = $this->Country_model->update_country_rd($id);
-		// $data['parent'] = $this->Country_model->get_single_rd_parent($id);
 		if($result){
 			$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");	
 		}else{
@@ -216,7 +204,6 @@ class Country_rd extends CI_Controller
     }
 	function contry_rd_delete($id)
 	{
-		//var_dump($id);die;
 		$data['delete'] = $this->Country_model->contry_rd_delete($id);
 		$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
 		redirect('admin/country_rd');
