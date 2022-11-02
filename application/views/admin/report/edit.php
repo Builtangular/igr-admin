@@ -113,6 +113,15 @@
                                         </div>
                                     </div>
                                 </div>
+								<div class="form-group">
+                                    <label class="control-label col-md-3">Country RD Status</label>
+                                    <div class="col-md-9">
+                                        <div class="radio">
+                                            <label><input type="radio" name="country_status" value="1" <?php echo ($country_status==1)?'checked':'' ?> />Created</label>
+                                            <label><input type="radio" name="country_status" value="0" <?php echo ($country_status==0)?'checked':'' ?> />Generate</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -190,13 +199,31 @@
                                     <div class="col-md-9">
                                         <div class="radio">
                                             <label><input type="radio" name="volume" value="1"
-                                                    onclick="return HideVunit(1)" />Yes</label>
+                                                    onclick="return HideVunit(1)" <?php echo ($is_volume_based==1)?'checked':'' ?> />Yes</label>
 
                                             <label><input type="radio" name="volume" value="0"
-                                                    onclick="return HideVunit(0)" checked />No</label>
+                                                    onclick="return HideVunit(0)" <?php echo ($is_volume_based==0)?'checked':'' ?> />No</label>
                                         </div>
                                     </div>
                                 </div>
+								<?php if($is_volume_based == 1){?>
+								<div class="form-group" id="div1" style="display: block;">
+                                    <label class="control-label col-md-3">Volume CAGR</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="volume_cagr" name="volume_cagr"
+                                            value="<?php echo $volume_based_cagr; ?>" class="form-control"
+                                            placeholder="Volume CAGR" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="div3" style="display: block;">
+                                    <label class="control-label col-md-3">Volume Unit</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="volume_unit" name="volume_based_unit"
+                                            value="<?php echo $volume_based_unit; ?>" class="form-control"
+                                            placeholder="Volume Unit" />
+                                    </div>
+                                </div>
+								<?php } else {?>
                                 <div class="form-group" id="div1" style="display: none;">
                                     <label class="control-label col-md-3">Volume CAGR</label>
                                     <div class="col-md-9">
@@ -213,6 +240,7 @@
                                             placeholder="Volume Unit" />
                                     </div>
                                 </div>
+								<?php } ?>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -240,26 +268,26 @@
                                         placeholder="Market Value During the Forecast Period" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label class="control-label col-md-2">Report Definition</label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Report_definition" rows="5" class="form-control"><?php echo $report_definition; ?></textarea>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
-                                <label class="control-label col-md-2">Report Description</label>
+                                <label class="control-label col-md-2">Market Insight Para 1</label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Report_description" rows="8" class="form-control"><?php echo $report_description; ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Executive Summary-DRO</label>
+                                <label class="control-label col-md-2">Market Insight Para 2</label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Executive_summary_DRO" rows="8" class="form-control"><?php echo $executive_summary_DRO; ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Executive Summary - Regional Description</label>
+                                <label class="control-label col-md-2">Market Insight Para 3</label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Executive_summary_regional_description" rows="8"
                                         class="form-control"><?php echo $executive_summary_regional_description; ?></textarea>

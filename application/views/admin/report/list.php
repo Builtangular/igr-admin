@@ -55,30 +55,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($Global_Rds as $data){ ?>
-
+                                <?php foreach($Global_Rds as $data){ /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
+								$query = $this->db->query($sql);
+								if ($query->num_rows() > 0) { $rd_company = $query->row(); }
+								$sql_seg = "SELECT COUNT(report_id) AS rd_segments FROM tbl_rd_segments where report_id = ".$data->id." And parent_id = 0";
+								$query_seg = $this->db->query($sql_seg);
+								if ($query_seg->num_rows() > 0) { $rd_segment = $query_seg->row(); }
+								$sql_img = "SELECT * FROM tbl_rd_image where report_id = ".$data->id;
+								$query_img = $this->db->query($sql_img);
+								if ($query_img->num_rows() > 0) { $rd_image = "Uploaded"; } else {$rd_image = "Not uploaded";}
+								  ?> 
                                     <tr style="font-size: 14px;">
                                         <td class="text-center"><?php echo $data->id; ?></td>
-                                        <td><?php echo $data->name; ?></td>
+                                        <td><?php echo $data->title; ?></td>
                                         <td class="text-center"><?php echo $data->scope_id; ?></td>
                                         <td class="text-center"><?php echo $data->category_id; ?></td>
                                         <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
                                         <!--<td><?php echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
                                         <!-- <td><?php echo $data->is_volume_based; ?></td> -->
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_company->rd_companies." company"; ?></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_segment->rd_segments." segment"; ?></td>
 										<td class="text-center"><?php echo $data->status; ?></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><i class="fa fa-image"></i>  Image</b></a></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><i class="fa fa-image"></i> Image</b></a><br><?php echo $rd_image; ?></td>
                                         <?php if($data->country_status == 1){ ?>
                                             <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b> Created</b></td>
-                                        <?php }else {?>                                        
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>
+                                        <?php }else {?> 
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>                                        
                                         <?php }?>
                                         <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
 											<a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
 										</td>
                                     </tr>
-                                    <?php } ?>
+								<?php  }  ?>
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">

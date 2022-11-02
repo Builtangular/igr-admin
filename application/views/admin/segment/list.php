@@ -56,10 +56,12 @@
                                         <a href="<?php echo base_url(); ?>admin/segment/edit/<?php echo $data->id; ?>"
                                             class="btn btn-warning">Edit</a>
                                     </td>
-                                    <form action="<?php echo base_url(); ?>admin/segment/delete/<?php echo $data->id; ?>" method="post"
-                                        class="form-horizontal">
+                                    <form
+                                        action="<?php echo base_url(); ?>admin/segment/delete/<?php echo $data->id; ?>"
+                                        method="post" class="form-horizontal">
                                         <td>
-                                            <input type="hidden" name="report_id" value="<?php echo $data->report_id; ?>">
+                                            <input type="hidden" name="report_id"
+                                                value="<?php echo $data->report_id; ?>">
                                             <button class="btn btn-danger" type="submit">Delete</button>
                                         </td>
                                     </form>
@@ -70,6 +72,58 @@
                     </div>
                     <div class="box-footer">
 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h1 class="box-title">Segments</h1>
+                    </div>
+                    <div class="box-body">
+						<!-- main segment -->
+                        <ol>                            
+                            <?php foreach($main_segments as $data){ ?>
+                            <li><?php echo $data->name; ?>
+                                <!-- sub segment -->
+								<?php $sql = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$data->id;
+								$query = $this->db->query($sql);
+								if ($query->num_rows() > 0) { ?>
+                                <ol>                                    
+                                    <?php foreach ($query->result() as $sub_seg) {?>
+                                    <li><?php echo $sub_seg->name; ?>
+                                        <!-- child segment -->
+										<?php $sql1 = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$sub_seg->id;
+										$query1 = $this->db->query($sql1);
+										if ($query1->num_rows() > 0) { ?>
+                                        <ol>                                            
+                                            <?php foreach ($query1->result() as $child_seg) {?>
+                                            <li><?php echo $child_seg->name; ?>
+                                                <!-- sub child segment -->
+												<?php $sql2 = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$child_seg->id;
+												$query2 = $this->db->query($sql2);
+												if ($query2->num_rows() > 0) { ?>
+                                                <ol>                                                   
+                                                    <?php foreach ($query2->result() as $sub_child_seg) {?>
+                                                    <li><?php echo $sub_child_seg->name; ?> </li>
+                                                    <?php } ?>
+                                                </ol>
+                                                <?php } ?>
+												<!-- sub child segment -->
+                                            </li>
+                                            <?php } ?>
+                                        </ol>
+                                        <?php } ?>
+										 <!-- child segment -->
+                                    </li>
+                                    <?php } ?>
+                                </ol>
+                                <?php } ?>
+								<!-- sub segment -->
+                            </li>
+                            <?php } ?>							
+                        </ol>
+						<!-- main segment -->
                     </div>
                 </div>
             </div>

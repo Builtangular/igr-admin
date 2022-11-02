@@ -12,7 +12,23 @@ class Data_model extends CI_Model {
 	public function get_global_rds(){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
-		$this->db->where('status',1);
+		$this->db->where('status !=',2);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0)
+		{			
+			return $sql->result();
+		}
+		else
+		{
+			return array();
+		}
+	}
+	public function get_drafted_global_rds(){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('status',2);
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -157,6 +173,17 @@ class Data_model extends CI_Model {
 			return array();
 		}
 	}
+	public function get_rd_main_segments($id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_segments");
+		$this->db->where(array('report_id' => $id, 'parent_id' => 0));
+		$sql = $this->db->get();
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+	}
 	public function insert_rd_segment($postseg){
 		$this->db->trans_start();
 		$this->db->insert('tbl_rd_segments', $postseg);
@@ -187,6 +214,12 @@ class Data_model extends CI_Model {
 	public function delete_rd_segment($id){
 		$this->db->where('id', $id);
 		$result = $this->db->delete('tbl_rd_segments');
+		return $result;
+	}	
+	/* function to delete country rds of report id */
+	public function delete_contry_rds($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_country_rd');
 		return $result;
 	}
 	/******** pooja work ***************/

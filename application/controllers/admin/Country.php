@@ -41,6 +41,7 @@ class Country extends CI_Controller
 	{
 		if($this->session->userdata('logged_in'))
 	 	{
+			$data = $this->session->userdata('logged_in');
 			$result = $this->Country_model->insert_country_record();
 			if($result == 1)
 			{

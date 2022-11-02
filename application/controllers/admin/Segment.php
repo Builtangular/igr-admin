@@ -8,7 +8,7 @@ class Segment extends CI_Controller
 	{		
 		parent::__construct();		
 		$this->load->library('form_validation');		
-		$this->load->model('admin/Data_Model');
+		$this->load->model('admin/Data_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
@@ -22,8 +22,8 @@ class Segment extends CI_Controller
 			// var_dump($data['success_code']); die;
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
-			$data['segments']= $this->Data_Model->get_rd_segments($id);
-            // var_dump($data['segments']); die;
+			$data['segments']= $this->Data_model->get_rd_segments($id);
+			$data['main_segments']= $this->Data_model->get_rd_main_segments($id);
 			$this->load->view('admin/segment/list',$data);			
 		}		
 		else
@@ -39,7 +39,7 @@ class Segment extends CI_Controller
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
-            $data['segments']= $this->Data_Model->get_rd_segments($id);
+            $data['segments']= $this->Data_model->get_rd_segments($id);
             // var_dump($data['segments']); die;
 			$this->load->view('admin/segment/add',$data);			
 		}		
@@ -63,7 +63,7 @@ class Segment extends CI_Controller
 				'report_id'=>$id,
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
-			$inserted_id = $this->Data_Model->insert_rd_segment($postseg);
+			$inserted_id = $this->Data_model->insert_rd_segment($postseg);
 			if($inserted_id){
 				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");	
 			}else{
@@ -83,12 +83,12 @@ class Segment extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$segment = $this->Data_Model->get_rd_segment($seg_id);
+			$segment = $this->Data_model->get_rd_segment($seg_id);
 			$data['seg_id']= $segment->id;
 			$data['seg_name']= $segment->name;
             $data['report_id']= $segment->report_id;
             $data['parent_id']= $segment->parent_id;
-			$data['segments']= $this->Data_Model->get_rd_segments($data['report_id']);
+			$data['segments']= $this->Data_model->get_rd_segments($data['report_id']);
 			// var_dump($data['segment']); die;
 			$this->load->view('admin/segment/edit',$data);			
 		}		
@@ -111,7 +111,7 @@ class Segment extends CI_Controller
 				'parent_id'=>$this->input->post('parent'),
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
-			$result = $this->Data_Model->update_rd_segment($seg_id,$postcseg);
+			$result = $this->Data_model->update_rd_segment($seg_id,$postcseg);
 			if($result){
 				$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");				
 				redirect('admin/segment/'.$report_id);
@@ -133,7 +133,7 @@ class Segment extends CI_Controller
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
             $report_id = $this->input->post('report_id');			
-			$result = $this->Data_Model->delete_rd_segment($seg_id);
+			$result = $this->Data_model->delete_rd_segment($seg_id);
 			if($result){
 				$this->session->set_flashdata("success_code","Record has been deleted successfully..!!!");				
 				redirect('admin/segment/'.$report_id);

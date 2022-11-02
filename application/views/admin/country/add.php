@@ -25,7 +25,8 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Create Country Region Master</h1>
                     </div>
-                    <form action="<?php echo base_url('admin/country/insert_country');?>" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url('admin/country/insert_country');?>" method="post"
+                        class="form-horizontal">
                         <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
                         <div class="box-body">
                             <div class="form-group">
@@ -38,15 +39,15 @@
                                 <label class="control-label col-md-2">Parent</label>
                                 <div class="col-md-8">
                                     <select class="form-control b-none" name="parent" placeholder="">
-                                        <option value="">--Select Parent--</option>
+                                        <option value="0">--Select Parent--</option>
                                         <?php 						
-							foreach($get_country_data as $data)						
-							{						
-							?>
-                                <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
-                                <?php						
-							}					
-							?>
+							            foreach($get_country_data as $data)						
+                                        {						
+                                        ?>
+                                        <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
+                                        <?php						
+                                        }					
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -62,7 +63,6 @@
                             <div class="box-footer">
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>
-                            
                     </form>
                 </div>
             </div>

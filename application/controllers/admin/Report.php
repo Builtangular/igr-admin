@@ -9,7 +9,7 @@ class Report extends CI_Controller
 		
 		parent::__construct();		
 		$this->load->library('form_validation');		
-		$this->load->model('admin/Data_Model');
+		$this->load->model('admin/Data_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));		
@@ -23,7 +23,7 @@ class Report extends CI_Controller
 			$data['success_code'] = $this->session->userdata('success_code');
 			// var_dump($data['success_code']); die;
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Global_Rds']= $this->Data_Model->get_global_rds();
+			$data['Global_Rds']= $this->Data_model->get_global_rds();
 			$this->load->view('admin/report/list',$data);			
 		}		
 		else
@@ -34,7 +34,7 @@ class Report extends CI_Controller
 	public function title_exist()
     {
 		
-		$result = $this->Data_Model->title_exists($this->input->get('name'));
+		$result = $this->Data_model->title_exists($this->input->get('name'));
 		if($result == true){
 			$data['message']="<p class=\"text-red\">Title already exists</p>";
 		}else{
@@ -48,9 +48,9 @@ class Report extends CI_Controller
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];				
-			$data['scopes_data']= $this->Data_Model->get_scope_master();
-			$data['category_data']= $this->Data_Model->get_category_master();
-			$data['Global_Rds']= $this->Data_Model->get_global_rds();
+			$data['scopes_data']= $this->Data_model->get_scope_master();
+			$data['category_data']= $this->Data_model->get_category_master();
+			$data['Global_Rds']= $this->Data_model->get_global_rds();
 			$this->load->view('admin/report/add',$data);			
 		}		
 		else
@@ -65,7 +65,7 @@ class Report extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			/* automated sku */
-			$report_sku = $this->Data_Model->get_report_count();			
+			$report_sku = $this->Data_model->get_report_count();			
 			$sku_code = explode('R', $report_sku->sku);
 			$sku = 'IGR'.'0'.($sku_code[1] + 1);
 			/* automated url */
@@ -82,6 +82,7 @@ class Report extends CI_Controller
 					'category_id'=>$this->input->post('category'),
 					'scope_id'=>$this->input->post('scope'),
 					'url'=>$new_report_url,
+					'pages'=> 80,
 					'forecast_from'=>$this->input->post('forecast_from'),
 					'forecast_to'=>$this->input->post('forecast_to'),
 					'analysis_from'=>$this->input->post('analysis_form'),
@@ -95,7 +96,7 @@ class Report extends CI_Controller
 					'enterprise_price'=>$this->input->post('enterprise_user'),
 					'datasheet_price'=>$this->input->post('datasheet'),
 					'cagr_market_value'=>$this->input->post('market_value'),
-					'report_definition'=>$this->input->post('Report_definition'),
+					/* 'report_definition'=>$this->input->post('Report_definition'), */
 					'report_description'=>$this->input->post('Report_description'),
 					'executive_summary_DRO'=>$this->input->post('Executive_summary_DRO'),
 					'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'),
@@ -105,7 +106,7 @@ class Report extends CI_Controller
 					'created_at'=> date('Y-m-d h:i:sa')
 				);			
 			// var_dump($postdata); die;				
-			$Last_Inserted_id = $this->Data_Model->insert_rd_data($postdata);
+			$Last_Inserted_id = $this->Data_model->insert_rd_data($postdata);
 			if($Last_Inserted_id){
 				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!");				
 				redirect('admin/report');
@@ -125,9 +126,9 @@ class Report extends CI_Controller
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['scopes_data']= $this->Data_Model->get_scope_master();
-			$data['category_data']= $this->Data_Model->get_category_master();
-			$rd_data= $this->Data_Model->get_rd_data($id);
+			$data['scopes_data']= $this->Data_model->get_scope_master();
+			$data['category_data']= $this->Data_model->get_category_master();
+			$rd_data= $this->Data_model->get_rd_data($id);
 			// var_dump($rd_data->enterprise_price); die;
 			$data['report_id']= $rd_data->id;
 			$data['name']= $rd_data->name;
@@ -149,11 +150,12 @@ class Report extends CI_Controller
 			$data['enterprise_price']= $rd_data->enterprise_price;
 			$data['datasheet_price']= $rd_data->datasheet_price;
 			$data['cagr_market_value']= $rd_data->cagr_market_value;
-			$data['report_definition']= $rd_data->report_definition;
+			/* $data['report_definition']= $rd_data->report_definition; */
 			$data['report_description']= $rd_data->report_description;
 			$data['executive_summary_DRO']= $rd_data->executive_summary_DRO;
 			$data['executive_summary_regional_description']= $rd_data->executive_summary_regional_description;
 			$data['largest_region']= $rd_data->largest_region;
+			$data['country_status']= $rd_data->country_status;
 			$data['status']= $rd_data->status;
 			$data['created_user']= $rd_data->created_user;
 			$data['updated_at']= $rd_data->updated_at;
@@ -172,6 +174,10 @@ class Report extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$report_id = $this->input->post('report_id');
+			$country_status = $this->input->post('country_status');
+			if($country_status == 0){
+				$data['delete'] = $this->Data_model->delete_contry_rds($report_id);
+			}
 			$title = $this->input->post('title');
 			$updatedata=array(
 				'title'=>$this->input->post('title'),
@@ -199,10 +205,11 @@ class Report extends CI_Controller
 				'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'),
 				'largest_region'=>$this->input->post('Largest_region'),
 				'created_user'=>$session_data['Login_user_name'],
+				'country_status'=>$this->input->post('country_status'),
 				'status'=>$this->input->post('status'),
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);	
-			$result = $this->Data_Model->update_rd_data($report_id,$updatedata);
+			$result = $this->Data_model->update_rd_data($report_id,$updatedata);
 			if($result){
 				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
 			}else{
@@ -221,13 +228,25 @@ class Report extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];
 			// $report_id = $this->input->post('report_id');			
-			$result = $this->Data_Model->delete_rd_data($id);
+			$result = $this->Data_model->delete_rd_data($id);
 			if($result){
 				$this->session->set_flashdata("success_code", "Report has been deleted successfully..!!!");				
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Record has not deleted");		
 			}		
 			redirect('admin/report/');
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function drafts(){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];
+			// $report_id = $this->input->post('report_id');			
+			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds();
+			$this->load->view('admin/report/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
 		}

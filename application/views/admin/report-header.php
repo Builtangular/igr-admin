@@ -150,6 +150,7 @@
                             <li><a href="<?php echo base_url(); ?>admin/country_rd"><span>Country Reports</span></a></li>
                         </ul>
                     </li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file"></i><span>Drafts</span></a></li>
                     <!-- <li><a href="http://localhost/testapp/public/superadmin/enroll"><span>Enrollment</span></a></li>
                     <li><a href="#"><span>Generate Report</span></a></li> -->
                 </ul>

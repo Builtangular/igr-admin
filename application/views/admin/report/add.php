@@ -31,7 +31,7 @@
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Scope</label>
+                                    <label class="control-label col-md-3">Scope <span class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="scope">
                                             <option value="0">Select</option>
@@ -43,14 +43,14 @@
                                     </div>
                                 </div>
 								<div class="form-group">
-                                    <label class="control-label col-md-3">Title Case Name</label>
+                                    <label class="control-label col-md-3">Title Case Name <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" id="search" name="title" class="form-control">
+                                        <input type="text" id="search" name="title" class="form-control" required>
 										<span class="help-block margin" id="txtHint"></span>
                                     </div>								
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Forecast From </label>
+                                    <label class="control-label col-md-3">Forecast From <span class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="forecast_from" id="From_forecast_period"
                                             Onchange="changeyear(this.value)" required>
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Forecast To </label>
+                                    <label class="control-label col-md-3">Forecast To <span class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="forecast_to" id="forecast_to">
                                             <option value="">Select To Forecast Period</option>
@@ -77,13 +77,13 @@
                                     </div>
                                 </div>
 								<div class="form-group">
-                                    <label class="control-label col-md-3">CAGR</label>
+                                    <label class="control-label col-md-3">CAGR <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" name="cagr" class="form-control">
+                                        <input type="text" name="cagr" class="form-control" required>
                                     </div>
                                 </div>                                
 								<div class="form-group">
-                                    <label class="control-label col-md-3">Report Status</label>
+                                    <label class="control-label col-md-3">Report Status <span class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <div class="radio">
                                             <label><input type="radio" name="status" value="1" checked />Active</label>
@@ -95,7 +95,7 @@
                             </div>
                             <div class="col-md-6">
 								<div class="form-group">
-                                    <label class="control-label col-md-3">Category</label>
+                                    <label class="control-label col-md-3">Category <span class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="category">
                                             <option value="0">Select</option>
@@ -107,14 +107,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Small Case Name</label>
+                                    <label class="control-label col-md-3">Small Case Name <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" id="search" name="name" class="form-control">
+                                        <input type="text" id="search" name="name" class="form-control" required>
 										<span class="help-block margin" id="txtHint"></span>
                                     </div>								
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Analysis From </label>
+                                    <label class="control-label col-md-3">Analysis From <span class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="analysis_form" id="analysis_form">
                                             <option value="">Select From Period</option>
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Analysis To </label>
+                                    <label class="control-label col-md-3">Analysis To <span class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="analysis_to" id="analysis_to">
                                             <option value="">Select To Period</option>
@@ -172,7 +172,7 @@
 						</div>
                         <div class="col-md-12">
 							<div class="form-group">
-                                <label class="control-label col-md-2">Report Price</label>
+                                <label class="control-label col-md-2">Report Price <span class="text-red">*</span></label>
                                 <div class="col-md-4">
                                     <input type="text" id="single_user" name="single_user" class="form-control" placeholder="Single User License" />
                                 </div>
@@ -191,38 +191,38 @@
                                     <input type="text" id="market_value" name="market_value" class="form-control" placeholder="Market Value During the Forecast Period" />
                                 </div>
                             </div>
-							<div class="form-group">
-                                <label class="control-label col-md-2">Report Definition</label>
+							<!--<div class="form-group">
+                                <label class="control-label col-md-2">Insight Para 1</label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Report_definition" rows="5"
                                         class="form-control"></textarea>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
-                                <label class="control-label col-md-2">Report Description</label>
+                                <label class="control-label col-md-2">Market Insight Para 1 <span class="text-red">*</span></label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Report_description" rows="8"
                                         class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Executive Summary-DRO</label>
+                                <label class="control-label col-md-2">Market Insight Para 2 <span class="text-red">*</span></label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Executive_summary_DRO" rows="8"
                                         class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Executive Summary - Regional Description</label>
+                                <label class="control-label col-md-2">Market Insight Para 3 <span class="text-red">*</span></label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Executive_summary_regional_description" rows="8"
                                         class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Largest Region</label>
+                                <label class="control-label col-md-2">Largest Region <span class="text-red">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" name="Largest_region" class="form-control">
+                                    <input type="text" name="Largest_region" class="form-control" required>
                                 </div>
                             </div>
                         </div>

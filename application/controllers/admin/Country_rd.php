@@ -207,7 +207,6 @@ class Country_rd extends CI_Controller
 		$data['delete'] = $this->Country_model->contry_rd_delete($id);
 		$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
 		redirect('admin/country_rd');
-		
 
 	}
 	
