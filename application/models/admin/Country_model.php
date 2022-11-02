@@ -68,6 +68,7 @@ class Country_model extends CI_Model {
 	public function get_country_rds(){
 		$this->db->select("*");
 		$this->db->from("tbl_country_rd");
+		$this->db->order_by('created_at',"DESC");
 		$sql = $this->db->get();
 		if($sql->num_rows() > 0){			
 			return $sql->result();
@@ -167,6 +168,18 @@ class Country_model extends CI_Model {
 		$result = $this->db->get('tbl_country_rd');
 		//echo $this->db->last_query();die;
 		return $result->row();
+	}
+	
+	public function get_brazil_report_count()
+	{	
+	$this->db->select("sku");
+	$this->db->from("tbl_country_rd");
+	$this->db->where('country','brazil');
+	$this->db->limit(1);
+	$this->db->order_by('id',"DESC");
+	$query = $this->db->get();
+	$result = $query->row();	
+	return $result;	
 	}
 }
 ?>

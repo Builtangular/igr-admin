@@ -41,7 +41,7 @@
 									<th>Title</th>
 									<th>Sku</th>
 									<th>Country</th>
-									<th>status</th>
+									<th>Status</th>
 									<th>Date</th>
 									<th>Action</th>
                                 </tr>
@@ -70,7 +70,7 @@
 									<th>Title</th>
 									<th>Sku</th>
 									<th>Country</th>
-									<th>status</th>
+									<th>Status</th>
 									<!-- <th>Vol</th> -->
 									<th>Date</th>
 									<th>Action</th>
@@ -116,14 +116,14 @@
   
 <script>
   $(function () {
-    $('#rddata').DataTable()
-    $('#example2').DataTable({
+    // $('#rddata').DataTable()
+    $('#rddata').DataTable({
       'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : false,
       'info'        : true,
-      'autoWidth'   : false
+      'autoWidth'   : true
     })
   })
 </script>

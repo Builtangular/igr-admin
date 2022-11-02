@@ -46,6 +46,10 @@ class Country_rd extends CI_Controller
 			// var_dump( $data['global_rds'] );die;	
             $data['countries'] = $this->Country_model->get_countries();
             
+			$country_title_count = $this->Country_model->get_brazil_report_count();
+			// var_dump($country_title_count);die;
+			$sku_code = explode('Z', $country_title_count->sku);
+			// var_dump($sku_code);die;
             foreach($data['countries'] as $country_data)
 			{
                 $Country_name=$country_data->name;	
@@ -143,7 +147,8 @@ class Country_rd extends CI_Controller
 					$single_user = 4795;
 					$enterprise = 7195;
 				}
-				
+				$Report_code = $sku.'0'.($sku_code[1] + 1);
+				// var_dump($Report_code);die;
 				$report_title_new=str_replace( array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $Country_Report_title);
 				$encoded_report_title= urldecode($report_title_new);	
 				$encoded_report_url = str_replace(' ','-', $encoded_report_title);
@@ -153,7 +158,7 @@ class Country_rd extends CI_Controller
 				$post_countrydata = array(
 					'report_id'=>$id,
 					'title'=>ucwords($final_country_rd_title),
-					'sku'=>$sku,
+					'sku'=>$Report_code,
 					'singleuser_price'=>$single_user,
 					'enterprise_price'=>$enterprise,
 					'url'=>$url,
