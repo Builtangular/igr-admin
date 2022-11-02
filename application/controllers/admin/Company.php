@@ -7,7 +7,7 @@ class Company extends CI_Controller
 	{		
 		parent::__construct();		
 		$this->load->library('form_validation');		
-		$this->load->model('admin/Data_Model');
+		$this->load->model('admin/Data_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
@@ -22,7 +22,7 @@ class Company extends CI_Controller
 			// var_dump($data['success_code']); die;
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
-			$data['Companies']= $this->Data_Model->get_rd_companies($id);
+			$data['Companies']= $this->Data_model->get_rd_companies($id);
 			$this->load->view('admin/company/list',$data);			
 		}		
 		else
@@ -59,7 +59,7 @@ class Company extends CI_Controller
 				'report_id'=>$id,
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
-			$inserted_id = $this->Data_Model->insert_rd_company_data($postcomp);
+			$inserted_id = $this->Data_model->insert_rd_company_data($postcomp);
 			if($inserted_id){
 				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");				
 				redirect('admin/company/'.$id);
@@ -80,7 +80,7 @@ class Company extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];				
-			$company= $this->Data_Model->get_rd_company($cmp_id);		
+			$company= $this->Data_model->get_rd_company($cmp_id);		
 			$data['company_id']= $company->id;
 			$data['company_name']= $company->name;
 			$data['report_id']= $company->report_id;
@@ -105,7 +105,7 @@ class Company extends CI_Controller
 				'name'=>$this->input->post('name'),
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
-			$result = $this->Data_Model->update_rd_company($cmp_id,$postcomp);
+			$result = $this->Data_model->update_rd_company($cmp_id,$postcomp);
 			if($result){
 				$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");				
 				redirect('admin/company/'.$report_id);
@@ -127,7 +127,7 @@ class Company extends CI_Controller
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];
 			$report_id = $this->input->post('report_id');			
-			$result = $this->Data_Model->delete_rd_company($cmp_id);
+			$result = $this->Data_model->delete_rd_company($cmp_id);
 			if($result){
 				$this->session->set_flashdata("success_code","Record has been deleted successfully..!!!");				
 				redirect('admin/company/'.$report_id);
