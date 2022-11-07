@@ -197,7 +197,7 @@
                                     <textarea type="text" name="Report_definition" rows="5"
                                         class="form-control"></textarea>
                                 </div>
-                            </div>-->
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Market Insight Para 1 <span class="text-red">*</span></label>
                                 <div class="col-md-10">
@@ -218,7 +218,7 @@
                                     <textarea type="text" name="Executive_summary_regional_description" rows="8"
                                         class="form-control"></textarea>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label class="control-label col-md-2">Largest Region <span class="text-red">*</span></label>
                                 <div class="col-md-10">

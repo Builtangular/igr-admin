@@ -62,6 +62,13 @@ $route['admin/scope_register'] ='admin/dashboard/scope_register';
 $route['admin/company/(:any)'] ='admin/company/index/$1';
 $route['admin/segment/(:any)'] ='admin/segment/index/$1';
 $route['admin/image/(:num)'] ='admin/image/index/$1';
+$route['admin/market-insight/(:num)'] ='admin/market_insight/index/$1';
+$route['admin/market-insight/add/(:num)'] ='admin/market_insight/add/$1';
+$route['admin/market-insight/insert/(:num)'] ='admin/market_insight/insert/$1';
+$route['admin/market-insight/view/(:num)'] ='admin/market_insight/view/$1';
+$route['admin/market-insight/edit/(:num)'] ='admin/market_insight/edit/$1';
+$route['admin/market-insight/update/(:num)'] ='admin/market_insight/update/$1';
+$route['admin/market-insight/delete/(:num)'] ='admin/market_insight/delete/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
 

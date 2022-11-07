@@ -274,7 +274,7 @@
                                     <textarea type="text" name="Report_definition" rows="5" class="form-control"><?php echo $report_definition; ?></textarea>
                                 </div>
                             </div> -->
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label class="control-label col-md-2">Market Insight Para 1</label>
                                 <div class="col-md-10">
                                     <textarea type="text" name="Report_description" rows="8" class="form-control"><?php echo $report_description; ?></textarea>
@@ -292,7 +292,7 @@
                                     <textarea type="text" name="Executive_summary_regional_description" rows="8"
                                         class="form-control"><?php echo $executive_summary_regional_description; ?></textarea>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label class="control-label col-md-2">Largest Region</label>
                                 <div class="col-md-10">

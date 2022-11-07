@@ -97,9 +97,9 @@ class Report extends CI_Controller
 					'datasheet_price'=>$this->input->post('datasheet'),
 					'cagr_market_value'=>$this->input->post('market_value'),
 					/* 'report_definition'=>$this->input->post('Report_definition'), */
-					'report_description'=>$this->input->post('Report_description'),
+					/* 'report_description'=>$this->input->post('Report_description'),
 					'executive_summary_DRO'=>$this->input->post('Executive_summary_DRO'),
-					'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'),
+					'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'), */
 					'largest_region'=>$this->input->post('Largest_region'),
 					'created_user'=>$session_data['Login_user_name'],
 					'status'=>$this->input->post('status'),
@@ -151,9 +151,9 @@ class Report extends CI_Controller
 			$data['datasheet_price']= $rd_data->datasheet_price;
 			$data['cagr_market_value']= $rd_data->cagr_market_value;
 			/* $data['report_definition']= $rd_data->report_definition; */
-			$data['report_description']= $rd_data->report_description;
+			/* $data['report_description']= $rd_data->report_description;
 			$data['executive_summary_DRO']= $rd_data->executive_summary_DRO;
-			$data['executive_summary_regional_description']= $rd_data->executive_summary_regional_description;
+			$data['executive_summary_regional_description']= $rd_data->executive_summary_regional_description; */
 			$data['largest_region']= $rd_data->largest_region;
 			$data['country_status']= $rd_data->country_status;
 			$data['status']= $rd_data->status;

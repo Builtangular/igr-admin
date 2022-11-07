@@ -50,6 +50,7 @@
 									<th>Segment</th>
 									<th>Status</th>
 									<th>Image</th>
+                                    <th>Insight</th>
 									<th>Country</th>
 									<th>Action</th>
                                 </tr>
@@ -63,7 +64,11 @@
 								if ($query_seg->num_rows() > 0) { $rd_segment = $query_seg->row(); }
 								$sql_img = "SELECT * FROM tbl_rd_image where report_id = ".$data->id;
 								$query_img = $this->db->query($sql_img);
-								if ($query_img->num_rows() > 0) { $rd_image = "Uploaded"; } else {$rd_image = "Not uploaded";}
+								/* if ($query_img->num_rows() > 0) { $rd_image = "<img src=\"http://localhost/igr_admin/assets/admin/img-rd/global-automotive-display-system-market.jpg\" class=\"fa \" alt=\"User Image\" style=\"height:20px; width: 40px;\"> <br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";} */
+								if ($query_img->num_rows() > 0) { $rd_image = "<i class=\"fa fa-image\"></i><br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";}
+                                $market_insight = "SELECT * FROM tbl_rd_market_insight_data where report_id = ".$data->id;
+								$query_market_insight = $this->db->query($market_insight);
+								if ($query_market_insight->num_rows() > 0) { $insight_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$insight_status = "<i class=\"fa fa-plus\"></i><br>Add";}
 								  ?> 
                                     <tr style="font-size: 14px;">
                                         <td class="text-center"><?php echo $data->id; ?></td>
@@ -76,7 +81,13 @@
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_company->rd_companies." company"; ?></td>
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_segment->rd_segments." segment"; ?></td>
 										<td class="text-center"><?php echo $data->status; ?></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><i class="fa fa-image"></i> Image</b></a><br><?php echo $rd_image; ?></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a></td>
+                                        <?php if($query_market_insight->num_rows() > 0){ ?>
+                                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/view/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a></td>
+                                        <?php }else {?> 
+                                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a></td>                                        
+                                        <?php }?>
+                                        
                                         <?php if($data->country_status == 1){ ?>
                                             <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b> Created</b></td>
                                         <?php }else {?> 
@@ -99,8 +110,9 @@
 									<!-- <th>Vol</th> -->
 									<th>Company</th>
 									<th>Segment</th>									
-									<th>Status</th>
+									<th>Status</th>                                    
 									<th>Image</th>
+                                    <th>Insight</th>
 									<th>Country</th>
 									<th>Action</th>
                                 </tr>

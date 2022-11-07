@@ -75,17 +75,64 @@ class Data_model extends CI_Model {
 		$result = $this->db->delete('tbl_rd_data');
 		return $result;
 	}
+
+/* **********  Market Insight ********** */
+	public function insert_market_insight($postdata){
+		$this->db->trans_start();
+		$this->db->insert('tbl_rd_market_insight_data', $postdata);
+		$insert_id = $this->db->insert_id();
+		$this->db->trans_complete();
+		/* echo $this->db->last_query();		
+		die; */
+		return $insert_id;
+	}
+	public function get_rd_market_insight_data($report_id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_market_insight_data");
+		$this->db->where(array('report_id' => $report_id, 'status' => 1));
+		$sql = $this->db->get();		
+		if($sql->num_rows() > 0)
+		{			
+			return $sql->result_array();
+		}else{
+			return array();
+		}
+	}
+	public function get_rd_single_market_insight($id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_market_insight_data");
+		$this->db->where(array('id' => $id, 'status' => 1));
+		$sql = $this->db->get();
+		if($sql->num_rows() == 1)
+		{
+			return $sql->row();
+		}else{
+			return $sql->result_array();
+		}
+	}
+	// Function to Delete selected record from table name.
+	public function delete_rd_insight_para($id){
+		$this->db->where('id', $id);
+		$result = $this->db->delete('tbl_rd_market_insight_data');
+		return $result;
+	}
+	// Update Query For RD market insight Data
+	public function update_rd_market_insight($id,$data){
+		$this->db->where('id', $id);
+		$result =  $this->db->update('tbl_rd_market_insight_data', $data);		
+		return $result;
+	}
+/* *******  Market Insight ********** */
+
 	/* Master Tables */
 	public function get_category_master(){
 		$this->db->select("*");
 		$this->db->from("tbl_categories_master");
 		$sql = $this->db->get();
 		if($sql->num_rows() > 0)
-		{			
-			return $sql->result();
-		}
-		else
 		{
+			return $sql->result();
+		}else{
 			return array();
 		}
 	}
@@ -106,14 +153,10 @@ class Data_model extends CI_Model {
 		$this->db->from("tbl_rd_data");
 		$this->db->where('id',$id);
 		$sql = $this->db->get();
-		/* echo $this->otherdb->last_query();
-		die; */
 		if($sql->num_rows() > 1)
 		{			
 			return $sql->result_array();
-		}
-		else
-		{
+		} else {
 			return $sql->row();
 		}
 	}
@@ -125,7 +168,7 @@ class Data_model extends CI_Model {
 		$sql = $this->db->get();
 		if($sql->num_rows() > 0){			
 			return $sql->result();
-		}else{
+		} else {
 			return array();
 		}
 	}
@@ -189,8 +232,7 @@ class Data_model extends CI_Model {
 		$this->db->insert('tbl_rd_segments', $postseg);
 		$insert_id = $this->db->insert_id();
 		$this->db->trans_complete();
-		/* echo $this->db->last_query();		
-		die; */
+		/* echo $this->db->last_query(); die; */
 		return $insert_id;
 	}
 	public function get_rd_segment($id){
@@ -208,7 +250,6 @@ class Data_model extends CI_Model {
 		$result =  $this->db->update('tbl_rd_segments', $data);
 		// echo $this->db->last_query();	die;
 		return $result;
-		// return $this->db->affected_rows();
 	}
 	// Function to Delete selected record from table name students.
 	public function delete_rd_segment($id){
@@ -259,26 +300,21 @@ class Data_model extends CI_Model {
 	public function insert_scope_record()
 	{
 		$data = array(
-			          'name'    =>$this->input->post('name'),
-			          'parent'	=>$this->input->post('parent'),
-			          'active'  =>$this->input->post('status'),
-			        );
-
-		
+				'name'    => $this->input->post('name'),
+				'parent'  => $this->input->post('parent'),
+				'active'  => $this->input->post('status'),
+			);		
 			$this->db->insert('tbl_scope_master', $data);
 			return 1;
-
     }
 	function scope_delete($id)
 	{
-		//var_dump('hii');die;
 		$this->db->where("id", $id);
     	$this->db->delete("tbl_scope_master");
     	return true;
 	}
 	public function get_single_scope_data($id)
 	{
-
 		$this->db->where('id',$id);
 		$result = $this->db->get('tbl_scope_master');
 		//echo $this->db->last_query();die;
