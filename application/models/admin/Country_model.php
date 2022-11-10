@@ -172,14 +172,15 @@ class Country_model extends CI_Model {
 	
 	public function get_brazil_report_count()
 	{	
-	$this->db->select("sku");
-	$this->db->from("tbl_country_rd");
-	$this->db->where('country','brazil');
-	$this->db->limit(1);
-	$this->db->order_by('id',"DESC");
-	$query = $this->db->get();
-	$result = $query->row();	
-	return $result;	
+		$this->db->select("sku");
+		$this->db->from("tbl_country_rd");
+		$this->db->where('country','brazil');
+		$this->db->limit(1);
+		$this->db->order_by('id',"DESC");
+		$query = $this->db->get();
+		$result = $query->row();	
+		return $result;	
 	}
+	
 }
 ?>

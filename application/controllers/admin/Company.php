@@ -1,10 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Company extends CI_Controller 
-{    
-	public function __construct()
-	{		
+class Company extends CI_Controller {    
+	public function __construct(){		
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Data_model');
@@ -12,11 +10,8 @@ class Company extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
 	}
-	public function index($id)
-	{
-		
-		if($this->session->userdata('logged_in'))
-		{
+	public function index($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			// var_dump($data['success_code']); die;
@@ -24,32 +19,23 @@ class Company extends CI_Controller
 			$data['report_id']=$id;	
 			$data['Companies']= $this->Data_model->get_rd_companies($id);
 			$this->load->view('admin/company/list',$data);			
-		}		
-		else
-		{			
+		}else{			
 			$this->load->view('admin/login');
 		}
 	}
-	public function add($id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function add($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
 			$this->load->view('admin/company/add',$data);			
-		}		
-		else
-		{			
+		}else{			
 			$this->load->view('admin/login');
 		}
 	}
-	public function insert($id)
-	{
-		
-		if($this->session->userdata('logged_in'))
-		{
+	public function insert($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -68,15 +54,12 @@ class Company extends CI_Controller
 				redirect('admin/company/'.$id);
 			}
 		}		
-		else
-		{			
+		else{			
 			$this->load->view('admin/login');
 		}
 	}
-	public function edit($cmp_id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function edit($cmp_id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];				
@@ -86,17 +69,13 @@ class Company extends CI_Controller
 			$data['report_id']= $company->report_id;
 			// var_dump($data['company']); die;
 			$this->load->view('admin/company/edit',$data);			
-		}		
-		else
-		{			
+		}else{			
 			$this->load->view('admin/login');
 		}
 	}
-	public function update($cmp_id)
-	{
+	public function update($cmp_id){
 		// var_dump($id); die;
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');			
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -113,16 +92,12 @@ class Company extends CI_Controller
 				$this->session->set_flashdata("success_code","Sorry! Data has not updated");				
 				redirect('admin/company/'.$report_id);
 			}
-		}		
-		else
-		{			
+		}else{			
 			$this->load->view('admin/login');
 		}
 	}
-	public function delete($cmp_id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function delete($cmp_id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];
@@ -135,9 +110,7 @@ class Company extends CI_Controller
 				$this->session->set_flashdata("success_code","Sorry! Record has not deleted");				
 				redirect('admin/company/'.$report_id);
 			}	
-		}		
-		else
-		{			
+		}else{			
 			$this->load->view('admin/login');
 		}
 	}
