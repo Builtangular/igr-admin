@@ -27,7 +27,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Market Insight</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/market-insight/insert/<?php echo $report_id; ?>" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/market-insight/insert/<?php echo $report_id; ?>" method="post" class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-12">
                                 <div class="form-group">

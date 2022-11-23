@@ -27,7 +27,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Add Report</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/report/insert" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/report/insert" method="post" class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -174,13 +174,13 @@
 							<div class="form-group">
                                 <label class="control-label col-md-2">Report Price <span class="text-red">*</span></label>
                                 <div class="col-md-4">
-                                    <input type="text" id="single_user" name="single_user" class="form-control" placeholder="Single User License" />
+                                    <input type="text" id="single_user" name="single_user" class="form-control" placeholder="Single User License" autocomplete="on" />
                                 </div>
 								<div class="col-md-3">
-                                    <input type="text" id="enterprise_user" name="enterprise_user" class="form-control" placeholder="Enterprise License" />
+                                    <input type="text" id="enterprise_user" name="enterprise_user" class="form-control" placeholder="Enterprise License" autocomplete="on" />
                                 </div>
 								<div class="col-md-3">
-                                    <input type="text" id="datasheet" name="datasheet" class="form-control" placeholder="Data Sheet License" />
+                                    <input type="text" id="datasheet" name="datasheet" class="form-control" placeholder="Data Sheet License" autocomplete="on" />
                                 </div>
                             </div>
 						</div>

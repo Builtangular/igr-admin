@@ -69,6 +69,8 @@ $route['admin/market-insight/view/(:num)'] ='admin/market_insight/view/$1';
 $route['admin/market-insight/edit/(:num)'] ='admin/market_insight/edit/$1';
 $route['admin/market-insight/update/(:num)'] ='admin/market_insight/update/$1';
 $route['admin/market-insight/delete/(:num)'] ='admin/market_insight/delete/$1';
+$route['admin/dro/(:num)'] ='admin/dro_controller/index/$1';
+$route['admin/dro/add/(:num)'] ='admin/dro_controller/add/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
 

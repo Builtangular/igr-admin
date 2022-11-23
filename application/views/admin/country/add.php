@@ -26,7 +26,7 @@
                         <h1 class="box-title">Create Country Region Master</h1>
                     </div>
                     <form action="<?php echo base_url('admin/country/insert_country');?>" method="post"
-                        class="form-horizontal">
+                        class="form-horizontal" autocomplete="off">
                         <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
                         <div class="box-body">
                             <div class="form-group">

@@ -49,8 +49,9 @@
 									<th>Company</th>
 									<th>Segment</th>
 									<th>Status</th>
-									<th>Image</th>
                                     <th>Insight</th>
+                                    <th>Drivers</th>
+									<th>Image</th>
 									<th>Country</th>
 									<th>Action</th>
                                 </tr>
@@ -81,16 +82,16 @@
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_company->rd_companies." company"; ?></td>
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_segment->rd_segments." segment"; ?></td>
 										<td class="text-center"><?php echo $data->status; ?></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a></td>
                                         <?php if($query_market_insight->num_rows() > 0){ ?>
                                             <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/view/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a></td>
                                         <?php }else {?> 
                                             <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a></td>                                        
                                         <?php }?>
-                                        
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/dro/<?php echo $data->id; ?>"><b><i class="fa fa-plus"></i><br />Add</b></a></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a></td>
                                         <?php if($data->country_status == 1){ ?>
                                             <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b> Created</b></td>
-                                        <?php }else {?> 
+                                        <?php }else { ?> 
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>                                        
                                         <?php }?>
                                         <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
@@ -110,9 +111,10 @@
 									<!-- <th>Vol</th> -->
 									<th>Company</th>
 									<th>Segment</th>									
-									<th>Status</th>                                    
-									<th>Image</th>
-                                    <th>Insight</th>
+									<th>Status</th>
+                                    <th>Insight</th>                                    
+                                    <th>Drivers</th>                                    
+									<th>Image</th>  
 									<th>Country</th>
 									<th>Action</th>
                                 </tr>

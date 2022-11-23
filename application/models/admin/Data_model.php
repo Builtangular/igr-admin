@@ -263,6 +263,18 @@ class Data_model extends CI_Model {
 		$result = $this->db->delete('tbl_country_rd');
 		return $result;
 	}
+	/* DRO Data */
+	public function get_rd_dro_data($id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_dro_data");
+		$this->db->where(array('report_id' => $id, 'status' => 1));
+		$sql = $this->db->get();
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+	}
 	/******** pooja work ***************/
 	function count_global_report()
 	{

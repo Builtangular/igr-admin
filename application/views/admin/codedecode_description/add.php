@@ -25,8 +25,8 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Create Codedecode Description Master</h1>
                     </div>
-                    <form action="<?php echo base_url('admin/codedecode_description/insert');?>" method="post" class="form-horizontal">
-                        <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
+                    <form action="<?php echo base_url('admin/codedecode_description/insert');?>" method="post"
+                        class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Description</label>
@@ -40,13 +40,13 @@
                                     <select class="form-control b-none" name="codetype" placeholder="">
                                         <option value="">--Select Codedecode Type--</option>
                                         <?php 						
-							foreach($get_codedecode_description as $data)						
-							{						
-							?>
-                                <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
-                                <?php						
-							}					
-							?>
+                                        foreach($get_codedecode_description as $data)						
+                                        {						
+                                        ?>
+                                        <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
+                                        <?php						
+                                        }					
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -62,11 +62,10 @@
                             <div class="box-footer">
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>
-                            
+                        </div>
                     </form>
                 </div>
             </div>
-        </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
