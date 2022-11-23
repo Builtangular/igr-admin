@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create Codedecode Type Master
+            Create PR2 Reports Master
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -20,30 +20,27 @@
         <!-- Your Page Content Here -->
 
         <div class='row'>
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h1 class="box-title">Create Codedecode Type Master</h1>
+                        <h1 class="box-title">Create PR2 Reports Master</h1>
                     </div>
-                    <form action="<?php echo base_url('admin/codedecode_type/insert_codedecode_type');?>" method="post"
-                        class="form-horizontal" autocomplete="off">
+                    <form action="<?php echo base_url(); ?>admin/pr2_reports/update/<?php echo $single_pr2->report_id;?>"
+                        method="post" class="form-horizontal">
                         <div class="box-body">
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Name</label>
-                                <div class="col-md-8">
-                                    <input type="text" name="name" id="name" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Status</label>
-                                <div class="col-md-8">
-                                    <div class="radio">
-                                        <label><input type="radio" name="status" value="1" checked />Active</label>
-                                        <label><input type="radio" name="status" value="0" />Inactive</label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Description</label>
+                                    <div class="col-md-9">
+                                        <textarea type="text" name="description" rows="5"
+                                            class="form-control"><?php echo $single_pr2->description;?></textarea>
+                                        <span></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-footer">
+                                <input type="hidden" name="id" class="form-control" id="id"
+                                    value="<?php if(!empty($single_pr2)){echo $single_pr2->id;}?>">
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>
                         </div>

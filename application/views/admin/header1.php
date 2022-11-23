@@ -130,21 +130,7 @@
                     <li class="header"><a href="<?php echo base_url(); ?>admin/dashboard"><span>Dashboard</span></a>
                     </li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-table"></i><span>Master Setup</span> <i
-                                class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <!-- <li><a href="http://localhost/testapp/public/superadmin/codetype"><span>Code Type</span></a></li>
-							<li><a href="http://localhost/testapp/public/superadmin/codedecode"><span>Code Decode</span></a></li> -->
-                            <li><a href="<?php echo base_url(); ?>admin/scope"><span>Scope Master</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/category"><span>Category Master</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/country"><span>Country Master</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/region"><span>Region Master</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/codedecode_type"><span>Codedecode Type</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/codedecode_description"><span>Codedecode Description</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/dro_type"><span>DRO Type</span></a></li>
-                        </ul>
-                    </li>
+                   
                     <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span>Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
@@ -153,7 +139,7 @@
                             <li><a href="<?php echo base_url(); ?>admin/country_rd"><span>Country Reports</span></a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file"></i><span>Drafts</span></a></li>
+                   
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                 </ul>
             </section>

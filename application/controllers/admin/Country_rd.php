@@ -2,10 +2,8 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Country_rd extends CI_Controller 
-{    
-	public function __construct()
-	{		
+class Country_rd extends CI_Controller {    
+	public function __construct(){		
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Country_model');
@@ -13,28 +11,20 @@ class Country_rd extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
 	}
-	public function index()
-	{
-		
-		if($this->session->userdata('logged_in'))
-		{
+	public function index(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['report_id']=$id;	
 			$data['Country_Rds']= $this->Country_model->get_country_rds();
 			$this->load->view('admin/country_rd/list',$data);			
-		}		
-		else
-		{			
+		}else{			
 			$this->load->view('admin/login');
 		}
 	}
-    public function create($id)
-	{
-		
-		if($this->session->userdata('logged_in'))
-		{
+    public function create($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -168,24 +158,18 @@ class Country_rd extends CI_Controller
 				);
 				
 				$insert_country_rd_details = $this->Country_model->insert_country_rd_details($post_countrydata);
-				if($insert_country_rd_details)
-				{
-					
+				if($insert_country_rd_details){
 					$update_record = $this->Country_model->update_country_status($id);
 				}
             }
            redirect('admin/country_rd');
         		
-		}		
-		else
-		{			
+		}else{			
 			$this->load->view('admin/login');
 		}
     }
-	public function edit($id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function edit($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['country_rd_data']= $this->Country_model->get_country_rd_record();
@@ -195,9 +179,7 @@ class Country_rd extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
-	public function update_country_rd()
-    {
-		
+	public function update_country_rd(){
 		$id = $this->input->post('id');
 		$result = $this->Country_model->update_country_rd($id);
 		if($result){
@@ -207,8 +189,7 @@ class Country_rd extends CI_Controller
 		}
 		redirect('admin/country_rd');
     }
-	function contry_rd_delete($id)
-	{
+	function contry_rd_delete($id){
 		$data['delete'] = $this->Country_model->contry_rd_delete($id);
 		$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
 		redirect('admin/country_rd');

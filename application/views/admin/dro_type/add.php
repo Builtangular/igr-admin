@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create Category Region Master
+            Create DRO Type Master
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -23,31 +23,15 @@
             <div class="col-md-8">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h1 class="box-title">Create Category Region Master</h1>
+                        <h1 class="box-title">Create DRO Type Master</h1>
                     </div>
-                    <form action="<?php echo base_url('admin/category/insert_category');?>" method="post" class="form-horizontal" autocomplete="off">
+                    <form action="<?php echo base_url();?>admin/dro_type/insert_dro_type/" method="post" class="form-horizontal">
                         <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Name</label>
                                 <div class="col-md-8">
                                     <input type="text" name="name" id="name" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Parent</label>
-                                <div class="col-md-8">
-                                    <select class="form-control b-none" name="parent" placeholder="">
-                                        <option value="">--Select Parent--</option>
-                                        <?php 						
-							foreach($get_category_data as $data)						
-							{						
-							?>
-                                <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
-                                <?php						
-							}					
-							?>
-                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
