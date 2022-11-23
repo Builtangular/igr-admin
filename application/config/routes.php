@@ -69,11 +69,13 @@ $route['admin/market-insight/view/(:num)'] ='admin/market_insight/view/$1';
 $route['admin/market-insight/edit/(:num)'] ='admin/market_insight/edit/$1';
 $route['admin/market-insight/update/(:num)'] ='admin/market_insight/update/$1';
 $route['admin/market-insight/delete/(:num)'] ='admin/market_insight/delete/$1';
-$route['admin/dro/(:num)'] ='admin/dro_controller/index/$1';
-$route['admin/dro/add/(:num)'] ='admin/dro_controller/add/$1';
+/* $route['admin/dro/(:num)'] ='admin/dro_controller/index/$1'; 
+$route['admin/dro/add/(:num)'] ='admin/dro_controller/add/$1'; */
 $route['admin/dro-type/(:num)'] ='admin/dro_type/index/$1';
 $route['admin/dro-reports/(:num)'] ='admin/dro_reports/index/$1';
 $route['admin/dro-reports/add/(:num)'] ='admin/dro_reports/add/$1';
+$route['admin/dro-reports/edit/(:num)'] ='admin/dro_reports/edit/$1';
+$route['admin/dro-reports/delete/(:num)'] ='admin/dro_reports/delete/$1';
 
 $route['admin/pr2-reports/(:num)'] ='admin/pr2_reports/index/$1';
 $route['admin/pr2-reports/add/(:num)'] ='admin/pr2_reports/add/$1';

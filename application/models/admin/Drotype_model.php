@@ -14,7 +14,7 @@ class Drotype_model extends CI_Model {
 	public function insert_dro_type_record(){
 		$data = array(
 			'name'      =>$this->input->post('name'),
-			'active'    =>$this->input->post('status'),
+			'status'    =>$this->input->post('status'),
 		);
 		$res = $this->db->insert('tbl_dro_type', $data);
 		return $res;
@@ -26,7 +26,7 @@ class Drotype_model extends CI_Model {
 	}public function update_dro_type($id){
         $update = array(
             'name'=>$this->input->post('name'),
-			'active'=>$this->input->post('status')
+			'status'=>$this->input->post('status')
             );
         $this->db->where('id',$id);
         return $this->db->update('tbl_dro_type', $update);
@@ -39,7 +39,7 @@ class Drotype_model extends CI_Model {
 	/* RD DRO Records Operations */
 	public function get_rd_dro_data($report_id){
 		$this->db->select('tbl_rd_dro_data.* ,tbl_dro_type.name');
-		$this->db->join('tbl_dro_type','tbl_dro_type.id = tbl_rd_dro_data.type_id');
+		$this->db->join('tbl_dro_type','tbl_dro_type.name = tbl_rd_dro_data.type');
 		$this->db->where('report_id',$report_id);
 		//$this->db->order_by('id',"desc");
 	    $result = $this->db->get('tbl_rd_dro_data');
@@ -52,10 +52,10 @@ class Drotype_model extends CI_Model {
 	}
 	public function insert_rd_dro_records($report_id){
 		$data = array(
-				'type_id'       =>$this->input->post('type_id'),
+				'type'      	=>$this->input->post('type'),
 				'report_id'     =>$report_id,
 				'description'	=>$this->input->post('description'),
-				'active'        =>$this->input->post('status'),
+				'status'        =>$this->input->post('status'),
 			);
 			$res= $this->db->insert('tbl_rd_dro_data', $data);
 			return $res;
@@ -68,9 +68,9 @@ class Drotype_model extends CI_Model {
 	}
 	public function update_rd_single_dro($id){
         $update = array(
-            'type_id'       =>$this->input->post('type_id'),
+            'type'          =>$this->input->post('type'),
 			'description'	=>$this->input->post('description'),
-			'active'        =>$this->input->post('status')
+			'status'        =>$this->input->post('status')
             );
         $this->db->where('id',$id);
         return $this->db->update('tbl_rd_dro_data', $update);

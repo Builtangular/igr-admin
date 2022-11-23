@@ -23,7 +23,6 @@ class Dro_reports extends CI_Controller
 		$data['title'] = "Category Master";
 		$data['report_id'] = $report_id;
 		$data['list_data'] = $this->Drotype_model->get_rd_dro_data($report_id);
-		// var_dump($data['list_data']);die;
 		$this->load->view("admin/dro_report/list", $data);
         }else{
             $this->load->view("admin/login");
@@ -66,8 +65,7 @@ class Dro_reports extends CI_Controller
 			$this->load->view("admin/dro_report/edit",$data);
 		}else
 		{
-			$this->load->view("admin/login");
-			
+			$this->load->view("admin/login");			
 		}
     }
 	public function update($report_id)
@@ -79,6 +77,7 @@ class Dro_reports extends CI_Controller
     }
 	function delete($id)
 	{
+		$report_id = $this->input->post('report_id');
 		$data['delete'] = $this->Drotype_model->delete_rd_dro_data($id);
 		$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
 		redirect('admin/dro-reports/'.$report_id);

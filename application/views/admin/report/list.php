@@ -51,6 +51,8 @@
 									<!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
+                                    <th>Overview</th>
+                                    <th>PR2</th>
 									<th>Image</th>
 									<th>Country</th>
 									<th>Action</th>
@@ -70,6 +72,18 @@
                                 $market_insight = "SELECT * FROM tbl_rd_market_insight_data where report_id = ".$data->id;
 								$query_market_insight = $this->db->query($market_insight);
 								if ($query_market_insight->num_rows() > 0) { $insight_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$insight_status = "<i class=\"fa fa-plus\"></i><br>Add";}
+                                /* Report DROs */
+                                $dro_reports = "SELECT * FROM tbl_rd_dro_data where report_id = ".$data->id;
+								$query_dro_reports = $this->db->query($dro_reports);
+                                if ($query_dro_reports->num_rows() > 0) { $dro_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$dro_status = "<i class=\"fa fa-plus\"></i><br>Add";}
+                                /* Segment Overview */
+                                $segment_overview = "SELECT * FROM tbl_segment_overview where report_id = ".$data->id;
+								$query_segment_overview = $this->db->query($segment_overview);
+                                if ($query_segment_overview->num_rows() > 0) { $segment_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$segment_status = "<i class=\"fa fa-plus\"></i><br>Add";}
+                                /* PR2 Writeup */
+                                $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = ".$data->id;
+								$query_pr2_reports = $this->db->query($pr2_reports);
+                                if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$pr2_reports_status = "<i class=\"fa fa-plus\"></i><br>Add";}
 								  ?> 
                                     <tr style="font-size: 14px;">
                                         <td class="text-center"><?php echo $data->id; ?></td>
@@ -87,7 +101,34 @@
                                         <?php }else {?> 
                                             <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a></td>                                        
                                         <?php }?>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/dro/<?php echo $data->id; ?>"><b><i class="fa fa-plus"></i><br />Add</b></a></td>
+                                        <?php if($query_dro_reports->num_rows() > 0){ ?>
+                                        <td class="text-center"><a
+                                                href="<?php echo base_url(); ?>admin/dro-reports/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
+                                        </td>
+                                        <?php }else {?>
+                                        <td class="text-center"><a
+                                                href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
+                                        </td>
+                                        <?php }?>
+                                        <?php if($query_segment_overview->num_rows() > 0){ ?>
+                                        <td class="text-center"><a
+                                                href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
+                                        </td>
+                                        <?php }else {?>
+                                        <td class="text-center"><a
+                                                href="<?php echo base_url(); ?>admin/segment-overview/add/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
+                                        </td>
+                                        <?php }?>
+
+                                        <?php if($query_pr2_reports->num_rows() > 0){ ?>
+                                        <td class="text-center"><a
+                                                href="<?php echo base_url(); ?>admin/pr2-reports/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
+                                        </td>
+                                        <?php }else {?>
+                                        <td class="text-center"><a
+                                                href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
+                                        </td>
+                                        <?php }?>
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a></td>
                                         <?php if($data->country_status == 1){ ?>
                                             <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b> Created</b></td>
@@ -113,7 +154,9 @@
 									<th>Segment</th>									
 									<!-- <th>Status</th> -->
                                     <th>Insight</th>                                    
-                                    <th>DRO</th>                                    
+                                    <th>DRO</th>
+                                    <th>Overview</th>
+                                    <th>PR2</th>                                    
 									<th>Image</th>  
 									<th>Country</th>
 									<th>Action</th>

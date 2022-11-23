@@ -40,10 +40,9 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Description</th>
-                            <th>Dro Type</th>
-                            <th>Active</th>
-                        
+                            <th>Type</th>
+                            <th>Description</th>                            
+                            <th>Status</th>                        
                             <th colspan="2">Action</th>
                         </tr>
                         </thead>
@@ -52,20 +51,19 @@
                         $i=1;
                          foreach($list_data as $list){ ?>                                               
                         <tr>
-                            <td><?php echo $i++; ?></td>
-                            <td><?php echo $list->description; ?></td>
+                            <td><?php echo $i++; ?></td>                            
                             <td><?php echo $list->name; ?></td>
-                            <td><?php echo $list->active; ?></td>
-                            
+                            <td><?php echo $list->description; ?></td>
+                            <td><?php echo $list->status; ?></td>                            
                             <td><a href="<?php echo base_url();?>admin/dro_reports/edit/<?php echo $list->id;?>" class="btn btn-warning">Edit</a></td>
-                            <td>
-                            <form action="" method="post">
-                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <a href="<?php echo base_url() . "admin/dro_reports/delete/" . $list->id; ?>" class="btn btn-danger" type="submit">Delete</a>
-                                
-                            </form>
+                            <form action="<?php echo base_url(); ?>admin/dro_reports/delete/<?php echo $list->id; ?>" method="post"
+                                        class="form-horizontal">
+                            <td>                            
+                                <input type="hidden" name="report_id" value="<?php echo $report_id; ?>">
+                                <!-- <a href="<?php echo base_url();?>admin/dro_reports/delete/<?php echo $list->id;?>" class="btn btn-danger">Delete</a> -->
+                                <button class="btn btn-danger" type="submit">Delete</button>
                             </td>
+                         </form>
                         </tr>
                         <?php } ?>
                         </tbody>

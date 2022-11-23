@@ -42,19 +42,17 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2">DRO Type</label>
                                     <div class="col-md-9">
-                                        <select class="form-control b-none" name="type_id" placeholder="">
+                                        <select class="form-control b-none" name="type" placeholder="">
                                             <option value="0">--Select Dro Type--</option>
-                                            <?php 						
-                                        foreach($get_dro_type as $data) { 
-                                            if($data->id == $single_dro->type_id){
-                                        ?>
-                                            <option value="<?php echo $data->id; ?>" selected><?php echo $data->name; ?>
+                                            <?php foreach($get_dro_type as $data) { 
+                                            if($data->name == $single_dro->type){
+                                            ?>
+                                            <option value="<?php echo $data->name; ?>" selected><?php echo $data->name; ?>
                                             </option>
                                             <?php }else{ ?>
-                                            <option value="<?php echo $data->id ?>"><?php echo $data->name?> </option>
+                                            <option value="<?php echo $data->name ?>"><?php echo $data->name?> </option>
                                             <?php  } } ?>
                                         </select>
-                                        <span></span>
                                     </div>
                                 </div>
                             </div>

@@ -43,13 +43,13 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2">DRO Type</label>
                                     <div class="col-md-9">
-                                    <select class="form-control b-none" name="type_id" placeholder="" required>
-                                        <option value="0">--Select Dro Type--</option>
+                                    <select class="form-control b-none" name="type" required>
+                                        <option value="0">--Select Type--</option>
                                         <?php 						
 							            foreach($get_dro_type as $data)						
                                         {						
                                         ?>
-                                        <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
+                                        <option value="<?php echo $data->name;?>"><?php echo $data->name; ?></option>
                                         <?php						
                                         }					
                                         ?>
