@@ -18,9 +18,10 @@ class Segment extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
-			// var_dump($data['success_code']); die;
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];			
+			$data['success_code'] = $this->session->userdata('success_code');
+
 			$data['report_id']=$id;	
 			$data['segments']= $this->Data_model->get_rd_segments($id);
 			$data['main_segments']= $this->Data_model->get_rd_main_segments($id);
@@ -36,11 +37,11 @@ class Segment extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$data['report_id']=$id;	
             $data['segments']= $this->Data_model->get_rd_segments($id);
-            // var_dump($data['segments']); die;
 			$this->load->view('admin/segment/add',$data);			
 		}		
 		else
@@ -50,13 +51,12 @@ class Segment extends CI_Controller
 	}
 	public function insert($id)
 	{
-		// var_dump($_POST); die;
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-
+			$data['Role_id']=$session_data['Role_id'];
+			
 			$postseg=array(				
 				'name'=>$this->input->post('name'),
 				'parent_id'=>$this->input->post('parent'),
@@ -81,8 +81,9 @@ class Segment extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			
 			$segment = $this->Data_model->get_rd_segment($seg_id);
 			$data['seg_id']= $segment->id;
 			$data['seg_name']= $segment->name;
@@ -103,8 +104,9 @@ class Segment extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');			
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			
             $report_id = $this->input->post('report_id');
 			$postcseg=array(				
 				'name'=>$this->input->post('name'),
@@ -130,8 +132,9 @@ class Segment extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			
             $report_id = $this->input->post('report_id');			
 			$result = $this->Data_model->delete_rd_segment($seg_id);
 			if($result){

@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Report List
+            Under Study Report List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Report List</h3>
+                        <h3 class="box-title">Under Study Report List</h3>
 						<a href="<?php echo base_url(); ?>admin/report/add" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
@@ -40,25 +40,6 @@
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
-
-                                <th>Id</th>
-                                <th>Title</th>
-                                <th>Scope</th>
-                                <th>Cat</th>
-                                <th>Forecast</th>
-                                <!-- <th>Vol</th> -->
-                                <th>Company</th>
-                                <th>Segment</th>
-                                <!-- <th>Status</th> -->
-                                <th>Insight</th>
-                                <th>DRO</th>
-                                <th>Overview</th>
-                                <th>PR2</th>
-                                <th>Image</th>
-                                <th>Country</th>
-                                <th>Action</th>
-                            </tr>
-
                                     <th>Id</th>
 									<th>Title</th>
 									<th>Scope</th>
@@ -76,7 +57,6 @@
 									<th>Country</th>
 									<th>Action</th>
                                 </tr>
-
                             </thead>
                             <tbody>
                                 <?php foreach($Global_Rds as $data){ /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
@@ -155,7 +135,8 @@
                                         <?php }else { ?> 
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  <br />Create</b></a></td>                                        
                                         <?php }?>
-                                        <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
+                                        <td><a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>" class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> | 
+                                            <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
 											<a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
 										</td>
                                     </tr>

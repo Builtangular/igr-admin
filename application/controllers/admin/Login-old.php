@@ -23,14 +23,21 @@ class Login extends CI_Controller
         $this->form_validation->set_rules('password', 'password', 'required');
 		if($this->form_validation->run() == FALSE)
         {
+			// echo"Here...";
+			// die;
             $this->load->view('admin/login');
         }
 		else
         {			
 			$sess_array = array();
+			// $insert = array(
+			// 	'sessionId'=>$this->input->post('sessionId')
+			// 	'userName '=>$this->input->post('username'),
+			// 	'enrollId'=>
+			// );
 			$result = $this->Login_model->login($this->input->post('username'),$this->input->post('password'));
-			/* var_dump($result);
-			die; */
+			// var_dump($insert);
+			// die;
 			if($result > 0)
 			{	
 				foreach($result as $row)
@@ -48,6 +55,8 @@ class Login extends CI_Controller
 					// var_dump($sess_array);die;			
 					$this->session->set_userdata('logged_in', $sess_array);
 				}
+				// $insert = $this->Login_model->login($sess_array);
+				// var_dump($insert);die;
 				$session_data = $this->session->userdata('logged_in');
 				if($session_data['Role_id']==1)
 				{
@@ -55,10 +64,10 @@ class Login extends CI_Controller
 				}
 				else if($session_data['Role_id']==2)
 				{
-					redirect('admin/dashboard');			
+					redirect('admin/executive_dashboard');			
 				}else if($session_data['Role_id']==3)
 				{
-					redirect('admin/dashboard');			
+					redirect('admin/analyst_dashboard');			
 				}								
 			}
 			else

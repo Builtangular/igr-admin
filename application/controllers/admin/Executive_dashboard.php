@@ -20,7 +20,9 @@ class Executive_dashboard extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
             $data['global_count'] = $this->Executive_dashboard_model->count_global_report();
             $data['country_count'] = $this->Executive_dashboard_model->count_country_report();
             $data['region_count'] = $this->Executive_dashboard_model->count_region_report();

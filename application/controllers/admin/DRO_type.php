@@ -13,20 +13,25 @@ class Dro_type extends CI_Controller {
 	}
 	function index(){	
         if($this->session->userdata('logged_in')){
-        $data = $this->session->userdata('logged_in');
-		$data['massage'] = $this->session->userdata('msg');
-		$data['title'] = "DRO Type Master";
-		$data['list_data'] = $this->Drotype_model->get_dro_type();
-		$this->load->view("admin/dro_type/list", $data);
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$data['massage'] = $this->session->userdata('msg');
+			$data['title'] = "DRO Type Master";
+			$data['list_data'] = $this->Drotype_model->get_dro_type();
+			$this->load->view("admin/dro_type/list", $data);
         }else{
             $this->load->view("admin/login");
         }
 	}
     function add(){
 		if($this->session->userdata('logged_in')){
-		$data = $this->session->userdata('logged_in');
-		$data['get_dro_type'] = $this->Drotype_model->get_dro_type();
-		$this->load->view("admin/dro_type/add",$data);
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['get_dro_type'] = $this->Drotype_model->get_dro_type();
+			$this->load->view("admin/dro_type/add",$data);
 		}else{
 			 $this->load->view("admin/login");
 		}
@@ -34,12 +39,16 @@ class Dro_type extends CI_Controller {
     function insert_dro_type(){
         if($this->session->userdata('logged_in'))
 	 	{
-				$result = $this->Drotype_model->insert_dro_type_record();
-				if($result == 1)
-				{
-					$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
-				}
-				redirect('admin/dro_type');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$result = $this->Drotype_model->insert_dro_type_record();
+			if($result == 1)
+			{
+				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
+			}
+			redirect('admin/dro_type');
 	 	}else
 		{
 			$this->load->view("admin/login");
@@ -48,27 +57,45 @@ class Dro_type extends CI_Controller {
 	function edit($id){
         if($this->session->userdata('logged_in'))
 		{
-			$data = $this->session->userdata('logged_in');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$data['get_dro_type'] = $this->Drotype_model->get_dro_type();
 			$data['single_dro_type'] = $this->Drotype_model->get_single_dro_type($id);
 			$this->load->view("admin/dro_type/edit",$data);
-		}else
-		{
+		}else {
 			$this->load->view("admin/login");
-			
 		}
     }
     function update_dro_type(){
-        $id = $this->input->post('id');
-		$this->Drotype_model->update_dro_type($id);
-		$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
-		redirect('admin/dro_type');
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			
+			$id = $this->input->post('id');
+			$this->Drotype_model->update_dro_type($id);
+			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
+			redirect('admin/dro_type');
+		}else {
+			$this->load->view("admin/login");
+		}
     }
     function dro_type_delete($id){
-		$data['delete'] = $this->Drotype_model->dro_type_delete($id);
-		$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
-		redirect('admin/dro_type');
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
 
+			$data['delete'] = $this->Drotype_model->dro_type_delete($id);
+			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
+			redirect('admin/dro_type');
+		}else {
+			$this->load->view("admin/login");
+		}
 	}
  
 }  
