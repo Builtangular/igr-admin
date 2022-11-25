@@ -63,7 +63,8 @@ class Report extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Login_user_name']=$session_data['Login_user_name'];
+			$data['Role_id'] = $this->session->userdata('Role_id');	
 			/* automated sku */
 			$report_sku = $this->Data_model->get_report_count();			
 			$sku_code = explode('R', $report_sku->sku);
@@ -125,7 +126,8 @@ class Report extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Login_user_name']=$session_data['Login_user_name'];
+			$data['Role_id'] = $this->session->userdata('Role_id');	
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$rd_data= $this->Data_model->get_rd_data($id);
@@ -173,6 +175,7 @@ class Report extends CI_Controller
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id'] = $this->session->userdata('Role_id');
 			$report_id = $this->input->post('report_id');
 			$country_status = $this->input->post('country_status');
 			if($country_status == 0){
@@ -227,6 +230,7 @@ class Report extends CI_Controller
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];
+			$data['Role_id'] = $this->session->userdata('Role_id');
 			// $report_id = $this->input->post('report_id');			
 			$result = $this->Data_model->delete_rd_data($id);
 			if($result){
@@ -244,12 +248,50 @@ class Report extends CI_Controller
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];
-			// $report_id = $this->input->post('report_id');			
-			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds();
+			$data['Role_id'] = $this->session->userdata('Role_id');
+			$status = 0;
+			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds($status,$data['Login_user_name']);
 			$this->load->view('admin/report/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
 		}
+	}
+	/* Analyst work process */
+	public function published_rd(){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Role_id'] = $this->session->userdata('Role_id');
+			// var_dump($data['success_code']); die;
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$status = 3;
+			$data['Global_Rds']= $this->Data_model->get_global_published_rds($status);
+			// $data['published_list']= $this->Data_model->get_published_data();
+			$this->load->view('admin/report/published_list',$data);			
+		}		
+		else
+		{			
+			$this->load->view('admin/login');
+		}	
+
+	}
+	public function processed_rd(){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Role_id'] = $this->session->userdata('Role_id');
+			// var_dump($data['success_code']); die;
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$status = 1;
+			$data['Global_Rds']= $this->Data_model->get_global_processed_rds($status);
+			$this->load->view('admin/report/list',$data);			
+		}		
+		else
+		{			
+			$this->load->view('admin/login');
+		}	
 	}
 }
 ?>

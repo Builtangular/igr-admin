@@ -18,7 +18,10 @@ class Dashboard extends CI_Controller
     public function index()
 	{	
         if($this->session->userdata('logged_in')){
-            $data = $this->session->userdata('logged_in');
+            $session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];	
+			// var_dump($data['Role_id']); die;
             $data['global_count'] = $this->Data_model->count_global_report();
 			$data['country_count'] = $this->Data_model->count_country_report();
             $data['region_count'] = $this->Data_model->count_region_report();
@@ -32,7 +35,7 @@ class Dashboard extends CI_Controller
 	function scope()
 	{	
         if($this->session->userdata('logged_in')){
-        $data = $this->session->userdata('logged_in');
+        $session_data = $this->session->userdata('logged_in');
 		$data['title'] = "Scope Master";
 		$data['list_data'] = $this->Data_model->get_scope_master();
 		//print_r($data);exit();

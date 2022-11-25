@@ -85,6 +85,13 @@ $route['admin/segment-overview/(:num)'] ='admin/segment_overview/index/$1';
 $route['admin/segment-overview/add/(:num)'] ='admin/segment_overview/add/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
+$route['admin/report/processed'] ='admin/report/processed_rd';
+$route['admin/report/published'] ='admin/report/published_rd';
+
+$route['admin/spreadsheet'] = 'admin/PhpspreadsheetController';
+$route['admin/spreadsheet/filter'] = 'admin/PhpspreadsheetController/filter';
+$route['admin/spreadsheet/index'] = 'admin/PhpspreadsheetController/index';
+$route['admin/spreadsheet/export'] = 'admin/PhpspreadsheetController/export';
 
 // $route['admin/country_rd'] ='admin/country_rd/index';
 // $route['admin/country_rd/create/(:num)'] ='admin/country_rd/create/$1';

@@ -40,23 +40,23 @@
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
-                                    <th>Id</th>
-									<th>Title</th>
-									<th>Scope</th>
-									<th>Cat</th>
-									<th>Forecast</th>
-									<!-- <th>Vol</th> -->
-									<th>Company</th>
-									<th>Segment</th>
-									<!-- <th>Status</th> -->
-                                    <th>Insight</th>
-                                    <th>DRO</th>
-                                    <th>Overview</th>
-                                    <th>PR2</th>
-									<th>Image</th>
-									<th>Country</th>
-									<th>Action</th>
-                                </tr>
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Scope</th>
+                                <th>Cat</th>
+                                <th>Forecast</th>
+                                <!-- <th>Vol</th> -->
+                                <th>Company</th>
+                                <th>Segment</th>
+                                <!-- <th>Status</th> -->
+                                <th>Insight</th>
+                                <th>DRO</th>
+                                <th>Overview</th>
+                                <th>PR2</th>
+                                <th>Image</th>
+                                <th>Country</th>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody>
                                 <?php foreach($Global_Rds as $data){ /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
