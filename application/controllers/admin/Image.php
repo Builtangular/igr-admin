@@ -19,20 +19,26 @@ class Image extends CI_Controller
     function index($id)
 	{	
         if($this->session->userdata('logged_in')){
-        $data = $this->session->userdata('logged_in');
-        $data['massage'] = $this->session->userdata('msg');
-        $data['report_id'] = $id;
-        $data['image'] = $this->Image_model->get_image_data($id); 
-		$this->load->view("admin/image_upload", $data);
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$data['massage'] = $this->session->userdata('msg');
+			$data['report_id'] = $id;
+			$data['image'] = $this->Image_model->get_image_data($id); 
+			$this->load->view("admin/image_upload", $data);
         }else{
             $this->load->view("admin/login");
         }
 	}
     public function image_upload()
     {
-       
         if($this->session->userdata('logged_in'))
         {
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
             $file ='';
 			$config = array(
 				'upload_path' 	=> "assets/admin/img-rd",

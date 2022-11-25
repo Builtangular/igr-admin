@@ -12,7 +12,7 @@ class Data_model extends CI_Model {
 	public function get_global_rds(){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
-		$this->db->where('status !=',2);
+		$this->db->where('status', 3);
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -28,7 +28,7 @@ class Data_model extends CI_Model {
 	public function get_drafted_global_rds(){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
-		$this->db->where('status',2);
+		$this->db->where('status', 0);
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -90,6 +90,18 @@ class Data_model extends CI_Model {
 		$this->db->select("*");
 		$this->db->from("tbl_rd_market_insight_data");
 		$this->db->where(array('report_id' => $report_id, 'status' => 1));
+		$sql = $this->db->get();		
+		if($sql->num_rows() > 0)
+		{			
+			return $sql->result_array();
+		}else{
+			return array();
+		}
+	}
+	public function get_rd_market_insight_only($report_id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_market_insight_data");
+		$this->db->where(array('report_id' => $report_id, 'type !='=> 'Report Definition', 'status' => 1));
 		$sql = $this->db->get();		
 		if($sql->num_rows() > 0)
 		{			
@@ -351,5 +363,31 @@ class Data_model extends CI_Model {
 		return $result->row();
 	}
 
+	/* *********** Updation of RD by Monika ******** */
+	// Update Query For RD Data
+	public function update_insight_description($type, $report_id, $data){
+		$this->db->where(array('report_id'=> $report_id, 'type'=>$type));
+		$result =  $this->db->update('tbl_rd_market_insight_data', $data);
+		// echo $this->db->last_query();	die;
+		return $result;
+	}
+	public function update_segments_name($segment_id, $report_id, $data){
+		$this->db->where(array('report_id'=> $report_id, 'id'=>$segment_id));
+		$result =  $this->db->update('tbl_rd_segments', $data);
+		// echo $this->db->last_query();	// die;
+		return $result;
+	}
+	public function update_company_name($company_id, $report_id, $data){
+		$this->db->where(array('report_id'=> $report_id, 'id'=>$company_id));
+		$result =  $this->db->update('tbl_rd_companies', $data);
+		// echo $this->db->last_query();	// die;
+		return $result;
+	}
+	public function update_dro_description($dro_id, $report_id, $data){
+		$this->db->where(array('report_id'=> $report_id, 'id'=>$dro_id));
+		$result =  $this->db->update('tbl_rd_dro_data', $data);
+		// echo $this->db->last_query();	// die;
+		return $result;
+	}
 }
 ?>

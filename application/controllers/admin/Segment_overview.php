@@ -15,15 +15,16 @@ class Segment_overview extends CI_Controller
 	}
 	function index($report_id)
 	{	
-		// var_dump($_POST);die;
         if($this->session->userdata('logged_in')){
-        $data = $this->session->userdata('logged_in');
-        $data['massage'] = $this->session->userdata('success_code');
-		$data['title'] = "Segment Master";
-		$data['report_id'] = $report_id;
-		$data['list_data'] = $this->Segment_model->get_rd_segment();
-		// var_dump($data['report_id']);die;
-		$this->load->view("admin/segment_overview/list", $data);
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['massage'] = $this->session->userdata('success_code');
+			$data['title'] = "Segment Master";
+			$data['report_id'] = $report_id;
+			$data['list_data'] = $this->Segment_model->get_rd_segment();
+			// var_dump($data['report_id']);die;
+			$this->load->view("admin/segment_overview/list", $data);
         }else{
             $this->load->view("admin/login");
         }
@@ -31,20 +32,25 @@ class Segment_overview extends CI_Controller
 	function add($report_id)
 	{
 		if($this->session->userdata('logged_in')){
-		$data = $this->session->userdata('logged_in');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
 	
-		$data['get_rd_segment'] = $this->Segment_model->get_rd_segment_data($report_id);
-		$data['report_id'] = $report_id;
-		$this->load->view("admin/segment_overview/add",$data);
+			$data['get_rd_segment'] = $this->Segment_model->get_rd_segment_data($report_id);
+			$data['report_id'] = $report_id;
+			$this->load->view("admin/segment_overview/add",$data);
 		}else{
 			 $this->load->view("admin/login");
 		}
 	}
 	public function insert($report_id)
     {
-		// var_dump($_POST);die;
-        if($this->session->userdata('logged_in'))
+		if($this->session->userdata('logged_in'))
 	 	{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$description=$this->input->post('description');
             $seg_id=$this->input->post('seg_id');
           
@@ -78,7 +84,10 @@ class Segment_overview extends CI_Controller
     {
 		if($this->session->userdata('logged_in'))
 		{
-			$data = $this->session->userdata('logged_in');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$data['get_rd_segment'] = $this->Segment_model->get_rd_segment_data($report_id);
 			$data['segment_overview'] = $this->Segment_model->get_rd_segment_overview($report_id);
 			$data['report_id'] = $report_id;
@@ -113,7 +122,9 @@ class Segment_overview extends CI_Controller
 		// var_dump($_POST);die;
 		if($this->session->userdata('logged_in'))
 		{
-			$data = $this->session->userdata('logged_in');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
 			
 			$description_new=$this->input->post('description_new');
 			$seg_id_new=$this->input->post('seg_id_new');
@@ -186,14 +197,19 @@ class Segment_overview extends CI_Controller
 
 	function delete($id)
 	{
-		$data['delete'] = $this->Segment_model->delete_rd_dro_segment($id);
-		$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
-		redirect('admin/report');
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			
+			$data['delete'] = $this->Segment_model->delete_rd_dro_segment($id);
+			$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
+			redirect('admin/report');
+		}else{
+			$this->load->view("admin/login");			
+		}
 	}
-	
-
-	
-
 }  
     
 ?>

@@ -30,24 +30,29 @@ class Scope extends CI_Controller
 	function add()
 	{
 		if($this->session->userdata('logged_in')){
-		$data = $this->session->userdata('logged_in');
-		$data['get_scope_data'] = $this->Data_model->get_scope_master();
-		$this->load->view("admin/scope/add",$data);
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['get_scope_data'] = $this->Data_model->get_scope_master();
+			$this->load->view("admin/scope/add",$data);
 		}else{
 			 $this->load->view("admin/login");
 		}
 	}
     public function insert_scope()
 	{
-		//var_dump($_POST);die;
 		if($this->session->userdata('logged_in'))
 	 	{
-				$result = $this->Data_model->insert_scope_record();
-				if($result == 1)
-				{
-					$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
-				}
-				redirect('admin/scope');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$result = $this->Data_model->insert_scope_record();
+			if($result == 1)
+			{
+				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
+			}
+			redirect('admin/scope');
 	 	}else
 		{
 			$this->load->view("admin/login");
@@ -59,36 +64,49 @@ class Scope extends CI_Controller
     {
 		if($this->session->userdata('logged_in'))
 		{
-			$data = $this->session->userdata('logged_in');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$data['get_scope_data'] = $this->Data_model->get_scope_master();
 			$data['single_scope_data'] = $this->Data_model->get_single_scope_data($id);
 			$this->load->view("admin/scope/edit",$data);
-		}else
-		{
-			$this->load->view("admin/login");
-			
+		}else{
+			$this->load->view("admin/login");			
 		}
     }
 	public function update_scope()
 	{
-		$id = $this->input->post('id');
-		$this->Data_model->update_scope($id);
-		$data['parent'] = $this->Data_model->get_single_parent($id);
-		$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
-		redirect('admin/scope');
-		
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$id = $this->input->post('id');
+			$this->Data_model->update_scope($id);
+			$data['parent'] = $this->Data_model->get_single_parent($id);
+			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
+			redirect('admin/scope');
+		}else{
+			$this->load->view("admin/login");			
+		}
 	}
 	function scope_delete($id)
 	{
-		$data['delete'] = $this->Data_model->scope_delete($id);
-		$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
-		redirect('admin/scope');
-		
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
 
+			$data['delete'] = $this->Data_model->scope_delete($id);
+			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
+			redirect('admin/scope');
+		}else{
+			$this->load->view("admin/login");			
+		}
 	}
-  
-        
-
 }  
     
 ?>

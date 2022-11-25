@@ -16,12 +16,14 @@ class Codedecode_type extends CI_Controller
 	function index()
 	{	
         if($this->session->userdata('logged_in')){
-        $data = $this->session->userdata('logged_in');
-		$data['massage'] = $this->session->userdata('msg');
-		$data['title'] = "Codedecode Type Master";
-		$data['list_data'] = $this->Codedecode_model->get_codedecode_type();
-		//print_r($data);exit();
-		$this->load->view("admin/codedecode_type/list", $data);
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$data['massage'] = $this->session->userdata('msg');
+			$data['title'] = "Codedecode Type Master";
+			$data['list_data'] = $this->Codedecode_model->get_codedecode_type();
+			$this->load->view("admin/codedecode_type/list", $data);
         }else{
             $this->load->view("admin/login");
         }
@@ -29,68 +31,81 @@ class Codedecode_type extends CI_Controller
 	function add()
 	{
 		if($this->session->userdata('logged_in')){
-		$data = $this->session->userdata('logged_in');
-		$data['get_codedecode_type'] = $this->Codedecode_model->get_codedecode_type();
-		$this->load->view("admin/codedecode_type/add",$data);
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$data['get_codedecode_type'] = $this->Codedecode_model->get_codedecode_type();
+			$this->load->view("admin/codedecode_type/add",$data);
 		}else{
-			 $this->load->view("admin/login");
+			$this->load->view("admin/login");
 		}
 	}
     public function insert_codedecode_type()
 	{
-		// var_dump($_POST);die;
 		if($this->session->userdata('logged_in'))
 	 	{
-				//var_dump($_POST);die;
-				//$this->Data_model->insert_scope_record($id);
-				$result = $this->Codedecode_model->insert_codedecode_type_record();
-				// var_dump($result);die;
-				if($result == 1)
-				{
-					$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
-				}
-				redirect('admin/codedecode_type');
-	 	}else
-		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$result = $this->Codedecode_model->insert_codedecode_type_record();
+			if($result == 1)
+			{
+				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
+			}
+			redirect('admin/codedecode_type');
+	 	}else {
 			$this->load->view("admin/login");
 		}
 	}
-
    
     public function edit($id)
     {
 		if($this->session->userdata('logged_in'))
 		{
-			$data = $this->session->userdata('logged_in');
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$data['get_codedecode_type'] = $this->Codedecode_model->get_codedecode_type();
 			$data['single_codedecode_type'] = $this->Codedecode_model->get_single_codedecode_type($id);
 			$this->load->view("admin/codedecode_type/edit",$data);
-		}else
-		{
-			$this->load->view("admin/login");
-			
+		}else{
+			$this->load->view("admin/login");			
 		}
     }
 	public function update_codedecode_type()
 	{
-		$id = $this->input->post('id');
-		$this->Codedecode_model->update_codedecode_type($id);
-		$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
-		redirect('admin/codedecode_type');
-		
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$id = $this->input->post('id');
+			$this->Codedecode_model->update_codedecode_type($id);
+			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
+			redirect('admin/codedecode_type');
+		}else{
+			$this->load->view("admin/login");			
+		}
 	}
 	function codedecode_type_delete($id)
 	{
-		//var_dump($id);die;
-		$data['delete'] = $this->Codedecode_model->codedecode_type_delete($id);
-		$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
-		redirect('admin/codedecode_type');
-		
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
 
+			$data['delete'] = $this->Codedecode_model->codedecode_type_delete($id);
+			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
+			redirect('admin/codedecode_type');
+		}else{
+			$this->load->view("admin/login");			
+		}
 	}
-  
-        
-
 }  
     
 ?>

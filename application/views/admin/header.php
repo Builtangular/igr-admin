@@ -130,8 +130,9 @@
                     <li class="header"><a href="<?php echo base_url(); ?>admin/dashboard"><span>Dashboard</span></a>
                     </li>
                     <!-- Optionally, you can add icons to the links -->
+                    <?php if($Role_id == 1){ ?>
                     <li class="treeview">
-                        <a href="#"><i class="fa fa-table"></i><span>Master Setup</span> <i
+                        <a href="#"><i class="fa fa-table"></i><span class="text-bold">Master Setup</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <!-- <li><a href="http://localhost/testapp/public/superadmin/codetype"><span>Code Type</span></a></li>
@@ -145,16 +146,20 @@
                             <li><a href="<?php echo base_url(); ?>admin/dro_type"><span>DRO Type</span></a></li>
                         </ul>
                     </li>
+                    <?php } if($Role_id == 1 || $Role_id == 2){ ?>
                     <li class="treeview">
-                        <a href="#"><i class="fa fa-files-o"></i><span>Report Management</span> <i
+                        <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li><a href="<?php echo base_url(); ?>admin/report"><span>Reports</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/country_rd"><span>Country Reports</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/report"><span>Published Reports</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/country-rd"><span>Country Reports</span></a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file"></i><span>Drafts</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/verified"><i class="fa fa-file-word-o"></i><span class="text-bold">Verified RDs</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file-code-o"></i><span class="text-bold">Drafts</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/add"><i class="fa fa-plus"></i><span class="text-bold">Add New RD</span></a></li>
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <?php } ?>
                 </ul>
             </section>
             <!-- /.sidebar -->

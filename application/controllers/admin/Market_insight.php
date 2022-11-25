@@ -13,14 +13,14 @@ class Market_insight extends CI_Controller
 		$this->load->helper(array('form', 'url'));				
 	}
 	public function index($id)
-	{
-		
+	{		
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
-			// var_dump($data['success_code']); die;
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+			
 			$data['report_id']=$id;	
 			$data['Companies']= $this->Data_model->get_rd_companies($id);
 			$this->load->view('admin/insight/add',$data);			
@@ -35,8 +35,10 @@ class Market_insight extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+
 			$data['report_id']=$id;	
 			$this->load->view('admin/insight/add_single',$data);			
 		}		
@@ -50,9 +52,9 @@ class Market_insight extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
             /* Market Insight Overview */
             /* <!-- Report Definition --> */
             $Report_definition=$this->input->post('Report_definition');
@@ -150,8 +152,10 @@ class Market_insight extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+
             $data['market_insight'] = $this->Data_model->get_rd_market_insight_data($report_id);	
 			$data['report_id']=$report_id;	
 			$this->load->view('admin/insight/list',$data);			
@@ -166,8 +170,9 @@ class Market_insight extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
             /* Add insight data */
             $Insert_report_insight=array(
                 'report_id'=>$id,			
@@ -191,8 +196,8 @@ class Market_insight extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
 
 			$market_insight = $this->Data_model->get_rd_single_market_insight($id);	
             // var_dump($data['market_insight']); die;	
@@ -216,8 +221,9 @@ class Market_insight extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');			
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$report_id = $this->input->post('report_id');
 			$postdata=array(				
 				'description'=>$this->input->post('insight_description'),
@@ -242,8 +248,9 @@ class Market_insight extends CI_Controller
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
-			$data['Login_user_name']=$session_data['Login_user_name'];
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
 			$report_id = $this->input->post('report_id');			
 			$result = $this->Data_model->delete_rd_insight_para($id);
 			if($result){

@@ -14,8 +14,10 @@ class Country_rd extends CI_Controller {
 	public function index(){
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+
 			$data['report_id']=$id;	
 			$data['Country_Rds']= $this->Country_model->get_country_rds();
 			$this->load->view('admin/country_rd/list',$data);			
@@ -26,20 +28,17 @@ class Country_rd extends CI_Controller {
     public function create($id){
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+
             $data['global_rds']= $this->Country_model->get_global_rd_data($id);	
             $rd_title = $data['global_rds']->title;
             $rd_name = $data['global_rds']->name;
             $forecast_to = $data['global_rds']->forecast_to;
-			// $rd_id = $data['global_rds']->$id;
-			// var_dump( $data['global_rds'] );die;	
-            $data['countries'] = $this->Country_model->get_countries();
-            
+            $data['countries'] = $this->Country_model->get_countries();            
 			$country_title_count = $this->Country_model->get_brazil_report_count();
-			// var_dump($country_title_count);die;
 			$sku_code = explode('Z', $country_title_count->sku);
-			// var_dump($sku_code);die;
             foreach($data['countries'] as $country_data)
 			{
                 $Country_name=$country_data->name;	
@@ -138,7 +137,6 @@ class Country_rd extends CI_Controller {
 					$enterprise = 7195;
 				}
 				$Report_code = $sku.'0'.($sku_code[1] + 1);
-				// var_dump($Report_code);die;
 				$report_title_new=str_replace( array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $Country_Report_title);
 				$encoded_report_title= urldecode($report_title_new);	
 				$encoded_report_url = str_replace(' ','-', $encoded_report_title);
@@ -172,6 +170,9 @@ class Country_rd extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+
 			$data['country_rd_data']= $this->Country_model->get_country_rd_record();
 			$data['single_country_data'] = $this->Country_model->get_single_country_rd_data($id);
 			$this->load->view('admin/country_rd/edit',$data);
@@ -180,21 +181,35 @@ class Country_rd extends CI_Controller {
 		}
 	}
 	public function update_country_rd(){
-		$id = $this->input->post('id');
-		$result = $this->Country_model->update_country_rd($id);
-		if($result){
-			$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");	
-		}else{
-			$this->session->set_flashdata("success_code","Sorry! Data has not updated");	
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+			$id = $this->input->post('id');
+			$result = $this->Country_model->update_country_rd($id);
+			if($result){
+				$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");	
+			}else{
+				$this->session->set_flashdata("success_code","Sorry! Data has not updated");	
+			}
+			redirect('admin/country_rd');
+		}else{			
+			$this->load->view('admin/login');
 		}
-		redirect('admin/country_rd');
     }
 	function contry_rd_delete($id){
-		$data['delete'] = $this->Country_model->contry_rd_delete($id);
-		$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
-		redirect('admin/country_rd');
-
-	}
-	
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['delete'] = $this->Country_model->contry_rd_delete($id);
+			$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
+			redirect('admin/country_rd');
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}	
 }
 ?>

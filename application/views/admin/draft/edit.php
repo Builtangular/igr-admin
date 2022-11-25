@@ -27,7 +27,8 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Update Report</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/report/update" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/report/rd-update" method="post"
+                        class="form-horizontal">
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -82,7 +83,8 @@
                                             <?php foreach($Period1 as $Period1) { 
                                                 if($Period1 == $forecast_to){
                                                     ?>
-                                            <option value="<?php echo $forecast_to; ?>" Selected><?php echo $forecast_to; ?></option>
+                                            <option value="<?php echo $forecast_to; ?>" Selected>
+                                                <?php echo $forecast_to; ?></option>
                                             <?php }else{ ?>
                                             <option value="<?php echo $Period1; ?>"><?php echo $Period1; ?></option>
                                             <?php } } ?>
@@ -99,29 +101,34 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">SKU</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="sku" value="<?php echo $sku; ?>"
-                                            class="form-control">
+                                        <input type="text" name="sku" value="<?php echo $sku; ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Report Status</label>
                                     <div class="col-md-9">
                                         <div class="radio">
-                                            <label><input type="radio" name="status" value="3" <?php echo ($status==3)?'checked':'' ?> />Published</label>
-                                            <label><input type="radio" name="status" value="0" <?php echo ($status==0)?'checked':'' ?> />Draft</label>
-                                            <!-- <label><input type="radio" name="status" value="2" <?php echo ($status==2)?'checked':'' ?> />Draft</label> -->
+                                            <label><input type="radio" name="status" value="0"
+                                                    <?php echo ($status==0)?'checked':'' ?> />Draft</label>
+                                            <!-- <label><input type="radio" name="status" value="0"
+                                                    <?php echo ($status==0)?'checked':'' ?> />Under Study</label> -->
+                                            <label><input type="radio" name="status" value="3"
+                                                    <?php echo ($status==1)?'checked':'' ?> />Publish</label>
+                                            <!-- <label><input type="radio" name="status" value="2" <?php echo ($status==2)?'checked':'' ?> />Inactive</label> -->
                                         </div>
                                     </div>
                                 </div>
-								<div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="control-label col-md-3">Country RD Status</label>
                                     <div class="col-md-9">
                                         <div class="radio">
-                                            <label><input type="radio" name="country_status" value="1" <?php echo ($country_status==1)?'checked':'' ?> />Created</label>
-                                            <label><input type="radio" name="country_status" value="0" <?php echo ($country_status==0)?'checked':'' ?> />Generate</label>
+                                            <label><input type="radio" name="country_status" value="1"
+                                                    <?php echo ($country_status==1)?'checked':'' ?> />Created</label>
+                                            <label><input type="radio" name="country_status" value="0"
+                                                    <?php echo ($country_status==0)?'checked':'' ?> />Generate</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -132,7 +139,8 @@
                                             <?php foreach($category_data as $category){
                                                 if($category->id == $category_id){
                                                     ?>
-                                            <option value="<?php echo $category->id; ?>" Selected><?php echo $category->name; ?></option>
+                                            <option value="<?php echo $category->id; ?>" Selected>
+                                                <?php echo $category->name; ?></option>
                                             <?php }else{ ?>
                                             <option value="<?php echo $category->id; ?>"><?php echo $category->name; ?>
                                             </option>
@@ -172,9 +180,9 @@
                                             <?php foreach($Period2 as $Period2) { 
                                                  if($Period2 == $analysis_to){
                                                     ?>
-                                                <option value="<?php echo $analysis_to; ?>" Selected>
-                                                    <?php echo $analysis_to; ?></option>
-                                                <?php }else{ ?>
+                                            <option value="<?php echo $analysis_to; ?>" Selected>
+                                                <?php echo $analysis_to; ?></option>
+                                            <?php }else{ ?>
                                             <option value="<?php echo $Period2; ?>"><?php echo $Period2; ?></option>
                                             <?php } } ?>
                                         </select>
@@ -190,8 +198,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">URL Path</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="url" value="<?php echo $url; ?>"
-                                            class="form-control">
+                                        <input type="text" name="url" value="<?php echo $url; ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -199,15 +206,17 @@
                                     <div class="col-md-9">
                                         <div class="radio">
                                             <label><input type="radio" name="volume" value="1"
-                                                    onclick="return HideVunit(1)" <?php echo ($is_volume_based==1)?'checked':'' ?> />Yes</label>
+                                                    onclick="return HideVunit(1)"
+                                                    <?php echo ($is_volume_based==1)?'checked':'' ?> />Yes</label>
 
                                             <label><input type="radio" name="volume" value="0"
-                                                    onclick="return HideVunit(0)" <?php echo ($is_volume_based==0)?'checked':'' ?> />No</label>
+                                                    onclick="return HideVunit(0)"
+                                                    <?php echo ($is_volume_based==0)?'checked':'' ?> />No</label>
                                         </div>
                                     </div>
                                 </div>
-								<?php if($is_volume_based == 1){?>
-								<div class="form-group" id="div1" style="display: block;">
+                                <?php if($is_volume_based == 1){?>
+                                <div class="form-group" id="div1" style="display: block;">
                                     <label class="control-label col-md-3">Volume CAGR</label>
                                     <div class="col-md-9">
                                         <input type="text" id="volume_cagr" name="volume_cagr"
@@ -223,7 +232,7 @@
                                             placeholder="Volume Unit" />
                                     </div>
                                 </div>
-								<?php } else {?>
+                                <?php } else {?>
                                 <div class="form-group" id="div1" style="display: none;">
                                     <label class="control-label col-md-3">Volume CAGR</label>
                                     <div class="col-md-9">
@@ -240,22 +249,25 @@
                                             placeholder="Volume Unit" />
                                     </div>
                                 </div>
-								<?php } ?>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Report Price</label>
                                 <div class="col-md-4">
-                                    <input type="text" id="single_user" name="single_user" value="<?php echo $singleuser_price; ?>" class="form-control"
+                                    <input type="text" id="single_user" name="single_user"
+                                        value="<?php echo $singleuser_price; ?>" class="form-control"
                                         placeholder="Single User License" />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" id="enterprise_user" name="enterprise_user" value="<?php echo $enterprise_price; ?>" class="form-control"
+                                    <input type="text" id="enterprise_user" name="enterprise_user"
+                                        value="<?php echo $enterprise_price; ?>" class="form-control"
                                         placeholder="Enterprise License" />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" id="datasheet" name="datasheet" value="<?php echo $datasheet_price; ?>" class="form-control"
+                                    <input type="text" id="datasheet" name="datasheet"
+                                        value="<?php echo $datasheet_price; ?>" class="form-control"
                                         placeholder="Data Sheet License" />
                                 </div>
                             </div>
@@ -264,7 +276,8 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">CAGR Market Value</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="market_value" name="market_value" class="form-control" value="<?php echo $cagr_market_value; ?>"
+                                    <input type="text" id="market_value" name="market_value" class="form-control"
+                                        value="<?php echo $cagr_market_value; ?>"
                                         placeholder="Market Value During the Forecast Period" />
                                 </div>
                             </div>
@@ -296,21 +309,92 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Largest Region</label>
                                 <div class="col-md-10">
-                                    <input type="text" name="Largest_region" value="<?php echo $largest_region; ?>" class="form-control">
+                                    <input type="text" name="Largest_region" value="<?php echo $largest_region; ?>"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Publish Date</label>
                                 <div class="col-md-10">
-                                    <input type="text" name="Publish_date" value="<?php echo $updated_at; ?>" class="form-control">
+                                    <input type="text" name="Publish_date" value="<?php echo $updated_at; ?>"
+                                        class="form-control">
                                 </div>
                             </div>
                         </div>
-                        <div class="box-footer">
-                            <input type="hidden" name="report_id" class="form-control" value="<?php echo $report_id; ?>">
-                            <input type="submit" class="btn btn-info pull-right" value="Submit">
+                        <hr />
+                        <?php if($market_insight){ ?>
+                        <h3 class="col-md-12"><span class="label label-success">Market Insight</span></h3>
+                        <?php foreach($market_insight as $insight){ ?>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2"><?php echo $insight['type']; ?></label>
+                                <div class="col-md-10">
+                                    <textarea type="text" name="insight_description[]" rows="9"
+                                        class="form-control"><?php echo $insight['description']; ?></textarea>
+                                    <input type="hidden" name="insight_type[]" value="<?php echo $insight['type']; ?>"
+                                        class="form-control">
+                                </div>
+                            </div>
                         </div>
-
+                        <?php } } ?>
+                        <?php if($segments){  ?>
+                        <h3 class="col-md-12"><span class="label label-success">Segments List</span></h3>
+                        <!-- <h4 class="col-md-12">Segment List</h4> -->
+                        <?php foreach($segments as $seg){  ?>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <?php if($seg->parent_id == 0){  ?>
+                                <label class="control-label col-md-2"><?php echo $seg->name; ?></label>
+                                <?php }else {  ?>
+                                <label class="control-label col-md-2"></label>
+                                <?php }  ?>
+                                <div class="col-md-10">
+                                    <input type="text" name="segment_name[]" value="<?php echo $seg->name; ?>"
+                                        class="form-control">
+                                    <input type="hidden" name="segment_id[]" value="<?php echo $seg->id; ?>"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <?php } } ?>
+                        <?php if($companies){  ?>
+                        <h3 class="col-md-12"><span class="label label-success">Companies List</span></h3>
+                        <!-- <h4 class="col-md-12">Companies List</h4> -->
+                        <?php foreach($companies as $company){  ?>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2"></label>
+                                <div class="col-md-10">
+                                    <input type="text" name="company_name[]" value="<?php echo $company->name; ?>"
+                                        class="form-control">
+                                    <input type="hidden" name="company_id[]" value="<?php echo $company->id; ?>"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <?php } } ?>
+                        <?php if($dro_data){  ?>
+                        <h3 class="col-md-12"><span class="label label-success">DRO List</span></h3>
+                        <!-- <h4 class="col-md-12 text-red">DRO List</h4> -->
+                        <?php foreach($dro_data as $dro){  ?>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2"><?php echo $dro->type; ?></label>
+                                <div class="col-md-10">
+                                    <input type="text" name="dro_description[]" value="<?php echo $dro->description; ?>"
+                                        class="form-control">
+                                    <input type="hidden" name="dro_id[]" value="<?php echo $dro->id; ?>"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <?php } } ?>
+                        <div class="box-footer">
+                            <input type="hidden" name="report_id" class="form-control"
+                                value="<?php echo $report_id; ?>">
+                            <input type="submit" class="btn btn-info pull-left" name="request" value="Update">
+                            <input type="submit" class="btn btn-success pull-right" name="request" value="Publish">
+                        </div>
                     </form>
                 </div>
             </div>
@@ -333,7 +417,6 @@ function changeyear(inputYear) {
     $("#forecast_to").val(To_forecast);
     $("#analysis_form").val(From_Period);
     $("#analysis_to").val(To_Period);
-
 }
 
 function HideVunit(input) {
