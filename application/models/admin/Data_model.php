@@ -25,12 +25,10 @@ class Data_model extends CI_Model {
 			return array();
 		}
 	}
-	public function get_global_processed_rds($status){
+	public function get_drafted_global_rds(){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
-
-		$this->db->where(array('status'=>$status));
-
+		$this->db->where('status', 0);
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -43,41 +41,6 @@ class Data_model extends CI_Model {
 			return array();
 		}
 	}
-	public function get_global_published_rds($status){
-		$this->db->select("*");
-		$this->db->from("tbl_rd_data");
-		$this->db->where(array('status'=>$status));
-		$sql = $this->db->get();
-		/* echo $this->otherdb->last_query();
-		die; */
-		if($sql->num_rows() > 0)
-		{			
-			return $sql->result();
-		}
-		else
-		{
-			return array();
-		}
-	}
-	public function get_drafted_global_rds($status, $created_user){
-		$this->db->select("*");
-		$this->db->from("tbl_rd_data");
-		// $this->db->where('status',0);
-		// $this->db->where(array('Login_user_name', 'LIKE', '%'.$created_user.'%', 'status'=>$status));
-		$this->db->where(array('created_user'=>$created_user, 'status'=>$status));
-		$sql = $this->db->get();
-	// echo $this->db->last_query();
-	// die; 
-		if($sql->num_rows() > 0)
-		{			
-			return $sql->result();
-		}
-		else
-		{
-			return array();
-		}
-	}
-	
 	function title_exists($key)
 	{
 		$this->db->like('name',$key);
@@ -398,13 +361,6 @@ class Data_model extends CI_Model {
 		$result = $this->db->get('tbl_scope_master');
 		//echo $this->db->last_query();die;
 		return $result->row();
-	}
-	public function get_published_data()
-	{
-
-		$result = $this->db->get('tbl_rd_data');
-		 $res = $result->result();
-		 return $res;
 	}
 
 	/* *********** Updation of RD by Monika ******** */

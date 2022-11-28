@@ -127,11 +127,19 @@
                     </div>
                 </div>
                 <ul class="sidebar-menu">
+                    <li class="header"><a href="<?php echo base_url(); ?>admin/dashboard"><span>Dashboard</span></a>
+                    </li>
+                    <!-- Optionally, you can add icons to the links -->
                    
-                    <li><a href="<?php echo base_url(); ?>admin/report/published"><i class="fa fa-files-o"></i><span>Published Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file"></i><span>Drafted Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/processed"><i class="fa fa-files-o"></i><span>Processed Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/add"><i class="fa fa-files-o"></i><span>Add Report</span></a></li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-files-o"></i><span>Report Management</span> <i
+                                class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/report"><span>Reports</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/country_rd"><span>Country Reports</span></a></li>
+                        </ul>
+                    </li>
+                   
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                 </ul>
             </section>

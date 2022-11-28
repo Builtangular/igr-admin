@@ -15,12 +15,8 @@ $this->load->library('pagination');
 $this->load->helper(array('form', 'url'));	
 }
 public function index(){
-<<<<<<< Updated upstream
-=======
-
     // var_dump($_POST);die;
 
->>>>>>> Stashed changes
     if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
@@ -30,7 +26,7 @@ public function index(){
             $data['list_data'] = $this->Export_model->getfilterdata($data['from_date'] ,$data['to_date']);
             // var_dump($data['list_data']);die;
             // $data['list_data'] = $this->Export_model->getlist();
-			$this->load->view('spreadsheet',$data);			
+			$this->load->view('admin/spreadsheet',$data);			
 		}		
 		else
 		{			
@@ -44,7 +40,7 @@ public function filter(){
         $session_data = $this->session->userdata('logged_in');
         $data['Login_user_name']=$session_data['Login_user_name'];
         $data['list_data'] = $this->Export_model->getlist();
-        $this->load->view('filter',$data);	
+        $this->load->view('admin/filter',$data);	
     }		
     else
     {			
@@ -53,16 +49,13 @@ public function filter(){
     
 }
 public function export(){
-<<<<<<< Updated upstream
     if($this->session->userdata('logged_in'))
     {
         $session_data = $this->session->userdata('logged_in');
         $data['Login_user_name']=$session_data['Login_user_name'];
         $data['list_data'] = $this->Export_model->getlist();
-        $this->load->view('filter',$data);	
+        $this->load->view('admin/filter',$data);	
     }	
-=======
->>>>>>> Stashed changes
 // var_dump($_POST);die;
 $from_date = $this->input->post('from_date');
 //  var_dump($from_date);die;
@@ -152,11 +145,6 @@ header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"');
 header('Cache-Control: max-age=0');
 $writer->save('php://output'); // download file
 }
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
 // public function import(){
 // $file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 // if(isset($_FILES['upload_file']['name']) && in_array($_FILES['upload_file']['type'], $file_mimes)) {
@@ -173,8 +161,5 @@ $writer->save('php://output'); // download file
 // print_r($sheetData);
 // }
 // }
-<<<<<<< Updated upstream
+
 }
-=======
-}
->>>>>>> Stashed changes

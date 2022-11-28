@@ -87,24 +87,13 @@ $route['admin/segment-overview/(:num)'] ='admin/segment_overview/index/$1';
 $route['admin/segment-overview/add/(:num)'] ='admin/segment_overview/add/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
-
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 $route['admin/spreadsheet'] = 'admin/PhpspreadsheetController';
 $route['admin/spreadsheet/filter'] = 'admin/PhpspreadsheetController/filter';
 $route['admin/spreadsheet/index'] = 'admin/PhpspreadsheetController/index';
 $route['admin/spreadsheet/export'] = 'admin/PhpspreadsheetController/export';
 
-<<<<<<< Updated upstream
-=======
-
-
 // $route['admin/export'] ='admin/export/index';
 // $route['admin/export/generateXls'] ='admin/export/generateXls';
-
->>>>>>> Stashed changes
 // $route['admin/country_rd'] ='admin/country_rd/index';
 // $route['admin/country_rd/create/(:num)'] ='admin/country_rd/create/$1';
 
