@@ -31,8 +31,6 @@ class Data_model extends CI_Model {
 
 		$this->db->where(array('status'=>$status));
 
-		$this->db->where('status', 0);
-
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */

@@ -153,8 +153,6 @@
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>admin/report"><span>Published Reports</span></a></li>
 
-                            <li><a href="<?php echo base_url(); ?>admin/country_rd"><span>Country Reports</span></a></li>
-
                             <li><a href="<?php echo base_url(); ?>admin/country-rd"><span>Country Reports</span></a></li>
 
                         </ul>
@@ -166,12 +164,21 @@
                     <?php } ?>
 
 
-                    <?php if($Role_id == 1 || $Role_id == 3){ ?>
+                    <?php if($Role_id == 3){ ?>
                 
-                    <li><a href="<?php echo base_url(); ?>admin/report/published"><i class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file-code-o"></i><span class="text-bold">Drafts</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/processed"><i class="fa fa-files-o"></i><span>Processed Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/add"><i class="fa fa-plus"></i><span class="text-bold">Add New RD</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/published"><i class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span class="text-bold">Drafts</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i class="fa fa-files-o"></i><span>Processed Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span class="text-bold">Add New RD</span></a></li>
+                    <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <?php } ?>
+
+                    <?php if($Role_id == 4){ ?>
+                
+                    <li><a href="<?php echo base_url(); ?>admin/report/"><i class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/"><i class="fa fa-file-code-o"></i><span class="text-bold">Drafts</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/"><i class="fa fa-files-o"></i><span>Processed Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/"><i class="fa fa-plus"></i><span class="text-bold">Add New RD</span></a></li>
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                     <?php } ?>
 

@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/report-header.php'); ?>
 	
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -69,19 +69,19 @@
 								if ($query_img->num_rows() > 0) { $rd_image = "<i class=\"fa fa-image\"></i><br>"; } else {$rd_image = "NA";}
                                 $market_insight = "SELECT * FROM tbl_rd_market_insight_data where report_id = ".$data->id;
 								$query_market_insight = $this->db->query($market_insight);
-								if ($query_market_insight->num_rows() > 0) { $insight_status = "Yes"; } else {$insight_status = "NA";}
+								if ($query_market_insight->num_rows() > 0) { $insight_status = "Given"; } else {$insight_status = "NA";}
                                 /* Report DROs */
                                 $dro_reports = "SELECT * FROM tbl_rd_dro_data where report_id = ".$data->id;
 								$query_dro_reports = $this->db->query($dro_reports);
-                                if ($query_dro_reports->num_rows() > 0) { $dro_status = "Yes"; } else {$dro_status = "NA";}
+                                if ($query_dro_reports->num_rows() > 0) { $dro_status = "Given"; } else {$dro_status = "NA";}
                                 /* Segment Overview */
                                 $segment_overview = "SELECT * FROM tbl_segment_overview where report_id = ".$data->id;
 								$query_segment_overview = $this->db->query($segment_overview);
-                                if ($query_segment_overview->num_rows() > 0) { $segment_status = "Yes"; } else {$segment_status = "NA";}
+                                if ($query_segment_overview->num_rows() > 0) { $segment_status = "Given"; } else {$segment_status = "NA";}
                                 /* PR2 Writeup */
                                 $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = ".$data->id;
 								$query_pr2_reports = $this->db->query($pr2_reports);
-                                if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "Yes"; } else {$pr2_reports_status = "NA";}
+                                if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "Given"; } else {$pr2_reports_status = "NA";}
 								?> 
                                                                      
                         <tr>
@@ -93,11 +93,11 @@
                             <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
                             <td><?php echo $rd_company->rd_companies;?></td>
                             <td><?php echo $rd_segment->rd_segments; ?></td>
-                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/view/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a></td>
-                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/dro-reports/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a></td>
-                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a></td>
-                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/pr2-reports/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a></td>
-                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a></td>
+                            <td class="text-center"><b><?php echo $insight_status; ?></b></td>
+                            <td class="text-center"><b><?php echo $dro_status; ?></b></td>
+                            <td class="text-center"><b><?php echo $segment_status; ?></b></td>
+                            <td class="text-center"><b><?php echo $pr2_reports_status; ?></b></td>
+                            <td class="text-center"><b><?php echo $rd_image; ?></b></a></td>
                             <?php if($data->country_status == 1){ ?>
                             <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b> Created</b></td>
                             <?php }else { ?> 

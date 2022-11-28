@@ -40,7 +40,6 @@
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
-
                                 <th>Id</th>
                                 <th>Title</th>
                                 <th>Scope</th>
@@ -58,25 +57,6 @@
                                 <th>Country</th>
                                 <th>Action</th>
                             </tr>
-
-                                    <th>Id</th>
-									<th>Title</th>
-									<th>Scope</th>
-									<th>Cat</th>
-									<th>Forecast</th>
-									<!-- <th>Vol</th> -->
-									<th>Segment</th>
-									<th>Company</th>
-									<!-- <th>Status</th> -->
-                                    <th>Insight</th>
-                                    <th>DRO</th>
-                                    <!-- <th>Overview</th>
-                                    <th>PR2</th> -->
-									<th>Image</th>
-									<th>Country</th>
-									<th>Action</th>
-                                </tr>
-
                             </thead>
                             <tbody>
                                 <?php foreach($Global_Rds as $data){ /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
@@ -89,7 +69,6 @@
 								$query_img = $this->db->query($sql_img);
 								/* if ($query_img->num_rows() > 0) { $rd_image = "<img src=\"http://localhost/igr_admin/assets/admin/img-rd/global-automotive-display-system-market.jpg\" class=\"fa \" alt=\"User Image\" style=\"height:20px; width: 40px;\"> <br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";} */
 								if ($query_img->num_rows() > 0) { $rd_image = "<i class=\"fa fa-image\"></i><br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";}
-                                /* Market Insight */
                                 $market_insight = "SELECT * FROM tbl_rd_market_insight_data where report_id = ".$data->id;
 								$query_market_insight = $this->db->query($market_insight);
 								if ($query_market_insight->num_rows() > 0) { $insight_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$insight_status = "<i class=\"fa fa-plus\"></i><br>Add";}
@@ -112,10 +91,10 @@
                                         <td class="text-center"><?php echo $data->scope_id; ?></td>
                                         <td class="text-center"><?php echo $data->category_id; ?></td>
                                         <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
-                                        <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
-                                        <!-- <td><?php // echo $data->is_volume_based; ?></td> -->
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_segment->rd_segments." segment"; ?></td>
+                                        <!--<td><?php echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
+                                        <!-- <td><?php echo $data->is_volume_based; ?></td> -->
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_company->rd_companies." company"; ?></td>
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i> List</b></a><br><?php echo $rd_segment->rd_segments." segment"; ?></td>
 										<!-- <td class="text-center"><?php echo $data->status; ?></td> -->
                                         <?php if($query_market_insight->num_rows() > 0){ ?>
                                             <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/view/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a></td>
@@ -131,7 +110,7 @@
                                                 href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
                                         </td>
                                         <?php }?>
-                                        <?php /*  if($query_segment_overview->num_rows() > 0){ ?>
+                                        <?php if($query_segment_overview->num_rows() > 0){ ?>
                                         <td class="text-center"><a
                                                 href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
                                         </td>
@@ -140,6 +119,7 @@
                                                 href="<?php echo base_url(); ?>admin/segment-overview/add/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
                                         </td>
                                         <?php }?>
+
                                         <?php if($query_pr2_reports->num_rows() > 0){ ?>
                                         <td class="text-center"><a
                                                 href="<?php echo base_url(); ?>admin/pr2-reports/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
@@ -148,17 +128,18 @@
                                         <td class="text-center"><a
                                                 href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
                                         </td>
-                                        <?php } */ ?>
+                                        <?php }?>
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a></td>
                                         <?php if($data->country_status == 1){ ?>
-                                            <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><br /><b> Created</b></td>
+                                            <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b> Created</b></td>
                                         <?php }else { ?> 
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  <br />Create</b></a></td>                                        
+                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  Create</b></a></td>                                        
                                         <?php }?>
                                         <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
 											<a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
 										</td>
                                     </tr>
+                                    
 								<?php  }  ?>
                             </tbody>
                             <tfoot>
@@ -170,13 +151,13 @@
 									<th>Forecast</th>
 									<!-- <th>Analysis</th> -->
 									<!-- <th>Vol</th> -->
-									<th>Segment</th>									
 									<th>Company</th>
+									<th>Segment</th>									
 									<!-- <th>Status</th> -->
                                     <th>Insight</th>                                    
                                     <th>DRO</th>
-                                    <!-- <th>Overview</th>
-                                    <th>PR2</th> -->                                  
+                                    <th>Overview</th>
+                                    <th>PR2</th>                                    
 									<th>Image</th>  
 									<th>Country</th>
 									<th>Action</th>

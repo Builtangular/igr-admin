@@ -87,8 +87,7 @@ $route['admin/segment-overview/(:num)'] ='admin/segment_overview/index/$1';
 $route['admin/segment-overview/add/(:num)'] ='admin/segment_overview/add/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
-$route['admin/report/processed'] ='admin/report/processed_rd';
-$route['admin/report/published'] ='admin/report/published_rd';
+
 
 $route['admin/spreadsheet'] = 'admin/PhpspreadsheetController';
 $route['admin/spreadsheet/filter'] = 'admin/PhpspreadsheetController/filter';
@@ -97,3 +96,9 @@ $route['admin/spreadsheet/export'] = 'admin/PhpspreadsheetController/export';
 
 // $route['admin/country_rd'] ='admin/country_rd/index';
 // $route['admin/country_rd/create/(:num)'] ='admin/country_rd/create/$1';
+
+/* analyst urls */
+$route['analyst/report/processed'] ='admin/report/analyst_processed_rd';
+$route['analyst/report/published'] ='admin/report/analyst_published_rd';
+$route['analyst/report/drafts'] ='admin/report/drafts';
+$route['analyst/report/add'] ='admin/report/add';
