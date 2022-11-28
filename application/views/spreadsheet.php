@@ -26,6 +26,7 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">RD List</h3>
+<<<<<<< Updated upstream
                         <form action="<?php echo  base_url('admin/spreadsheet/export'); ?>" method="post" >
                        
                                 <input type="submit" value="Export Excel" class="btn btn-primary pull-right"></td>
@@ -33,6 +34,8 @@
                         <input type="hidden" name="from_date" class="form-control" value="<?php echo $from_date; ?>">
                         <input type="hidden" name="to_date" class="form-control" value="<?php echo $to_date; ?>">
                     </form>
+=======
+>>>>>>> Stashed changes
                     </div>
 					<!-- <form method="post" action="<?php echo form_open_multipart('admin/spreadsheet/export',array('name' => 'spreadsheet'));?>"> -->
                     <div class="box-body">
@@ -56,11 +59,19 @@
                                 <th class="header">SingleUser Price</th>                      
                                 <th class="header">Enterprise Price</th>                      
                                 <th class="header">Datasheet Price</th>                      
+<<<<<<< Updated upstream
                                 <th class="header">CAGR Market Value</th>   
                                 <th class="header">Report Defination</th>                      
                                 <th class="header">Report Description</th>                      
                                 <th class="header">Executive Summary DRO</th>                      
                                 <th class="header">Executive Summary Regional Description</th>
+=======
+                                <!-- <th class="header">CAGR Market Value</th>    -->
+                                <!-- <th class="header">Report Defination</th>                      
+                                <th class="header">Report Description</th>                      
+                                <th class="header">Executive Summary DRO</th>                      
+                                <th class="header">Executive Summary Regional Description</th> -->
+>>>>>>> Stashed changes
                                 <th class="header">Largest Region</th>                      
                                 <th class="header">Country Status</th>                      
                                 <th class="header">Status</th>                      
@@ -96,11 +107,19 @@
                                                 <td><?php echo $list->singleuser_price; ?></td> 
                                                 <td><?php echo $list->enterprise_price; ?></td> 
                                                 <td><?php echo $list->datasheet_price; ?></td> 
+<<<<<<< Updated upstream
                                                 <td><?php echo $list->cagr_market_value; ?></td> 
                                                 <td><?php echo $list->report_definition; ?></td> 
                                                 <td><?php echo $list->report_description; ?></td> 
                                                 <td><?php echo $list->executive_summary_DRO; ?></td> 
                                                 <td><?php echo $list->executive_summary_regional_description; ?></td> 
+=======
+                                            <!-- <td><?php echo $list->cagr_market_value; ?></td>  -->
+                                                <!-- <td><?php echo $list->report_definition; ?></td> 
+                                                <td><?php echo $list->report_description; ?></td> 
+                                                <td><?php echo $list->executive_summary_DRO; ?></td> 
+                                                <td><?php echo $list->executive_summary_regional_description; ?></td>  -->
+>>>>>>> Stashed changes
                                                 <td><?php echo $list->largest_region; ?></td> 
                                                 <td><?php echo $list->country_status; ?></td> 
                                                 <td><?php echo $list->status; ?></td> 
@@ -126,7 +145,20 @@
                         </table>
                         
                         <!-- <?php echo form_open_multipart('admin/spreadsheet/export',array('name' => 'spreadsheet')); ?> -->
+<<<<<<< Updated upstream
                       
+=======
+                        <form action="<?php echo  base_url('admin/spreadsheet/export'); ?>" method="post" >
+                        <!-- <a href="<?php echo base_url(); ?>admin/spreadsheet/filter" > -->
+                            <tr>
+                                <td colspan="5" align="center">
+                                <input type="submit" value="Export"></td>
+                            </tr>
+                        <!-- <input type="hidden" name="list_data" class="form-control" value="<?php echo $list_data->id;?>"> -->
+                        <input type="hidden" name="from_date" class="form-control" value="<?php echo $from_date; ?>">
+                        <input type="hidden" name="to_date" class="form-control" value="<?php echo $to_date; ?>">
+                    </form>
+>>>>>>> Stashed changes
                     </div>
                 </div>
             </div>

@@ -143,7 +143,9 @@
                             <li><a href="<?php echo base_url(); ?>admin/region"><span>Region Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/codedecode_type"><span>Codedecode Type</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/codedecode_description"><span>Codedecode Description</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/dro_type"><span>DRO Type</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/dro_type"><span>DRO Type</span></a></li> 
+                            <li><a href="<?php echo base_url(); ?>admin/image_text_write"><span>Upload Text Write Image</span></a></li> 
+                            <li><a href="<?php echo base_url(); ?>admin/spreadsheet"><span>Export</span></a></li> 
                         </ul>
                     </li>
                     <?php } if($Role_id == 1 || $Role_id == 2){ ?>
@@ -151,6 +153,7 @@
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
+<<<<<<< Updated upstream
                             <li><a href="<?php echo base_url(); ?>admin/report"><span>Published Reports</span></a></li>
 
                             <li><a href="<?php echo base_url(); ?>admin/country-rd"><span>Country Reports</span></a></li>
@@ -182,6 +185,15 @@
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                     <?php } ?>
 
+=======
+                            <li><a href="<?php echo base_url(); ?>admin/report"><span>Reports</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/country_rd"><span>Country Reports</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><span>Export Reports</span></a></li>
+                        </ul>
+                    </li>
+                    <!-- <li><a href="http://localhost/testapp/public/superadmin/enroll"><span>Enrollment</span></a></li>
+                    <li><a href="#"><span>Generate Report</span></a></li> -->
+>>>>>>> Stashed changes
                 </ul>
             </section>
             <!-- /.sidebar -->

@@ -10,7 +10,11 @@
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
         <ol class="breadcrumb">
+<<<<<<< Updated upstream
             <li><a href="#"><i class="fa fa-dashboard"></i>Level</a></li>
+=======
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+>>>>>>> Stashed changes
             <li class="active">Here</li>
         </ol>
     </section>
@@ -37,7 +41,11 @@
                             </div>
                            
                             <div class="box-footer">
+<<<<<<< Updated upstream
                                 <input type="submit" class="btn btn-primary pull-right" value="Submit">
+=======
+                                <input type="submit" class="btn btn-primary" value="Submit">
+>>>>>>> Stashed changes
                             </div>
                             
                     </form>
@@ -84,4 +92,8 @@ $("#to_date").datepicker({
 });
 
 
+<<<<<<< Updated upstream
 </script>
+=======
+  </script>
+>>>>>>> Stashed changes
