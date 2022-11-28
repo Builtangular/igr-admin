@@ -36,5 +36,6 @@ class Image_model extends CI_Model {
         $res = $result->row();
         return $res;
      }
+     
 }
 ?>

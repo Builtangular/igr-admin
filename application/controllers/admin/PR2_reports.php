@@ -29,6 +29,7 @@ class PR2_reports extends CI_Controller
             $this->load->view("admin/login");
         }
 	}
+	
 	function add($report_id)
 	{
 		if($this->session->userdata('logged_in')){
@@ -96,6 +97,7 @@ class PR2_reports extends CI_Controller
     }
 	function delete($id)
 	{
+<<<<<<< Updated upstream
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
@@ -107,6 +109,11 @@ class PR2_reports extends CI_Controller
 		}else{
 			$this->load->view("admin/login");
 		}
+=======
+		$data['delete'] = $this->pr2_model->delete_rd_pr2($id);
+		$this->session->set_flashdata('msg','Data has been delete successfully....!!!');
+		redirect('admin/pr2-reports/'.$report_id);
+>>>>>>> Stashed changes
 	}
 }    
 ?>

@@ -56,10 +56,15 @@ class Login extends CI_Controller
 				else if($session_data['Role_id']==2)
 				{
 					redirect('admin/dashboard');			
-				}else if($session_data['Role_id']==3)
+				}
+				else if($session_data['Role_id']==3)
 				{
 					redirect('admin/dashboard');			
-				}								
+				}
+				else if($session_data['Role_id']==4)	
+				{
+					redirect('admin/dashboard');
+				}							
 			}
 			else
 			{							

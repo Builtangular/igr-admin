@@ -182,11 +182,18 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | use segment based URLs.
 |
 */
+
 $config['enable_query_strings'] = FALSE;
 $config['controller_trigger'] = 'c';
 $config['function_trigger'] = 'm';
 $config['directory_trigger'] = 'd';
-
+// $config = array(
+//     'image_library' => 'gd2',
+//     'source_image' => $img,
+//     'dynamic_output' => true,
+//     'width' => $width,
+//     'height' => $height,
+// );
 /*
 |--------------------------------------------------------------------------
 | Allow $_GET array
@@ -521,3 +528,9 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+// $config['composer_autoload'] = FALSE;
+
+
+$config['composer_autoload'] = 'vendor/autoload.php';
+
