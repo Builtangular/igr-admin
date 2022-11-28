@@ -50,7 +50,7 @@ class Category extends CI_Controller {
 			//var_dump($result);die;
 			if($result == 1)
 			{
-				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
+				$this->session->set_flashdata('msg', 'Data has been inserted successfully...!!!');
 			}	
             redirect('admin/category');
 		}else{
@@ -95,7 +95,7 @@ class Category extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];	
 
 			$data['delete'] = $this->Category_model->category_delete($id);
-			$this->session->set_flashdata('msg','ata has been deleted successfully');
+			$this->session->set_flashdata('msg','Data has been deleted successfully');
 			redirect('admin/category');
 		}else{
 			$this->load->view("admin/login");

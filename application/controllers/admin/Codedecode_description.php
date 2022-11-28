@@ -68,8 +68,7 @@ class Codedecode_description extends CI_Controller {
 			$data['code_type'] = $this->Codedecode_model->get_codedecode_type_data();
 			$this->load->view("admin/codedecode_description/edit",$data);
 		}else{
-			$this->load->view("admin/login");
-			
+			$this->load->view("admin/login");			
 		}
     }
 	public function update_codedecode_description(){

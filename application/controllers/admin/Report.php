@@ -110,7 +110,8 @@ class Report extends CI_Controller
 					'largest_region'=>$this->input->post('Largest_region'),
 					'created_user'=>$session_data['Login_user_name'],
 					'status'=>$this->input->post('status'),
-					'created_at'=> date('Y-m-d h:i:sa')
+					'created_at'=> date('Y-m-d'),
+					'updated_at'=> date('Y-m-d')
 				);			
 			// var_dump($postdata); die;				
 			$Last_Inserted_id = $this->Data_model->insert_rd_data($postdata);
@@ -218,7 +219,7 @@ class Report extends CI_Controller
 				'created_user'=>$session_data['Login_user_name'],
 				'country_status'=>$this->input->post('country_status'),
 				'status'=>$this->input->post('status'),
-				'updated_at'=> date('Y-m-d h:i:sa')
+				'updated_at'=> date('Y-m-d')
 			);	
 			$result = $this->Data_model->update_rd_data($report_id,$updatedata);
 			if($result){
@@ -366,7 +367,7 @@ class Report extends CI_Controller
 				'created_user'=> $session_data['Login_user_name'],
 				'country_status'=> $this->input->post('country_status'),
 				'status'=> $status,
-				'updated_at'=> date('Y-m-d h:i:sa')
+				'updated_at'=> date('Y-m-d')
 			);	
 			$result = $this->Data_model->update_rd_data($report_id, $updatedata);
 			/* Market Insight */
@@ -382,7 +383,7 @@ class Report extends CI_Controller
 						$update_insight_description = array(
 							'report_id'=>$report_id,
 							'description'=>$insight_description[$num],
-							'updated_at'=>date('Y-m-d H:i:s')
+							'updated_at'=>date('Y-m-d')
 						);
 						$result = $this->Data_model->update_insight_description($type, $report_id, $update_insight_description);
 					}
@@ -401,7 +402,7 @@ class Report extends CI_Controller
 						$update_segments_name = array(
 							'report_id'=>$report_id,
 							'name'=>$segment_name[$num],
-							'updated_at'=>date('Y-m-d H:i:s')
+							'updated_at'=>date('Y-m-d')
 						);
 						$id = $segment_id[$num];
 						$result = $this->Data_model->update_segments_name($id, $report_id, $update_segments_name);
@@ -421,7 +422,7 @@ class Report extends CI_Controller
 						$update_company_name = array(
 							'report_id'=>$report_id,
 							'name'=>$company_name[$num],
-							'updated_at'=>date('Y-m-d H:i:s')
+							'updated_at'=>date('Y-m-d')
 						);
 						$id = $company_id[$num];
 						$result = $this->Data_model->update_company_name($id, $report_id, $update_company_name);
@@ -441,7 +442,7 @@ class Report extends CI_Controller
 						$update_dro_description = array(
 							'report_id'=>$report_id,
 							'description'=>$dro_description[$num],
-							'updated_at'=>date('Y-m-d H:i:s')
+							'updated_at'=>date('Y-m-d')
 						);
 						$id = $dro_id[$num];
 						$result = $this->Data_model->update_dro_description($id, $report_id, $update_dro_description);
