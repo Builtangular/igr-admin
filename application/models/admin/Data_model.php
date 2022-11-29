@@ -1,9 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Data_model extends CI_Model {   
-    
-	 public function __construct() 
-	 {
+class Data_model extends CI_Model {  
+	 public function __construct(){
 		   parent::__construct(); 
 		   $this->load->database();
 		   $this->admindb = $this->load->database('admindb', TRUE);
@@ -16,12 +14,21 @@ class Data_model extends CI_Model {
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
-		if($sql->num_rows() > 0)
-		{			
+		if($sql->num_rows() > 0){			
 			return $sql->result();
+		}else{
+			return array();
 		}
-		else
-		{
+	}public function get_global_analyst_rds($status){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('status', $status);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
 			return array();
 		}
 	}
@@ -32,23 +39,19 @@ class Data_model extends CI_Model {
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
-		if($sql->num_rows() > 0)
-		{			
+		if($sql->num_rows() > 0){			
 			return $sql->result();
-		}
-		else
-		{
+		}else{
 			return array();
 		}
 	}
-	function title_exists($key)
-	{
+	
+	function title_exists($key){
 		$this->db->like('name',$key);
 		$query = $this->db->get('tbl_rd_data');
 		if ($query->num_rows() > 0){
 			return true;
-		}
-		else{
+		}else{
 			return false;
 		}
 	}
@@ -139,7 +142,7 @@ class Data_model extends CI_Model {
 	/* Master Tables */
 	public function get_category_master(){
 		$this->db->select("*");
-		$this->db->from("tbl_categories_master");
+		$this->db->from("tbl_master_category");
 		$sql = $this->db->get();
 		if($sql->num_rows() > 0)
 		{
@@ -149,8 +152,7 @@ class Data_model extends CI_Model {
 		}
 	}
 	/* last sku */
-	public function get_report_count()
-	{
+	public function get_report_count(){
 		$this->db->select("sku");
 		$this->db->from("tbl_rd_data");
 		$this->db->limit(1);
@@ -288,77 +290,67 @@ class Data_model extends CI_Model {
 		}
 	}
 	/******** pooja work ***************/
-	function count_global_report()
-	{
+	function count_global_report(){
 		$this->admindb->where('status','1');
 		$result = $this->admindb->get('igr_global_reports');
 		$result = $result->num_rows();
 		return $result;
 	}
-	function count_country_report()
-	{
+	function count_country_report(){
 		$this->admindb->where('status','1');
 		$result = $this->admindb->get('igr_country_reports');
 		$result = $result->num_rows();
 		return $result;
 	}
-	function count_region_report()
-	{
+	function count_region_report(){
 		$result = $this->admindb->get('igr_regional_reports');
 		$result = $result->num_rows();
 		return $result;
 	}
-	function count_infographics_report()
-	{
+	function count_infographics_report(){
 		$this->admindb->where('status','1');
 		$result = $this->admindb->get('igr_infographics_data');
 		$result = $result->num_rows();
 		return $result;
 	}
-	public function get_scope_master()
-	{
-		 $result = $this->db->get('tbl_scope_master');
+	public function get_scope_master(){
+		 $result = $this->db->get('tbl_master_scope');
 		 $res = $result->result();
 		 return $res;
 	}
-	public function insert_scope_record()
-	{
+	public function insert_scope_record(){
 		$data = array(
 				'name'    => $this->input->post('name'),
 				'parent'  => $this->input->post('parent'),
 				'active'  => $this->input->post('status'),
 			);		
-			$this->db->insert('tbl_scope_master', $data);
+			$this->db->insert('tbl_master_scope', $data);
 			return 1;
     }
-	function scope_delete($id)
-	{
+	function scope_delete($id){
 		$this->db->where("id", $id);
-    	$this->db->delete("tbl_scope_master");
+    	$this->db->delete("tbl_master_scope");
     	return true;
 	}
-	public function get_single_scope_data($id)
-	{
+	public function get_single_scope_data($id){
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_scope_master');
+		$result = $this->db->get('tbl_master_scope');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
-	public function update_scope($id)
-    {
+	public function update_scope($id) {
         $update = array(
             'name'=>$this->input->post('name'),
 			'parent'=>$this->input->post('parent'),
 			'active'=>$this->input->post('status')
             );
         $this->db->where('id',$id);
-        return $this->db->update('tbl_scope_master', $update);
+        return $this->db->update('tbl_master_scope', $update);
     }
-	public function get_single_parent($id)
-	{
+	public function get_single_parent($id){
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_scope_master');
+		$result = $this->db->get('tbl_master_scope');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
@@ -388,6 +380,61 @@ class Data_model extends CI_Model {
 		$result =  $this->db->update('tbl_rd_dro_data', $data);
 		// echo $this->db->last_query();	// die;
 		return $result;
+	}
+	/* Analyst Data */
+	public function get_global_processed_rds($status){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('status', $status);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+	}
+	public function get_global_published_rds($status){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('status', $status);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+	}
+/* manager Data */
+	public function get_drafted_manager_global_rd($status){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('status', $status);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+	}
+	public function get_manager_global_rds($status){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('status', $status);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+
 	}
 }
 ?>

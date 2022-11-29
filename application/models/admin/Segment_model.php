@@ -15,17 +15,17 @@ class Segment_model extends CI_Model {
 	 } 
 	 public function get_rd_segment()
 	 {
-		$this->db->select('tbl_segment_overview.* ,tbl_rd_segments.name');
+		$this->db->select('tbl_rd_segment_overview.* ,tbl_rd_segments.name');
 		// $this->db->where(array('report_id'=>$report_id));
-		$this->db->join('tbl_rd_segments','tbl_rd_segments.id = tbl_segment_overview.segment_id');
-		$result = $this->db->get('tbl_segment_overview');
+		$this->db->join('tbl_rd_segments','tbl_rd_segments.id = tbl_rd_segment_overview.segment_id');
+		$result = $this->db->get('tbl_rd_segment_overview');
 		$res = $result->result();
 		return $res;
 	 }
 	 public function insert_rd_seg_overview($postoverview){
 	
 		$this->db->trans_start();
-		$this->db->insert('tbl_segment_overview', $postoverview);
+$this->db->insert('tbl_rd_segment_overview', $postoverview);
 		$insert_id = $this->db->insert_id();
 		$this->db->trans_complete();
 		/* echo $this->db->last_query();		
@@ -34,21 +34,21 @@ class Segment_model extends CI_Model {
     }
 	public function get_rd_segment_overview($report_id){
 		$this->db->where('report_id',$report_id);
-		$result = $this->db->get('tbl_segment_overview');
+		$result = $this->db->get('tbl_rd_segment_overview');
 		//echo $this->db->last_query();die;
 		return $result->result();
 	}
 	public function update_rd_single_segment($overview_id, $seg_id,$data){
 		$this->db->where(array('id'=>$overview_id, 'segment_id'=>$seg_id));
 		// $this->db->where('report_id',$report_id);
-		$result =  $this->db->update('tbl_segment_overview', $data);
+		$result =  $this->db->update('tbl_rd_segment_overview', $data);
 		// echo $this->db->last_query();	
 		return $result;
     }
 	function delete_rd_dro_segment($overview_id){
 		// $this->db->where("id", $id);
 		$this->db->where(array('id'=>$overview_id));
-    	$res= $this->db->delete("tbl_segment_overview");
+    	$res= $this->db->delete("tbl_rd_segment_overview");
 		// echo $this->db->last_query();
 		return $res;
 	}

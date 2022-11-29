@@ -141,9 +141,12 @@
                             <li><a href="<?php echo base_url(); ?>admin/category"><span>Category Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/country"><span>Country Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/region"><span>Region Master</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/codedecode_type"><span>Codedecode Type</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/codedecode_description"><span>Codedecode Description</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/codedecode_type"><span>Codedecode
+                                        Type</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/codedecode_description"><span>Codedecode
+                                        Description</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/dro_type"><span>DRO Type</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/image_text_write"><span>Upload Text Write Image</span></a></li> 
                         </ul>
                     </li>
                     <?php } if($Role_id == 1 || $Role_id == 2){ ?>
@@ -152,14 +155,52 @@
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>admin/report"><span>Published Reports</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/country-rd"><span>Country Reports</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/country-rd"><span>Country Reports</span></a>
+                            </li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/verified"><i class="fa fa-file-word-o"></i><span class="text-bold">Verified RDs</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file-code-o"></i><span class="text-bold">Drafts</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/add"><i class="fa fa-plus"></i><span class="text-bold">Add New RD</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/verified"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Verified RDs</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file-code-o"></i><span
+                                class="text-bold">Drafts</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/add"><i class="fa fa-plus"></i><span
+                                class="text-bold">Add New RD</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
+                    <?php } ?>
+
+
+                    <?php if($Role_id == 3){ ?>
+
+                    <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
+                                class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i
+                                class="fa fa-files-o"></i><span>Processed Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
+                                class="text-bold">Drafts</span></a></li>
+                 
+                    <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
+                                class="text-bold">Add New RD</span></a></li>
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
-                    <?php } ?>                    
+                    <?php } ?>
+
+                    <?php if($Role_id == 4){ ?>
+
+                    <li><a href="<?php echo base_url(); ?>manager/report/published"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Published Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>manager/report/processed"><i class="fa fa-files-o"></i><span>Processed
+                                Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
+                                class="text-bold">Drafts</span></a></li>
+                   
+                   
+                    <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <?php } ?>
+                </ul>
+                </li>
+                <!-- <li><a href="http://localhost/testapp/public/superadmin/enroll"><span>Enrollment</span></a></li>
+                    <li><a href="#"><span>Generate Report</span></a></li> -->
+
                 </ul>
             </section>
             <!-- /.sidebar -->

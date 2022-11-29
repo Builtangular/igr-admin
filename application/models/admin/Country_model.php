@@ -12,7 +12,7 @@ class Country_model extends CI_Model {
 	public function get_country_master()
 	{
 		$this->db->select("*");
-		$this->db->from("tbl_country_master");
+		$this->db->from("tbl_master_country");
 		$sql = $this->db->get();		
 		$res = $sql->result();
 		return $res;
@@ -25,7 +25,7 @@ class Country_model extends CI_Model {
 			'active'  =>$this->input->post('status'),
 			);
 		 
-		$sql = $this->db->insert('tbl_country_master', $data);
+		$sql = $this->db->insert('tbl_master_country', $data);
 		return $sql;
 
    }
@@ -33,7 +33,7 @@ class Country_model extends CI_Model {
    {
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_country_master');
+		$result = $this->db->get('tbl_master_country');
 		//echo $this->db->last_query();die;
 		return $result->row();
    }
@@ -45,12 +45,12 @@ class Country_model extends CI_Model {
 			  'active'=>$this->input->post('status')
 		   );
 	   $this->db->where('id',$id);
-	   return $this->db->update('tbl_country_master', $update);
+	   return $this->db->update('tbl_master_country', $update);
    }
    public function get_single_parent($id)
    {
 		$this->db->select("*");
-		$this->db->from("tbl_country_master");
+		$this->db->from("tbl_master_country");
 		$this->db->where('id',$id);
 		$result = $this->db->get();
 		//echo $this->db->last_query();die;
@@ -59,7 +59,7 @@ class Country_model extends CI_Model {
    function country_delete($id)
    {
 		$this->db->where("id", $id);
-		$result = $this->db->delete("tbl_country_master");
+		$result = $this->db->delete("tbl_master_country");
 		return $result;
    }
 
@@ -95,7 +95,7 @@ class Country_model extends CI_Model {
 	public function get_countries()
 	{
 		$this->db->select("*");
-		$this->db->from("tbl_country_master");
+		$this->db->from("tbl_master_country");
 		$sql = $this->db->get();
 		// echo $this->db->last_query();	die;
 		if($sql->num_rows() > 1)
@@ -126,7 +126,7 @@ class Country_model extends CI_Model {
 	}
 	public function get_country_rd_record()
 	{
-		 $result = $this->db->get('tbl_country_master');
+		 $result = $this->db->get('tbl_master_country');
 		 $res = $result->result();
 		 return $res;
 	

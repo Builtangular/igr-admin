@@ -10,7 +10,7 @@ class Codedecode_model extends CI_Model {
 	 }
 	public function get_codedecode_type()
 	{
-		 $result = $this->db->get('tbl_codedecode_type');
+		 $result = $this->db->get('tbl_master_codetype');
 		 $res = $result->result();
 		 return $res;
 	}
@@ -22,7 +22,7 @@ class Codedecode_model extends CI_Model {
 			        );
 
 		
-			$this->db->insert('tbl_codedecode_type', $data);
+			$this->db->insert('tbl_master_codetype', $data);
 			return 1;
 
     }
@@ -30,14 +30,14 @@ class Codedecode_model extends CI_Model {
 	{
 		//var_dump('hii');die;
 		$this->db->where("id", $id);
-    	$this->db->delete("tbl_codedecode_type");
+    	$this->db->delete("tbl_master_codetype");
     	return true;
 	}
 	public function get_single_codedecode_type($id)
 	{
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_codedecode_type');
+		$result = $this->db->get('tbl_master_codetype');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
@@ -48,18 +48,18 @@ class Codedecode_model extends CI_Model {
 			'active'=>$this->input->post('status')
             );
         $this->db->where('id',$id);
-        return $this->db->update('tbl_codedecode_type', $update);
+        return $this->db->update('tbl_master_codetype', $update);
     }
 	/* Get Codedecode Description */
 	public function get_codedecode_description()
 	{
-		 $result = $this->db->get('tbl_codedecode_type_description');
+		 $result = $this->db->get('tbl_master_codetype_description');
 		 $res = $result->result();
 		 return $res;
 	}
     public function get_codedecode_type_data()
 	{
-		 $result = $this->db->get('tbl_codedecode_type');
+		 $result = $this->db->get('tbl_master_codetype');
 		 $res = $result->result();
 		 return $res;
 	}
@@ -72,7 +72,7 @@ class Codedecode_model extends CI_Model {
 			        );
 
 		
-			$this->db->insert('tbl_codedecode_type_description', $data);
+			$this->db->insert('tbl_master_codetype_description', $data);
 			return 1;
 
     }
@@ -80,14 +80,14 @@ class Codedecode_model extends CI_Model {
 	{
 		//var_dump('hii');die;
 		$this->db->where("id", $id);
-    	$this->db->delete("tbl_codedecode_type_description");
+    	$this->db->delete("tbl_master_codetype_description");
     	return true;
 	}
 	public function get_single_codedecode_description($id)
 	{
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_codedecode_type_description');
+		$result = $this->db->get('tbl_master_codetype_description');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
@@ -99,13 +99,13 @@ class Codedecode_model extends CI_Model {
 			'active'=>$this->input->post('status')
             );
         $this->db->where('id',$id);
-        return $this->db->update('tbl_codedecode_type_description', $update);
+        return $this->db->update('tbl_master_codetype_description', $update);
     }
 	public function get_single_codedecode_decs($id)
 	{
 
 		$this->db->where('id',$id);
-		$result = $this->db->get('tbl_codedecode_type');
+		$result = $this->db->get('tbl_master_codetype');
 		//echo $this->db->last_query();die;
 		return $result->row();
 	}
