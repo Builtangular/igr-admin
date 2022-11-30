@@ -78,7 +78,7 @@
 								$query_dro_reports = $this->db->query($dro_reports);
                                 if ($query_dro_reports->num_rows() > 0) { $dro_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$dro_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* Segment Overview */
-                                $segment_overview = "SELECT * FROM tbl_segment_overview where report_id = ".$data->id;
+                                $segment_overview = "SELECT * FROM tbl_rd_segment_overview where report_id = ".$data->id;
 								$query_segment_overview = $this->db->query($segment_overview);
                                 if ($query_segment_overview->num_rows() > 0) { $segment_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$segment_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* PR2 Writeup */

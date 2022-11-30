@@ -18,8 +18,9 @@ class Image_text_write extends CI_Controller
     function index()
 	{	
         if($this->session->userdata('logged_in')){
-        $data = $this->session->userdata('logged_in');
-        $data['massage'] = $this->session->userdata('msg');
+		$session_data = $this->session->userdata('logged_in');
+		$data['Login_user_name']=$session_data['Login_user_name'];	
+		$data['Role_id']=$session_data['Role_id'];
 		$this->load->view("admin/image_text_upload", $data);
         }else{
             $this->load->view("admin/login");

@@ -71,8 +71,7 @@ $route['admin/market-insight/view/(:num)'] ='admin/market_insight/view/$1';
 $route['admin/market-insight/edit/(:num)'] ='admin/market_insight/edit/$1';
 $route['admin/market-insight/update/(:num)'] ='admin/market_insight/update/$1';
 $route['admin/market-insight/delete/(:num)'] ='admin/market_insight/delete/$1';
-/* $route['admin/dro/(:num)'] ='admin/dro_controller/index/$1'; 
-$route['admin/dro/add/(:num)'] ='admin/dro_controller/add/$1'; */
+
 $route['admin/dro-type/(:num)'] ='admin/dro_type/index/$1';
 $route['admin/dro-reports/(:num)'] ='admin/dro_reports/index/$1';
 $route['admin/dro-reports/add/(:num)'] ='admin/dro_reports/add/$1';
@@ -87,18 +86,19 @@ $route['admin/segment-overview/(:num)'] ='admin/segment_overview/index/$1';
 $route['admin/segment-overview/add/(:num)'] ='admin/segment_overview/add/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
+
 $route['admin/spreadsheet'] = 'admin/PhpspreadsheetController';
 $route['admin/spreadsheet/filter'] = 'admin/PhpspreadsheetController/filter';
 $route['admin/spreadsheet/index'] = 'admin/PhpspreadsheetController/index';
 $route['admin/spreadsheet/export'] = 'admin/PhpspreadsheetController/export';
 
-// $route['admin/export'] ='admin/export/index';
-// $route['admin/export/generateXls'] ='admin/export/generateXls';
-// $route['admin/country_rd'] ='admin/country_rd/index';
-// $route['admin/country_rd/create/(:num)'] ='admin/country_rd/create/$1';
-
 /* analyst urls */
-$route['analyst/report/processed'] ='admin/report/analyst_processed_rd';
-$route['analyst/report/published'] ='admin/report/analyst_published_rd';
+$route['analyst/report/processed'] ='admin/analyst_report/analyst_processed_rd';
+$route['analyst/report/published'] ='admin/analyst_report/analyst_published_rd';
 $route['analyst/report/drafts'] ='admin/report/drafts';
 $route['analyst/report/add'] ='admin/report/add';
+
+/* manager urls */
+$route['manager/report/processed'] ='admin/manager_report/manager_processed_rd';
+$route['manager/report/published'] ='admin/manager_report/manager_published_rd';
+$route['manager/report/drafts'] ='admin/manager_report/drafts';

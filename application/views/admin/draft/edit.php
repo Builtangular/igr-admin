@@ -393,11 +393,18 @@
                             </div>
                         </div>
                         <?php } } ?>
+
                         <div class="box-footer">
                             <input type="hidden" name="report_id" class="form-control"
                                 value="<?php echo $report_id; ?>">
                             <input type="submit" class="btn btn-info pull-left" name="request" value="Update">
+                            <?php if($Role_id == 4){ ?>
+                            <input type="submit" class="btn btn-success pull-right" name="request" value="Verify">
+                            <?php } else if($Role_id == 3){ ?>
+                            <input type="submit" class="btn btn-success pull-right" name="request" value="Process">                           
+                            <?php } else{ ?>
                             <input type="submit" class="btn btn-success pull-right" name="request" value="Publish">
+                            <?php }?>
                         </div>
                     </form>
                 </div>

@@ -305,7 +305,9 @@
                                     <input type="text" name="Publish_date" value="<?php echo $updated_at; ?>" class="form-control">
                                 </div>
                             </div>
+                            
                         </div>
+                        
                         <div class="box-footer">
                             <input type="hidden" name="report_id" class="form-control" value="<?php echo $report_id; ?>">
                             <input type="submit" class="btn btn-info pull-right" value="Submit">

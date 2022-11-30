@@ -10,7 +10,7 @@ class Category_model extends CI_Model {
      }
      public function get_category_master()
      {
-          $result = $this->db->get('tbl_categories_master');
+          $result = $this->db->get('tbl_master_category');
           $res = $result->result();
           return $res;
      }
@@ -23,13 +23,13 @@ class Category_model extends CI_Model {
                'created_at'=> date('Y-m-d'),
                'updated_at'=> date('Y-m-d')
           );
-          $result = $this->db->insert('tbl_categories_master', $data);
+          $result = $this->db->insert('tbl_master_category', $data);
           return $result; 
      }    
      public function get_single_category_data($id)
      { 
           $this->db->where('id',$id);
-          $result = $this->db->get('tbl_categories_master');
+          $result = $this->db->get('tbl_master_category');
           //echo $this->db->last_query();die;
           return $result->row();
      }
@@ -42,19 +42,19 @@ class Category_model extends CI_Model {
                'updated_at'=> date('Y-m-d')
           );
          $this->db->where('id',$id);
-         return $this->db->update('tbl_categories_master', $update);
+         return $this->db->update('tbl_master_category', $update);
      }
      public function get_single_parent($id)
      { 
           $this->db->where('id',$id);
-          $result = $this->db->get('tbl_categories_master');
+          $result = $this->db->get('tbl_master_category');
           //echo $this->db->last_query();die;
           return $result->row();
      }
      function category_delete($id)
      {
           $this->db->where("id", $id);
-          $this->db->delete("tbl_categories_master");
+          $this->db->delete("tbl_master_category");
           return true;
      }
 }

@@ -2,10 +2,8 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Report extends CI_Controller 
-{    
-	public function __construct()
-	{		
+class Report extends CI_Controller {    
+	public function __construct(){		
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Data_model');
@@ -13,10 +11,8 @@ class Report extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
 	}
-	public function index()
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function index(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -28,14 +24,11 @@ class Report extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
-	public function title_exist()
-    {
-		if($this->session->userdata('logged_in'))
-		{
+	public function title_exist(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			
 			$result = $this->Data_model->title_exists($this->input->get('name'));
 			if($result == true){
 				$data['message']="<p class=\"text-red\">Title already exists</p>";
@@ -47,14 +40,11 @@ class Report extends CI_Controller
 			$this->load->view('admin/login');
 		}
     }
-	public function add()
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function add(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$data['Global_Rds']= $this->Data_model->get_global_rds();
@@ -64,13 +54,10 @@ class Report extends CI_Controller
 		}
 	}
 	public function insert(){
-		
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			/* automated sku */
 			$report_sku = $this->Data_model->get_report_count();			
 			$sku_code = explode('R', $report_sku->sku);
@@ -130,12 +117,10 @@ class Report extends CI_Controller
 	}
 	/* Edit Rd Data */
 	public function edit($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$rd_data= $this->Data_model->get_rd_data($id);
@@ -184,7 +169,6 @@ class Report extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$report_id = $this->input->post('report_id');
 			$country_status = $this->input->post('country_status');
 			if($country_status == 0){
@@ -225,8 +209,7 @@ class Report extends CI_Controller
 			if($result){
 				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
 			}else{
-				$this->session->set_flashdata("success_code","Sorry! Data has not updated");				
-				
+				$this->session->set_flashdata("success_code","Sorry! Data has not updated");
 			}
 			redirect('admin/report');
 		}else{			
@@ -239,7 +222,6 @@ class Report extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$result = $this->Data_model->delete_rd_data($id);
 			if($result){
 				$this->session->set_flashdata("success_code", "Report has been deleted successfully..!!!");				
@@ -252,13 +234,13 @@ class Report extends CI_Controller
 		}
 	}
 	public function drafts(){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
-						
-			$data['Page_name']= 'Under Study';
+			$data['Role_id']=$session_data['Role_id'];			
+			$data['success_code'] = $this->session->userdata('success_code');
+			
+			$data['Page_name']= 'Under Study';			
 			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds();
 			$this->load->view('admin/draft/list',$data);			
 		}else{			
@@ -266,12 +248,11 @@ class Report extends CI_Controller
 		}
 	}
 	public function view($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
-				
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$rd_data= $this->Data_model->get_rd_data($id);
@@ -321,17 +302,23 @@ class Report extends CI_Controller
 	/* To Update complete content of report from executive */
 	public function rd_update(){
 		// var_dump($_POST); die;
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
+			// var_dump($data['Login_user_name']);die;
 			$report_id = $this->input->post('report_id');
 			$request = $this->input->post('request');
+			// var_dump($request);die;
 			if($request == 'Publish'){
 				$status = 3;
-			}else{
+			}else if ($request == 'Verified'){
+				$status = 2;
+			}
+			else if ($request == 'Process'){
+				$status = 1;
+			}
+			else{
 				$status = $this->input->post('status');
 			}
 			$country_status = $this->input->post('country_status');
