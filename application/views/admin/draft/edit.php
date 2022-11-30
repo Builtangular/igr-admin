@@ -108,6 +108,10 @@
                                     <label class="control-label col-md-3">Report Status</label>
                                     <div class="col-md-9">
                                         <div class="radio">
+                                            <?php if($status == 2){ ?>
+                                                <label><input type="radio" name="status" value="2"
+                                                    <?php echo ($status==2)?'checked':'' ?> />Verified</label>
+                                            <?php } ?>
                                             <label><input type="radio" name="status" value="0"
                                                     <?php echo ($status==0)?'checked':'' ?> />Draft</label>
                                             <!-- <label><input type="radio" name="status" value="0"
@@ -118,7 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label col-md-3">Country RD Status</label>
                                     <div class="col-md-9">
                                         <div class="radio">
@@ -128,7 +132,7 @@
                                                     <?php echo ($country_status==0)?'checked':'' ?> />Generate</label>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

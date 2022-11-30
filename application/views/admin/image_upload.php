@@ -33,26 +33,26 @@
                     <form action="<?php echo base_url('admin/image/image_upload');?>" method="post"
                         class="form-horizontal" accept-charset="utf-8" enctype="multipart/form-data">
                         <div class="box-body">
-                        <?php if($image){?>
+                            <?php if($image){?>
                             <h5 class="box-title text-bold">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                                     Exiting File: <?php echo $image->image_file; ?>
                                 </a>
+                                <input type="hidden" name="id" class="form-control"
+                                        value="<?php echo $image->id;?>">
                             </h5>
                             <?php } ?>
-                        <div class="form-group">
+                            <div class="form-group">
                                 <label for="inputImage" class="col-sm-3 control-label">Upload Image</label>
                                 <div class="col-md-9">
-                                    <input type="file" name="image_file" class="form-control">
-                                    <input type="hidden" name="id" class="form-control"
-                                        value="<?php echo $image->id;?>">
+                                    <input type="file" name="image_file" class="form-control">                                    
                                     <input type="hidden" name="report_id" class="form-control"
                                         value="<?php echo $report_id;?>">
                                 </div>
                             </div>
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-primary pull-right" value="Submit">
-                        </div>
+                            <div class="box-footer">
+                                <input type="submit" class="btn btn-primary pull-right" value="Submit">
+                            </div>
                     </form>
                 </div>
             </div>

@@ -41,6 +41,22 @@ class Data_model extends CI_Model {
 			return array();
 		}
 	}
+	public function get_verified_global_rds(){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		$this->db->where('status', 2);
+		$sql = $this->db->get();
+		/* echo $this->otherdb->last_query();
+		die; */
+		if($sql->num_rows() > 0)
+		{			
+			return $sql->result();
+		}
+		else
+		{
+			return array();
+		}
+	}
 	function title_exists($key)
 	{
 		$this->db->like('name',$key);
@@ -328,8 +344,8 @@ class Data_model extends CI_Model {
 				'parent'  => $this->input->post('parent'),
 				'active'  => $this->input->post('status'),
 			);		
-			$this->db->insert('tbl_scope_master', $data);
-			return 1;
+		$result = $this->db->insert('tbl_scope_master', $data);
+		return $result;
     }
 	function scope_delete($id)
 	{
@@ -389,5 +405,51 @@ class Data_model extends CI_Model {
 		// echo $this->db->last_query();	// die;
 		return $result;
 	}
+	public function insert_published_rd_title($report_id, $full_title){
+		/* $complete_title = array('full_title' => $data);    
+		$this->db->where(array('id'=> $report_id));
+		$result =  $this->db->update('tbl_rd_data', $complete_title);
+		// echo $this->db->last_query();	die;
+		return $result;
+		 */
+		$data = array(
+			'report_id'    => $report_id,
+			'rd_title'    => $full_title,
+			'created_at'  => date('Y-m-d'),
+			'updated_at'  => date('Y-m-d'),
+		);		
+		$result = $this->db->insert('tbl_rd_title_data', $data);
+		return $result;
+	}
+	/* Segments Extract */
+	function get_main_segments($report_id)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_rd_segments');
+		$this->db->where(array('report_id'=>$report_id, 'parent_id'=>0));
+		// $this->db->order_by("updated_at", "desc");
+		// $this->db->limit(5);
+		$query = $this->db->get();
+		// echo $this->db->last_query();
+		if($query->num_rows() > 0)
+		{			
+			return $query->result_array();
+		}else{
+			return array();
+		}
+	}
+	function get_sub_segments($report_id, $seg_id)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_rd_segments');
+		$this->db->where(array('report_id'=>$report_id, 'parent_id'=>$seg_id));
+		$sql = $this->db->get();
+		if($sql->num_rows() > 0)
+		{
+			return $sql->result_array();
+		}else{
+			return array();
+		}
+	}	
 }
 ?>

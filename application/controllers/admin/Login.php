@@ -23,7 +23,8 @@ class Login extends CI_Controller
         $this->form_validation->set_rules('password', 'password', 'required');
 		if($this->form_validation->run() == FALSE)
         {
-            $this->load->view('admin/login');
+            $data['msg'] = "Welcome";
+            $this->load->view('admin/login', $data);
         }
 		else
         {			
@@ -66,7 +67,7 @@ class Login extends CI_Controller
 				/////////// If Auth. is fail //////
 				// $data['message'] = "<font class='error'>Invalid username or password..!!</font>";
 				// $this->session->set_flashdata("error_code","Invalid username or password..!!");	
-				$data['msg'] = "Invalid username or password.";
+				$data['msg'] = "<code>Invalid username or password.</code>";
 				$this->load->view('admin/login', $data);			
 				// $this->load->view('admin/login',$data);				
 			}

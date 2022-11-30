@@ -27,23 +27,23 @@
                     <div class="box-header">
                         <h3 class="box-title">Country RD List</h3>
                     </div>
-					<?php if($success_code){ ?>
-					<div class="alert alert-success">					
-					<button type="button" class="close" data-dismiss="alert">x</button>
-						<p><?php echo $success_code; ?></p>
-					</div>
-					<?php } ?>
+                    <?php if($success_code){ ?>
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <p><?php echo $success_code; ?></p>
+                    </div>
+                    <?php } ?>
                     <div class="box-body">
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-									<th>Title</th>
-									<th>Sku</th>
-									<th>Country</th>
-									<th>Status</th>
-									<th>Date</th>
-									<th>Action</th>
+                                    <th>Title</th>
+                                    <th>Sku</th>
+                                    <th>Country</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th style="width: 89px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,29 +51,31 @@
                                         
                                         ?>
 
-                                    <tr style="font-size: 14px;">
-                                        <td class="text-center"><?php echo $data->id; ?></td>
-                                        <td><?php echo $data->title; ?></td>
-                                        <td class="text-center"><?php echo $data->sku; ?></td>
-                                        <td class="text-center"><?php echo $data->country; ?></td>
-                                        <td class="text-center"><?php echo $data->status; ?></td>
-                                        <td class="text-center"><?php echo date("d-m-Y"); ?></td>
-                                        <td><a href="<?php echo base_url(); ?>admin/country_rd/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
-											<a href="<?php echo base_url(); ?>admin/country_rd/contry_rd_delete/<?php echo $data->id; ?>"" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-										</td>
-                                    </tr>
-                                    <?php } ?>
+                                <tr style="font-size: 14px;">
+                                    <td class="text-center"><?php echo $data->id; ?></td>
+                                    <td><?php echo $data->title; ?></td>
+                                    <td class="text-center"><?php echo $data->sku; ?></td>
+                                    <td class="text-center"><?php echo $data->country; ?></td>
+                                    <td class="text-center"><?php echo $data->status; ?></td>
+                                    <td class="text-center"><?php echo date("d-m-Y"); ?></td>
+                                    <td><a href="<?php echo base_url(); ?>admin/country_rd/edit/<?php echo $data->id; ?>"
+                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |
+                                        <a href="<?php echo base_url(); ?>admin/country_rd/contry_rd_delete/<?php echo $data->id; ?>"" class="
+                                            btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                    </td>
+                                </tr>
+                                <?php } ?>
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-									<th>Title</th>
-									<th>Sku</th>
-									<th>Country</th>
-									<th>Status</th>
-									<!-- <th>Vol</th> -->
-									<th>Date</th>
-									<th>Action</th>
+                                    <th>Title</th>
+                                    <th>Sku</th>
+                                    <th>Country</th>
+                                    <th>Status</th>
+                                    <!-- <th>Vol</th> -->
+                                    <th>Date</th>
+                                    <th style="width: 89px;">Action</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -84,7 +86,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <!-- Footer -->
-    <footer class="main-footer">
+<footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
         Anything you want
@@ -96,36 +98,37 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 
-    <!-- jQuery 2.1.3 -->
-    <script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.2 JS -->
-    
-	<script src="<?php echo base_url(); ?>assets/admin/js/jquery.dataTables.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/admin/js/dataTables.bootstrap.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/admin/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- AdminLTE App -->
-    <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
-    
-    
-    <script>
-    $(document).ready(function () {
-      $('.sidebar-menu').tree()
-    })
-  </script>
-  
+<!-- jQuery 2.1.3 -->
+<script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+
+<script src="<?php echo base_url(); ?>assets/admin/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/admin/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/admin/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
+
+
 <script>
-  $(function () {
+$(document).ready(function() {
+    $('.sidebar-menu').tree()
+})
+</script>
+
+<script>
+$(function() {
     // $('#rddata').DataTable()
     $('#rddata').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : false,
-      'info'        : true,
-      'autoWidth'   : true
+        'paging': true,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': false,
+        'info': true,
+        'autoWidth': true
     })
-  })
+})
 </script>
-        </body>
+</body>
+
 </html>

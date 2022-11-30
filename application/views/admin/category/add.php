@@ -44,7 +44,7 @@
                                         foreach($get_category_data as $data)						
                                         {						
                                         ?>
-                                            <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
+                                        <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
                                         <?php						
                                         }					
                                         ?>

@@ -117,10 +117,10 @@ class Report extends CI_Controller
 			$Last_Inserted_id = $this->Data_model->insert_rd_data($postdata);
 			if($Last_Inserted_id){
 				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!");				
-				redirect('admin/report');
+				redirect('admin/report/drafts');
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");				
-				redirect('admin/report');
+				redirect('admin/report/drafts');
 			}		
 		}		
 		else
@@ -229,7 +229,6 @@ class Report extends CI_Controller
 				
 			}
 			redirect('admin/report');
-			var_dump($updatedata); die;
 		}else{			
 			$this->load->view('admin/login');
 		}
@@ -259,6 +258,7 @@ class Report extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 						
+			$data['Page_name']= 'Under Study';
 			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds();
 			$this->load->view('admin/draft/list',$data);			
 		}else{			
@@ -334,10 +334,10 @@ class Report extends CI_Controller
 			}else{
 				$status = $this->input->post('status');
 			}
-			/* $country_status = $this->input->post('country_status');
+			$country_status = $this->input->post('country_status');
 			if($country_status == 0){
 				$data['delete'] = $this->Data_model->delete_contry_rds($report_id);
-			} */
+			}
 			$title = $this->input->post('title');
 			$updatedata=array(
 				'title'=> $this->input->post('title'),
@@ -450,8 +450,68 @@ class Report extends CI_Controller
 					$num++;
 				}
 			}
-			// die; 
 			if($request == 'Publish'){
+
+				$scope_id= $this->input->post('scope');
+				$report_title = $this->input->post('title');
+				$forecast_to = $this->input->post('forecast_to');
+				/* Get Scope of title */
+				$ScopeList = $this->Data_model->get_scope_master();
+				
+				foreach($ScopeList as $scope){
+					if($scope->id == $scope_id){
+						$scope_name = $scope->name;
+						// var_dump($scope_name);
+					}
+				}
+				$MainSegments= $this->Data_model->get_main_segments($report_id);
+				// var_dump($MainSegments); die;
+				foreach($MainSegments as $segments)
+				{
+					$mainseg[] = strtolower($segments['name']);					
+					// var_dump($mainseg); 
+					$segment_details.= ltrim(rtrim(strtolower($segments['name'])))." - ";	
+					$SubSegments=$this->Data_model->get_sub_segments($report_id, $segments['id']);
+					// var_dump($SubSegments); die;
+					foreach($SubSegments as $sub_seg)
+					{
+						$sub_seg1[]=strtolower($sub_seg['name']);					
+					}
+					$j= count($sub_seg1);
+					// var_dump($sub_seg1);
+					for($i = 0; $i< $j ; $i++)
+					{
+						if($i == $j-2)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", and ";
+						}
+						if($i == $j-1)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i]))."; ";
+						}
+						if($i < $j-2)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", ";
+						}						
+					}	
+					unset($sub_seg1);
+				}				
+				unset($mainseg);
+				
+				$Report_title = htmlspecialchars($report_title)." (".ucwords($segment_details)."): ";
+				$Report_title_1 = array_shift(explode('; )', $Report_title));
+				$Report_title_2 = str_replace('And','and',ltrim(rtrim(ucwords($Report_title_1, " \t\r\n\f\v'"))));
+				$report_full_title = $Report_title_2."): ".ucwords($scope_name)." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;;
+
+				$result = $this->Data_model->insert_published_rd_title($report_id, $report_full_title);
+				// $join_result = $this->Data_model->join_two_tables_of_rd();
+				// var_dump($result); die;
+			}
+			// die; 
+			if($status == 2){
+				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
+				redirect('admin/report/verified');
+			}if($request == 'Publish'){
 				$this->session->set_flashdata("success_code","Report: ".$title." has been published successfully..!!!");
 				redirect('admin/report');
 			}else if($result){
@@ -461,6 +521,20 @@ class Report extends CI_Controller
 				$this->session->set_flashdata("success_code","Sorry! Data has not updated");				
 				redirect('admin/report/drafts');
 			}			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function verified(){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			
+			$data['Page_name']= 'Verified';
+			$data['Global_Rds']= $this->Data_model->get_verified_global_rds();
+			$this->load->view('admin/draft/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
 		}
