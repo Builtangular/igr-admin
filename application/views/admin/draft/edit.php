@@ -104,21 +104,19 @@
                                         <input type="text" name="sku" value="<?php echo $sku; ?>" class="form-control">
                                     </div>
                                 </div>
+                                <?php if($Role_id == 1 || $Role_id == 2){  ?>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Report Status</label>
                                     <div class="col-md-9">
                                         <div class="radio">
                                             <?php if($status == 2){ ?>
-                                                <label><input type="radio" name="status" value="2"
+                                            <label><input type="radio" name="status" value="2"
                                                     <?php echo ($status==2)?'checked':'' ?> />Verified</label>
                                             <?php } ?>
                                             <label><input type="radio" name="status" value="0"
                                                     <?php echo ($status==0)?'checked':'' ?> />Draft</label>
-                                            <!-- <label><input type="radio" name="status" value="0"
-                                                    <?php echo ($status==0)?'checked':'' ?> />Under Study</label> -->
                                             <label><input type="radio" name="status" value="3"
                                                     <?php echo ($status==1)?'checked':'' ?> />Publish</label>
-                                            <!-- <label><input type="radio" name="status" value="2" <?php echo ($status==2)?'checked':'' ?> />Inactive</label> -->
                                         </div>
                                     </div>
                                 </div>
@@ -133,6 +131,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php } ?>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -285,31 +284,6 @@
                                         placeholder="Market Value During the Forecast Period" />
                                 </div>
                             </div>
-                            <!-- <div class="form-group">
-                                <label class="control-label col-md-2">Report Definition</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Report_definition" rows="5" class="form-control"><?php echo $report_definition; ?></textarea>
-                                </div>
-                            </div> -->
-                            <!-- <div class="form-group">
-                                <label class="control-label col-md-2">Market Insight Para 1</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Report_description" rows="8" class="form-control"><?php echo $report_description; ?></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Market Insight Para 2</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Executive_summary_DRO" rows="8" class="form-control"><?php echo $executive_summary_DRO; ?></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Market Insight Para 3</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Executive_summary_regional_description" rows="8"
-                                        class="form-control"><?php echo $executive_summary_regional_description; ?></textarea>
-                                </div>
-                            </div> -->
                             <div class="form-group">
                                 <label class="control-label col-md-2">Largest Region</label>
                                 <div class="col-md-10">
@@ -325,9 +299,9 @@
                                 </div>
                             </div>
                         </div>
-                        <hr />
+                        <!-- Market Insight Part -->
                         <?php if($market_insight){ ?>
-                        <h3 class="col-md-12"><span class="label label-success">Market Insight</span></h3>
+                        <h4 class="col-md-12 page-header text-red">Market Insight</h4>
                         <?php foreach($market_insight as $insight){ ?>
                         <div class="col-md-12">
                             <div class="form-group">
@@ -341,9 +315,12 @@
                             </div>
                         </div>
                         <?php } } ?>
+                        <!-- ./ Market Insight Part -->
+                        <!-- Segments Part -->
                         <?php if($segments){  ?>
-                        <h3 class="col-md-12"><span class="label label-success">Segments List</span></h3>
+                        <!-- <h3 class="col-md-12 text-center"><span class="label label-success">Segments List</span></h3> -->
                         <!-- <h4 class="col-md-12">Segment List</h4> -->
+                        <h4 class="col-md-12 page-header text-red">Segments List</h4>
                         <?php foreach($segments as $seg){  ?>
                         <div class="col-md-12">
                             <div class="form-group">
@@ -361,9 +338,10 @@
                             </div>
                         </div>
                         <?php } } ?>
+                        <!-- ./ Segments Part -->
+                        <!-- Companies Part -->
                         <?php if($companies){  ?>
-                        <h3 class="col-md-12"><span class="label label-success">Companies List</span></h3>
-                        <!-- <h4 class="col-md-12">Companies List</h4> -->
+                        <h4 class="col-md-12 page-header text-red">Companies List</h4>
                         <?php foreach($companies as $company){  ?>
                         <div class="col-md-12">
                             <div class="form-group">
@@ -377,9 +355,10 @@
                             </div>
                         </div>
                         <?php } } ?>
+                        <!-- ./ Companies Part -->
+                        <!-- DRO Part -->
                         <?php if($dro_data){  ?>
-                        <h3 class="col-md-12"><span class="label label-success">DRO List</span></h3>
-                        <!-- <h4 class="col-md-12 text-red">DRO List</h4> -->
+                        <h4 class="col-md-12 page-header text-red">DRO List</h4>
                         <?php foreach($dro_data as $dro){  ?>
                         <div class="col-md-12">
                             <div class="form-group">
@@ -393,6 +372,39 @@
                             </div>
                         </div>
                         <?php } } ?>
+                        <!-- ./ DRO Part -->
+                        <!-- Segment Overview Part -->
+                        <?php if($Role_id == 3){  ?>
+                        <?php if($segment_overview_data){  ?>
+                        <h4 class="col-md-12 page-header text-red">Segment Overview</h4>
+                        <!-- <h4 class="col-md-12 text-red">DRO List</h4> -->
+                        <?php foreach($segment_overview_data as $segment_overview){  
+                            
+                            foreach($MainSegment as $name){
+                            if ($segment_overview['id'] == $name->id){
+                                $segment_id = $name->id;
+                                $segment_name.= $name->name;
+                                // var_dump($segment_name); 
+                            } } 
+                            // die;
+                            ?>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label
+                                    class="control-label col-md-2"><?php echo $segment_name; ?></label>
+                                <div class="col-md-10">
+                                    <textarea type="text" name="segment_overview[]" rows="5"
+                                        class="form-control"><?php echo $segment_overview['description']; ?></textarea>
+                                    <!-- <input type="text" name="dro_description[]" value="<?php echo $segment_overview['description']; ?>"
+                                        class="form-control"> -->
+                                    <input type="hidden" name="seg_overview_id[]"
+                                        value="<?php echo $segment_overview['id']; ?>" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <?php } } ?>
+                        <?php }  ?>
+                        <!-- ./ Segment Overview Part -->
 
                         <div class="box-footer">
                             <input type="hidden" name="report_id" class="form-control"
@@ -401,7 +413,7 @@
                             <?php if($Role_id == 4){ ?>
                             <input type="submit" class="btn btn-success pull-right" name="request" value="Verify">
                             <?php } else if($Role_id == 3){ ?>
-                            <input type="submit" class="btn btn-success pull-right" name="request" value="Process">                           
+                            <input type="submit" class="btn btn-success pull-right" name="request" value="Process">
                             <?php } else{ ?>
                             <input type="submit" class="btn btn-success pull-right" name="request" value="Publish">
                             <?php }?>

@@ -256,7 +256,6 @@ class Report extends CI_Controller {
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$rd_data= $this->Data_model->get_rd_data($id);
-			// var_dump($rd_data->enterprise_price); die;
 			$data['report_id']= $rd_data->id;
 			$data['name']= $rd_data->name;
 			$data['title']= $rd_data->title;
@@ -294,6 +293,10 @@ class Report extends CI_Controller {
 			$data['companies']= $this->Data_model->get_rd_companies($id);
 			/* DRO */
 			$data['dro_data'] = $this->Data_model->get_rd_dro_data($id);
+			/* Segment Overview */
+			$data['segment_overview_data'] = $this->Data_model->get_rd_segment_overview($id);
+			$data['MainSegment'] = $this->Data_model->get_main_segment_name($id);
+			// var_dump($data['segment_overview_data']); die;
 			$this->load->view('admin/draft/edit',$data);			
 		}else{			
 			$this->load->view('admin/login');

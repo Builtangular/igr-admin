@@ -46,26 +46,18 @@
                                     <th>Cat</th>
                                     <th>Forecast</th>
                                     <!-- <th>Vol</th> -->
-                                    <th>Company</th>
-                                    <th>Segment</th>
-                                    <!-- <th>Status</th> -->
-                                    <th>Insight</th>
-                                    <th>DRO</th>
-                                    <th>Overview</th>
-                                    <th>PR2</th>
-                                    <th>Image</th>
-                                    <th>Country</th>
-                                    <th style="width: 75px;">Action</th>
                                     <th>Segment</th>
                                     <th>Company</th>
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
                                     <!-- <th>Overview</th>
-                                    <th>PR2</th> -->
+                                    <th>PR2</th> -->                                    
+                                    <?php if($Role_id == 1 || $Role_id==2){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
-                                    <th>Action</th>
+                                    <?php } ?>
+                                    <th style="width: 75px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,12 +94,6 @@
                                     <td class="text-center"><?php echo $data->scope_id; ?></td>
                                     <td class="text-center"><?php echo $data->category_id; ?></td>
                                     <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
-                                    <!--<td><?php echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
-                                    <!-- <td><?php echo $data->is_volume_based; ?></td> -->
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i
-                                                    class="fa fa-pencil"></i>
-                                                List</b></a><br><?php echo $rd_company->rd_companies." company"; ?></td>
                                     <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
                                     <!-- <td><?php // echo $data->is_volume_based; ?></td> -->
                                     <td class="text-center"><a
@@ -137,7 +123,6 @@
                                             href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
                                     </td>
                                     <?php }?>
-                                    <?php if($query_segment_overview->num_rows() > 0){ ?>
                                     <?php /*  if($query_segment_overview->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
@@ -155,25 +140,20 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
                                     </td>
-                                    <?php }?>
-=======
                                     <?php } */ ?>
+                                     <?php if($Role_id == 1 || $Role_id==2){  ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a>
                                     </td>
                                     <?php if($data->country_status == 1){ ?>
-                                    <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b>
                                     <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><br /><b>
                                             Created</b></td>
                                     <?php }else { ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i
-                                                    class="fa fa-globe"></i> Create</b></a></td>
-                                    <?php }?>
-                                    <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>">
-                                                    <i class="fa fa-globe"></i> <br />Create</b></a></td>
-                                    <?php }?>
-                                    <td><a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>"
+                                                    class="fa fa-globe"></i> <br />Create</b></a></td>
+                                    <?php } }?>
+                                    <td><a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>"
                                             class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |
                                         <a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
@@ -190,15 +170,17 @@
                                     <th>Forecast</th>
                                     <!-- <th>Analysis</th> -->
                                     <!-- <th>Vol</th> -->
-                                    <th>Company</th>
                                     <th>Segment</th>
+                                    <th>Company</th>
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
-                                    <th>Overview</th>
-                                    <th>PR2</th>
-                                    <th>Image</th>
-                                    <th>Country</th>
+                                    <!-- <th>Overview</th>
+                                    <th>PR2</th> -->                                    
+                                    <?php if($Role_id == 1 || $Role_id==2){ ?>
+                                        <th>Image</th>
+                                        <th>Country</th>
+                                    <?php } ?>
                                     <th style="width: 75px;">Action</th>
                                 </tr>
                             </tfoot>

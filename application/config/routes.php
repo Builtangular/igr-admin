@@ -102,3 +102,7 @@ $route['analyst/report/add'] ='admin/report/add';
 $route['manager/report/processed'] ='admin/manager_report/manager_processed_rd';
 $route['manager/report/published'] ='admin/manager_report/manager_published_rd';
 $route['manager/report/drafts'] ='admin/manager_report/drafts';
+
+/* Generate RD & Sample by Analyst & Manager */
+$route['analyst/generate-rd'] ='admin/generate_rd/index';
+// $route['admin/report/generate-rd/Generate_RD_1/(:num)'] ='admin/generate_rd/Generate_RD_1/$1';

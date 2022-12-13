@@ -20,6 +20,7 @@ class Segment_overview extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('success_code');
+
 			$data['title'] = "Segment Master";
 			$data['report_id'] = $report_id;
 			$data['list_data'] = $this->Segment_model->get_rd_segment();
@@ -73,7 +74,7 @@ class Segment_overview extends CI_Controller
 			{
 				$this->session->set_flashdata('success_code', 'Data has been inserted successfully....!!!');
 			}
-			redirect('admin/report');
+			redirect('analyst/report/drafts');
 	 	}
 		else
 		{
@@ -90,36 +91,17 @@ class Segment_overview extends CI_Controller
 
 			$data['get_rd_segment'] = $this->Segment_model->get_rd_segment_data($report_id);
 			$data['segment_overview'] = $this->Segment_model->get_rd_segment_overview($report_id);
-			$data['report_id'] = $report_id;
-			// var_dump($data['segment_overview'] );die;
-			$this->load->view("admin/segment_overview/edit",$data);
-		}else
-		{
-			$this->load->view("admin/login");
 			
+			$data['report_id'] = $report_id;
+			$this->load->view("admin/segment_overview/edit", $data);
+		}
+		else
+		{
+			$this->load->view("admin/login");			
 		}
     }
-	/* public function view($report_id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
-			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-
-			$data['get_rd_segment'] = $this->Segment_model->get_rd_segment_data($report_id);
-			$data['segment_overview'] = $this->Segment_model->get_rd_segment_overview($report_id);
-			$data['rd_id'] = $report_id;			
-			// $data['list_data'] = $this->Segment_model->get_rd_segment($report_id);
-			$this->load->view('admin/segment_overview/edit',$data);			
-		}		
-		else
-		{			
-			$this->load->view('admin/login');
-		}
-	} */
 	public function update($report_id)
     {
-		// var_dump($_POST);die;
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
@@ -132,64 +114,49 @@ class Segment_overview extends CI_Controller
 			$description=$this->input->post('description');
 			$seg_id=$this->input->post('seg_id');		
 			// var_dump($description_new); die;
-				$num1 = 0;
-				foreach($description as $seg_overview)
-				{
-					if($seg_overview != "" || $seg_overview != null)
-					{
-						$update_seg_overview=array(						
-							'description'=>$description[$num1],
-							'updated_at'=>date('Y-m-d H:i:s')
-						);
-						$result=$this->Segment_model->update_rd_single_segment($overview_id[$num1],$seg_id[$num1],$update_seg_overview);
-						// var_dump($result);die;
-					}
-					else{
-						$result=$this->Segment_model->delete_rd_dro_segment($overview_id[$num1]);
-					}
-					$num1++;
-				}
-	
-			/* if($description == ''){
-				// echo "hiii"; die;
-			$num2  = 0;
+			$num1 = 0;
 			foreach($description as $seg_overview)
-				{
-					if($seg_overview != "" || $seg_overview != null)
-					{						
-						$result=$this->Segment_model->delete_rd_dro_segment($overview_id[$num2]);
-						// var_dump($result);die;	
-					}
-					$num2++;
-				}die;
-			}	 */
-			if($description_new){
-				// echo "hiii"; die;
-			$num = 0;
-			foreach($description_new as $seg_overview)
 			{
 				if($seg_overview != "" || $seg_overview != null)
 				{
-					$Insert_seg_overview=array(
-						'report_id'=>$report_id,			
-						'segment_id'=>$seg_id_new[$num],
-						'description'=>$description_new[$num],
+					$update_seg_overview=array(						
+						'description'=>$description[$num1],
 						'updated_at'=>date('Y-m-d H:i:s')
 					);
-					$result=$this->Segment_model->insert_rd_seg_overview($Insert_seg_overview);
+					$result=$this->Segment_model->update_rd_single_segment_overview($overview_id[$num1],$seg_id[$num1],$update_seg_overview);
+					// var_dump($result);die;
 				}
-				$num++;
+				else{
+					$result=$this->Segment_model->delete_rd_single_segment_overview($overview_id[$num1]);
+				}
+				$num1++;
 			}
-		} 		
+			if($description_new){
+				$num = 0;
+				foreach($description_new as $seg_overview)
+				{
+					if($seg_overview != "" || $seg_overview != null)
+					{
+						$Insert_seg_overview=array(
+							'report_id'=>$report_id,			
+							'segment_id'=>$seg_id_new[$num],
+							'description'=>$description_new[$num],
+							'updated_at'=>date('Y-m-d H:i:s')
+						);
+						$result=$this->Segment_model->insert_rd_seg_overview($Insert_seg_overview);
+					}
+					$num++;
+				}
+			} 		
 			if($result == 1)
 			{
 				$this->session->set_flashdata('success_code', 'Data has been updated successfully....!!!');				
 			}else{
 				$this->session->set_flashdata('success_code', 'Sorry! Data has not updated....!!!');	
 			}
-			redirect('admin/report');
-			
-		}else
+			redirect('analyst/report/drafts');			
+		}
+		else
 		{
 			$this->load->view("admin/login");
 		}
@@ -203,9 +170,9 @@ class Segment_overview extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			
-			$data['delete'] = $this->Segment_model->delete_rd_dro_segment($id);
+			$data['delete'] = $this->Segment_model->delete_rd_single_segment_overview($id);
 			$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
-			redirect('admin/report');
+			redirect('analyst/report/drafts');
 		}else{
 			$this->load->view("admin/login");			
 		}

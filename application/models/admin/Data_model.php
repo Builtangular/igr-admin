@@ -12,8 +12,7 @@ class Data_model extends CI_Model {
 		$this->db->from("tbl_rd_data");
 		$this->db->where('status', 3);
 		$sql = $this->db->get();
-		/* echo $this->otherdb->last_query();
-		die; */
+		// echo $this->db->last_query();	die; 
 		if($sql->num_rows() > 0){			
 			return $sql->result();
 		}else{
@@ -24,8 +23,7 @@ class Data_model extends CI_Model {
 		$this->db->from("tbl_rd_data");
 		$this->db->where('status', $status);
 		$sql = $this->db->get();
-		/* echo $this->otherdb->last_query();
-		die; */
+		// echo $this->db->last_query();	die; 
 		if($sql->num_rows() > 0){			
 			return $sql->result();
 		}else{
@@ -444,7 +442,33 @@ class Data_model extends CI_Model {
 		}else{
 			return array();
 		}
-	}	
+	}
+	/* Segment Overview Fetch */	
+	function get_rd_segment_overview($report_id)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_rd_segment_overview');
+		$this->db->where(array('report_id'=>$report_id, 'status'=>1));
+		$query = $this->db->get();
+		// echo $this->db->last_query();
+		if($query->num_rows() > 0){			
+			return $query->result_array();
+		}else{
+			return array();
+		}
+	}
+	function get_main_segment_name($report_id){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_segments");
+		$this->db->where(array('report_id'=>$report_id, 'parent_id'=>0));
+		$sql = $this->db->get();
+		// echo $this->db->last_query(); die;
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+	}
 	/* Analyst Data */
 	public function get_global_processed_rds($status){
 		$this->db->select("*");

@@ -35,7 +35,7 @@
                         <button type="button" class="close" data-dismiss="alert">x</button>
                         <p><?php echo $success_code; ?></p>
                     </div>
-                    <?php } ?>
+                    <?php }  ?>
                     <div class="box-body">
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
@@ -51,10 +51,14 @@
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
-                                    <!-- <th>Overview</th>
-                                    <th>PR2</th> -->
+                                    <?php if($Role_id == "3" || $Role_id=="4"){  ?>
+                                    <th>Overview</th>
+                                    <th>PR2</th>
+                                    <?php } ?>
+                                    <?php if($Role_id == "1" || $Role_id=="2"){  ?>
                                     <th>Image</th>
                                     <th>Country</th>
+                                    <?php } ?>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -121,7 +125,8 @@
                                             href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
                                     </td>
                                     <?php }?>
-                                    <?php /*  if($query_segment_overview->num_rows() > 0){ ?>
+                                    <?php if($Role_id == "3" || $Role_id=="4"){  ?>
+                                    <?php if($query_segment_overview->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
                                     </td>
@@ -138,7 +143,9 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
                                     </td>
-                                    <?php } */ ?>
+                                    <?php } } ?>
+
+                                     <?php if($Role_id == 1 || $Role_id==2){  ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a>
                                     </td>
@@ -149,7 +156,7 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i
                                                     class="fa fa-globe"></i> <br />Create</b></a></td>
-                                    <?php }?>
+                                    <?php } } ?>
                                     <td><a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>"
                                             class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> |
                                         <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
@@ -173,10 +180,14 @@
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
-                                    <!-- <th>Overview</th>
-                                    <th>PR2</th> -->
+                                    <?php if($Role_id == "3" || $Role_id=="4"){  ?>
+                                    <th>Overview</th>
+                                    <th>PR2</th>
+                                    <?php } ?>
+                                    <?php if($Role_id == 1 || $Role_id == 2){  ?>
                                     <th>Image</th>
                                     <th>Country</th>
+                                    <?php } ?>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
