@@ -24,6 +24,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/igr_admin/';
+$config['site_url'] = 'http://localhost/infinium_new/';
+
+// $config['index_page'] = 'index.php';
+// $config['url_suffix'] = '/';
+
 
 /*
 |--------------------------------------------------------------------------

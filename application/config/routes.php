@@ -102,3 +102,7 @@ $route['analyst/report/add'] ='admin/report/add';
 $route['manager/report/processed'] ='admin/manager_report/manager_processed_rd';
 $route['manager/report/published'] ='admin/manager_report/manager_published_rd';
 $route['manager/report/drafts'] ='admin/manager_report/drafts';
+
+/* custom link urls */
+$route['sales/custom_link'] ='admin/custom_link';
+$route['sales/custom_link/add'] ='admin/custom_link/add';

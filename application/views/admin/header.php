@@ -196,6 +196,13 @@
                    
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                     <?php } ?>
+                    <?php if($Role_id == 5){ ?>
+
+                    <li><a href="<?php echo base_url(); ?>sales/custom_link"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Custom Link</span></a></li>
+
+                    <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <?php } ?>
                 </ul>
                 </li>
                 <!-- <li><a href="http://localhost/testapp/public/superadmin/enroll"><span>Enrollment</span></a></li>

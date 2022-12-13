@@ -212,7 +212,7 @@ class Report extends CI_Controller {
 				$this->session->set_flashdata("success_code","Sorry! Data has not updated");
 			}
 			redirect('admin/report');
-			var_dump($updatedata); die;
+			// var_dump($updatedata); die;
 		}else{			
 			$this->load->view('admin/login');
 		}

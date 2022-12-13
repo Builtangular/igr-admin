@@ -18,7 +18,8 @@ class Drotype_model extends CI_Model {
 		);
 		$res = $this->db->insert('tbl_master_drotype', $data);
 		return $res;
-    }public function get_single_dro_type($id){
+    }
+	public function get_single_dro_type($id){
 		$this->db->where('id',$id);
 		$result = $this->db->get('tbl_master_drotype');
 		//echo $this->db->last_query();die;

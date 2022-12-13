@@ -85,8 +85,8 @@ class Data_model extends CI_Model {
 		$this->db->insert('tbl_rd_market_insight_data', $postdata);
 		$insert_id = $this->db->insert_id();
 		$this->db->trans_complete();
-		/* echo $this->db->last_query();		
-		die; */
+			// echo $this->db->last_query();		
+			// die; 
 		return $insert_id;
 	}
 	public function get_rd_market_insight_data($report_id){

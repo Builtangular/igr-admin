@@ -27,7 +27,6 @@ class Codedecode_description_model extends CI_Model {
 			          'description'    =>$this->input->post('description'),
 			          'active'  =>$this->input->post('status'),
 			        );
-
 		
 			$this->db->insert('tbl_codedecode_type_description', $data);
 			return 1;

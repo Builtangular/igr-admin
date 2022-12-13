@@ -16,7 +16,6 @@ class Dro_type extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$data['massage'] = $this->session->userdata('msg');
 			$data['title'] = "DRO Type Master";
 			$data['list_data'] = $this->Drotype_model->get_dro_type();
@@ -60,7 +59,6 @@ class Dro_type extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$data['get_dro_type'] = $this->Drotype_model->get_dro_type();
 			$data['single_dro_type'] = $this->Drotype_model->get_single_dro_type($id);
 			$this->load->view("admin/dro_type/edit",$data);
@@ -74,7 +72,6 @@ class Dro_type extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			
 			$id = $this->input->post('id');
 			$this->Drotype_model->update_dro_type($id);
 			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');

@@ -63,6 +63,9 @@ class Login extends CI_Controller
 				{
 					// var_dump($_POST);die;
 					redirect('admin/dashboard');			
+				}
+				else if($session_data['Role_id']==5){
+					redirect('admin/dashboard');
 				}								
 			}
 			else

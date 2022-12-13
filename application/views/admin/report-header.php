@@ -164,8 +164,8 @@
                                 class="text-bold">Drafts</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/report/add"><i class="fa fa-plus"></i><span
                                 class="text-bold">Add New RD</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i class="fa fa-file-excel-o"></i><span
-                                class="text-bold">Export Reports</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
                     <?php } ?>
 
                     <?php if($Role_id == 3){ ?>
@@ -181,13 +181,17 @@
                     <?php } ?>
 
                     <?php if($Role_id == 4){ ?>
-                    <li><a href="<?php echo base_url(); ?>manager/report/published"><i class="fa fa-file-word-o"></i><span
-                                class="text-bold">Published Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>manager/report/published"><i
+                                class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>manager/report/processed"><i
                                 class="fa fa-files-o"></i><span>Processed Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <?php } ?>
+                    <?php if($Role_id == 5){ ?>
+                    <li><a href="<?php echo base_url(); ?>sales/custom_link"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Custom Link</span></a></li>
                     <?php } ?>
                 </ul>
                 </li>

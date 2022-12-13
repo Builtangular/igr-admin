@@ -25,7 +25,7 @@ class Segment_model extends CI_Model {
 	 public function insert_rd_seg_overview($postoverview){
 	
 		$this->db->trans_start();
-$this->db->insert('tbl_rd_segment_overview', $postoverview);
+		$this->db->insert('tbl_rd_segment_overview', $postoverview);
 		$insert_id = $this->db->insert_id();
 		$this->db->trans_complete();
 		/* echo $this->db->last_query();		
