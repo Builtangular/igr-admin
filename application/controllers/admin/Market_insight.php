@@ -59,7 +59,6 @@ class Market_insight extends CI_Controller
             /* <!-- Report Definition --> */
             $Report_definition=$this->input->post('Report_definition');
             $Definition=$this->input->post('definition');
-          
             $num = 0;
             foreach($Report_definition as $definition)
             {
@@ -73,13 +72,16 @@ class Market_insight extends CI_Controller
                         'updated_at'=>date('Y-m-d H:i:s')
                     );
                     $insert_report_definition=$this->Data_model->insert_market_insight($Insert_report_definition);
+					// var_dump($insert_report_definition);die;
                 }
                 $num++;
             }
            
             /* <!-- Report Description --> */
             $Report_description=$this->input->post('Report_description');
+			// var_dump($Report_description);die;
             $Description=$this->input->post('description');
+			// var_dump($Description);die;
             $num1 = 0;
             foreach($Report_description as $description)
             {
@@ -92,7 +94,9 @@ class Market_insight extends CI_Controller
                         'status'=>1,                        
                         'updated_at'=>date('Y-m-d H:i:s')
                     );
+					// var_dump($Insert_report_description);die;
                     $insert_report_description=$this->Data_model->insert_market_insight($Insert_report_description);
+					// var_dump($insert_report_description);die;
                 }
                 $num1++;
             }
@@ -111,7 +115,9 @@ class Market_insight extends CI_Controller
                         'status'=>1,                        
                         'updated_at'=>date('Y-m-d H:i:s')
                     );
+					// var_dump($Insert_summary_DRO);die;
                     $insert_summary_DRO=$this->Data_model->insert_market_insight($Insert_summary_DRO);
+					// var_dump($insert_summary_DRO);die;
                 }
                 $num2++;
             }
@@ -130,6 +136,7 @@ class Market_insight extends CI_Controller
                          'status'=>1,                        
                          'updated_at'=>date('Y-m-d H:i:s')
                      );
+					//  var_dump($Insert_summary_regional_description);die;
                      $insert_summary_regional_description=$this->Data_model->insert_market_insight($Insert_summary_regional_description);
                  }
                  $num3++;

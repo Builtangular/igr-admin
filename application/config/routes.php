@@ -105,4 +105,7 @@ $route['manager/report/drafts'] ='admin/manager_report/drafts';
 
 /* Generate RD & Sample by Analyst & Manager */
 $route['analyst/generate-rd'] ='admin/generate_rd/index';
-// $route['admin/report/generate-rd/Generate_RD_1/(:num)'] ='admin/generate_rd/Generate_RD_1/$1';
+
+/* custom link urls */
+$route['sales/custom_link'] ='admin/custom_link';
+$route['sales/custom_link/add'] ='admin/custom_link/add';
