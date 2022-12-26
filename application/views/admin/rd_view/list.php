@@ -102,10 +102,10 @@
                                             title="Get RD2"><b><i class="fa fa-download"></i> &nbsp;RD2</b>
                                         </a> <br />
                                         <a href="<?php echo base_url()?>admin/generate_rd/toc/?report_id=<?php echo $data->id;?>"
-                                            title="Get RD2"><b><i class="fa fa-download"></i> &nbsp;TOC</b>
+                                            title="Get TOC"><b><i class="fa fa-download"></i> &nbsp;TOC</b>
                                         </a> <br />
-                                        <a href="<?php echo base_url()?>admin/report/generate_rd/Generate_sample_pages/?report_id=<?php echo $data->id;?>"
-                                            title="Get RD2"><b><i class="fa fa-download"></i> &nbsp;Sample</b>
+                                        <a href="<?php echo base_url()?>admin/generate_rd/sample_pages/?report_id=<?php echo $data->id;?>"
+                                            title="Get Sample Pages"><b><i class="fa fa-download"></i> &nbsp;Sample</b>
                                         </a>
                                     </td>
 

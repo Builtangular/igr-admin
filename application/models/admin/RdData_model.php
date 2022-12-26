@@ -75,7 +75,7 @@ class RdData_model extends CI_Model {
 		}
 	}
 	/* get RD Segments */
-    public function get_main_segments($report_id, $parent)
+    public function get_rd_segments($report_id, $parent)
 	{
 		$this->db->select("*");
 		$this->db->from('tbl_rd_segments');
@@ -88,6 +88,30 @@ class RdData_model extends CI_Model {
 			return array();
 		}
 	}
+	 public function get_rd_segment_overview($report_id, $segment_id)
+	{
+		$this->db->select("*");
+		$this->db->from('tbl_rd_segment_overview');
+		$this->db->where(array('report_id'=>$report_id, 'segment_id'=> $segment_id));
+		$querys = $this->db->get();
+		if($querys->num_rows() > 0){			
+			return $querys->result();
+		}else{
+			return array();
+		}
+	}
+	public function get_count_rd_childsegments($report_id, $parent)
+	{
+		/* $query = $this->db->query("SELECT * FROM tbl_rd_segments WHERE report_id = $report_id AND parent_id = $parent");
+		$rowscount = $this->db->count_all();
+		return $rowscount; */
+		$this->db->select('*');
+		$this->db->from('tbl_rd_segments');
+		$this->db->where(array('report_id'=>$report_id, 'parent_id'=> $parent));
+		$rowscount = $this->db->count_all_results();
+		return $rowscount;
+	}
+	
 	/* Get RD Companies */
 	public function get_rd_companies($report_id)
 	{
@@ -98,6 +122,20 @@ class RdData_model extends CI_Model {
 		// echo $this->db->last_query();		
 		if($cquery->num_rows() > 0){			
 			return $cquery->result();
+		}else{
+			return array();
+		}
+	}
+	/* Get RD Market Insight */
+	public function get_rd_market_insight($report_id, $type)
+	{
+		$this->db->select("*");
+		$this->db->from('tbl_rd_market_insight_data');
+		$this->db->where(array('report_id'=>$report_id, 'type'=>$type, 'status'=> 1));
+		$sql = $this->db->get();
+		// echo $this->db->last_query();		
+		if($sql->num_rows() > 0){			
+			return $sql->result();
 		}else{
 			return array();
 		}

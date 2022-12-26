@@ -300,7 +300,7 @@ class Data_model extends CI_Model {
 		if($sql->num_rows() > 0){			
 			return $sql->result();
 		}else{
-			return array();
+			return $sql->row();
 		}
 	}
 	/******** pooja work ***************/
