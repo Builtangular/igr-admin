@@ -35,7 +35,7 @@
                         
                                 foreach($get_rd_segment as $data){ 
                                     
-                                    $segment_overview = "SELECT id, description FROM tbl_segment_overview where segment_id = ".$data->id;
+                                    $segment_overview = "SELECT id, description FROM tbl_rd_segment_overview where segment_id = ".$data->id;
                                     $query_segment_overview = $this->db->query($segment_overview);
                                     if ($query_segment_overview->num_rows() > 0) {
                                         $rd_segment_overview = $query_segment_overview->row();

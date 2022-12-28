@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,57 +14,64 @@
     <title>Infinium Admin</title>
     <link href="<?php echo base_url(); ?>assets/admin/css/style.min.css" rel="stylesheet" />
 </head>
+
 <body>
-  <!-- ============================================================== -->
-  <!-- Start Page Content -->
-  <!-- ============================================================== -->
-  <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
     <div class="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-			<div class="error-body text-center">
-				<h1 class="error-title text-cyan">Infinium Admin</h1>
-			</div>
-                <center><div class="col-md-4">
-                    <div class="card">
-                        <form action="<?php echo base_url('admin/login'); ?>" class="form-horizontal" method="post">
-                            <div class="card-body">
-                                <center><h4 class="card-title">Login</h4></center>
-                                <?php
+                <div class="error-body text-center">
+                    <h1 class="error-title text-cyan">Infinium Admin</h1>
+                </div>
+                <center>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <form action="<?php echo base_url('admin/login'); ?>" class="form-horizontal" method="post">
+                                <div class="card-body">
+                                    <center>
+                                        <h4 class="card-title">Login</h4>
+                                    </center>
+                                    <?php
                                     echo form_open('admin/login');
                                     // echo validation_errors();
                                     if ($msg){
-                                    echo '<p><code>'.$msg.'</code></p>';
+                                    echo '<p>'.$msg.'</p>';
                                     }
                                     ?>
-                                <div class="form-group row">
-                                    <label for="username" class="col-sm-3 text-end control-label col-form-label">User Name
+                                    <div class="form-group row">
+                                        <label for="username"
+                                            class="col-sm-3 text-end control-label col-form-label">User Name
                                         </label>
-                                    <div class="col-sm-9">
-                                        <input type="email" name="username" class="form-control" id="username"
-                                            placeholder="Email" required>
+                                        <div class="col-sm-9">
+                                            <input type="email" name="username" class="form-control" id="username"
+                                                placeholder="Email" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="password" class="col-sm-3 text-end control-label col-form-label">Password
+                                    <div class="form-group row">
+                                        <label for="password"
+                                            class="col-sm-3 text-end control-label col-form-label">Password
                                         </label>
-                                    <div class="col-sm-9">
-                                        <input type="password" name="password" class="form-control" id="password"
-                                            placeholder="Password" required>
+                                        <div class="col-sm-9">
+                                            <input type="password" name="password" class="form-control" id="password"
+                                                placeholder="Password" required>
+                                        </div>
                                     </div>
-                                </div>
-                              <div class="border-top">
-                                  <div class="card-body">
-                                      <button type="submit" class="btn btn-primary">
-                                          Submit
-                                      </button>
-                                  </div>
-                              </div>
-                        </form>
-                    </div></center>
-                </div>
+                                    <div class="border-top">
+                                        <div class="card-body">
+                                            <button type="submit" class="btn btn-primary">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                </center>
             </div>
         </div>
+    </div>
     </div>
 </body>
 

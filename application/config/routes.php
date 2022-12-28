@@ -106,6 +106,9 @@ $route['manager/report/processed'] ='admin/manager_report/manager_processed_rd';
 $route['manager/report/published'] ='admin/manager_report/manager_published_rd';
 $route['manager/report/drafts'] ='admin/manager_report/drafts';
 
+/* Generate RD & Sample by Analyst & Manager */
+$route['analyst/generate-rd'] ='admin/generate_rd/index';
+
 /* custom link urls */
 $route['sales/custom-link'] ='admin/custom_link';
 $route['sales/custom-link/add'] ='admin/custom_link/add';
@@ -115,3 +118,6 @@ $route['sales/sample-query'] ='admin/queries';
 $route['sales/toc-query'] ='admin/queries/toc_list';
 $route['sales/customization-query'] ='admin/queries/customization_list';
 $route['sales/enquiry-query'] ='admin/queries/enquiry_list';
+
+$route['sales/custom_link'] ='admin/custom_link';
+$route['sales/custom_link/add'] ='admin/custom_link/add';

@@ -30,6 +30,7 @@
                     <form action="<?php echo base_url(); ?>admin/market-insight/insert/<?php echo $report_id; ?>" method="post" class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-12">
+                                <?php if($Role_id == 4){?>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Report Definition 1</label>
                                     <div class="col-md-9">
@@ -43,7 +44,8 @@
                                     </div>
                                     <input type="hidden" name="definition" id="definition" value="Report Definition" class="form-control">
                                 </div>
-                                <span  id="Definition"></span>
+                                <span id="Definition"></span>
+                                <?php } ?>
                                <!--  Report Description -->
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Report Description 1<span
@@ -86,7 +88,7 @@
                                     </div>
                                     <input type="hidden" name="summary_regional_description" id="summary_regional_description" value="Summary Regional Description" class="form-control">
                                 </div>
-                                <span  id="Summary_regional_description"></span>
+                                <span id="Summary_regional_description"></span>
                                 <!-- <div class="form-group">
                                     <label class="control-label col-md-2">Market Insight Extra Para</label>
                                     <div class="col-md-10">

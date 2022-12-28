@@ -38,14 +38,14 @@ class Segment_model extends CI_Model {
 		//echo $this->db->last_query();die;
 		return $result->result();
 	}
-	public function update_rd_single_segment($overview_id, $seg_id,$data){
+	public function update_rd_single_segment_overview($overview_id, $seg_id,$data){
 		$this->db->where(array('id'=>$overview_id, 'segment_id'=>$seg_id));
 		// $this->db->where('report_id',$report_id);
 		$result =  $this->db->update('tbl_rd_segment_overview', $data);
 		// echo $this->db->last_query();	
 		return $result;
     }
-	function delete_rd_dro_segment($overview_id){
+	function delete_rd_single_segment_overview($overview_id){
 		// $this->db->where("id", $id);
 		$this->db->where(array('id'=>$overview_id));
     	$res= $this->db->delete("tbl_rd_segment_overview");

@@ -27,6 +27,9 @@
                     </div>
                     <form autocomplete="off" action="<?php echo base_url(); ?>admin/segment/update/<?php echo $seg_id; ?>" method="post"
                         class="form-horizontal">
+
+                    <form action="<?php echo base_url(); ?>admin/segment/update/<?php echo $seg_id; ?>" method="post"
+                        class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Name</label>

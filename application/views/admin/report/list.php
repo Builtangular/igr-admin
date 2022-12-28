@@ -57,7 +57,9 @@
                                     <th>Image</th>
                                     <th>Country</th>
                                     <?php } ?>
-                                    <th>Action</th>
+                                    <th>Action</th>                           
+                                    
+                                    <th style="width: 75px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,6 +142,7 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
                                     </td>
+
                                     <?php } ?>
                                     <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
                                     <td class="text-center"><a
@@ -183,6 +186,14 @@
                                     <th>Country</th>
                                     <?php } ?>
                                     <th>Action</th>
+
+                                    <!-- <th>Overview</th>
+                                    <th>PR2</th> -->                                    
+                                    <?php if($Role_id == 1 || $Role_id==2){ ?>
+                                        <th>Image</th>
+                                        <th>Country</th>
+                                    <?php } ?>
+                                    <th style="width: 75px;">Action</th>
                                 </tr>
                             </tfoot>
                         </table>
