@@ -24,7 +24,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Create Segment</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/segment/insert/<?php echo $report_id; ?>" method="post"
+                    <form autocomplete="off" action="<?php echo base_url(); ?>admin/segment/insert/<?php echo $report_id; ?>" method="post"
                         class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
@@ -40,9 +40,11 @@
                                         <option value="0">Select</option> 
                                         <?php foreach($segments as $data) { ?>  
                                             <option value="<?php echo $data->id; ?>"><?php echo $data->name; ?></option> 
+                                            
                                         <?php } ?>                                       
                                     </select>
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="box-footer">

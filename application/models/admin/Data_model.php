@@ -32,10 +32,11 @@ class Data_model extends CI_Model {
 			return array();
 		}
 	}
-	public function get_drafted_global_rds(){
+	public function get_drafted_global_rds($Login_user_name){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
-		$this->db->where('status', 0);
+		$this->db->where(array('created_user' => $Login_user_name, 'status'=> 0));
+		$this->db->order_by('id',"DESC");
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -78,7 +79,37 @@ class Data_model extends CI_Model {
 		$result = $this->db->delete('tbl_rd_data');
 		return $result;
 	}
-
+	/* Delete rd data from other tables as well */
+	public function delete_rd_segments_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_segments');
+		return $result;
+	}
+	public function delete_rd_companies_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_companies');
+		return $result;
+	}
+	public function delete_rd_market_insight_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_market_insight_data');
+		return $result;
+	}
+	public function delete_rd_dro_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_dro_data');
+		return $result;
+	}
+	public function delete_rd_segment_overview_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_segment_overview');
+		return $result;
+	}
+	public function delete_rd_PR2_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_pr2_data');
+		return $result;
+	}
 /* **********  Market Insight ********** */
 	public function insert_market_insight($postdata){
 		$this->db->trans_start();

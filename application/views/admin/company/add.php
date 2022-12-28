@@ -23,7 +23,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Create Company</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/company/insert/<?php echo $report_id; ?>" method="post"
+                    <form autocomplete="off" action="<?php echo base_url(); ?>admin/company/insert/<?php echo $report_id; ?>" method="post"
                         class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="form-group">

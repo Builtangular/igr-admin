@@ -25,7 +25,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Update Segment</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/segment/update/<?php echo $seg_id; ?>" method="post"
+                    <form autocomplete="off" action="<?php echo base_url(); ?>admin/segment/update/<?php echo $seg_id; ?>" method="post"
                         class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">

@@ -104,9 +104,9 @@ class Market_insight extends CI_Controller
             $Executive_summary_DRO=$this->input->post('Executive_summary_DRO');
             $summary_DRO=$this->input->post('summary_DRO');
             $num2 = 0;
-            foreach($Report_description as $description)
+            foreach($$Executive_summary_DRO as $$Executive_summary)
             {
-                if($description != "" || $description != null )
+                if($$Executive_summary != "" || $$Executive_summary != null )
                 {
                     $Insert_summary_DRO=array(
                         'report_id'=>$id,			

@@ -108,7 +108,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <!-- jQuery 2.1.3 -->
-<script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
 <!-- Bootstrap 3.3.2 JS -->
 <script>
 /* add new description */

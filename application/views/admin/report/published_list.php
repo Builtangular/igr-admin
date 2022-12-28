@@ -53,8 +53,10 @@
                                     <th>DRO</th>
                                     <th>Overview</th>
                                     <th>PR2</th>
+                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
+                                    <?php  }?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,6 +99,7 @@
                                     <td class="text-center"><b><?php echo $dro_status; ?></b></td>
                                     <td class="text-center"><b><?php echo $segment_status; ?></b></td>
                                     <td class="text-center"><b><?php echo $pr2_reports_status; ?></b></td>
+                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
                                     <td class="text-center"><b><?php echo $rd_image; ?></b></a></td>
                                     <?php if($data->country_status == 1){ ?>
                                     <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b>
@@ -105,6 +108,7 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i
                                                     class="fa fa-globe"></i> Create</b></a></td>
+                                    <?php }?>
                                     <?php }?>
                                     <form action="" method="post">
                                         <input type="hidden" name="_token"
@@ -130,8 +134,10 @@
                                     <th>DRO</th>
                                     <th>Overview</th>
                                     <th>PR2</th>
+                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
+                                    <?php  }?>
                                 </tr>
                             </tfoot>
                         </table>
@@ -174,14 +180,8 @@ $(document).ready(function() {
 
 <script>
 $(function() {
-    $('#rddata').DataTable()
-    $('#example2').DataTable({
-        'paging': true,
-        'lengthChange': false,
-        'searching': false,
-        'ordering': true,
-        'info': true,
-        'autoWidth': false
+     $('#rddata').DataTable({
+        'ordering'    : false,
     })
 })
 </script>

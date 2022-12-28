@@ -51,10 +51,12 @@
 									<!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
-                                    <!-- <th>Overview</th>
-                                    <th>PR2</th> -->
+                                    <th>Overview</th>
+                                    <th>PR2</th>
+                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
 									<th>Image</th>
 									<th>Country</th>
+                                    <?php } ?>
 									<th>Action</th>
                                 </tr>
                             </thead>
@@ -111,7 +113,7 @@
                                                 href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
                                         </td>
                                         <?php }?>
-                                        <?php /*  if($query_segment_overview->num_rows() > 0){ ?>
+                                        <?php  if($query_segment_overview->num_rows() > 0){ ?>
                                         <td class="text-center"><a
                                                 href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
                                         </td>
@@ -128,12 +130,14 @@
                                         <td class="text-center"><a
                                                 href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
                                         </td>
-                                        <?php } */ ?>
+                                        <?php } ?>
+                                        <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a></td>
                                         <?php if($data->country_status == 1){ ?>
                                             <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><br /><b> Created</b></td>
                                         <?php }else { ?> 
                                         <td class="text-center"><a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i>  <br />Create</b></a></td>                                        
+                                        <?php }?>
                                         <?php }?>
                                         <td><a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>" class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> | 
                                             <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
@@ -156,10 +160,12 @@
 									<!-- <th>Status</th> -->
                                     <th>Insight</th>                                    
                                     <th>DRO</th>
-                                    <!-- <th>Overview</th>
-                                    <th>PR2</th> -->                                  
+                                    <th>Overview</th>
+                                    <th>PR2</th> 
+                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>                                 
 									<th>Image</th>  
 									<th>Country</th>
+                                    <?php } ?>
 									<th>Action</th>
                                 </tr>
                             </tfoot>
@@ -177,7 +183,7 @@
         Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2022 <a href="#">Infinium</a>.</strong> All rights reserved.
+    <strong>Copyright © 2022 <a href="#">Infinium LLP</a>.</strong> All rights reserved.
 </footer>
 </div><!-- ./wrapper -->
 
@@ -203,15 +209,10 @@
   
 <script>
   $(function () {
-    $('#rddata').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
+    $('#rddata').DataTable({
+        'ordering'    : false,
     })
+   
   })
 </script>
         </body>

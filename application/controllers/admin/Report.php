@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//ini_set('display_errors', '0');
+ini_set('display_errors', '0');
 class Report extends CI_Controller {    
 	public function __construct(){		
 		parent::__construct();		
@@ -90,10 +90,6 @@ class Report extends CI_Controller {
 					'enterprise_price'=>$this->input->post('enterprise_user'),
 					'datasheet_price'=>$this->input->post('datasheet'),
 					'cagr_market_value'=>$this->input->post('market_value'),
-					/* 'report_definition'=>$this->input->post('Report_definition'), */
-					/* 'report_description'=>$this->input->post('Report_description'),
-					'executive_summary_DRO'=>$this->input->post('Executive_summary_DRO'),
-					'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'), */
 					'largest_region'=>$this->input->post('Largest_region'),
 					'created_user'=>$session_data['Login_user_name'],
 					'status'=>$this->input->post('status'),
@@ -104,10 +100,10 @@ class Report extends CI_Controller {
 			$Last_Inserted_id = $this->Data_model->insert_rd_data($postdata);
 			if($Last_Inserted_id){
 				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!");				
-				redirect('admin/report');
+				redirect('admin/report/drafts');
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");				
-				redirect('admin/report');
+				redirect('admin/report/drafts');
 			}		
 		}		
 		else
@@ -145,10 +141,6 @@ class Report extends CI_Controller {
 			$data['enterprise_price']= $rd_data->enterprise_price;
 			$data['datasheet_price']= $rd_data->datasheet_price;
 			$data['cagr_market_value']= $rd_data->cagr_market_value;
-			/* $data['report_definition']= $rd_data->report_definition; */
-			/* $data['report_description']= $rd_data->report_description;
-			$data['executive_summary_DRO']= $rd_data->executive_summary_DRO;
-			$data['executive_summary_regional_description']= $rd_data->executive_summary_regional_description; */
 			$data['largest_region']= $rd_data->largest_region;
 			$data['country_status']= $rd_data->country_status;
 			$data['status']= $rd_data->status;
@@ -211,7 +203,7 @@ class Report extends CI_Controller {
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Data has not updated");
 			}
-			redirect('admin/report');
+			redirect('admin/report/drafts');
 			// var_dump($updatedata); die;
 		}else{			
 			$this->load->view('admin/login');
@@ -223,13 +215,23 @@ class Report extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+
 			$result = $this->Data_model->delete_rd_data($id);
+			
+			if($result){
+				$result_rd_segment = $this->Data_model->delete_rd_segments_data($id);
+				$result_rd_companies = $this->Data_model->delete_rd_companies_data($id);
+				$result_rd_market_insight = $this->Data_model->delete_rd_market_insight_data($id);
+				$result_rd_dro = $this->Data_model->delete_rd_dro_data($id);
+				$result_rd_segment_overview = $this->Data_model->delete_rd_segment_overview_data($id);
+				$result_rd_PR2 = $this->Data_model->delete_rd_PR2_data($id);
+			}
 			if($result){
 				$this->session->set_flashdata("success_code", "Report has been deleted successfully..!!!");				
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Record has not deleted");		
 			}		
-			redirect('admin/report/');
+			redirect('admin/report/drafts');
 		}else{			
 			$this->load->view('admin/login');
 		}
@@ -240,7 +242,7 @@ class Report extends CI_Controller {
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
-			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds();
+			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds($data['Login_user_name']);
 			$this->load->view('admin/draft/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -255,7 +257,6 @@ class Report extends CI_Controller {
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$rd_data= $this->Data_model->get_rd_data($id);
-			// var_dump($rd_data->enterprise_price); die;
 			$data['report_id']= $rd_data->id;
 			$data['name']= $rd_data->name;
 			$data['title']= $rd_data->title;
@@ -276,10 +277,6 @@ class Report extends CI_Controller {
 			$data['enterprise_price']= $rd_data->enterprise_price;
 			$data['datasheet_price']= $rd_data->datasheet_price;
 			$data['cagr_market_value']= $rd_data->cagr_market_value;
-			/* $data['report_definition']= $rd_data->report_definition; */
-			/* $data['report_description']= $rd_data->report_description;
-			$data['executive_summary_DRO']= $rd_data->executive_summary_DRO;
-			$data['executive_summary_regional_description']= $rd_data->executive_summary_regional_description; */
 			$data['largest_region']= $rd_data->largest_region;
 			$data['country_status']= $rd_data->country_status;
 			$data['status']= $rd_data->status;
@@ -345,10 +342,6 @@ class Report extends CI_Controller {
 				'enterprise_price'=> $this->input->post('enterprise_user'),
 				'datasheet_price'=> $this->input->post('datasheet'),
 				'cagr_market_value'=> $this->input->post('market_value'),
-				/* 'report_definition'=> $this->input->post('Report_definition'),
-				'report_description'=> $this->input->post('Report_description'),
-				'executive_summary_DRO'=> $this->input->post('Executive_summary_DRO'),
-				'executive_summary_regional_description'=> $this->input->post('Executive_summary_regional_description'), */
 				'largest_region'=> $this->input->post('Largest_region'),
 				'created_user'=> $session_data['Login_user_name'],
 				'country_status'=> $this->input->post('country_status'),

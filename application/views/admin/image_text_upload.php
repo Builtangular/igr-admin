@@ -30,7 +30,7 @@
                         <p><?php echo $massage; ?></p>
                     </div>
                     <?php } ?>
-                    <form action="<?php echo base_url('admin/image_text_write/image_write');?>" method="post"
+                    <form action="<?php echo base_url();?>admin/image_text_write/image_write/<?php echo $id; ?>" method="post"
                         class="form-horizontal" accept-charset="utf-8" enctype="multipart/form-data">
                         <div class="box-body">
                      
@@ -43,6 +43,7 @@
                             </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary pull-right" value="Submit">
+                            <input type="hidden" name="id" value="<?php echo $id; ?>" class="form-control">
                         </div>
                     </form>
                 </div>

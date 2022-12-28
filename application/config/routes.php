@@ -87,6 +87,9 @@ $route['admin/segment-overview/add/(:num)'] ='admin/segment_overview/add/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
 
+$route['admin/image-text-write'] ='admin/image_text_write/index';
+$route['admin/image-text-write/(:num)'] ='admin/image_text_write/image_write/$1';
+
 $route['admin/spreadsheet'] = 'admin/PhpspreadsheetController';
 $route['admin/spreadsheet/filter'] = 'admin/PhpspreadsheetController/filter';
 $route['admin/spreadsheet/index'] = 'admin/PhpspreadsheetController/index';
@@ -104,5 +107,11 @@ $route['manager/report/published'] ='admin/manager_report/manager_published_rd';
 $route['manager/report/drafts'] ='admin/manager_report/drafts';
 
 /* custom link urls */
-$route['sales/custom_link'] ='admin/custom_link';
-$route['sales/custom_link/add'] ='admin/custom_link/add';
+$route['sales/custom-link'] ='admin/custom_link';
+$route['sales/custom-link/add'] ='admin/custom_link/add';
+
+/* Queries urls */
+$route['sales/sample-query'] ='admin/queries';
+$route['sales/toc-query'] ='admin/queries/toc_list';
+$route['sales/customization-query'] ='admin/queries/customization_list';
+$route['sales/enquiry-query'] ='admin/queries/enquiry_list';

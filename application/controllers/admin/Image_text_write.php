@@ -21,41 +21,61 @@ class Image_text_write extends CI_Controller
 		$session_data = $this->session->userdata('logged_in');
 		$data['Login_user_name']=$session_data['Login_user_name'];	
 		$data['Role_id']=$session_data['Role_id'];
+		// $data['id'] = $this->input->post('id');
+		$image_record = $this->Image_write_model->get_image_record();
+		$data['id'] = $image_record->id;
+		// var_dump($id);die;
 		$this->load->view("admin/image_text_upload", $data);
         }else{
             $this->load->view("admin/login");
         }
 	}
-    public function image_write()
+    public function image_write($id)
     {
+		// var_dump($_POST);die;
+		// $image_record = $this->Image_write_model->get_image_record();
+		// var_dump($image_record);die;
+		$id = $this->input->post('id');
+		// var_dump($id);die;
+		$image_record = $this->Image_write_model->get_image_record($id);
+		$data['image_file'] = $image_record->image_file;
+		// var_dump($data['image_file']);die;
 		$file ='';
 		$config = array(
 			'upload_path' 	=> "assets/admin/img-text",
 			'allowed_types' => "*",
 			'encrypt_name'	=> false,
 		);
+		// var_dump($config);die;
 		$this->upload->initialize($config);
 		if($this->upload->do_upload('image_file')){
 			$data = $this->upload->data();				
 			$file = $data['file_name'];
+			// var_dump($file);die;
 				
 		}else{
 			$error = array('error' => $this->upload->display_errors());	
 			$this->upload->display_errors();
 		}
-		$result = $this->Image_write_model->upload_image($file);
-		$image_data = $this->Image_write_model->get_image_data(); 
-		$text_data = $this->Image_write_model->get_text_data();
+		$result = $this->Image_write_model->upload_image($file,$id);
+		// var_dump($result);die;
+		$image_data = $this->Image_write_model->get_image_data($result,$id);
+		// $data['id'] = $image_data->id;
+		// var_dump($image_data);die;
+		$text_data = $this->Image_write_model->get_text_data($result);
+		// var_dump($text_data);die;
 		$img = imagecreatefromjpeg("assets/admin/img-text/".$image_data->image_file);
 		$color = imagecolorallocate($img, 255, 255, 0);  
 		$color1 = imagecolorallocate($img, 118, 118, 118);  
-		 
+		// var_dump($color1);die;
 		$string_a = $text_data->name;
 		$fontSize_a = 20;
 		$posX_a = 10;
 		$posY_a = 50;
 		$angle_a = 0;
 
+		// var_dump($string_a);die;
+		
 		$string_b = $text_data->sku;
 		$fontSize_b = 20;
 		$posX_b = 1400;

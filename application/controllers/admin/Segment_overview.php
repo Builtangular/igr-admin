@@ -50,7 +50,6 @@ class Segment_overview extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$description=$this->input->post('description');
             $seg_id=$this->input->post('seg_id');
           

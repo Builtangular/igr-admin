@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Report List
+            Custom List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Report List</h3>
+                        <h3 class="box-title">Custom List</h3>
                         <a href="<?php echo base_url(); ?>admin/custom_link/add" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>

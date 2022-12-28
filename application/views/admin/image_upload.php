@@ -32,12 +32,12 @@
                         </div>
                         <?php } ?>
                         <form action="<?php echo base_url('admin/image/image_upload');?>" method="post"
-                            class="form-horizontal" accept-charset="utf-8" enctype="multipart/form-data">
+                            class="form-horizontal"  accept-charset="utf-8" enctype="multipart/form-data">
                             <div class="box-body">
                                 <h5 class="box-title text-bold">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                                         <img src="<?php echo site_url('assets/admin/img-rd/'.$image->image_file); ?>"
-                                            alt="image" />
+                                        alt="image" width="500" height="400"/>
                                     </a>
                                 </h5>
                             </div>

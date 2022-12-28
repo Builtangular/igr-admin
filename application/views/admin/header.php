@@ -146,7 +146,7 @@
                             <li><a href="<?php echo base_url(); ?>admin/codedecode_description"><span>Codedecode
                                         Description</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/dro_type"><span>DRO Type</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/image_text_write"><span>Upload Text Write Image</span></a></li> 
+                            <li><a href="<?php echo base_url(); ?>admin/image-text-write"><span>Upload Text Write Image</span></a></li> 
                         </ul>
                     </li>
                     <?php } if($Role_id == 1 || $Role_id == 2){ ?>
@@ -167,6 +167,7 @@
                                 class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
+                   
                     <?php } ?>
 
 
@@ -198,8 +199,23 @@
                     <?php } ?>
                     <?php if($Role_id == 5){ ?>
 
-                    <li><a href="<?php echo base_url(); ?>sales/custom_link"><i class="fa fa-file-word-o"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Custom Link</span></a></li>
+                    
+                    <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Sample Queries</span></a></li>
+
+                    <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">TOC Queries</span></a></li>
+                    
+                    <li><a href="<?php echo base_url(); ?>sales/customization-query"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Customization Queries</span></a></li>
+
+                    <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Enquiry Queries</span></a></li>
+
+                    <li><a href="<?php echo base_url(); ?>admin/jobpost"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Job Post</span></a></li>
 
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                     <?php } ?>

@@ -23,7 +23,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Update Company</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/company/update/<?php echo $company_id; ?>" method="post"
+                    <form autocomplete="off" action="<?php echo base_url(); ?>admin/company/update/<?php echo $company_id; ?>" method="post"
                         class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
