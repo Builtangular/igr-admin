@@ -57,7 +57,7 @@
                                     <th>Image</th>
                                     <th>Country</th>
                                     <?php } ?>
-                                    <th>Action</th>                           
+                                    <!-- <th>Action</th>                            -->
                                     
                                     <th style="width: 75px;">Action</th>
                                 </tr>
@@ -185,14 +185,7 @@
                                     <th>Image</th>
                                     <th>Country</th>
                                     <?php } ?>
-                                    <th>Action</th>
-
-                                    <!-- <th>Overview</th>
-                                    <th>PR2</th> -->                                    
-                                    <?php if($Role_id == 1 || $Role_id==2){ ?>
-                                        <th>Image</th>
-                                        <th>Country</th>
-                                    <?php } ?>
+                                    <!-- <th>Action</th> -->
                                     <th style="width: 75px;">Action</th>
                                 </tr>
                             </tfoot>

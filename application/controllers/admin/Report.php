@@ -242,13 +242,8 @@ class Report extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];			
 			$data['success_code'] = $this->session->userdata('success_code');
-			$data['Login_user_name'] = $session_data['Login_user_name'];
-			$data['Role_id'] = $session_data['Role_id'];
-			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds($data['Login_user_name']);
-
-			
 			$data['Page_name']= 'Under Study';			
-			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds();
+			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds($data['Login_user_name']);
 
 			$this->load->view('admin/draft/list',$data);			
 		}else{			

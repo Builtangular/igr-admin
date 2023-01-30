@@ -121,3 +121,14 @@ $route['sales/enquiry-query'] ='admin/queries/enquiry_list';
 
 $route['sales/custom_link'] ='admin/custom_link';
 $route['sales/custom_link/add'] ='admin/custom_link/add';
+$route['admin/spam-mail'] ='admin/spam_mail';
+$route['admin/spam_mail/insert'] ='admin/spam_mail/insert';
+$route['admin/spam-mail/import_file'] ='admin/spam_mail/import_file';
+$route['admin/spam_mail/export_data'] ='admin/spam_mail/export_data';
+
+/* invoice urls */
+$route['invoice/index'] ='admin/invoice/index';
+$route['admin/generate-invoice'] ='admin/invoice/add_invoice';
+
+/* employee urls */
+$route['admin/employee-details'] ='admin/Employee_Details/index';

@@ -212,7 +212,33 @@
                     <li><a href="<?php echo base_url(); ?>admin/jobpost"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Job Post</span></a></li>
 
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Spam Mail</span></a></li>
+
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
+
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <?php } ?>
+                    <?php if($Role_id == 6){?>
+                        <li><a href="<?php echo base_url(); ?>admin/jobpost"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Job Post</span></a></li>
+                        <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Custom Link</span></a></li>
+                        <!-- <li><a href="<?php echo base_url(); ?>admin/generate-invoice"><i class="fa fa-plus"></i><span
+                                class="text-bold">Generate Invoice</span></a></li> -->
+                       
+                        <li><a href="<?php echo base_url(); ?>admin/employee-details"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Employee Details</span></a></li>
+
+                       
+                    <?php } ?>
+                    <?php if($Role_id == 7){?>
+                        <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Spam Mail</span></a></li>
+
+                        <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
+                                    class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
                     <?php } ?>
                 </ul>
                 </li>

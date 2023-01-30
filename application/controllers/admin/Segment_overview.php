@@ -20,7 +20,6 @@ class Segment_overview extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('success_code');
-
 			$data['title'] = "Segment Master";
 			$data['report_id'] = $report_id;
 			$data['list_data'] = $this->Segment_model->get_rd_segment();
@@ -36,7 +35,6 @@ class Segment_overview extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-	
 			$data['get_rd_segment'] = $this->Segment_model->get_rd_segment_data($report_id);
 			$data['report_id'] = $report_id;
 			$this->load->view("admin/segment_overview/add",$data);
@@ -87,10 +85,8 @@ class Segment_overview extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$data['get_rd_segment'] = $this->Segment_model->get_rd_segment_data($report_id);
 			$data['segment_overview'] = $this->Segment_model->get_rd_segment_overview($report_id);
-			
 			$data['report_id'] = $report_id;
 			$this->load->view("admin/segment_overview/edit", $data);
 		}
@@ -106,7 +102,6 @@ class Segment_overview extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			
 			$description_new=$this->input->post('description_new');
 			$seg_id_new=$this->input->post('seg_id_new');
 			$overview_id=$this->input->post('overview_id');
@@ -168,7 +163,6 @@ class Segment_overview extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			
 			$data['delete'] = $this->Segment_model->delete_rd_single_segment_overview($id);
 			$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
 			redirect('analyst/report/drafts');

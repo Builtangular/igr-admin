@@ -13,7 +13,9 @@
 	"require": {
 		"php": ">=5.3.7",
 		"phpoffice/phpspreadsheet": "^1.25",
-		"phpoffice/phpword": "^1.0"
+		"phpoffice/phpword": "^1.0",
+		"zendframework/zend-escaper": "^2.6",
+		"zendframework/zend-stdlib": "^3.2"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

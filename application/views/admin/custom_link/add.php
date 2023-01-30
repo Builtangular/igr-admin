@@ -25,7 +25,8 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Create Custom link</h1>
                     </div>
-                    <form action="<?php echo base_url();?>admin/custom_link/insert_custom_link/" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url();?>admin/custom_link/insert_custom_link/" method="post"
+                        class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Report Id</label>
@@ -52,14 +53,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Licens Type</label>
+                                <label class="control-label col-md-2">License Type</label>
                                 <div class="col-md-8">
                                     <select class="form-control b-none" name="licens_type" placeholder="">
-                                        <option value=""selected>Select Licens Type</option>
-                                        <option value="Singleuser">Singleuser</option>
+                                        <option value="" selected>Select License Type</option>
+                                        <option value="Single User">Single User</option>
                                         <option value="Enterprise">Enterprise</option>
-                                        <option value="Datasheet">Datasheet</option>
-                                      
+                                        <option value="Data Sheet">Data Sheet</option>
                                     </select>
                                 </div>
                             </div>
@@ -72,7 +72,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="box-footer">
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>

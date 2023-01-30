@@ -1,0 +1,310 @@
+<?php header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + (60 * 60))); // 1 hour 
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">		
+	<meta name="google-site-verification" content="gl6u4czK8mKcoCfSxwEOXWanntBKui1ab9eDYgtNIQg" />
+	<title><?php echo $title; ?></title>
+	<meta name="keywords" content="<?php echo $keywords; ?>" />
+	<?php if ($Meta_Description) {?><meta name="description" content="<?php echo $Meta_Description; ?>" /><?php } ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="Robots" content="index, follow" />
+	<meta name="distribution" content="Global" />
+	<meta name="document-type" content="Public" />
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="<?php echo $title; ?>">
+	<meta property="og:description" content="<?php echo $Meta_Description; ?>">
+	<meta property="og:url" content="<?php echo $url_new; ?>">
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('favicon.ico');?>">
+	<meta property="fb:app_id" content="Infinium-Global-Research-1725071574409716/">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@infiniumglobal1">
+	<meta name="twitter:title" content="Infinium Global Research - Research Reports, Consulting, Business and Industry Analysis">
+	<meta name="twitter:description" content="Infinium Global Research is a business consulting and market research firm; a group of experts who caters to fulfilling business and market research needs of leading companies in various industry verticals and business segments.">
+	<meta name="twitter:image" content="https://www.infiniumglobalresearch.com/images/logo.jpg">
+	<meta name="twitter:image:alt" content="Infinium Global Research">
+	<link rel="publisher" href=" https://plus.google.com/108611302042598257995 ">
+	<link rel="canonical" href="<?php echo $url_new; ?>">
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-69030636-1"></script> 
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'UA-69030636-1');
+	</script>
+	<meta name="msvalidate.01" content="B45D41A7A2AB7E060A7B32557094BAFD" />
+	<!-- yandex-verification -->
+	<meta name="yandex-verification" content="87381bb79bcd56b2" />
+	<!-- End yandex-verification -->
+	<link href="<?php echo base_url('assets/img/apple-touch-icon.webp'); ?>" rel="apple-touch-icon" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="<?php echo base_url('assets/css/style.css'); ?>" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url('assets/css/main.css'); ?>" rel="stylesheet" type="text/css">
+</head>
+<body>
+  
+<div class="main-wrapper">
+  <div class="site-content-wrapper bg-white">
+    <div class="site-content">
+      <header class="topbar p-1 btn-top">
+        <div class="container">
+          <div class="row">
+          <div class="col-md-8 text-left hideinphone" id="logo">
+            <a class="btn text-white btn-lg btn-floating fb" href="https://www.facebook.com/InfiniumGlobalResearch/" role="button">
+              <i class="fa fa-facebook"></i>
+            </a>
+            <a class="btn text-white btn-lg btn-floating tw" href="https://twitter.com/infiniumglobal1" role="button">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a class="btn text-white btn-lg btn-floating youtube" href="https://www.youtube.com/channel/UCTNTFJHqTrgVfQyFEAVtXUA" target="_blank">
+                <i class="fa fa-youtube"></i>
+            </a>
+            <a class="btn text-white btn-lg btn-floating insta" href="https://www.instagram.com/infiniumglobalresearch/" target="_blank">
+                <i class="fa fa-instagram"></i>
+            </a>
+            <a class="btn text-white btn-lg btn-floating linkedin" href="https://www.linkedin.com/company/infinium-global-research-1/" target="_blank">
+                <i class="fa fa-linkedin"></i>
+            </a>
+          </div>
+          <div class="col-md-4">
+            <div class="justify-content-end">
+              <b class="hideInPc btn-block"><a href="http://infi-portal.infiniumglobalresearch.net/" class="btn-block btn btn-warning blink mt-1" id=""
+              target="_blank" style="border-radius: 0px;">Infi-Portal</a> </b>
+			  <span class="ml-5 " id="google_translate_element"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+      </header>      
+  <style>
+    #reset{
+      display:none;
+    }
+    </style>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <a href="<?php echo base_url();?>">
+              <img src='<?php echo base_url('assets/img/logo.webp'); ?>' alt="Infinium Global Research" height="44" width="100%" class="logo-sm">
+            </a>
+            <i class="fa fa-search head-logo display-45 float-right mt-3 mr-3 hideInPc" onclick="showSearch()"></i>
+            <p class="tag-line">Reliable Data You Can Trust</p>
+          </div>
+          <div class="branding col-md-8 pt-2 col-sm-8">
+            <form autocomplete="off" role="search" id="welcomeDiv" action="<?php echo site_url(); ?>search" method="POST" class="mt-1 display-none">
+              <div class="input-group border round-corner">
+                <select class="search-bar hideinphone" name="region" id="region" placeholder="">
+                    <option value="" selected>Select Region</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="BRICS">BRICS</option>
+                    <option value="China">China</option>
+                    <option value="France">France</option>
+                    <option value="GCC">GCC</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Global">Global</option>
+                    <option value="India">India</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="Japan">Japan</option>
+                    <option value="MENA">MENA</option>
+                    <option value="Poland">Poland</option>
+                    <option value="Russia">Russia</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="United Arab Emirates">United Arab Emirates</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                    <option value="Vietnam">Vietnam</option>
+                </select>
+                <input type="text" class="form-control" placeholder="Search here" id="search" name="keyword" required style="border:none;outline:none;">
+                <div class="input-group-append">
+                  <button class="btn-top text_white btn ml-1" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+                <input type="text" autocomplete="false" name="hidden" class="hidden" style="display: none">
+              </div>
+              <a class="open-button hideInPc float-right" onclick="openForm()" style="color:#FFA500">Advanced Search</a>
+              <a href="<?php echo base_url();?>" id="reset" onclick="myFunction()">Reset</a>
+            </form>
+			<!-- Search Result -->
+            <div id="search_text" class="search_text p-2"></div>
+			<!-- End Search Result -->
+          </div>
+          <div class="col-md-2 pt-2 hidden">
+            <a href="http://infi-portal.infiniumglobalresearch.net/" class="btn-block btn btn-warning blink mt-1" id=""
+              target="_blank" style="border-radius: 0px;">Infi-Portal</a>
+          </div>
+        </div>
+      </div>
+      <div class="shadow-sm" id="nav-box">
+        <div class="container">
+          <nav class="navbar navbar-expand-md">
+          <div class="row">
+            <button class="navbar-toggler border" type="button text-info" data-toggle="collapse"
+              data-target="#collapsibleNavbar">
+              <i class="fa fa-bars"></i>
+            </button>
+			     </div>
+            <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="<?php echo base_url();?>">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    About Us
+                  </a>
+                  <div class="dropdown-menu">
+                    <a href="<?php echo base_url('about-us');?>" class="dropdown-item">About Company</a>
+                    <a href="<?php echo base_url('igr-growth-matrix');?>" class="dropdown-item">IGR Growth Matrix</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a  href="<?php echo base_url('infographics');?>" class="nav-link blink">Infographics</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="<?php echo base_url();?>" id="navbardrop" data-toggle="dropdown">
+                    Services
+                  </a>
+                  <div class="dropdown-menu">
+                    <a href="<?php echo base_url('research-services');?>" class="dropdown-item">Research Services</a>
+                    <!-- <a href="<?php echo base_url('fdi-solutions');?>" class="dropdown-item">FDI Solutions</a> -->
+                    <a href="<?php echo base_url('exclusive-services');?>"class="dropdown-item">Exclusive Services</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="<?php echo base_url();?>" id="navbardrop" data-toggle="dropdown">
+                    Industries
+                  </a>
+                  <div class="dropdown-menu">
+                    <a href="<?php echo base_url('industry/agriculture');?>" class="dropdown-item">Agriculture & Agrochemicals</a>
+                    <a href="<?php echo base_url('industry/automotive');?>" class="dropdown-item">Automotive, Aerospace & Defence</a>
+                    <a href="<?php echo base_url('industry/chemicals-materials');?>" class="dropdown-item">Chemicals & Materials</a>
+                    <a href="<?php echo base_url('industry/consumer-goods-packaging');?>" class="dropdown-item">Consumer Goods & Packaging</a>
+                    <a href="<?php echo base_url('industry/energy-mining-infra');?>" class="dropdown-item">Energy, Infrastructure and Mining</a>
+                    <a href="<?php echo base_url('industry/food-beverage');?>" class="dropdown-item">Food & Beverages</a>
+                    <a href="<?php echo base_url('industry/healthcare-medical-devices');?>" class="dropdown-item">Healthcare & Medical Devices</a>
+                    <a href="<?php echo base_url('industry/ict-semiconductor');?>" class="dropdown-item">Electronics, ICT & Semiconductors</a>
+                    <a href="<?php echo base_url('industry/industry-automation');?>" class="dropdown-item">Industry Automation</a>
+                    <!--<a (click)="send_id(40,'Fashion-Lifestyle-Hospitality')" class="dropdown-item">Fashion and Lifestyle </a>-->
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="<?php echo base_url();?>" id="navbardrop" data-toggle="dropdown">
+                    Country Reports
+                  </a>
+                  <div class="dropdown-menu">                   
+                    <a href="<?php echo base_url('country/argentina');?>" class="dropdown-item"> Argentina</a>
+                    <a href="<?php echo base_url('country/brazil');?>" class="dropdown-item"> Brazil</a>
+                    <a href="<?php echo base_url('country/china');?>" class="dropdown-item"> China</a>
+                    <a href="<?php echo base_url('country/france');?>" class="dropdown-item"> France</a>
+                    <a href="<?php echo base_url('country/germany');?>" class="dropdown-item"> Germany</a>
+                    <a href="<?php echo base_url('country/india');?>" class="dropdown-item">India</a>
+                    <a href="<?php echo base_url('country/ireland');?>" class="dropdown-item"> Ireland</a>
+                    <a href="<?php echo base_url('country/japan');?>" class="dropdown-item"> Japan</a>
+                    <a href="<?php echo base_url('country/poland');?>" class="dropdown-item"> Poland</a>
+                    <a href="<?php echo base_url('country/russia');?>" class="dropdown-item"> Russia</a>
+                    <a href="<?php echo base_url('country/saudi-arabia');?>" class="dropdown-item"> Saudi Arabia</a>
+                    <a href="<?php echo base_url('country/south-korea');?>" class="dropdown-item"> South Korea</a>
+                    <a href="<?php echo base_url('country/united-arab-emirates');?>" class="dropdown-item"> United Arab Emirates</a>
+                    <a href="<?php echo base_url('country/united-kingdom');?>" class="dropdown-item"> United Kingdom</a>
+                    <a href="<?php echo base_url('country/united-states');?>" class="dropdown-item"> United States</a>					
+                    <a href="<?php echo base_url('country/vietnam');?>" class="dropdown-item"> Vietnam</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="<?php echo base_url();?>" id="navbardrop" data-toggle="dropdown">
+                    Regional Reports
+                  </a>
+                  <div class="dropdown-menu">
+                    <a href="<?php echo base_url('region/africa');?>" class="dropdown-item">Africa </a>
+                    <a href="<?php echo base_url('region/brics');?>" class="dropdown-item">BRICS </a>
+                    <a href="<?php echo base_url('region/gcc');?>" class="dropdown-item">GCC</a>
+                    <a href="<?php echo base_url('region/mena');?>" class="dropdown-item">MENA</a>
+                  </div>
+                </li>
+                <li class="nav-item">                  
+                     <a href="<?php echo base_url('contact-us');?>" class="nav-link">Contact Us</a>
+                </li>
+                <li class="nav-item">                  
+                     <a href="<?php echo base_url('careers');?>" (click)="pageTitle('Careers')" class="nav-link">Careers</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
+<!--- headder Section End--->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+$(document).mouseup(function (e) { 
+	if ($(e.target).closest("#search_text").length === 0) {										
+		$("#search_text").hide(); 
+	} 
+});
+$( "#search_text" ).css("display","none");
+$(document).ready(function(){
+	$("#search").keyup(function(){				
+		var str=  $("#search").val();	
+    var strl= $("#region").val();
+		if(str == "") {
+			// alert(str);	
+			$("#search_text" ).css("display","none");
+		} else {
+			// alert(str);
+			$.get("<?php echo base_url(); ?>Welcome/ajaxsearch?id="+str+"&region="+strl, function(data){
+				$("#search_text" ).html("");
+				if(data == ""){
+					// console.log("in if");
+					$("#search_text" ).css("display","none");
+					$("#search_text").removeClass("search-result");								
+				} else {
+					// console.log("in else");
+					$("#search_text" ).html( data );
+					$("#search_text" ).css("display","");
+					$("#search_text").addClass("search-result");
+				}
+				
+			});
+		} 
+	});
+});
+function showSearch() {
+   var x = document.getElementById("welcomeDiv");
+	if (x.style.display === "none") {
+    x.style.display = "block";
+	} else {
+    x.style.display = "none";
+  }
+}
+
+function openForm() {
+  document.getElementById("region").style.display = "block";
+  document.getElementById("reset").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("region").style.display = "none";
+}
+
+function myFunction() {
+  document.getElementById("myForm").reset();
+}
+</script>
