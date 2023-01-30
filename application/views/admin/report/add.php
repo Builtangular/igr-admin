@@ -33,8 +33,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Scope <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="scope">
-                                            <option value="0">Select</option>
+                                        <select class="form-control" name="scope" required >
+                                            <option value="">Select</option>
                                             <?php foreach($scopes_data as $scopes){?>
                                             <option value="<?php echo $scopes->id; ?>"><?php echo $scopes->name; ?>
                                             </option>
@@ -97,8 +97,8 @@
 								<div class="form-group">
                                     <label class="control-label col-md-3">Category <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="category">
-                                            <option value="0">Select</option>
+                                        <select class="form-control" name="category" required>
+                                            <option value="">Select</option>
 											<?php foreach($category_data as $category){?>
                                             <option value="<?php echo $category->id; ?>"><?php echo $category->name; ?>
                                             </option>
@@ -174,13 +174,13 @@
 							<div class="form-group">
                                 <label class="control-label col-md-2">Report Price <span class="text-red">*</span></label>
                                 <div class="col-md-4">
-                                    <input type="text" id="single_user" name="single_user" class="form-control" placeholder="Single User License" autocomplete="on" />
+                                    <input type="text" id="single_user" name="single_user" class="form-control" placeholder="Single User License" autocomplete="on" required />
                                 </div>
 								<div class="col-md-3">
-                                    <input type="text" id="enterprise_user" name="enterprise_user" class="form-control" placeholder="Enterprise License" autocomplete="on" />
+                                    <input type="text" id="enterprise_user" name="enterprise_user" class="form-control" placeholder="Enterprise License" autocomplete="on" required />
                                 </div>
 								<div class="col-md-3">
-                                    <input type="text" id="datasheet" name="datasheet" class="form-control" placeholder="Data Sheet License" autocomplete="on" />
+                                    <input type="text" id="datasheet" name="datasheet" class="form-control" placeholder="Data Sheet License" autocomplete="on" required/>
                                 </div>
                             </div>
 						</div>
@@ -275,7 +275,7 @@ function HideVunit(input) {
 }
 </script>
 <!-- jQuery 2.1.3 -->
-    <script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
 <script>
 $(document).mouseup(function (e) { 

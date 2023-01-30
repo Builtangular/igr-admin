@@ -116,7 +116,7 @@
                                             <label><input type="radio" name="status" value="0"
                                                     <?php echo ($status==0)?'checked':'' ?> />Draft</label>
                                             <label><input type="radio" name="status" value="3"
-                                                    <?php echo ($status==1)?'checked':'' ?> />Publish</label>
+                                                    <?php echo ($status==3)?'checked':'' ?> />Publish</label>
                                         </div>
                                     </div>
                                 </div>

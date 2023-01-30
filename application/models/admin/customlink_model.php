@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class customlink_model extends CI_Model {   
+class Customlink_Model extends CI_Model {   
 	 public function __construct(){
 		   parent::__construct(); 
 		   $this->load->database();
@@ -52,7 +52,6 @@ class customlink_model extends CI_Model {
         $result= $this->db->update('tbl_rd_custom_link', $update);
         // echo $this->db->last_query();die;
         return $result;
-
     }
     function custom_link_delete($id){
 		$this->db->where("id", $id);

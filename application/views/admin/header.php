@@ -160,7 +160,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/verified"><i class="fa fa-file-word-o"></i><span
+                    <li><a href="<?php echo base_url(); ?>admin/report/verified_rd"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Verified RDs</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
@@ -168,6 +168,8 @@
                                 class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
+                         <li><a href="<?php echo base_url(); ?>admin/jobpost"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Job Post</span></a></li>
                     <?php } ?>
 
                     <?php if($Role_id == 3){ ?>
@@ -193,10 +195,23 @@
                     <?php } ?>
                     <?php if($Role_id == 5){ ?>
 
-                    <li><a href="<?php echo base_url(); ?>sales/custom_link"><i class="fa fa-file-word-o"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Custom Link</span></a></li>
+                      <li><a href="<?php echo base_url(); ?>admin/jobpost"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Job Post</span></a></li>
 
                     <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <?php } ?>
+                      <?php if($Role_id == 6){?>
+                        <li><a href="<?php echo base_url(); ?>admin/jobpost"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Job Post</span></a></li>
+                        <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Custom Link</span></a></li>
+                        <li><a href="<?php echo base_url(); ?>admin/generate-invoice"><i class="fa fa-plus"></i><span
+                                class="text-bold">Generate Invoice</span></a></li>
+
+                        <!-- <li><a href="<?php echo base_url(); ?>admin/invoice"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">invoice </span></a></li> -->
                     <?php } ?>
                 </ul>
                 </li>

@@ -30,7 +30,6 @@
                     <form action="<?php echo base_url(); ?>admin/market-insight/insert/<?php echo $report_id; ?>" method="post" class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-12">
-                                <?php if($Role_id == 4){?>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Report Definition 1</label>
                                     <div class="col-md-9">
@@ -45,7 +44,6 @@
                                     <input type="hidden" name="definition" id="definition" value="Report Definition" class="form-control">
                                 </div>
                                 <span id="Definition"></span>
-                                <?php } ?>
                                <!--  Report Description -->
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Report Description 1<span
@@ -60,7 +58,7 @@
                                     </div>
                                     <input type="hidden" name="description" id="description" value="Report Description" class="form-control">
                                 </div>
-                                <span  id="Description"></span>
+                                <span id="Description"></span>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Summary - DRO Para 1 <span
                                             class="text-red">*</span></label>
@@ -74,7 +72,7 @@
                                     </div>
                                     <input type="hidden" name="summary_DRO" id="summary_DRO" value="Summary DRO" class="form-control">
                                 </div>
-                                <span  id="Summary_DRO"></span>
+                                <span id="Summary_DRO"></span>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Summary - Regional Para 1 <span
                                             class="text-red">*</span></label>
@@ -89,13 +87,20 @@
                                     <input type="hidden" name="summary_regional_description" id="summary_regional_description" value="Summary Regional Description" class="form-control">
                                 </div>
                                 <span id="Summary_regional_description"></span>
-                                <!-- <div class="form-group">
-                                    <label class="control-label col-md-2">Market Insight Extra Para</label>
-                                    <div class="col-md-10">
-                                        <textarea type="text" name="Extra_para" rows="5"
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Competitive Landscape Para 1<span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-9">
+                                        <textarea type="text" name="competitive_landscape[]" rows="8"
                                             class="form-control"></textarea>
                                     </div>
-                                </div> -->
+                                    <div class="col-md-1">
+                                        <center><span type="button" class="btn btn-block btn-info"
+                                                id="competitive_landscape_description_addrow"><i class="fa fa-plus"></i> Add</span></center>
+                                    </div>
+                                    <input type="hidden" name="competitive_landscape_type" id="competitive_landscape_type" value="Competitive Landscape" class="form-control">
+                                </div>
+                                <span id="Competitive_landscape_description"></span>
                             </div>
                         </div>
 
@@ -170,6 +175,21 @@ jQuery(function() {
         );
 
         jQuery('#Summary_regional_description').append(newRow);
+        i++;
+    });
+});
+
+jQuery(function() {
+    var counter = 1;
+    var i = 2;
+    jQuery('#competitive_landscape_description_addrow').click(function(event) {
+        event.preventDefault();
+        counter++;
+        var newRow = jQuery(
+            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Competitive Landscape Para '+counter+'</label> <div class="col-md-9"> <textarea type="text" name="competitive_landscape[]" rows="8" class="form-control"></textarea></div> <div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center> </div></div>'
+        );
+
+        jQuery('#Competitive_landscape_description').append(newRow);
         i++;
     });
 });

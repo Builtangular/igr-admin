@@ -80,7 +80,6 @@ $route['admin/dro-reports/delete/(:num)'] ='admin/dro_reports/delete/$1';
 
 $route['admin/pr2-reports/(:num)'] ='admin/PR2_Reports/index/$1';
 $route['admin/pr2-reports/add/(:num)'] ='admin/PR2_Reports/add/$1';
-$route['admin/pr2_reports/edit/(:num)'] ='admin/PR2_Reports/edit/$1';
 $route['admin/pr2_reports/delete/(:num)'] ='admin/PR2_Reports/delete/$1';
 
 $route['admin/dro-reports/insert_dro_records/(:num)'] ='admin/dro_reports/insert_dro_records/$1';
@@ -95,25 +94,19 @@ $route['admin/spreadsheet/index'] = 'admin/PhpspreadsheetController/index';
 $route['admin/spreadsheet/export'] = 'admin/PhpspreadsheetController/export';
 
 /* analyst urls */
-$route['analyst/report/processed'] ='admin/Analyst_Report/analyst_processed_rd';
-$route['analyst/report/published'] ='admin/Analyst_Report/analyst_published_rd';
+$route['analyst/report/processed'] ='admin/analyst_report/analyst_processed_rd';
+$route['analyst/report/published'] ='admin/analyst_report/analyst_published_rd';
 $route['analyst/report/drafts'] ='admin/report/drafts';
 $route['analyst/report/add'] ='admin/report/add';
 
 /* manager urls */
-$route['manager/report/processed'] ='admin/Manager_Report/manager_processed_rd';
-$route['manager/report/published'] ='admin/Manager_Report/manager_published_rd';
-$route['manager/report/drafts'] ='admin/Manager_Report/drafts';
+$route['manager/report/processed'] ='admin/manager_report/manager_processed_rd';
+$route['manager/report/published'] ='admin/manager_report/manager_published_rd';
+$route['manager/report/drafts'] ='admin/manager_report/drafts';
 
 /* Generate RD & Sample by Analyst & Manager */
 $route['analyst/generate-rd'] ='admin/generate_rd/index';
 
 /* custom link urls */
-$route['sales/custom-link'] ='admin/Custom_link';
-$route['sales/custom-link/add'] ='admin/Custom_link/add';
-
-/* Queries urls */
-$route['sales/sample-query'] ='admin/queries';
-$route['sales/toc-query'] ='admin/queries/toc_list';
-$route['sales/customization-query'] ='admin/queries/customization_list';
-$route['sales/enquiry-query'] ='admin/queries/enquiry_list';
+$route['sales/custom_link'] ='admin/custom_link';
+$route['sales/custom_link/add'] ='admin/custom_link/add';

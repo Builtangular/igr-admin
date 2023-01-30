@@ -34,7 +34,7 @@
                                     <label class="control-label col-md-3">Scope</label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="scope">
-                                            <!-- <option value="0">Select</option> -->
+                                            <option value="">Select</option>
                                             <?php foreach($scopes_data as $scopes){
                                             if ($scopes->id == $scope_id){ ?>
                                             <option value="<?php echo $scopes->id; ?>" Selected>
@@ -200,7 +200,6 @@
                                         <div class="radio">
                                             <label><input type="radio" name="volume" value="1"
                                                     onclick="return HideVunit(1)" <?php echo ($is_volume_based==1)?'checked':'' ?> />Yes</label>
-
                                             <label><input type="radio" name="volume" value="0"
                                                     onclick="return HideVunit(0)" <?php echo ($is_volume_based==0)?'checked':'' ?> />No</label>
                                         </div>
@@ -223,7 +222,7 @@
                                             placeholder="Volume Unit" />
                                     </div>
                                 </div>
-								<?php } else {?>
+								<?php } else { ?>
                                 <div class="form-group" id="div1" style="display: none;">
                                     <label class="control-label col-md-3">Volume CAGR</label>
                                     <div class="col-md-9">
@@ -304,8 +303,7 @@
                                 <div class="col-md-10">
                                     <input type="text" name="Publish_date" value="<?php echo $updated_at; ?>" class="form-control">
                                 </div>
-                            </div>
-                            
+                            </div>                            
                         </div>
                         
                         <div class="box-footer">

@@ -47,10 +47,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($Country_Rds as $data){
-                                        
-                                        ?>
-
+                                <?php foreach($Country_Rds as $data){  ?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->id; ?></td>
                                     <td><?php echo $data->title; ?></td>
@@ -108,7 +105,6 @@
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
-
 
 <script>
 $(document).ready(function() {

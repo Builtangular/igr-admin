@@ -25,13 +25,336 @@ class Generate_rd extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 
-            $data['Published_rds'] = $this->RdData_model->get_global_rds(3);
+            $data['Published_rds'] = $this->RdData_model->get_global_rd_titles();
             $this->load->view('admin/rd_view/list',$data);
         }else{			
 			$this->load->view('admin/login');
 		}
     }
 
+	public function rd_1()
+	{
+        // var_dump($_GET["report_id"]); die;
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
+            /* RD base data extract */
+            $report_id = $single_rd_data->id;
+            $scope_id = $single_rd_data->scope_id;
+            $report_title = $single_rd_data->title;   // title case rd-title
+            $report_name = $single_rd_data->name;   // small case rd-title
+            $value_cagr = $single_rd_data->value_cagr;
+            $value_unit = $single_rd_data->value_unit;
+			$cagr_market_value = $single_rd_data->cagr_market_value;
+            $forecast_from = $single_rd_data->forecast_from;
+            $forecast_to = $single_rd_data->forecast_to;
+            $analysis_from = $single_rd_data->analysis_from;
+            $analysis_to = $single_rd_data->analysis_to;
+            $volume_based_cagr = $single_rd_data->volume_based_cagr;
+            $volume_based_unit = $single_rd_data->volume_based_unit;
+            $largest_region = $single_rd_data->largest_region;
+            /* ./ RD base data extract */
+            /* get scope data */
+            $ScopeList = $this->Data_model->get_scope_master();				
+            foreach($ScopeList as $scope){
+                if($scope->id == $scope_id){
+                    $scope_name = $scope->name;
+                }
+            }
+            /* ./ get scope data */
+            /* Concatenation */
+            $forecast_period =$forecast_from.'-'.$forecast_to;
+            $market_period =$analysis_from.'-'.$analysis_to;
+            $Report_title_scope =$scope_name.' '.htmlspecialchars($report_title);
+            // $report_name_scope = strtolower($scope_name).' '.$report_name;
+
+			/* description scope name */
+			if($scope_name == 'Global'){
+				$desc_scope_name = strtolower($scope_name);
+			} else {
+				$desc_scope_name = $scope_name;
+			}
+			$report_name_scope = $desc_scope_name.' '.$report_name;
+			/* Para 1st */
+			$rd1_para1 = $this->RdData_model->get_rd2_codedecode_para(1);
+            $RD1_para1 = $rd1_para1->description;
+			$New_RD1_para_1 = str_replace("report_name", $report_name, $RD1_para1);			
+			$New_RD1_para_2 = str_replace("scope_name", $desc_scope_name, $New_RD1_para_1);	
+
+			/* para last */
+			$rd1_para4 = $this->RdData_model->get_rd2_codedecode_para(2);
+            $RD1_para4 = $rd1_para4->description;
+			$New_RD1_para_4 = str_replace("report_name", $report_name, $RD1_para4);			
+			$New_RD1_para_5 = str_replace("forecast_period", strtolower($forecast_period), $New_RD1_para_4);
+
+			$parent = 0;
+			$main_segments= $this->RdData_model->get_rd_segments($report_id, $parent);
+			foreach($main_segments as $segments)
+			{
+				$mainseg[] = $segments->name;					
+					
+				$segment_name.= ltrim(rtrim($segments->name))." (";	
+				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);
+				foreach($sub_segments as $subsegments)
+				{
+					$subseg[] = $subsegments->name;					
+				}
+				$j= count($subseg);
+				for($i = 0; $i< $j ; $i++)
+				{
+					if($i == $j-2)
+					{
+						$segment_name.= ltrim(rtrim($subseg[$i])).", and ";
+					}
+					if($i == $j-1)
+					{
+						$segment_name.= ltrim(rtrim($subseg[$i]))."), ";
+					}
+					if($i < $j-2)
+					{
+						$segment_name.= ltrim(rtrim($subseg[$i])).", ";
+					}						
+				}
+				unset($subseg);					
+			}
+
+			$Meta_title = htmlspecialchars($report_title)." Size, Share, Trends, Analysis, Industry Report ".$forecast_to." | IGR";
+			$Meta_description = htmlspecialchars(strtolower($report_name_scope." covers segments, by ".$segment_name)."size, trends, CAGR, forecast up to ".$forecast_to);
+			$Meta_description=str_replace("amp;","",htmlspecialchars($Meta_description));
+			$Meta_keyword = htmlspecialchars(ucwords($report_name.", ".$report_name_scope.", Trends, Analysis, Share, Forecast, Drivers, Restraints, Market Research Report"));
+			
+			/* Word file writeup */
+			$PHPWord = new PhpWord();
+			$section = $PHPWord->addSection();
+			// Meta Title
+			$section->addText(htmlspecialchars("Meta Title:"), array('name'=>'Calibri (Body)','align'=>'center','bold'=>True, 'color'=>'#000','size'=>12));
+			$section->addText(htmlspecialchars($Meta_title), array('name'=>'Calibri (Body)','align'=>'center','bold'=>false, 'color'=>'#000','size'=>12));
+			$section->addTextBreak(1);
+			// Meta Description
+			$section->addText(htmlspecialchars("Meta Description:"), array('name'=>'Calibri (Body)','align'=>'center','bold'=>True, 'color'=>'#000','size'=>12));
+			$section->addText(htmlspecialchars($Meta_description), array('name'=>'Calibri (Body)','align'=>'center','bold'=>false, 'color'=>'#000','size'=>12));
+			$section->addTextBreak(1);
+			// Meta Keyword
+			$section->addText(htmlspecialchars("Meta Keyword:"), array('name'=>'Calibri (Body)','align'=>'center','bold'=>True, 'color'=>'#000','size'=>12));
+			$section->addText(htmlspecialchars($Meta_keyword), array('name'=>'Calibri (Body)','align'=>'center','bold'=>false, 'color'=>'#000','size'=>12));
+			$section->addTextBreak(1);
+			// URL Path
+			$section->addText(htmlspecialchars("Report URL:"), array('name'=>'Calibri (Body)','align'=>'center','bold'=>True, 'color'=>'#000','size'=>12));
+			$new_report_name=str_replace(" ","-",htmlspecialchars($report_name_scope));
+			$new_report_name=str_replace(",","-", strtolower($new_report_name));
+			$new_report_name=str_replace("--","-", $new_report_name);
+			$new_report_name=str_replace("/","-", strtolower($new_report_name));
+			$new_report_name=str_replace("&","and", strtolower($new_report_name));
+			$section->addText(htmlspecialchars($new_report_name), array('name'=>'Calibri (Body)','align'=>'center','bold'=>false, 'color'=>'#000','size'=>12));
+			$section->addTextBreak(3);
+
+			foreach($main_segments as $segments)
+			{
+				$mainseg[] = $segments->name;					
+					
+				$segment_details.= ltrim(rtrim(strtolower($segments->name)))." - ";	
+				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);
+				foreach($sub_segments as $subsegments)
+				{
+					$subseg[]=$subsegments->name;			
+				}
+				$j= count($subseg);
+				for($i = 0; $i< $j ; $i++)
+				{
+					if($i == $j-2)
+					{
+						$segment_details.= ltrim(rtrim($subseg[$i])).", and ";
+					}
+					if($i == $j-1)
+					{
+						$segment_details.= ltrim(rtrim($subseg[$i]))."; ";
+					}
+					if($i < $j-2)
+					{
+						$segment_details.= ltrim(rtrim($subseg[$i])).", ";
+					}						
+				}
+				unset($subseg);					
+			}
+			if($scope_name == 'Global')
+			{
+				$Report_new_title = htmlspecialchars($report_title)." (".ucwords($segment_details, " \t\r\n\f\v'")."): ".ucwords($scope_name)." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+			} else {
+				$Report_new_title = htmlspecialchars($scope_name.' '.$report_title)." (".ucwords($segment_details, " \t\r\n\f\v'")."): Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+			}
+			$Report_new_title=str_replace(" And "," and ",htmlspecialchars($Report_new_title));
+			$Report_new_title=str_replace(" Of "," of ",htmlspecialchars($Report_new_title));
+			$Report_new_title=str_replace(" To "," to ",htmlspecialchars($Report_new_title));
+			$Report_new_title=str_replace(" In "," in ",htmlspecialchars($Report_new_title));
+			$Report_new_title=str_replace(" On "," on ",htmlspecialchars($Report_new_title));
+			$Report_new_title=str_replace(" At "," at ",htmlspecialchars($Report_new_title));
+			$Report_new_title=str_replace("; )",")",htmlspecialchars($Report_new_title));
+			$Report_new_title=str_replace("amp;","",htmlspecialchars($Report_new_title));
+			
+			// var_dump($Report_new_title); die;
+			$section->addText(htmlspecialchars($Report_new_title), array('name'=>'Verdana','align'=>'center','bold'=>true, 'color'=>'006699','size'=>12));
+			$section->addTextBreak(1);
+
+			/* CAGR Automation Lines */
+			if($cagr_market_value){
+				$cagr_value = $cagr_market_value;
+			}else if(!is_numeric($value_cagr)){
+				$cagr_value = 'According to the report, the '.$desc_scope_name.' '.$report_name.' is projected to grow at a '.$value_cagr.' CAGR over the forecast period of '.$forecast_period.'.';
+			}else{
+				$cagr_value = 'According to the report, the '.$desc_scope_name.' '.$report_name.' is projected to grow at a CAGR of about '.$value_cagr.'% over the forecast period of '.$forecast_period.'.';
+			}
+			$PHPWord->addParagraphStyle('pStyle', array('align'=>'both', 'spaceAfter'=>100));
+			$section->addText(htmlspecialchars($New_RD1_para_2.$cagr_value), null, 'pStyle');
+			$section->addTextBreak(1);
+			$section->addText('Market Insight', array('align'=>'Left','bold'=>true,'name'=>'Verdana'));
+			$PHPWord->addParagraphStyle('pStyle', array('align'=>'both', 'spaceAfter'=>100));
+			$type = "Report Description";
+			$market_insight_description = $this->RdData_model->get_rd_market_insight($report_id, $type);
+			foreach($market_insight_description as $rd_description){
+				// $report_description.= $rd_description->description;
+				$section->addText(htmlspecialchars($rd_description->description), null, 'pStyle');
+				$section->addTextBreak(1);
+			}
+			$type = "Summary DRO";
+			$market_insight_summary_dro = $this->RdData_model->get_rd_market_insight($report_id, $type);
+			foreach($market_insight_summary_dro as $rd_summary_dro){
+				// $report_summary_dro.= $rd_summary_dro->description;
+				$section->addText(htmlspecialchars($rd_summary_dro->description), null, 'pStyle');
+				$section->addTextBreak(1);
+			}	
+			$type = "Summary Regional Description";
+			$market_insight_summary_regional = $this->RdData_model->get_rd_market_insight($report_id, $type);
+			foreach($market_insight_summary_regional as $rd_summary_regional){
+				// $report_summary_dro.= $rd_summary_dro->description;
+				$section->addText(htmlspecialchars($rd_summary_regional->description), null, 'pStyle');
+				$section->addTextBreak(1);
+			}	
+			/* /. Get Global Rd Para 2 - Market Insight */
+			/* Get Global Rd Para 3 - Segments Covered */
+			$new_text="";
+			$segment_covered="";
+			$new_text1='The report on '.$report_name_scope.' covers segments such as ';
+			/* Getting main and sub segments */	
+			$parent = 0;
+			$main_segments= $this->RdData_model->get_rd_segments($report_id, $parent);
+			foreach($main_segments as $segments)
+			{
+				$mainseg1[] = strtolower($segments->name);			
+				
+				$new_text.="On the basis of ".ltrim(rtrim(strtolower($segments->name))).", the sub-markets include ";	
+				$SubSegments=$this->RdData_model->get_rd_segments($report_id, $segments->id);
+				foreach($SubSegments as $sub_seg)
+				{
+					$sub_seg1[]=strtolower($sub_seg->name);					
+				}
+				$j= count($sub_seg1);
+				for($i = 0; $i< $j ; $i++)
+				{
+					if($i == $j-2)
+					{
+						$new_text.= ltrim(rtrim($sub_seg1[$i])).", and ";
+					}
+					if($i == $j-1)
+					{
+						$new_text.= ltrim(rtrim($sub_seg1[$i])).". ";
+					}
+					if($i < $j-2)
+					{
+						$new_text.= ltrim(rtrim($sub_seg1[$i])).", ";
+					}						
+				}
+				unset($sub_seg1);					
+			}
+			$j= count($mainseg1);
+			for($i=0; $i<$j ; $i++)
+			{
+				if($i==$j-2)
+				{
+					$new_text1 .=ltrim(rtrim($mainseg1[$i])).", and ";
+				}
+				if($i== $j-1)
+				{
+					$new_text1 .= ltrim(rtrim($mainseg1[$i])).".";
+				}
+				if($i<$j-2)
+				{
+					$new_text1 .= ltrim(rtrim($mainseg1[$i])).", ";
+				}
+			}
+			unset($mainseg1);
+			$segment_covered = $new_text1.' '.$new_text;
+
+			$section->addText('Segment Covered', array('align'=>'Left','bold'=>true,'name'=>'Verdana'));
+			$PHPWord->addParagraphStyle('pStyle', array('align'=>'both', 'spaceAfter'=>100));
+			$section->addText(htmlspecialchars($segment_covered), null, 'pStyle');
+			$section->addTextBreak(1);	
+
+			/**************Company Profile****************************/
+			/* Fetch companies from database */
+			$cmp_profile="The report provides profiles of the companies in the market such as ";
+			$Rd_companies=$this->RdData_model->get_rd_companies($report_id);
+			foreach($Rd_companies as $cmp)
+			{
+				$companies[]= $cmp->name;					
+			}
+			$j= count($companies);				
+			for($i = 0; $i< $j ; $i++)
+			{
+				if($i == $j-2)
+				{
+					$cmp_profile .= ltrim(rtrim($companies[$i])).", and ";
+				}
+				if($i == $j-1)
+				{
+					$cmp_profile .= ltrim(rtrim($companies[$i])).". ";
+				}
+				if($i < $j-2)
+				{
+					$cmp_profile .= ltrim(rtrim($companies[$i])).", ";
+				}					
+			}
+			// unset($cmp_profile);
+			$company_profile = $cmp_profile;
+			$section->addText('Companies Profiled:', array('align'=>'Left','bold'=>true,'name'=>'Verdana'));
+			$PHPWord->addParagraphStyle('pStyle', array('align'=>'both', 'spaceAfter'=>100));
+			$section->addText(htmlspecialchars($company_profile), null, 'pStyle');
+			$section->addTextBreak(1);
+
+			/* Get Global Rd Para 4 - Report Highlights */
+
+			$section->addText('Report Highlights:', array('align'=>'Left','bold'=>true,'name'=>'Verdana'));
+			$PHPWord->addParagraphStyle('pStyle', array('align'=>'both', 'spaceAfter'=>100));
+			$section->addText(htmlspecialchars($New_RD1_para_5), null, 'pStyle');
+			$section->addTextBreak(1);
+			// var_dump($company_profile ); die;
+
+
+			/* Generate word file */
+            $new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));			
+			$new_file_name=str_replace("/","-", $new_file_name);
+			$objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
+			$filename = "".htmlspecialchars($new_file_name)."-RD1.docx";
+			$objWriter->save($filename);
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename='.$filename);
+			// header('Content-Transfer-Encoding: binary');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($filename));
+			ob_clean();
+			flush();
+			readfile($filename);
+			unlink($filename);
+			exit; // deletes the temporary file		
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
     public function rd_2()
 	{
         // var_dump($_GET["report_id"]); die;
@@ -67,13 +390,22 @@ class Generate_rd extends CI_Controller {
             /* Concatenation */
             $forecast_period =$forecast_from.'-'.$forecast_to;
             $market_period =$analysis_from.'-'.$analysis_to;
-            $Report_title_scope =$scope_name.' '.$report_title;
-            $report_name_scope = strtolower($scope_name).' '.$report_name;
+            $Report_title_scope =$scope_name.' '.htmlspecialchars($report_title);
+			/* description scope name */
+			if($scope_name == 'Global'){
+				$desc_scope_name = strtolower($scope_name);
+			} else {
+				$desc_scope_name = $scope_name;
+			}
+            $report_name_scope = $desc_scope_name.' '.$report_name;
 
             /* Fetch RD2 Content  */
 			/* Report Title */
-			$Rd2_report_title = ucwords($report_name, " \t\r\n\f\v'").': '.$scope_name.' Industry Analysis, Trends, Market Size, and Forecasts up to '.$forecast_to;
-			
+			if($scope_name == 'Global'){
+				$Rd2_report_title = ucwords($report_name, " \t\r\n\f\v'").': '.$scope_name.' Industry Analysis, Trends, Market Size, and Forecasts up to '.$forecast_to;	
+			} else {
+				$Rd2_report_title = $scope_name.' '.ucwords($report_name, " \t\r\n\f\v'").': Industry Analysis, Trends, Market Size, and Forecasts up to '.$forecast_to;
+			}
             // Para 1 -----------
             $rd2_para1 = $this->RdData_model->get_rd2_codedecode_para(3);
             $RD2_para1 = $rd2_para1->description;
@@ -101,7 +433,7 @@ class Generate_rd extends CI_Controller {
     				}
     				if($i == $j-1)
     				{
-    					$Scope_Region .= ltrim(rtrim($ScReg[$i]))." ";
+    					$Scope_Region .= ltrim(rtrim($ScReg[$i]))."";
     				}
     				if($i < $j-2)
     				{
@@ -222,7 +554,7 @@ class Generate_rd extends CI_Controller {
 					$subseg[] = $subsegments->name;
 					$sub_segment = $subsegments->name;
 					$section->addListItem(htmlspecialchars($sub_segment), 0, 'Header', $listStyle, 'P-Style');
-
+					
 					$child_segments= $this->RdData_model->get_rd_segments($report_id, $subsegments->id);			
 					if($child_segments)
 					{
@@ -231,7 +563,6 @@ class Generate_rd extends CI_Controller {
 							$childseg[] = $childsegments->name;
 							$child_segment = $childsegments->name;
 							$section->addListItem(htmlspecialchars($child_segment), 1, 'Header', $listStyle, 'P-Style');
-
 						}
 					}
 				}		
@@ -248,22 +579,25 @@ class Generate_rd extends CI_Controller {
 			}
 			$section->addTextBreak(1);
 			/* Report Deliver Para */
-			if($scope_name == "Global")
-			{
-			    $rd2_report_deliver_para = $this->RdData_model->get_rd2_codedecode_para(7);
-				$rd2_report_deliver_para1 = $rd2_report_deliver_para->description;
+			$rd2_report_deliver_para = $this->RdData_model->get_rd2_codedecode_para(7);
+			$rd2_report_deliver_para1 = $rd2_report_deliver_para->description;
 
-				$section->addText('What does this report deliver?', array('align'=>'center','bold'=>true,'name'=>'Verdana'));
-				$deliverylines = explode('\n', $rd2_report_deliver_para1);
-				foreach($deliverylines as $DlinePara) 
-				{
-					$rd2_report_deliver_para2 = str_replace("Forecast_period_last_value",$forecast_to,$DlinePara);						
-					$rd2_report_deliver_para3 = str_replace("Report_name_scope",$report_name_scope,$rd2_report_deliver_para2);						
-					$rd2_report_deliver_para4 = str_replace("Report_name",$report_name,$rd2_report_deliver_para3);					
-					$rd2_report_deliver_para5 = str_replace("Scope_name",strtolower($scope_name),$rd2_report_deliver_para4);					
-					$section->addText(htmlspecialchars($rd2_report_deliver_para5), null, 'pStyle');		
-				}				
+			$section->addText('What does this report deliver?', array('align'=>'center','bold'=>true,'name'=>'Verdana'));
+			if($scope_name == 'Global'){
+				$scope_wise_line = $scope_name.' as well as regional markets';
+			}else{
+				$scope_wise_line = $scope_name.' countries';
 			}
+			$deliverylines = explode('\n', $rd2_report_deliver_para1);
+			foreach($deliverylines as $DlinePara) 
+			{
+				$rd2_report_deliver_para2 = str_replace("Forecast_period_last_value",$forecast_to,$DlinePara);						
+				$rd2_report_deliver_para3 = str_replace("Report_name_scope",$report_name_scope,$rd2_report_deliver_para2);						
+				$rd2_report_deliver_para4 = str_replace("Report_name",$report_name,$rd2_report_deliver_para3);					
+				$rd2_report_deliver_para5 = str_replace("Scope_name",$desc_scope_name,$rd2_report_deliver_para4);					
+				$rd2_report_deliver_para6 = str_replace("Scope_wise_line",$scope_wise_line,$rd2_report_deliver_para5);					
+				$section->addText(htmlspecialchars($rd2_report_deliver_para6), null, 'pStyle');		
+			}	
 			
 			/* Generate word file */
             $new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));			
@@ -352,13 +686,13 @@ class Generate_rd extends CI_Controller {
 			$section->addListItem(htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' Projection', 1,  'Header', $listStyle, 'P-Style');
 			if ($scope_name=="Global") {		    
 				$section->addListItem(htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' Regional Highlights', 1,  'Header', $listStyle, 'P-Style');
-		    }else {
+		    }/* else {
 			    $section->addListItem(htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' Country Highlights', 1,  'Header', $listStyle, 'P-Style');
-			}
+			} */
 			$section->addTextBreak(1);
 
 			/* Chapter 3 */
-			$section->addListItem(htmlspecialchars(ucwords($report_name_scope, " \t\r\n\f\v'")).' Overview', 0, 'myOwnStyle', $listStyle, 'P-Style');
+			$section->addListItem(htmlspecialchars($Report_title_scope).' Overview', 0, 'myOwnStyle', $listStyle, 'P-Style');
 			$section->addListItem('Introduction', 1, 'Header', $listStyle, 'P-Style');
 			$section->addListItem('Market Dynamics', 1, 'Header', $listStyle, 'P-Style');
 			$section->addListItem('Drivers', 2, 'Header', $listStyle, 'P-Style');
@@ -389,8 +723,8 @@ class Generate_rd extends CI_Controller {
 			if($scope_name == "Global")
 			{
 				$section->addListItem(htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' Macro Indicator Analysis', 0, 'myOwnStyle', $listStyle, 'P-Style');
-			}
-			$section->addTextBreak(1);
+				$section->addTextBreak(1);
+			}			
 
 			/* Chapter 5 i.e. Segment Chapters */
 			foreach($main_segments as $segments)
@@ -444,11 +778,13 @@ class Generate_rd extends CI_Controller {
     					$region_report_title = ltrim(rtrim($ScReg[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
     					$section->addListItem(htmlspecialchars($region_report_title), 2, 'Header', $listStyle, 'P-Style');
     				}
-    				if($ScReg[$i] == "RoW"){
-    					$section->addListItem(htmlspecialchars($region_fix).' by Sub-region', 2, 'Header', $listStyle, 'P-Style');					
-    				}else{
-    					$section->addListItem(htmlspecialchars($region_fix).' by Country', 2, 'Header', $listStyle, 'P-Style');
-    				}
+					if($scope_name == 'Global'){
+						if($ScReg[$i] == "RoW"){
+							$section->addListItem(htmlspecialchars($region_fix).' by Sub-region', 2, 'Header', $listStyle, 'P-Style');					
+						}else{
+							$section->addListItem(htmlspecialchars($region_fix).' by Country', 2, 'Header', $listStyle, 'P-Style');
+						}
+					}
     			}
     			unset($ScReg);
 			}
@@ -475,7 +811,7 @@ class Generate_rd extends CI_Controller {
             $new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));			
 			$new_file_name=str_replace("/","-", $new_file_name);
 			$objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-			$filename = "".htmlspecialchars($new_file_name)."-RD2.docx";
+			$filename = "".htmlspecialchars($new_file_name)."-TOC.docx";
 			$objWriter->save($filename);
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
@@ -524,6 +860,17 @@ class Generate_rd extends CI_Controller {
                     $scope_name = $scope->name;
                 }
             }
+			if($scope_name == 'Global'){
+				$desc_scope_name = strtolower($scope_name);
+				$scope_type = 'Region';
+				$geographic = 'geographic regions';
+			} else {
+				$desc_scope_name = $scope_name;
+				$scope_type = 'Country';
+				$geographic = 'countries';
+			}
+            $report_name_scope = $desc_scope_name.' '.$report_name;
+			
             /* ./ get scope data */
             /* get Rd segments */
 			$parent = 0;
@@ -560,7 +907,7 @@ class Generate_rd extends CI_Controller {
 				$ScReg[] = $scope_region->name;				
 			}
 			if($ScReg != NULL){
-    			$s = count($ScReg);
+    			$s= count($ScReg);
     			for($i=0; $i<$s; $i++)
     			{
     				if($i==$s-2)
@@ -586,7 +933,8 @@ class Generate_rd extends CI_Controller {
 			$Base_year = $forecast_from - 1;
 			$From_historic = $analysis_from - 2;
             $Report_title_scope =$scope_name.' '.$report_title;
-            $report_name_scope = strtolower($scope_name).' '.$report_name;
+            // $report_name_scope = strtolower($scope_name).' '.$report_name;
+			$report_name_scope = $desc_scope_name.' '.$report_name;
 
 			if($USD_value == 0 || $USD_value == ""){
 				$USD_value='X.XX';
@@ -616,23 +964,33 @@ class Generate_rd extends CI_Controller {
 			$New_sample_description_para1_6=str_replace("Report_description",$report_description_para,$New_sample_description_para1_5);
 			/* Sample - Report Description Para 2 */
 			$Sample_report_description_para2 = $this->RdData_model->get_rd2_codedecode_para(9);
-			$Get_sample_page_description_para2=$Sample_report_description_para2->description;
-			$New_sample_description_para2=str_replace("Report_name_scope",$report_name_scope,$Get_sample_page_description_para2);
-			$New_sample_description_para2_1=str_replace("Report_title",$report_name,$New_sample_description_para2);
-			$New_sample_description_para2_2=str_replace("From_period",$analysis_from,$New_sample_description_para2_1);
-			$New_sample_description_para2_3=str_replace("To_period",$analysis_to,$New_sample_description_para2_2);
-			$New_sample_description_para2_4=str_replace("base_year",$Base_year,$New_sample_description_para2_3);
-			$New_sample_description_para2_5=str_replace("From_forecast",$forecast_from,$New_sample_description_para2_4);
-			$New_sample_description_para2_6=str_replace("To_forecast",$forecast_to,$New_sample_description_para2_5);
-			$New_sample_description_para2_7=str_replace("Value_unit",$Value_unit,$New_sample_description_para2_6);
-			$New_sample_description_para2_8=str_replace("Segment_name",strtolower($rd_segments_name),$New_sample_description_para2_7);
+			$Get_sample_page_description_para2 = $Sample_report_description_para2->description;
+			$New_sample_description_para2 = str_replace("Report_name_scope",$report_name_scope,$Get_sample_page_description_para2);
+			$New_sample_description_para2_1 = str_replace("Report_title",$report_name,$New_sample_description_para2);
+			$New_sample_description_para2_2 = str_replace("From_period",$analysis_from,$New_sample_description_para2_1);
+			$New_sample_description_para2_3 = str_replace("To_period",$analysis_to,$New_sample_description_para2_2);
+			$New_sample_description_para2_4 = str_replace("base_year",$Base_year,$New_sample_description_para2_3);
+			$New_sample_description_para2_5 = str_replace("From_forecast",$forecast_from,$New_sample_description_para2_4);
+			$New_sample_description_para2_6 = str_replace("To_forecast",$forecast_to,$New_sample_description_para2_5);
+			$New_sample_description_para2_7 = str_replace("Value_unit",$Value_unit,$New_sample_description_para2_6);
+			$New_sample_description_para2_8 = str_replace("Segment_name",strtolower($rd_segments_name),$New_sample_description_para2_7);
+			$New_sample_description_para2_9 = str_replace("Scope_name",$desc_scope_name,$New_sample_description_para2_8);
+			$New_sample_description_para2_10 = str_replace("Scope_type",strtolower($scope_type),$New_sample_description_para2_9);
+			$New_sample_description_para2_11 = str_replace("Region_name",$rd_region_name,$New_sample_description_para2_10);
+			$New_sample_description_para2_12 = str_replace("Geographic_area",$geographic,$New_sample_description_para2_11);
+			if($scope_name == 'Global'){
+				$New_sample_description_para2_13 = $New_sample_description_para2_12." The market size and forecasts are also given for these regions. Countries with major market revenues are covered for each of the region.";
+			} else {
+				$New_sample_description_para2_13 = $New_sample_description_para2_12." The market size and forecasts are also given for these countries with major market revenues are covered for each of the country.";
+			}
+			// var_dump($New_sample_description_para2_13); die;
             
 			/* Sample - Report Description Para 3 */
 			$Sample_report_description_para3 = $this->RdData_model->get_rd2_codedecode_para(10);
-			$Get_sample_page_description_para3=$Sample_report_description_para3->description;
-			$New_sample_description_para3=str_replace("Report_title",$report_name,$Get_sample_page_description_para3);
-			$New_sample_description_para3_1=str_replace("Report_name_scope",$report_name_scope,$New_sample_description_para3);
-			$New_sample_description_para3_2=str_replace("Forecast_period",$forecast_period,$New_sample_description_para3_1);
+			$Get_sample_page_description_para3 = $Sample_report_description_para3->description;
+			$New_sample_description_para3 = str_replace("Report_title",$report_name,$Get_sample_page_description_para3);
+			$New_sample_description_para3_1 = str_replace("Report_name_scope",$report_name_scope,$New_sample_description_para3);
+			$New_sample_description_para3_2 = str_replace("Forecast_period",$forecast_period,$New_sample_description_para3_1);
              
 			// Report Methodology						
 			$Research_methodology = $this->RdData_model->get_rd2_codedecode_para(11);
@@ -651,16 +1009,19 @@ class Generate_rd extends CI_Controller {
 				$Get_research_approaches_para1_4 = str_replace("Value_unit",strtolower($Value_unit),$Get_research_approaches_para1_3);
 			}
 			$Get_research_approaches_para1_5 = str_replace("report_title",$report_name,$Get_research_approaches_para1_4);
+			$Get_research_approaches_para1_6 = str_replace("Scope_name",$desc_scope_name,$Get_research_approaches_para1_5);
 
 			$Research_approaches2 = $this->RdData_model->get_rd2_codedecode_para(13);
 			$Get_research_approaches_para2 = $Research_approaches2->description;
 			$Get_research_approaches_para2_1 = str_replace("Segment_name",strtolower($rd_segments_name),$Get_research_approaches_para2);
 			$Get_research_approaches_para2_2 = str_replace("Region_name",$rd_region_name,$Get_research_approaches_para2_1);
+			$Get_research_approaches_para2_3 = str_replace("Scope_name",$desc_scope_name,$Get_research_approaches_para2_2);
 
 			$Research_approaches3 = $this->RdData_model->get_rd2_codedecode_para(14);
 			$Get_research_approaches_para3 = $Research_approaches3->description;
 			$Get_research_approaches_para3_1 = str_replace("Report_name_scope",$report_name_scope,$Get_research_approaches_para3);
 			$Get_research_approaches_para3_2 = str_replace("Report_name",strtolower($report_name),$Get_research_approaches_para3_1);
+			$Get_research_approaches_para3_3 = str_replace("Scope_name",$desc_scope_name,$Get_research_approaches_para3_2);
 
 			/* Sample - Executive Summary */
 			$executive_summary = $this->RdData_model->get_rd2_codedecode_para(15);
@@ -706,7 +1067,8 @@ class Generate_rd extends CI_Controller {
 			/* IGR- Growth Matrix Analysis  */
 			$growth_matrix_analysis = $this->RdData_model->get_rd2_codedecode_para(19);
 			$growth_matrix_analysis_para = $growth_matrix_analysis->description;
-
+			$growth_matrix_analysis_para1 = str_replace("Segments_name",$segment1,$growth_matrix_analysis_para);
+			
 			/* IGR- Growth Matrix Analysis Sub Point */
 			$growth_matrix_analysis_sub_point = $this->RdData_model->get_rd2_codedecode_para(20);
 			$growth_matrix_analysis_sub_point_data = $growth_matrix_analysis_sub_point->description;
@@ -803,9 +1165,10 @@ class Generate_rd extends CI_Controller {
 				$section->addText('	2.1	'.htmlspecialchars(ucwords($Report_title_scope, " \t\r\n\f\v'")).' Highlights, (USD '.htmlspecialchars($Value_unit).')', 'subpoint', 'P-Style');
 			}
 			$section->addText('	2.2	'.htmlspecialchars(ucwords($Report_title_scope, " \t\r\n\f\v'")).' Projection', 'subpoint', 'P-Style');
-			$section->addText('	2.3	'.htmlspecialchars(ucwords($Report_title_scope, " \t\r\n\f\v'")).' CAGR, (USD '.htmlspecialchars($Value_unit).') Growth, By Regions', 'subpoint', 'P-Style');
-			$section->addText('	2.4	Most Lucrative Country Markets, '.htmlspecialchars($forecast_from), 'subpoint', 'P-Style');
-            
+			if($scope_name == 'Global'){
+				$section->addText('	2.3	'.htmlspecialchars(ucwords($Report_title_scope, " \t\r\n\f\v'")).' CAGR, (USD '.htmlspecialchars($Value_unit).') Growth, By Regions', 'subpoint', 'P-Style');
+				$section->addText('	2.4	Most Lucrative Country Markets, '.htmlspecialchars($forecast_from), 'subpoint', 'P-Style');
+			} 
 			/* TOC Chapter 3 */
 			$section->addText(htmlspecialchars('3.	Market Overview & Competitiveness'), 'ChapStyle', 'PStyle');
 			$section->addText(htmlspecialchars('	3.1	Introduction'), 'subpoint', 'P-Style');
@@ -864,6 +1227,7 @@ class Generate_rd extends CI_Controller {
     				$n++;
     			}
 			}
+			$section->addText("	3.3	Porter's Five Forces Analysis", 'subpoint', 'P-Style');
 			$section->addText('	3.4	IGR-Growth Matrix Analysis', 'subpoint', 'P-Style');
 			$parent = 0;
 			$main_segments = $this->RdData_model->get_rd_segments($report_id, $parent);	
@@ -873,11 +1237,7 @@ class Generate_rd extends CI_Controller {
 				$section->addText('		3.4.'.htmlspecialchars($sm).'	IGR-Growth Matrix Analysis by '.ucwords(htmlspecialchars($segment->name)), 'childpoint', 'P-Style');
 				$sm++;
 			}
-			if($scope_name == "Global") {
-				$section->addText('		3.4.'.htmlspecialchars($sm).'	IGR-Growth Matrix Analysis by Region', 'childpoint', 'P-Style');
-			}else {
-			    $section->addText('		3.4.'.htmlspecialchars($sm).'	IGR-Growth Matrix Analysis by Country', 'childpoint', 'P-Style');
-			}
+			$section->addText('		3.4.'.htmlspecialchars($sm).'	IGR-Growth Matrix Analysis by '.$scope_type, 'childpoint', 'P-Style');
 			$section->addText('	3.5	Value Chain Analysis of '.htmlspecialchars($report_title), 'subpoint', 'P-Style');
 			$section->addText('	3.6	TAM SAM SOM Analysis for '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 'subpoint', 'P-Style');
 			$section->addText('		3.6.1.	TAM SAM SOM Forecast Analysis (USD '.$Value_unit.') '.$forecast_period, 'childpoint', 'P-Style');
@@ -886,10 +1246,15 @@ class Generate_rd extends CI_Controller {
 			$section->addText('		3.6.4.	SOM', 'childpoint', 'P-Style');
             
 			/* TOC Chapter 4 */
-			$section->addText('4.	'.htmlspecialchars($report_title.' Macro Indicator Analysis'), 'ChapStyle', 'PStyle');
+			if($scope_name == "Global"){
+				$section->addText('4.	'.htmlspecialchars($report_title.' Macro Indicator Analysis'), 'ChapStyle', 'PStyle');
+				$chap = 5;
+			} else {
+				$desc_scope_name = $scope_name;
+				$chap = 4;
+			}
             
 			/* TOC Chapter 5 Segment */
-			$chap = 5;
 			foreach($main_segments as $segments)
 			{
 				$new_segment=$Report_title_scope.' by '.htmlspecialchars(ucwords($segments->name, " \t\r\n\f\v'"));	
@@ -924,13 +1289,10 @@ class Generate_rd extends CI_Controller {
 			}
 			
 			/* TOC Chapter 6 Region */
-			if($Volume_unit)
-			{
-				$section->addText($regchapt.'.	'.htmlspecialchars(ucwords($report_name_scope, " \t\r\n\f\v'")).', by Region (USD '.htmlspecialchars($Value_unit).', '.htmlspecialchars($Volume_unit).")", 'ChapStyle', 'PStyle');
-			}
-			else
-			{
-				$section->addText($regchapt.'.	'.htmlspecialchars(ucwords($report_name_scope, " \t\r\n\f\v'")).', by Region (USD '.htmlspecialchars($Value_unit).")", 'ChapStyle', 'PStyle');
+			if($Volume_unit){
+				$section->addText($regchapt.'.	'.htmlspecialchars($Report_title_scope).', by '.$scope_type.' (USD '.htmlspecialchars($Value_unit).', '.htmlspecialchars($Volume_unit).")", 'ChapStyle', 'PStyle');
+			} else {
+				$section->addText($regchapt.'.	'.htmlspecialchars($Report_title_scope).', by '.$scope_type.' (USD '.htmlspecialchars($Value_unit).")", 'ChapStyle', 'PStyle');
 			}
 			$section->addText('	'.$regchapt.'.1	Overview', 'subpoint', 'P-Style');
 			/* Fetch Region Data */
@@ -957,6 +1319,7 @@ class Generate_rd extends CI_Controller {
     					$section->addText('		'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'	'.htmlspecialchars($region_report_title), 'childpoint', 'P-Style');
     					$regchildpt++;
     				}
+				if($scope_name == 'Global'){
     				if($ScReg[$i] == "RoW"){	
     					$section->addText('		'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'	'.htmlspecialchars($region_fix).' by Sub-region', 'childpoint', 'P-Style');
     					/* adding country points */
@@ -1012,6 +1375,7 @@ class Generate_rd extends CI_Controller {
         					unset($Regcntry);
     					}
     				}
+				}
     				$regsubpt++;
     				$cmpt = $regchapt + 1;
     			}
@@ -1019,19 +1383,21 @@ class Generate_rd extends CI_Controller {
 			}
 			
 			/* Company Profiles */
-			$section->addText($cmpt.'.	Company Profiling', 'ChapStyle', 'PStyle');	
+			$section->addText($cmpt.'.	Company Profiles and Competitive Landscape', 'ChapStyle', 'PStyle');	
 			$section->addText('	'.$cmpt.'.1	Competitive Landscape in the '.htmlspecialchars(ucwords($report_title, " \t\r\n\f\v'")), 'childpoint', 'P-Style');
+			$section->addText('	'.$cmpt.'.2	Companies Profiles', 'childpoint', 'P-Style');
 			$cmpsub = 2;
+			$cmpsubchild = 1;
 			$Get_rd_companies = $this->RdData_model->get_rd_companies($report_id);
 			foreach($Get_rd_companies as $company)
 			{				
 				$cmpProfile = $company->name;					
-				$section->addText('		'.$cmpt.'.'.$cmpsub.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
-				$section->addText('			'.$cmpt.'.'.$cmpsub.'.1	Overview', 'childpoint', 'P-Style');				
-				$section->addText('			'.$cmpt.'.'.$cmpsub.'.2	Company Snapshot', 'childpoint', 'P-Style');
-				$section->addText('			'.$cmpt.'.'.$cmpsub.'.3	Product Portfolio', 'childpoint', 'P-Style');	
-				$section->addText('			'.$cmpt.'.'.$cmpsub.'.4	Recent Developments', 'childpoint', 'P-Style');	
-				$cmpsub++;
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style');				
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.2	Company Snapshot', 'childpoint', 'P-Style');
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.3	Product Portfolio', 'childpoint', 'P-Style');	
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.4	Recent Developments', 'childpoint', 'P-Style');	
+				$cmpsubchild++;
 			}
 			$section->addPageBreak();
 			/* ************* /. Report TOC Writing ******************* */
@@ -1061,12 +1427,12 @@ class Generate_rd extends CI_Controller {
 				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);	
 				foreach($sub_segments as $subsegments)
 				{
-					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 					$num++;
 
 					if($Volume_unit)
 					{
-						$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY REGIONS, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+						$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 						$num++;
 					}
 					/* --- child segment--- */
@@ -1074,11 +1440,11 @@ class Generate_rd extends CI_Controller {
 					if($child_segments){
 						foreach($child_segments as $childsegments)
 						{
-							$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+							$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 							$num++;
 							if($Volume_unit)
 							{
-								$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+								$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 								$num++;
 							}
 						}
@@ -1089,12 +1455,12 @@ class Generate_rd extends CI_Controller {
 			}
 			/* /. Main Segments */
 			/* Region */
-			$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+			$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 			$num++;
 
 			if($Volume_unit)
 			{
-				$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+				$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 				$num++;
 			}
 
@@ -1124,6 +1490,8 @@ class Generate_rd extends CI_Controller {
     					}
     				}
     				/* for sub region & country */
+				/* Scope Global Only */
+				if($scope_name == 'Global'){
     				if($ScRegion[$i] == "RoW")
     				{
     					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($region_fix)).', BY SUB-REGION'." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
@@ -1190,6 +1558,7 @@ class Generate_rd extends CI_Controller {
         					unset($Regcntry1);	
     					}
     				}
+				}/* /. Scope Global Only */
     			}
     		}
 			$section->addPageBreak();
@@ -1212,7 +1581,7 @@ class Generate_rd extends CI_Controller {
 				$figure5="FIGURE 5   ".htmlspecialchars(strtoupper($Report_title_scope)).", ".$market_period." (USD ".htmlspecialchars(strtoupper($Value_unit)).") \n";
 			}
 			$section->addText(htmlspecialchars($figure5), array('align'=>'center','name'=>'Franklin Gothic Medium','color' => '#78777C','size'=>10));
-			$figure6="FIGURE 6   ".htmlspecialchars(strtoupper($Report_title_scope)).", CAGR (USD ".htmlspecialchars(strtoupper($Value_unit)).") GROWTH BY REGIONS (".$forecast_from." - ".$forecast_to.")";
+			$figure6="FIGURE 6   ".htmlspecialchars(strtoupper($Report_title_scope)).", CAGR (USD ".htmlspecialchars(strtoupper($Value_unit)).") GROWTH BY ".strtoupper($scope_type)." (".$forecast_from." - ".$forecast_to.")";
 			$section->addText(htmlspecialchars($figure6), array('align'=>'center','name'=>'Franklin Gothic Medium','color' => '#78777C','size'=>10));
 			$figure7="FIGURE 7   DRIVERS OF ".htmlspecialchars(strtoupper($Report_title_scope)).", IMPACT ANALYSIS \n\n";
 			$section->addText(htmlspecialchars($figure7), array('align'=>'center','name'=>'Franklin Gothic Medium','color' => '#78777C','size'=>10));
@@ -1239,11 +1608,11 @@ class Generate_rd extends CI_Controller {
 				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);	
 				foreach($sub_segments as $subsegments)
 				{
-					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY REGIONS, ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 					$number++;
 					if($Volume_unit)
 					{
-						$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY REGIONS, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+						$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 						$number++;
 					}
 					/* --- child segment---- */
@@ -1251,11 +1620,11 @@ class Generate_rd extends CI_Controller {
 					if($child_segments){
 						foreach($child_segments as $childsegments)
 						{
-							$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY REGIONS, ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+							$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 							$number++;
 							if($Volume_unit)
 							{
-								$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$subsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($childsegments->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+								$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$subsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($childsegments->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 								$number++;
 							}
 						}	
@@ -1266,13 +1635,13 @@ class Generate_rd extends CI_Controller {
 			}
 			/* /. Segments */
 			/* Regions */
-			$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY REGION, ".$Base_year." - ".$forecast_to." (REVENUE % SHARE)", array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));			
+			$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to." (REVENUE % SHARE)", array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));			
 			$number++;
 			if($Volume_unit){
-				$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+				$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 				$number++;
 			}else{
-				$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+				$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 				$number++;
 			}
 			$Scope_Region;
@@ -1300,6 +1669,8 @@ class Generate_rd extends CI_Controller {
     						$number++;
     					}
     				}
+				/* Scope Global Only */
+				if($scope_name == 'Global'){
     				if($ScReg1[$i] == "RoW")
     				{
     					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_fix)).', BY SUB-REGION '.$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
@@ -1333,9 +1704,7 @@ class Generate_rd extends CI_Controller {
         					}			
         					unset($Regcntry2);
     					}
-    				}
-    				else
-    				{
+    				} else {
     					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_fix)).', BY COUNTRY '.$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
     					$number++;
     					if($Volume_unit)
@@ -1367,7 +1736,8 @@ class Generate_rd extends CI_Controller {
         					}			
         					unset($Regcntry2);
     					}
-    				}											
+    				}
+				}/* /. Scope Global Only */											
     			}
 			}
 			/* /. Regions */
@@ -1421,15 +1791,14 @@ class Generate_rd extends CI_Controller {
 			$section->addListItem('Introduction', 0, 'chaptHeading', $listStyle, 'Main Heading');								
 			$section->addListItem('Report Description', 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addText(htmlspecialchars($New_sample_description_para1_6), 'r2Style', 'paragraphStyle');
-			$section->addText(htmlspecialchars($New_sample_description_para2_8), 'r2Style', 'paragraphStyle');
+			$section->addText(htmlspecialchars($New_sample_description_para2_13), 'r2Style', 'paragraphStyle');
 			$section->addText(htmlspecialchars($New_sample_description_para3_2), 'r2Style', 'paragraphStyle');
 			$section->addTextBreak(1); 			
 
 			$section->addListItem('Segmentation and Research Scope', 2, 'childPoint', $listStyle, 'Head 2');
 			/* Segments List */
 			$parent = 0;
-			$main_segments2= $this->RdData_model->get_rd_segments($report_id, $parent);
-			
+			$main_segments2= $this->RdData_model->get_rd_segments($report_id, $parent);			
 			foreach($main_segments2 as $segments2)
 			{
 				$listStyleBullet = array('listType'=>PhpOffice\PhpWord\Style\ListItem::TYPE_BULLET_FILLED, 'name'=>'Franklin Gothic Medium', 'size' => 10.5, 'color'=>'#78777C', 'spaceAfter'=>0, 'spaceBefore'=> 0,  'spacing'=>0);
@@ -1547,10 +1916,19 @@ class Generate_rd extends CI_Controller {
 					$table->addRow();
 					$table->addCell(3000, $styleLastCell)->addText("Geographic coverage by countries", 'trStyle1', 'Table1_Left');
 					$table_cell = $table->addCell(6500, $styleLastCell);
+					if($scope_name == 'Global'){
 					$table_cell->addText("North America: The United States (U.S.), Canada and Mexico",'trStyle1', 'Table Bullet');//0 is the list level
 					$table_cell->addText("Europe: Germany, United Kingdom, France and Rest of Europe(covers Italy, Spain, Netherlands and Denmark)",'trStyle1', 'Table Bullet');
 					$table_cell->addText("Asia-Pacific: China, India, Japan, Australia and Rest of APAC covers Singapore, Thailand, Indonesia and South Korea",'trStyle1', 'Table Bullet');
 					$table_cell->addText("RoW: Latin America, Middle East and Africa, Africa covers South Africa",'trStyle1', 'Table Bullet');						
+					} else {
+						$get_scope_countries = $this->RdData_model->get_scope_regions($scope_id); 
+						// var_dump($get_scope_countries); die;
+    					foreach($get_scope_countries as $scope_countries)
+    					{    						
+							$table_cell->addText($scope_countries->name, 'trStyle1', 'Table Bullet');
+    					}
+					}
 				}
 				else
 				{
@@ -1592,7 +1970,7 @@ class Generate_rd extends CI_Controller {
 				$section->addText(htmlspecialchars($data_points), 'r2Style', 'Bullet');
 			}
 			$section->addText(htmlspecialchars('Breakdown of the profiles of primaries as follows:'), array('align'=>'left', 'bold'=>false, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
-			$section->addImage('images/primaries_profiles_breakdown.png', array('width'=>770, 'height'=>280, 'align'=>'center'));
+			$section->addImage('images/primaries_breakdown.png', array('width'=>770, 'height'=>230, 'align'=>'center'));
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addText(htmlspecialchars('Primary interviews not only help in data validation but also provide critical insights into the market, current business scenario, and future expectations and enhance the quality of our reports. In addition to analyzing the current and historical trends, our analysts predict where the market is headed, over the next five years.'), 'r2Style', 'paragraphStyle');
 			$section->addTextBreak(1);
@@ -1624,14 +2002,14 @@ class Generate_rd extends CI_Controller {
 			$section->addImage('images/research_approaches_top_down.png', array('width'=>520, 'height'=>320, 'align'=>'center')); 
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
-			$section->addText(htmlspecialchars($Get_research_approaches_para1_5), 'r2Style', 'paragraphStyle');
-			$section->addText(htmlspecialchars($Get_research_approaches_para2_2), 'r2Style', 'paragraphStyle');
+			$section->addText(htmlspecialchars($Get_research_approaches_para1_6), 'r2Style', 'paragraphStyle');
+			$section->addText(htmlspecialchars($Get_research_approaches_para2_3), 'r2Style', 'paragraphStyle');
 			$section->addTextBreak(1);
 			$section->addText(htmlspecialchars('IGR - RESEARCH METHOD AND DATA TRIANGULATION'), 'figureNameStyle', 'Figure _ Title');
 			$section->addImage('images/research_method_and_data_triangulation.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
-			$section->addText(htmlspecialchars($Get_research_approaches_para3_2), 'r2Style', 'paragraphStyle');
+			$section->addText(htmlspecialchars($Get_research_approaches_para3_3), 'r2Style', 'paragraphStyle');
 			$section->addPageBreak();
 			/* /. Sample Pages Chapter 1 */
 
@@ -1740,17 +2118,27 @@ class Generate_rd extends CI_Controller {
     					$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
     					$table->addRow();
     					$table_cell = $table->addCell(3500, $styleLastCell);
-    					$table_cell->addText(htmlspecialchars(ucwords($Report_title_scope))." by region (USD ".htmlspecialchars($Value_unit).")", 'trStyle1', 'pStyle');
+						$table_cell->addText(htmlspecialchars(ucwords($Report_title_scope))." by ".$scope_type." (USD ".htmlspecialchars($Value_unit).")", 'trStyle1', 'pStyle');
     					$table_cell = $table->addCell(3500, $styleLastCell);
-    					$table_cell->addText("North America: xx", 'trStyle1', 'Table Bullet');
+						$get_scope_countries = $this->RdData_model->get_scope_regions($scope_id); 
+						// var_dump($get_scope_countries); die;
+    					foreach($get_scope_countries as $scope_countries)
+    					{    						
+							$table_cell->addText($scope_countries->name.": xx", 'trStyle1', 'Table Bullet');
+    					}
+    					/* $table_cell->addText("North America: xx", 'trStyle1', 'Table Bullet');
     					$table_cell->addText("Europe: xx", 'trStyle1', 'Table Bullet');
     					$table_cell->addText("Asia-Pacific: xx", 'trStyle1', 'Table Bullet');
-    					$table_cell->addText("RoW: xx", 'trStyle1', 'Table Bullet');
+    					$table_cell->addText("RoW: xx", 'trStyle1', 'Table Bullet'); */
     					$table_cell = $table->addCell(3500, $styleLastCell);
-    					$table_cell->addText("North America: xx", 'trStyle1', 'Table Bullet');
+						foreach($get_scope_countries as $scope_countries)
+    					{    						
+							$table_cell->addText($scope_countries->name.": xx", 'trStyle1', 'Table Bullet');
+    					}
+    					/* $table_cell->addText("North America: xx", 'trStyle1', 'Table Bullet');
     					$table_cell->addText("Europe: xx", 'trStyle1', 'Table Bullet');
     					$table_cell->addText("Asia-Pacific: xx", 'trStyle1', 'Table Bullet');
-    					$table_cell->addText("RoW: xx", 'trStyle1', 'Table Bullet');					
+    					$table_cell->addText("RoW: xx", 'trStyle1', 'Table Bullet'); */					
     					$n++;
     					continue;
     				}				
@@ -1759,7 +2147,7 @@ class Generate_rd extends CI_Controller {
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
 			/************** Company Profile ****************************/
-			$cmp_profile_para="The report provides profiles of the companies in the ".strtolower($Report_name_scope)." such as, ";
+			$cmp_profile_para="The report provides profiles of the companies in the ".$scope_name.' '.strtolower($report_name)." such as, ";
 			$rd_companies = $this->RdData_model->get_rd_companies($report_id);
 			
 			foreach($rd_companies as $company)
@@ -1836,6 +2224,7 @@ class Generate_rd extends CI_Controller {
 			$textbox = $section->addTextBox(array('align' => 'center', 'width' => 700, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
 			$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
 			$section->addTextBreak(1);
+		if($scope_name == 'Global'){
 			$section->addListItem(htmlspecialchars(ucwords($Report_title_scope))." CAGR (USD ".htmlspecialchars(ucwords($Value_unit)).") Growth, By Regions", 1, 'subPoint', $listStyle, 'Head 1');
 			$figure7=htmlspecialchars(strtoupper($Report_title_scope)).", CAGR (USD ".htmlspecialchars(strtoupper($Value_unit)).") GROWTH BY REGIONS (".htmlspecialchars($forecast_from)." - ".htmlspecialchars($forecast_to).") \n\n";
 			$section->addText(htmlspecialchars($figure7), 'figureNameStyle', 'Figure _ Title');
@@ -1866,6 +2255,7 @@ class Generate_rd extends CI_Controller {
 			$section->addImage('images/top_10_countries.png', array('width'=>520, 'height'=>320, 'align'=>'center'));
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addPageBreak();
+		}
 			/* /. Sample Pages Chapter 2 */
 
 			/* Sample Pages Chapter 3 */
@@ -1937,27 +2327,54 @@ class Generate_rd extends CI_Controller {
 			$PHPWord->addFontStyle('r2Style', array('bold'=>false, 'italic'=>false, 'align' => 'both', 'size'=>10.5, 'name'=>'Franklin Gothic Medium'));
 			/* /. style */				
 			$section->addListItem('IGR- Growth Matrix Analysis', 1, 'subPoint', $listStyle, 'Head 1');
-			$section->addText(htmlspecialchars($growth_matrix_analysis_para), 'r2Style', 'paragraphStyle');
+			$section->addText(htmlspecialchars($growth_matrix_analysis_para1), 'r2Style', 'paragraphStyle');
 			$textlines = explode('\n', $growth_matrix_analysis_sub_point_data);
 			foreach($textlines as $line) 
 			{
 				$section->addText(htmlspecialchars($line), 'r2Style', 'Bullet');
 			}
 			$section->addTextBreak(1);
-			$section->addImage('images/IGR_growth_matrix.png', array('width'=>520, 'height'=>320, 'align'=>'center'));
-			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
-			$section->addTextBreak(1);			
-			$figure11="IGR- Growth Matrix Analysis";				
+						
+			$figure11="IGR-Growth Matrix Analysis";				
 			$parent= 0;				
+			$indexno= 0;				
+			$no = 0;				
 			$main_segments4 = $this->RdData_model->get_rd_segments($report_id, $parent);
 			foreach($main_segments4 as $segments4)
 			{
-				$mainseg4 = $segments4->name;
+				$mainseg44[] = $segments4->name;	
+				/* var_dump($mainseg44[0]); 			
+				$mainseg4 = $segments4->name;				
 				$igr_growth_matrix_segment_title = htmlspecialchars($figure11). ' by ' .ucwords($mainseg4);					
 				$section->addListItem(htmlspecialchars(' '.$igr_growth_matrix_segment_title), 2, 'childPoint', $listStyle, 'Head 2');
 				$section->addText('Same as the preceding point. Full details will be provided in the complete report.', 'noteFontSeg', 'noteStyle');
+				$section->addTextBreak(1); 
+				$no++; */
+			} 
+			$mgs = count($mainseg44);
+			if($mainseg44[0]){
+				$igr_growth_matrix_segment_title = htmlspecialchars($figure11). ' by ' .ucwords($mainseg44[0]);					
+				$section->addListItem(htmlspecialchars(' '.$igr_growth_matrix_segment_title), 2, 'childPoint', $listStyle, 'Head 2');
+				$section->addImage('images/IGR_growth_matrix_sagment.png', array('width'=>520, 'height'=>320, 'align'=>'center'));
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 				$section->addTextBreak(1);
 			}
+			if($mainseg44[1]) {
+				for($h=1; $h<$mgs; $h++)
+				{
+					$igr_growth_matrix_segment_title1 = htmlspecialchars($figure11). ' by ' .ucwords($mainseg44[$h]);					
+					$section->addListItem(htmlspecialchars(' '.$igr_growth_matrix_segment_title1), 2, 'childPoint', $listStyle, 'Head 2');
+					$section->addText('Same as the preceding point. Full details will be provided in the complete report.', 'noteFontSeg', 'noteStyle');
+					$section->addTextBreak(1); 
+				}
+			}
+			if($scope_name == "Global") {
+				$section->addListItem('IGR-Growth Matrix Analysis by Region', 2, 'childPoint', $listStyle, 'Head 2');
+			}else {
+			    $section->addListItem('IGR-Growth Matrix Analysis by Country', 2, 'childPoint', $listStyle, 'Head 2');
+			}
+			$section->addText('Same as the preceding point. Full details will be provided in the complete report.', 'noteFontSeg', 'noteStyle');
+			$section->addTextBreak(1);
 			$section->addListItem(htmlspecialchars('Value Chain Analysis of '.$report_title), 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addText(htmlspecialchars(strtoupper('VALUE CHAIN ANALYSIS')), 'figureNameStyle', 'Figure _ Title');
 			$section->addImage('images/value_chain_analysis.png', array('width' => 760, 'height' => 260, 'align' => 'center'));
@@ -1966,9 +2383,11 @@ class Generate_rd extends CI_Controller {
 			/* /. Sample Pages Chapter 3 */
 
 			/* Sample Pages Chapter 4 */
-			$section->addListItem(htmlspecialchars($report_title." Macro Indicator Analysis"), 0, 'chaptHeading', $listStyle, 'Main Heading');
-			$section->addText(htmlspecialchars('Macroeconomic indicators are numbers or data readings that depict the state of the economy in a specific nation, area, or industry. Any trader should be aware of macroeconomic indicators because they might have a big impact on market changes. This is why macroeconomic indicators will be used in the majority of fundamental analyses.'), 'r2Style', 'paragraphStyle');
-			$section->addPageBreak(1);
+			if($scope_name == "Global"){
+				$section->addListItem(htmlspecialchars($report_title." Macro Indicator Analysis"), 0, 'chaptHeading', $listStyle, 'Main Heading');
+				$section->addText(htmlspecialchars('Macroeconomic indicators are numbers or data readings that depict the state of the economy in a specific nation, area, or industry. Any trader should be aware of macroeconomic indicators because they might have a big impact on market changes. This is why macroeconomic indicators will be used in the majority of fundamental analyses.'), 'r2Style', 'paragraphStyle');
+				$section->addPageBreak(1);
+			} 			
 			/* /. Sample Pages Chapter 4 */
 
 			/* Sample Pages Chapter 5 */		
@@ -2126,8 +2545,7 @@ class Generate_rd extends CI_Controller {
 					$table = $section->addTable('myOwnTableStyle');
 					// Add row
 					$table->addRow(70);
-					// d
-					$table->addCell(3500, $styleCell)->addText(htmlspecialchars(ucwords($segments5->name)), $fontStyle, 'thStyle');					
+					$table->addCell(3500, $styleCell)->addText(htmlspecialchars(ucwords($segments5->name)), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
@@ -2195,14 +2613,14 @@ class Generate_rd extends CI_Controller {
 					$section->addListItem(htmlspecialchars($sub_segment5_2), 1, 'subPoint', $listStyle, 'Head 1');
 					$section->addText(htmlspecialchars('This Point Includes '.$sub_segment5_2.' Segment Analysis and Trends.'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
 					$section->addTextBreak(1);
-					/* adding figure */
-					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+					/* adding figure */					
+					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
 					$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 					$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 					$section->addTextBreak(1);
 					if($Volume_unit)
 					{
-						$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+						$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
 						$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 						$section->addTextBreak(1);
@@ -2210,13 +2628,13 @@ class Generate_rd extends CI_Controller {
 
 					/* Table Writeup - Sub Segment */
 					/* value based table */
-					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
+					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
 					// Add table
 					$table = $section->addTable('myOwnTableStyle');
 					// Add row
 					$table->addRow(70);
 					// Add cells header
-					$table->addCell(2500, $styleCell)->addText('Region', $fontStyle, 'thStyle');
+					$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2272,13 +2690,13 @@ class Generate_rd extends CI_Controller {
 					/* volume based table */
 					if($Volume_unit)
 					{
-						$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'tableNameStyle', 'Table_Title');
+						$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'tableNameStyle', 'Table_Title');
 						// Add table
 						$table = $section->addTable('myOwnTableStyle');
 						// Add row
 						$table->addRow(70);
 						// Add cells header
-						$table->addCell(2500, $styleCell)->addText('Region', $fontStyle, 'thStyle');
+						$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2345,26 +2763,26 @@ class Generate_rd extends CI_Controller {
 							$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
 							$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
 							$section->addTextBreak(1);
-							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3 ))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3 ))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
 							$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 							$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 							$section->addTextBreak(1);
 							if($Volume_unit)
 							{
-								$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+								$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
 								$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 								$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 								$section->addTextBreak(1);
 							}							
 							/* Child Segment - Table Writing started*/	
-							/* value based table */
-							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
+							/* value based table */							
+							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
 							// Add table
 							$table = $section->addTable('myOwnTableStyle');
 							// Add row
 							$table->addRow(70);
 							// Add cells
-							$table->addCell(2500, $styleCell)->addText('Region', $fontStyle, 'thStyle');
+							$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2418,14 +2836,14 @@ class Generate_rd extends CI_Controller {
 							$section->addTextBreak(1);
 							/* /. value based table */
 							/* volume based table */
-							if($Volume_unit){
-								$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." FOR ".htmlspecialchars(strtoupper($child_segment3))." BY REGIONS, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'tableNameStyle', 'Table_Title');
+							if($Volume_unit){								
+								$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." FOR ".htmlspecialchars(strtoupper($child_segment3))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'tableNameStyle', 'Table_Title');
 								// Define table style arrays
 								$table = $section->addTable('myOwnTableStyle');
 								// Add row
 								$table->addRow(70);
 								// Add cells
-								$table->addCell(2500, $styleCell)->addText('Region', $fontStyle, 'thStyle');
+								$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 								$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 								$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 								$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2506,11 +2924,16 @@ class Generate_rd extends CI_Controller {
 			/* /. Sample Pages Chapter 5 */
 
 		/* Sample Pages Chapter 6 - Region */
-			$section->addListItem(htmlspecialchars(ucwords($report_name_scope, " \t\r\n\f\v'")).', by Region', 0, 'chaptHeading', $listStyle, 'Main Heading');
+			if($scope_name == 'Global'){
+				$scope_type = 'Region';
+			} else {
+				$scope_type = 'Country';
+			}
+			$section->addListItem(htmlspecialchars(ucwords($report_name_scope, " \t\r\n\f\v'")).', by '.$scope_type, 0, 'chaptHeading', $listStyle, 'Main Heading');
 			$section->addListItem("	Overview", 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addText(htmlspecialchars($report_regional_description), 'r2Style', 'paragraphStyle');
-			$section->addTextBreak(1);
-			$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY REGION, ".$Base_year." - ".$forecast_to."(REVENUE % SHARE)", 'figureNameStyle', 'Figure _ Title');
+			$section->addTextBreak(1);			
+			$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to."(REVENUE % SHARE)", 'figureNameStyle', 'Figure _ Title');
 			if($forecast_period == '2021-2027')	{
 				$section->addImage('images/sample/xyz-market-by-region-2020-2027-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 			} else if($forecast_period == '2022-2028') {
@@ -2525,9 +2948,9 @@ class Generate_rd extends CI_Controller {
 			$section->addTextBreak(1);
 			if($Volume_unit)
 			{
-				$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+				$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
 			} else {
-				$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', 'figureNameStyle', 'Figure _ Title');
+				$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', 'figureNameStyle', 'Figure _ Title');
 			}
 			if($forecast_period == '2021-2027')	{
 				$section->addImage('images/sample/xyz-market-by-region-2019-2027-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
@@ -2539,13 +2962,13 @@ class Generate_rd extends CI_Controller {
 				$section->addText('add image of xyz-market-by-region-Pie', array('size'=>12, 'color'=>'black'));
 			}
 			/* value based table */
-			$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
+			$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
 			// Define table style arrays
 			$table = $section->addTable('myOwnTableStyle');
 			// Add row
 			$table->addRow(70);
 			// Add cells
-			$table->addCell(2500, $styleCell)->addText('Region', $fontStyle, 'thStyle');
+			$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 			$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 			$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 			$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2578,14 +3001,12 @@ class Generate_rd extends CI_Controller {
 				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
-				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$n++;
 			}
 				$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
 				$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
 				$table->addRow();
 				$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
-				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
@@ -2605,13 +3026,13 @@ class Generate_rd extends CI_Controller {
 			/* /. value based table */
 			/* volume based table */
 				if($Volume_unit){
-					$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY REGION, ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'tableNameStyle', 'Table_Title');
+					$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'tableNameStyle', 'Table_Title');
 					// Define table style arrays
 					$table = $section->addTable('myOwnTableStyle');
 					// Add row
 					$table->addRow(70);
 					// Add cells
-					$table->addCell(2500, $styleCell)->addText('Region', $fontStyle, 'thStyle');
+					$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2787,6 +3208,7 @@ class Generate_rd extends CI_Controller {
 					}
 					
 					// Country Figure AND Tables Writing for Regional chapter
+				if($scope_name == 'Global'){
 					if($scoperegion4[$i] == "RoW")
 					{
 						$region_name1 = ltrim(rtrim($scoperegion4[$i])).' '.ltrim(rtrim(ucwords($report_name))).', by Sub-region';
@@ -2968,23 +3390,20 @@ class Generate_rd extends CI_Controller {
     									if($forecast_period =='2021-2027')
     									{
     										$section->addImage('images/sample/xyz-market-by-region-2019-2027-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
-    									}else if($forecast_period =='2022-2028')
-    									{
+    									}else if($forecast_period =='2022-2028') {
     										$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
     									}else if($forecast_period =='2023-2029') {
     										$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
     									}
     										$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
     										$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
-    										$section->addTextBreak(1);
-    									
+    										$section->addTextBreak(1);    									
     								}else{
     									$section->addText(htmlspecialchars(strtoupper($country_title))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
     									if($forecast_period =='2021-2027')
     									{
     										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2019-2027-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
-    									} else if($forecast_period =='2022-2028')
-    									{
+    									} else if($forecast_period =='2022-2028') {
     										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2020-2028-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
     									} else if($forecast_period =='2023-2029') {
     										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2029-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
@@ -3067,13 +3486,15 @@ class Generate_rd extends CI_Controller {
     						unset($scopecountryname5);
 						}
 					}
+				}
 					break;
 					// unset($Segmetn_Region);
 				}
 			}
 			//	$reg = count($scoperegion4);
+			// var_dump($reg); die;
 				/* Only region headings */
-				for($i = 1; $i < 4 ; $i++)
+				for($i = 1; $i < $reg; $i++)
 				{
 					$Scope_Region = ltrim(rtrim($scoperegion4[$i]))." ";
 					$section->addListItem(htmlspecialchars($Scope_Region)."".htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 1, 'subPoint', $listStyle, 'Head 1');
@@ -3142,10 +3563,11 @@ class Generate_rd extends CI_Controller {
 		/* ************************ /. Report Description Writing *********************** */
 
 			/* Generate word file */
-            $new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));			
-			$new_file_name=str_replace("/","-", $new_file_name);
+            $new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));		
+			$new_file_name1=str_replace("/","-", $new_file_name);
+			$new_file_name2=str_replace("&amp;","and", $new_file_name1);
 			$objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
-			$filename = "Sample-".htmlspecialchars($new_file_name)."-Report.docx";
+			$filename = "Sample-".htmlspecialchars($new_file_name2)."-Report.docx";
 			$objWriter->save($filename);
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');

@@ -43,8 +43,8 @@
                                     <th style="width: 75px;">Action</th>
                                     <th>Id</th>
                                     <th>Title</th>
-                                    <!-- <th>Scope</th>
-                                    <th>Cat</th> -->
+                                    <th>Scope</th>
+                                    <!-- <th>Cat</th> -->
                                     <th>Forecast</th>
                                     <!-- <th>Analysis</th> -->
                                     <!-- <th>Vol</th> -->
@@ -89,11 +89,14 @@
                                 $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = ".$data->id;
 								$query_pr2_reports = $this->db->query($pr2_reports);
                                 if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$pr2_reports_status = "<i class=\"fa fa-plus\"></i><br>Add";}
-								  ?>
-
-
+								$ScopeList = $this->Data_model->get_scope_master();	
+                                foreach($ScopeList as $scope){
+                                    if($scope->id == $data->scope_id){
+                                        $scope_name = $scope->name;
+                                    }
+                                }
+                                ?>
                                 <tr style="font-size: 14px;">
-
                                     <td class="text-center">
                                         <a href="<?php echo base_url()?>admin/generate_rd/rd_1/?report_id=<?php echo $data->id;?>"
                                             title="Get RD1"><b><i class="fa fa-download"></i> &nbsp;RD1</b>
@@ -108,15 +111,14 @@
                                             title="Get Sample Pages"><b><i class="fa fa-download"></i> &nbsp;Sample</b>
                                         </a>
                                     </td>
-
                                     <td class="text-center"><?php echo $data->id; ?></td>
                                     <td><?php echo $data->title; ?></td>
-                                    <!-- <td class="text-center"><?php // echo $data->scope_id; ?></td>
-                                    <td class="text-center"><?php // echo $data->category_id; ?></td> -->
+                                    <td class="text-center"><?php echo $scope_name; ?></td>
+                                    <!-- <td class="text-center"><?php // echo $data->category_id; ?></td> -->
                                     <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
                                     <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
                                     <!-- <td><?php // echo $data->is_volume_based; ?></td> -->
-                                    <td class="text-center"><a
+                                    <td class="te   xt-center"><a
                                             href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i
                                                     class="fa fa-pencil"></i>
                                                 List</b></a><br><?php echo $rd_segment->rd_segments." segment"; ?></td>
@@ -181,8 +183,8 @@
                                     <th style="width: 75px;">Action</th>
                                     <th>Id</th>
                                     <th>Title</th>
-                                    <!-- <th>Scope</th>
-                                    <th>Cat</th> -->
+                                    <th>Scope</th>
+                                    <!-- <th>Cat</th> -->
                                     <th>Forecast</th>
                                     <!-- <th>Analysis</th> -->
                                     <!-- <th>Vol</th> -->
@@ -214,7 +216,7 @@
         Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2022 <a href="#">Infinium</a>.</strong> All rights reserved.
+    <strong>Copyright © 2023 <a href="#">Infinium</a>.</strong> All rights reserved.
 </footer>
 </div><!-- ./wrapper -->
 

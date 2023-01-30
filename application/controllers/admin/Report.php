@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//ini_set('display_errors', '0');
+ini_set('display_errors', '0');
 class Report extends CI_Controller {    
 	public function __construct(){		
 		parent::__construct();		
@@ -62,9 +62,19 @@ class Report extends CI_Controller {
 			$report_sku = $this->Data_model->get_report_count();			
 			$sku_code = explode('R', $report_sku->sku);
 			$sku = 'IGR'.'0'.($sku_code[1] + 1);
+
+			/* Scope Data */
+			$scope_id = $this->input->post('scope');
+			$ScopeList = $this->Data_model->get_scope_master();				
+            foreach($ScopeList as $scope){
+                if($scope->id == $scope_id){
+                    $scope_name = $scope->name;
+                }
+            }
+			
 			/* automated url */
-			$report_title=strtolower($this->input->post('name'));
-			$report_title_new=str_replace( array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $report_title);
+			$report_title=$scope_name.' '.strtolower($this->input->post('name'));
+			$report_title_new=str_replace(array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $report_title);
 			$encoded_report_title= urldecode($report_title_new);	
 			$encoded_report_url = str_replace(' ','-', $encoded_report_title);
 			$new_report_url = str_replace('--','-', strtolower($encoded_report_url));
@@ -90,10 +100,6 @@ class Report extends CI_Controller {
 					'enterprise_price'=>$this->input->post('enterprise_user'),
 					'datasheet_price'=>$this->input->post('datasheet'),
 					'cagr_market_value'=>$this->input->post('market_value'),
-					/* 'report_definition'=>$this->input->post('Report_definition'), */
-					/* 'report_description'=>$this->input->post('Report_description'),
-					'executive_summary_DRO'=>$this->input->post('Executive_summary_DRO'),
-					'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'), */
 					'largest_region'=>$this->input->post('Largest_region'),
 					'created_user'=>$session_data['Login_user_name'],
 					'status'=>$this->input->post('status'),
@@ -145,10 +151,6 @@ class Report extends CI_Controller {
 			$data['enterprise_price']= $rd_data->enterprise_price;
 			$data['datasheet_price']= $rd_data->datasheet_price;
 			$data['cagr_market_value']= $rd_data->cagr_market_value;
-			/* $data['report_definition']= $rd_data->report_definition; */
-			/* $data['report_description']= $rd_data->report_description;
-			$data['executive_summary_DRO']= $rd_data->executive_summary_DRO;
-			$data['executive_summary_regional_description']= $rd_data->executive_summary_regional_description; */
 			$data['largest_region']= $rd_data->largest_region;
 			$data['country_status']= $rd_data->country_status;
 			$data['status']= $rd_data->status;
@@ -174,6 +176,11 @@ class Report extends CI_Controller {
 			if($country_status == 0){
 				$data['delete'] = $this->Data_model->delete_contry_rds($report_id);
 			}
+			$rd_status = $this->input->post('status');
+			if($rd_status == 0){
+				$data['rd_delete'] = $this->Data_model->delete_rd_title($report_id);
+			}
+
 			$title = $this->input->post('title');
 			$updatedata=array(
 				'title'=>$this->input->post('title'),
@@ -195,10 +202,10 @@ class Report extends CI_Controller {
 				'enterprise_price'=>$this->input->post('enterprise_user'),
 				'datasheet_price'=>$this->input->post('datasheet'),
 				'cagr_market_value'=>$this->input->post('market_value'),
-				'report_definition'=>$this->input->post('Report_definition'),
+				/* 'report_definition'=>$this->input->post('report_definition'),
 				'report_description'=>$this->input->post('Report_description'),
 				'executive_summary_DRO'=>$this->input->post('Executive_summary_DRO'),
-				'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'),
+				'executive_summary_regional_description'=>$this->input->post('Executive_summary_regional_description'), */
 				'largest_region'=>$this->input->post('Largest_region'),
 				'created_user'=>$session_data['Login_user_name'],
 				'country_status'=>$this->input->post('country_status'),
@@ -223,13 +230,22 @@ class Report extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$result = $this->Data_model->delete_rd_data($id);
+
+			$result = $this->Data_model->delete_rd_data($id);			
+			if($result){
+				$result_rd_segment = $this->Data_model->delete_rd_segments_data($id);
+				$result_rd_companies = $this->Data_model->delete_rd_companies_data($id);
+				$result_rd_market_insight = $this->Data_model->delete_rd_market_insight_data($id);
+				$result_rd_dro = $this->Data_model->delete_rd_dro_data($id);
+				$result_rd_segment_overview = $this->Data_model->delete_rd_segment_overview_data($id);
+				$result_rd_PR2 = $this->Data_model->delete_rd_PR2_data($id);
+			}
 			if($result){
 				$this->session->set_flashdata("success_code", "Report has been deleted successfully..!!!");				
 			}else{
 				$this->session->set_flashdata("success_code","Sorry! Record has not deleted");		
 			}		
-			redirect('admin/report/');
+			redirect('admin/report/drafts');
 		}else{			
 			$this->load->view('admin/login');
 		}
@@ -237,12 +253,10 @@ class Report extends CI_Controller {
 	public function drafts(){
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];			
 			$data['success_code'] = $this->session->userdata('success_code');
-			
-			$data['Page_name']= 'Under Study';			
-			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds();
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds($data['Login_user_name']);
 			$this->load->view('admin/draft/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -277,10 +291,6 @@ class Report extends CI_Controller {
 			$data['enterprise_price']= $rd_data->enterprise_price;
 			$data['datasheet_price']= $rd_data->datasheet_price;
 			$data['cagr_market_value']= $rd_data->cagr_market_value;
-			/* $data['report_definition']= $rd_data->report_definition; */
-			/* $data['report_description']= $rd_data->report_description;
-			$data['executive_summary_DRO']= $rd_data->executive_summary_DRO;
-			$data['executive_summary_regional_description']= $rd_data->executive_summary_regional_description; */
 			$data['largest_region']= $rd_data->largest_region;
 			$data['country_status']= $rd_data->country_status;
 			$data['status']= $rd_data->status;
@@ -294,11 +304,7 @@ class Report extends CI_Controller {
 			$data['companies']= $this->Data_model->get_rd_companies($id);
 			/* DRO */
 			$data['dro_data'] = $this->Data_model->get_rd_dro_data($id);
-			/* Segment Overview */
-			$data['segment_overview_data'] = $this->Data_model->get_rd_segment_overview($id);
-			$data['MainSegment'] = $this->Data_model->get_main_segment_name($id);
-			// var_dump($data['segment_overview_data']); die;
-			$this->load->view('admin/draft/edit',$data);			
+			$this->load->view('admin/draft/edit',$data);
 		}else{			
 			$this->load->view('admin/login');
 		}
@@ -312,23 +318,22 @@ class Report extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 			// var_dump($data['Login_user_name']);die;
 			$report_id = $this->input->post('report_id');
-			$request = $this->input->post('request');
+			$request = $this->input->post('request');			
 			// var_dump($request);die;
 			if($request == 'Publish'){
 				$status = 3;
-			}else if ($request == 'Verified'){
+			}else if ($request == 'Verify'){
 				$status = 2;
-			}
-			else if ($request == 'Process'){
+			}else if ($request == 'Process'){
 				$status = 1;
-			}
-			else{
+			}else{
 				$status = $this->input->post('status');
 			}
-			$country_status = $this->input->post('country_status');
+			// var_dump($status); die;
+			/* $country_status = $this->input->post('country_status');
 			if($country_status == 0){
 				$data['delete'] = $this->Data_model->delete_contry_rds($report_id);
-			}
+			} */
 			$title = $this->input->post('title');
 			$updatedata=array(
 				'title'=> $this->input->post('title'),
@@ -350,12 +355,8 @@ class Report extends CI_Controller {
 				'enterprise_price'=> $this->input->post('enterprise_user'),
 				'datasheet_price'=> $this->input->post('datasheet'),
 				'cagr_market_value'=> $this->input->post('market_value'),
-				/* 'report_definition'=> $this->input->post('Report_definition'),
-				'report_description'=> $this->input->post('Report_description'),
-				'executive_summary_DRO'=> $this->input->post('Executive_summary_DRO'),
-				'executive_summary_regional_description'=> $this->input->post('Executive_summary_regional_description'), */
 				'largest_region'=> $this->input->post('Largest_region'),
-				'created_user'=> $session_data['Login_user_name'],
+				// 'created_user'=> $this->this->post('username'),
 				'country_status'=> $this->input->post('country_status'),
 				'status'=> $status,
 				'updated_at'=> date('Y-m-d')
@@ -441,7 +442,8 @@ class Report extends CI_Controller {
 					$num++;
 				}
 			}
-			if($request == 'Publish'){
+			/* To add complete Report title */
+			if($status == 3){
 
 				$scope_id= $this->input->post('scope');
 				$report_title = $this->input->post('title');
@@ -486,25 +488,25 @@ class Report extends CI_Controller {
 						}						
 					}	
 					unset($sub_seg1);
-				}				
+				}
 				unset($mainseg);
 				
-				$Report_title = htmlspecialchars($report_title)." (".ucwords($segment_details)."): ";
+				$Report_title = htmlspecialchars($report_title)." (".ucwords($segment_details, " \t\r\n\f\v'")."): ";
 				$Report_title_1 = array_shift(explode('; )', $Report_title));
 				$Report_title_2 = str_replace('And','and',ltrim(rtrim(ucwords($Report_title_1, " \t\r\n\f\v'"))));
-				$report_full_title = $Report_title_2."): ".ucwords($scope_name)." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;;
-
+				$report_full_title = $Report_title_2."): ".ucwords($scope_name)." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
 				$result = $this->Data_model->insert_published_rd_title($report_id, $report_full_title);
-				// $join_result = $this->Data_model->join_two_tables_of_rd();
-				// var_dump($result); die;
 			}
 			// die; 
-			if($status == 2){
-				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
-				redirect('admin/report/verified');
-			}if($request == 'Publish'){
+			if($status == 3){
 				$this->session->set_flashdata("success_code","Report: ".$title." has been published successfully..!!!");
 				redirect('admin/report');
+			}else if($result && $status == 1){
+				$this->session->set_flashdata("success_code","Report: ".$title." has been processed successfully..!!!");
+				redirect('analyst/report/processed');
+			}else if($result && $status == 2){
+				$this->session->set_flashdata("success_code","Report: ".$title." has been verified successfully..!!!");
+				redirect('manager/report/processed');
 			}else if($result){
 				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
 				redirect('admin/report/drafts');
@@ -516,16 +518,15 @@ class Report extends CI_Controller {
 			$this->load->view('admin/login');
 		}
 	}
-	public function verified(){
-		if($this->session->userdata('logged_in'))
-		{
+	public function verified_rd(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
-			
-			$data['Page_name']= 'Verified';
-			$data['Global_Rds']= $this->Data_model->get_verified_global_rds();
-			$this->load->view('admin/draft/list',$data);			
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+			$status = 2;
+			$data['Global_Rds']= $this->Data_model->get_global_published_rds($status);
+			$this->load->view('admin/report/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
 		}

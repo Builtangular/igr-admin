@@ -33,8 +33,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Description</th>
-                            <th>Active</th>
-                        
+                            <th>Active</th>                        
                             <th colspan="2">Action</th>
                         </tr>
                         </thead>
@@ -45,16 +44,10 @@
                         <tr>
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $list->description; ?></td>
-                            <td><?php echo $list->active; ?></td>
-                            
+                            <td><?php echo $list->active; ?></td>                            
                             <td><a href="<?php echo base_url();?>admin/pr2_reports/edit/<?php echo $list->id;?>" class="btn btn-warning">Edit</a></td>
                             <td>
-                            <form action="" method="post">
-                                <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <a href="<?php echo base_url() . "admin/pr2_reports/delete/" . $list->id; ?>" class="btn btn-danger" type="submit">Delete</a>
-                                
-                            </form>
+                                <a href="<?php echo base_url()."admin/pr2_reports/delete/".$list->id; ?>" class="btn btn-danger" type="submit">Delete</a>
                             </td>
                         </tr>
                         <?php } ?>

@@ -12,7 +12,8 @@ class Data_model extends CI_Model {
 		$this->db->from("tbl_rd_data");
 		$this->db->where('status', 3);
 		$sql = $this->db->get();
-		// echo $this->db->last_query();	die; 
+		/* echo $this->otherdb->last_query();
+		die; */
 		if($sql->num_rows() > 0){			
 			return $sql->result();
 		}else{
@@ -23,39 +24,26 @@ class Data_model extends CI_Model {
 		$this->db->from("tbl_rd_data");
 		$this->db->where('status', $status);
 		$sql = $this->db->get();
-		// echo $this->db->last_query();	die; 
+		/* echo $this->otherdb->last_query();
+		die; */
 		if($sql->num_rows() > 0){			
 			return $sql->result();
 		}else{
 			return array();
 		}
 	}
-	public function get_drafted_global_rds(){
+	public function get_drafted_global_rds($Login_user_name){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
+		$this->db->where(array('created_user' => $Login_user_name, 'status'=> 0));
 		$this->db->where('status', 0);
+		$this->db->order_by('id',"DESC");
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
 		if($sql->num_rows() > 0){			
 			return $sql->result();
 		}else{
-			return array();
-		}
-	}
-	public function get_verified_global_rds(){
-		$this->db->select("*");
-		$this->db->from("tbl_rd_data");
-		$this->db->where('status', 2);
-		$sql = $this->db->get();
-		/* echo $this->otherdb->last_query();
-		die; */
-		if($sql->num_rows() > 0)
-		{			
-			return $sql->result();
-		}
-		else
-		{
 			return array();
 		}
 	}
@@ -92,7 +80,37 @@ class Data_model extends CI_Model {
 		$result = $this->db->delete('tbl_rd_data');
 		return $result;
 	}
-
+	/* Delete rd data from other tables as well */
+	public function delete_rd_segments_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_segments');
+		return $result;
+	}
+	public function delete_rd_companies_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_companies');
+		return $result;
+	}
+	public function delete_rd_market_insight_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_market_insight_data');
+		return $result;
+	}
+	public function delete_rd_dro_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_dro_data');
+		return $result;
+	}
+	public function delete_rd_segment_overview_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_segment_overview');
+		return $result;
+	}
+	public function delete_rd_PR2_data($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_pr2_data');
+		return $result;
+	}
 /* **********  Market Insight ********** */
 	public function insert_market_insight($postdata){
 		$this->db->trans_start();
@@ -118,7 +136,8 @@ class Data_model extends CI_Model {
 	public function get_rd_market_insight_only($report_id){
 		$this->db->select("*");
 		$this->db->from("tbl_rd_market_insight_data");
-		$this->db->where(array('report_id' => $report_id, 'type !='=> 'Report Definition', 'status' => 1));
+		// $this->db->where(array('report_id' => $report_id, 'type !='=> 'Report Definition', 'status' => 1));
+		$this->db->where(array('report_id' => $report_id, 'status' => 1));
 		$sql = $this->db->get();		
 		if($sql->num_rows() > 0)
 		{			
@@ -291,6 +310,12 @@ class Data_model extends CI_Model {
 		$result = $this->db->delete('tbl_country_rd');
 		return $result;
 	}
+	/* function to delete rd title of report id */
+	public function delete_rd_title($id){
+		$this->db->where('report_id', $id);
+		$result = $this->db->delete('tbl_rd_title_data');
+		return $result;
+	}
 	/* DRO Data */
 	public function get_rd_dro_data($id){
 		$this->db->select("*");
@@ -300,7 +325,7 @@ class Data_model extends CI_Model {
 		if($sql->num_rows() > 0){			
 			return $sql->result();
 		}else{
-			return $sql->row();
+			return array();
 		}
 	}
 	/******** pooja work ***************/
@@ -327,10 +352,16 @@ class Data_model extends CI_Model {
 		$result = $result->num_rows();
 		return $result;
 	}
+	public function get_scope_master_data(){
+		$result = $this->db->get('tbl_master_scope');
+		$res = $result->result();
+		return $res;
+	}
 	public function get_scope_master(){
-		 $result = $this->db->get('tbl_master_scope');
-		 $res = $result->result();
-		 return $res;
+		$this->db->where('parent', 0);
+		$result = $this->db->get('tbl_master_scope');
+		$res = $result->result();
+		return $res;
 	}
 	public function insert_scope_record(){
 		$data = array(
@@ -338,8 +369,6 @@ class Data_model extends CI_Model {
 				'parent'  => $this->input->post('parent'),
 				'active'  => $this->input->post('status'),
 			);		
-		$result = $this->db->insert('tbl_scope_master', $data);
-		return $result;
 			$this->db->insert('tbl_master_scope', $data);
 			return 1;
     }
@@ -364,7 +393,6 @@ class Data_model extends CI_Model {
         return $this->db->update('tbl_master_scope', $update);
     }
 	public function get_single_parent($id){
-
 		$this->db->where('id',$id);
 		$result = $this->db->get('tbl_master_scope');
 		//echo $this->db->last_query();die;
@@ -398,18 +426,12 @@ class Data_model extends CI_Model {
 		return $result;
 	}
 	public function insert_published_rd_title($report_id, $full_title){
-		/* $complete_title = array('full_title' => $data);    
-		$this->db->where(array('id'=> $report_id));
-		$result =  $this->db->update('tbl_rd_data', $complete_title);
-		// echo $this->db->last_query();	die;
-		return $result;
-		 */
 		$data = array(
-			'report_id'    => $report_id,
+			'report_id'   => $report_id,
 			'rd_title'    => $full_title,
 			'created_at'  => date('Y-m-d'),
 			'updated_at'  => date('Y-m-d'),
-		);		
+	);		
 		$result = $this->db->insert('tbl_rd_title_data', $data);
 		return $result;
 	}
@@ -419,10 +441,8 @@ class Data_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_rd_segments');
 		$this->db->where(array('report_id'=>$report_id, 'parent_id'=>0));
-		// $this->db->order_by("updated_at", "desc");
-		// $this->db->limit(5);
 		$query = $this->db->get();
-		// echo $this->db->last_query();
+		// echo $this->db->last_query(); die;
 		if($query->num_rows() > 0)
 		{			
 			return $query->result_array();
@@ -439,32 +459,6 @@ class Data_model extends CI_Model {
 		if($sql->num_rows() > 0)
 		{
 			return $sql->result_array();
-		}else{
-			return array();
-		}
-	}
-	/* Segment Overview Fetch */	
-	function get_rd_segment_overview($report_id)
-	{
-		$this->db->select('*');
-		$this->db->from('tbl_rd_segment_overview');
-		$this->db->where(array('report_id'=>$report_id, 'status'=>1));
-		$query = $this->db->get();
-		// echo $this->db->last_query();
-		if($query->num_rows() > 0){			
-			return $query->result_array();
-		}else{
-			return array();
-		}
-	}
-	function get_main_segment_name($report_id){
-		$this->db->select("*");
-		$this->db->from("tbl_rd_segments");
-		$this->db->where(array('report_id'=>$report_id, 'parent_id'=>0));
-		$sql = $this->db->get();
-		// echo $this->db->last_query(); die;
-		if($sql->num_rows() > 0){			
-			return $sql->result();
 		}else{
 			return array();
 		}

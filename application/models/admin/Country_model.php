@@ -92,10 +92,11 @@ class Country_model extends CI_Model {
 			return $sql->row();
 		}
 	}
-	public function get_countries()
+	public function get_countries($scope_id)
 	{
 		$this->db->select("*");
 		$this->db->from("tbl_master_country");
+		$this->db->where('parent',$scope_id);
 		$sql = $this->db->get();
 		// echo $this->db->last_query();	die;
 		if($sql->num_rows() > 1)
@@ -174,7 +175,7 @@ class Country_model extends CI_Model {
 	{	
 		$this->db->select("sku");
 		$this->db->from("tbl_country_rd");
-		$this->db->where('country','brazil');
+		// $this->db->where('country','brazil');
 		$this->db->limit(1);
 		$this->db->order_by('id',"DESC");
 		$query = $this->db->get();
