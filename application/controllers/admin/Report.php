@@ -17,6 +17,7 @@ class Report extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['success_code'] = $this->session->userdata('success_code');
+			$data['title'] = "Published";
 
 			$data['Global_Rds']= $this->Data_model->get_global_rds();
 			$this->load->view('admin/report/list',$data);			
@@ -73,9 +74,9 @@ class Report extends CI_Controller {
             }
 			
 			/* automated url */
-			$report_title=$scope_name.' '.strtolower($this->input->post('name'));
-			$report_title_new=str_replace(array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $report_title);
-			$encoded_report_title= urldecode($report_title_new);	
+			$report_title = $scope_name.' '.strtolower($this->input->post('name'));
+			$report_title_new = str_replace(array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $report_title);
+			$encoded_report_title = urldecode($report_title_new);	
 			$encoded_report_url = str_replace(' ','-', $encoded_report_title);
 			$new_report_url = str_replace('--','-', strtolower($encoded_report_url));
 			// echo"----------new_report_url<-------->".$new_report_url."<--------><br><br>"; die;
@@ -96,6 +97,8 @@ class Report extends CI_Controller {
 					'is_volume_based'=>$this->input->post('volume'),
 					'volume_based_unit'=>$this->input->post('volume_based_unit'),
 					'volume_based_cagr'=>$this->input->post('volume_cagr'),
+					'revenue_start_year'=>$this->input->post('start_year_revenue'),
+					'revenue_end_year'=>$this->input->post('end_year_revenue'),
 					'singleuser_price'=>$this->input->post('single_user'),
 					'enterprise_price'=>$this->input->post('enterprise_user'),
 					'datasheet_price'=>$this->input->post('datasheet'),
@@ -109,15 +112,14 @@ class Report extends CI_Controller {
 			// var_dump($postdata); die;				
 			$Last_Inserted_id = $this->Data_model->insert_rd_data($postdata);
 			if($Last_Inserted_id){
-				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!");				
-				redirect('admin/report/drafts');
+				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!");
 			}else{
-				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");				
-				redirect('admin/report/drafts');
+				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");		
 			}		
+			redirect('admin/report/drafts');
 		}		
 		else
-		{			
+		{
 			$this->load->view('admin/login');
 		}		
 	}
@@ -461,14 +463,14 @@ class Report extends CI_Controller {
 				// var_dump($MainSegments); die;
 				foreach($MainSegments as $segments)
 				{
-					$mainseg[] = strtolower($segments['name']);					
+					$mainseg[] = $segments['name'];					
 					// var_dump($mainseg); 
-					$segment_details.= ltrim(rtrim(strtolower($segments['name'])))." - ";	
+					$segment_details.= ltrim(rtrim($segments['name']))." - ";	
 					$SubSegments=$this->Data_model->get_sub_segments($report_id, $segments['id']);
 					// var_dump($SubSegments); die;
 					foreach($SubSegments as $sub_seg)
 					{
-						$sub_seg1[]=strtolower($sub_seg['name']);					
+						$sub_seg1[] = $sub_seg['name'];					
 					}
 					$j= count($sub_seg1);
 					// var_dump($sub_seg1);
@@ -491,10 +493,14 @@ class Report extends CI_Controller {
 				}
 				unset($mainseg);
 				
-				$Report_title = htmlspecialchars($report_title)." (".ucwords($segment_details, " \t\r\n\f\v'")."): ";
+				$Report_title = htmlspecialchars($report_title)." (".$segment_details."): ";
 				$Report_title_1 = array_shift(explode('; )', $Report_title));
-				$Report_title_2 = str_replace('And','and',ltrim(rtrim(ucwords($Report_title_1, " \t\r\n\f\v'"))));
-				$report_full_title = $Report_title_2."): ".ucwords($scope_name)." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				$Report_title_2 = str_replace('And','and',ltrim(rtrim($Report_title_1)));
+				if($scope_name == 'Global'){
+					$report_full_title = $Report_title_2."): ".$scope_name." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				} else {
+					$report_full_title = $scope_name.' '.$Report_title_2."): Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				}
 				$result = $this->Data_model->insert_published_rd_title($report_id, $report_full_title);
 			}
 			// die; 
@@ -524,6 +530,7 @@ class Report extends CI_Controller {
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['title'] = "Verified";
 			$status = 2;
 			$data['Global_Rds']= $this->Data_model->get_global_published_rds($status);
 			$this->load->view('admin/report/list',$data);			

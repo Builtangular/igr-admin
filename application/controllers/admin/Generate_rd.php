@@ -1872,22 +1872,56 @@ class Generate_rd extends CI_Controller {
 					$table->addCell(6500)->addText("United States Dollar ($)", 'trStyle', 'pStyle');
 				}
 				else if($i==3)
-				{
-					$table->addRow();
-					$table->addCell(3000, $styleCellColor)->addText("The U.S.", 'trStyle1', 'Table1_Left');
-					$table->addCell(6500, $styleCellColor)->addText("United States", 'trStyle', 'pStyle');
+				{					
+					if($scope_name == 'Global'){
+						$table->addRow();
+						$table->addCell(3000, $styleCellColor)->addText("The U.S.", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500, $styleCellColor)->addText("United States", 'trStyle', 'pStyle');
+					} else if($scope_name == 'MENA'){
+						$table->addRow();
+						$table->addCell(3000, $styleCellColor)->addText("UAE", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500, $styleCellColor)->addText("United Arab Emirates", 'trStyle', 'pStyle');
+					} else if($scope_name == 'GCC'){
+						$table->addRow();
+						$table->addCell(3000, $styleCellColor)->addText("UAE", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500, $styleCellColor)->addText("United Arab Emirates", 'trStyle', 'pStyle');
+					}else if($scope_name == 'APAC'){
+						
+					} else if($scope_name == 'Africa'){
+						
+					}
 				}
 				else if($i==4)
-				{
-					$table->addRow();
-					$table->addCell(3000)->addText("APAC", 'trStyle1', 'Table1_Left');
-					$table->addCell(6500)->addText("Asia-Pacific", 'trStyle', 'pStyle');
+				{					
+					if($scope_name == 'Global'){
+						$table->addRow();
+						$table->addCell(3000)->addText("APAC", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500)->addText("Asia-Pacific", 'trStyle', 'pStyle');
+					} else if($scope_name == 'MENA'){
+						$table->addRow();
+						$table->addCell(3000)->addText("MENA", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500)->addText("Middle East and North Africa", 'trStyle', 'pStyle');
+					} else if($scope_name == 'GCC'){
+						$table->addRow();
+						$table->addCell(3000)->addText("GCC", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500)->addText("Gulf Cooperation Council", 'trStyle', 'pStyle');
+					}else if($scope_name == 'APAC'){
+						$table->addRow();
+						$table->addCell(3000)->addText("APAC", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500)->addText("Asia-Pacific", 'trStyle', 'pStyle');
+					} else if($scope_name == 'Africa'){
+						
+					}
 				}
 				else if($i==5)
-				{
-					$table->addRow();
-					$table->addCell(3000, $styleCellColor)->addText("RoW", 'trStyle1', 'Table1_Left');
-					$table->addCell(6500, $styleCellColor)->addText("Rest of the world", 'trStyle', 'pStyle');
+				{					
+					if($scope_name == 'Global'){
+						$table->addRow();
+						$table->addCell(3000, $styleCellColor)->addText("RoW", 'trStyle1', 'Table1_Left');
+						$table->addCell(6500, $styleCellColor)->addText("Rest of the world", 'trStyle', 'pStyle');
+					} else if($scope_name == 'MENA'){
+						
+					}
 				}
 				else if($i==6)
 				{
@@ -1950,11 +1984,20 @@ class Generate_rd extends CI_Controller {
 			$section->addTextBreak(1);
 			/* Updated format points */
 			$section->addListItem(htmlspecialchars('	Primary Research:'), 3, 'childSubpoint', $listStyle, 'Head 3');
-			$primary_research_para1 = explode('\n', $primary_research_para);
+			/* $primary_research_para1 = explode('\n', $primary_research_para);
 			foreach($primary_research_para1 as $primary_research_para1_1) 
 			{
 				$section->addText(htmlspecialchars($primary_research_para1_1), 'r2Style', 'paragraphStyle');
+			} */
+			if($scope_name == 'Global'){
+				$primary_research_para_1 = "We have conducted primary interviews with 10-12 key players form the major countries. The key countries considered for the particular market include - U.S, Germany, France, China, India, Japan and among others.";
+			} else {
+				$primary_research_para_1 = "We have conducted primary interviews with 10-12 key players form the major countries. The key countries considered for the particular market include - ".$rd_region_name.".";
 			}
+			// var_dump($primary_research_para_1); die;
+			$section->addText(htmlspecialchars($primary_research_para), 'r2Style', 'paragraphStyle');
+			$section->addText(htmlspecialchars($primary_research_para_1), 'r2Style', 'paragraphStyle');
+			$section->addText(htmlspecialchars("Primary interviews not only help in data validation but also provide critical insights into the market, current business scenario, and future expectations and enhance the quality of our reports. In addition to analyzing the current and historical trends, our analysts predict where the market is headed, over the next five years."), 'r2Style', 'paragraphStyle');
 			$section->addTextBreak(1);
 			$section->addText(htmlspecialchars('Primary Sources considered during this particular study:'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));	
 			$primary_research_source_points2 = explode('\n', $primary_research_source_points1);
@@ -1970,7 +2013,11 @@ class Generate_rd extends CI_Controller {
 				$section->addText(htmlspecialchars($data_points), 'r2Style', 'Bullet');
 			}
 			$section->addText(htmlspecialchars('Breakdown of the profiles of primaries as follows:'), array('align'=>'left', 'bold'=>false, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
-			$section->addImage('images/primaries_breakdown.png', array('width'=>770, 'height'=>230, 'align'=>'center'));
+			if($scope_name == 'Global'){
+				$section->addImage('images/primaries_breakdown.png', array('width'=>770, 'height'=>230, 'align'=>'center'));
+			} else {
+				$section->addImage('images/primaries_breakdown_country.png', array('width'=>770, 'height'=>230, 'align'=>'center'));
+			}			
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addText(htmlspecialchars('Primary interviews not only help in data validation but also provide critical insights into the market, current business scenario, and future expectations and enhance the quality of our reports. In addition to analyzing the current and historical trends, our analysts predict where the market is headed, over the next five years.'), 'r2Style', 'paragraphStyle');
 			$section->addTextBreak(1);
@@ -2937,9 +2984,17 @@ class Generate_rd extends CI_Controller {
 			if($forecast_period == '2021-2027')	{
 				$section->addImage('images/sample/xyz-market-by-region-2020-2027-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 			} else if($forecast_period == '2022-2028') {
-				$section->addImage('images/sample/xyz-market-by-region-2021-2028-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2021-2028-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2021-2028-Pie.png', array('width'=>760, 'height'=>250, 'align'=>'center'));
+				}
 			} else if($forecast_period == '2023-2029') {
-				$section->addImage('images/sample/xyz-market-by-region-2022-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2022-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2022-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}				
 			} else {
 				$section->addText('add image of xyz-market-by-region-Pie', array('size'=>12, 'color'=>'black'));
 			}
@@ -2955,9 +3010,17 @@ class Generate_rd extends CI_Controller {
 			if($forecast_period == '2021-2027')	{
 				$section->addImage('images/sample/xyz-market-by-region-2019-2027-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 			} else if($forecast_period == '2022-2028') {
-				$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}					
 			} else if($forecast_period == '2023-2029') {
-				$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}
 			} else {
 				$section->addText('add image of xyz-market-by-region-Pie', array('size'=>12, 'color'=>'black'));
 			}
@@ -3126,8 +3189,7 @@ class Generate_rd extends CI_Controller {
 								$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 							} else {
 								$section->addText('add image of xyz-market-by-region-2020-2028-Bar', array('size'=>12, 'color'=>'black'));
-							}
-						
+							}						
 							$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 							$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
 							$section->addTextBreak(1);
@@ -3154,7 +3216,7 @@ class Generate_rd extends CI_Controller {
 						// Add row
 						$table->addRow(70);
 						// Add cells
-						$table->addCell(2500, $styleCell)->addText(htmlspecialchars(ucwords($segments6->name)), $fontStyle, 'thStyle');
+						$table->addCell(2500, $styleCell)->addText(htmlspecialchars(ucwords($segments6->name, " \t\r\n\f\v'")), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -3582,6 +3644,56 @@ class Generate_rd extends CI_Controller {
 			readfile($filename);
 			unlink($filename);
 			exit; // deletes the temporary file		
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	/* for sample pages mail draft */
+	public function mail_draft(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
+            /* RD base data extract */
+            $report_id = $single_rd_data->id;
+            $scope_id = $single_rd_data->scope_id;
+            $report_title = $single_rd_data->title;   // title case rd-title
+            $report_name = $single_rd_data->name;   // small case rd-title
+            $value_cagr = $single_rd_data->value_cagr;
+            $value_unit = $single_rd_data->value_unit;
+			$cagr_market_value = $single_rd_data->cagr_market_value;
+            $forecast_from = $single_rd_data->forecast_from;
+            $forecast_to = $single_rd_data->forecast_to;
+            $analysis_from = $single_rd_data->analysis_from;
+            $analysis_to = $single_rd_data->analysis_to;
+            $volume_based_cagr = $single_rd_data->volume_based_cagr;
+            $volume_based_unit = $single_rd_data->volume_based_unit;
+            $largest_region = $single_rd_data->largest_region;
+            /* ./ RD base data extract */
+            /* get scope data */
+            $ScopeList = $this->Data_model->get_scope_master();				
+            foreach($ScopeList as $scope){
+                if($scope->id == $scope_id){
+                    $scope_name = $scope->name;
+                }
+            }
+            /* ./ get scope data */
+            /* Concatenation */
+            $forecast_period =$forecast_from.'-'.$forecast_to;
+            $market_period =$analysis_from.'-'.$analysis_to;
+            $Report_title_scope =$scope_name.' '.htmlspecialchars($report_title);
+            // $report_name_scope = strtolower($scope_name).' '.$report_name;
+
+			/* description scope name */
+			if($scope_name == 'Global'){
+				$desc_scope_name = strtolower($scope_name);
+			} else {
+				$desc_scope_name = $scope_name;
+			}
+			$report_name_scope = $desc_scope_name.' '.$report_name;
+			
 		}else{			
 			$this->load->view('admin/login');
 		}

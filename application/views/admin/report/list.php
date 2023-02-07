@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Report List
+        <?php echo $title; ?> Report List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -41,8 +41,8 @@
                             <thead>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-                                    <th>Title</th>
                                     <th>Scope</th>
+                                    <th>Title</th>
                                     <th>Cat</th>
                                     <th>Forecast</th>
                                     <!-- <th>Vol</th> -->
@@ -99,9 +99,9 @@
                                /* ./ get scope data */
                                 ?>
                                 <tr style="font-size: 14px;">
-                                    <td class="text-center"><?php echo $data->id; ?></td>
-                                    <td><?php echo $data->title; ?></td>
+                                    <td class="text-center"><?php echo $data->id; ?></td>                                    
                                     <td class="text-center"><?php echo $scope_name; ?></td>
+                                    <td><?php echo $data->title; ?></td>
                                     <td class="text-center"><?php echo $data->category_id; ?></td>
                                     <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
                                     <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
@@ -183,8 +183,8 @@
                             <tfoot>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-                                    <th>Title</th>
                                     <th>Scope</th>
+                                    <th>Title</th>
                                     <th>Cat</th>
                                     <th>Forecast</th>
                                     <!-- <th>Analysis</th> -->

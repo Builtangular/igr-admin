@@ -21,6 +21,7 @@ class Customlink_Model extends CI_Model {
 			'price'             =>$this->input->post('price'),
 			'licens_type'       =>$this->input->post('licens_type'),
 			'status'            =>$this->input->post('status'),
+			'created_at'        =>date('Y-m-d')
 		);
 		$res = $this->db->insert('tbl_rd_custom_link', $data);
 		return $res;
@@ -46,6 +47,7 @@ class Customlink_Model extends CI_Model {
 			'price'             =>$this->input->post('price'),
 			'licens_type'       =>$this->input->post('licens_type'),
 			'status'            =>$this->input->post('status'),
+            'created_at'        =>date('Y-m-d')
             );
             // var_dump($update);die;
         $this->db->where('id',$id);

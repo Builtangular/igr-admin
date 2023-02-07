@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>Infinium Admin</title>
@@ -10,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
         type="text/css" />
     <!-- Ionicons -->
-    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="<?php echo base_url(); ?>assets/admin//css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/admin/css/skin-blue.min.css" rel="stylesheet" type="text/css" />
@@ -80,7 +79,6 @@
         <!-- Header -->
         <!-- Main Header -->
         <header class="main-header">
-
             <!-- Logo -->
             <a href="#" class="logo">
                 <span class="logo-mini"><b>IGR</b></span>
@@ -131,12 +129,10 @@
                     </li>
                     <!-- Optionally, you can add icons to the links -->
                     <?php if($Role_id == 1){ ?>
-                     <li class="treeview">
+                    <li class="treeview">
                         <a href="#"><i class="fa fa-table"></i><span class="text-bold">Master Setup</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <!-- <li><a href="http://localhost/testapp/public/superadmin/codetype"><span>Code Type</span></a></li>
-							<li><a href="http://localhost/testapp/public/superadmin/codedecode"><span>Code Decode</span></a></li> -->
                             <li><a href="<?php echo base_url(); ?>admin/scope"><span>Scope Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/category"><span>Category Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/country"><span>Country Master</span></a></li>
@@ -151,7 +147,7 @@
                         </ul>
                     </li>
                     <?php } if($Role_id == 1 || $Role_id == 2){ ?>
-                     <li class="treeview">
+                    <!--  <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -159,8 +155,12 @@
                             <li><a href="<?php echo base_url(); ?>admin/country-rd"><span>Country Reports</span></a>
                             </li>
                         </ul>
-                    </li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/verified_rd"><i class="fa fa-file-word-o"></i><span
+                    </li> -->
+                    <li><a href="<?php echo base_url(); ?>admin/report"><i class="fa fa-file-pdf-o"></i><span
+                                class="text-bold">Published Reports</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/country-rd"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Country Reports</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/verified_rd"><i class="fa fa-file"></i><span
                                 class="text-bold">Verified RDs</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
@@ -169,7 +169,6 @@
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
                     <?php } ?>
-
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
@@ -182,9 +181,8 @@
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-download"></i><span
                                 class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
-
                     <?php if($Role_id == 4){ ?>
-                   <li><a href="<?php echo base_url(); ?>manager/report/published"><i
+                    <li><a href="<?php echo base_url(); ?>manager/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>manager/report/processed"><i class="fa fa-files-o"></i><span
                                 class="text-bold">Processed Report</span></a></li>
@@ -195,11 +193,20 @@
                     <li><a href="<?php echo base_url(); ?>sales/custom_link"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Custom Link</span></a></li>
                     <?php } ?>
-                </ul>
-                </li>
-                <!-- <li><a href="http://localhost/testapp/public/superadmin/enroll"><span>Enrollment</span></a></li>
-                    <li><a href="#"><span>Generate Report</span></a></li> -->
-
+                    <?php if($Role_id == 1 || $Role_id == 6){ ?>
+                    <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-file-excel-o"></i><span
+                                class="text-bold">Job Post</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Custom Link</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/generate-invoice"><i class="fa fa-plus"></i><span
+                                class="text-bold">Generate Invoice</span></a></li>
+                    <?php } ?>
+                    <?php if($Role_id == 7){ ?>
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-file-excel-o"></i><span
+                                class="text-bold">Spam Mail</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
+                    <?php } ?>
                 </ul>
             </section>
             <!-- /.sidebar -->
