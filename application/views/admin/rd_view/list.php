@@ -97,7 +97,7 @@
                                 }
                                 ?>
                                 <tr style="font-size: 14px;">
-                                    <td class="text-center">
+                                    <td class="">
                                         <a href="<?php echo base_url()?>admin/generate_rd/rd_1/?report_id=<?php echo $data->id;?>"
                                             title="Get RD1"><b><i class="fa fa-download"></i> &nbsp;RD1</b>
                                         </a> <br />
@@ -109,6 +109,9 @@
                                         </a> <br />
                                         <a href="<?php echo base_url()?>admin/generate_rd/sample_pages/?report_id=<?php echo $data->id;?>"
                                             title="Get Sample Pages"><b><i class="fa fa-download"></i> &nbsp;Sample</b>
+                                        </a> <br />
+                                        <a href="<?php echo base_url()?>admin/generate_rd/mail_draft/?report_id=<?php echo $data->id;?>"
+                                            title="Get Sample Pages Mail Draft"><b><i class="fa fa-download"></i> &nbsp;Mail Draft</b>
                                         </a>
                                     </td>
                                     <td class="text-center"><?php echo $data->id; ?></td>

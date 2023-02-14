@@ -149,6 +149,8 @@ class Report extends CI_Controller {
 			$data['is_volume_based']= $rd_data->is_volume_based;
 			$data['volume_based_unit']= $rd_data->volume_based_unit;
 			$data['volume_based_cagr']= $rd_data->volume_based_cagr;
+			$data['start_year_revenue']= $rd_data->revenue_start_year;
+			$data['end_year_revenue']= $rd_data->revenue_end_year;
 			$data['singleuser_price']= $rd_data->singleuser_price;
 			$data['enterprise_price']= $rd_data->enterprise_price;
 			$data['datasheet_price']= $rd_data->datasheet_price;
@@ -200,6 +202,8 @@ class Report extends CI_Controller {
 				'is_volume_based'=>$this->input->post('volume'),
 				'volume_based_unit'=>$this->input->post('volume_based_unit'),
 				'volume_based_cagr'=>$this->input->post('volume_cagr'),
+				'revenue_start_year'=>$this->input->post('start_year_revenue'),
+				'revenue_end_year'=>$this->input->post('end_year_revenue'),
 				'singleuser_price'=>$this->input->post('single_user'),
 				'enterprise_price'=>$this->input->post('enterprise_user'),
 				'datasheet_price'=>$this->input->post('datasheet'),
@@ -215,11 +219,72 @@ class Report extends CI_Controller {
 				'updated_at'=> date('Y-m-d')
 			);	
 			$result = $this->Data_model->update_rd_data($report_id,$updatedata);
-			if($result){
-				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
-			}else{
-				$this->session->set_flashdata("success_code","Sorry! Data has not updated");
+
+			/* Update RD Title */
+			if($result == 1){
+
+				$scope_id= $this->input->post('scope');
+				$report_title = $this->input->post('title');
+				$forecast_to = $this->input->post('forecast_to');
+				/* Get Scope of title */
+				$ScopeList = $this->Data_model->get_scope_master();
+				
+				foreach($ScopeList as $scope){
+					if($scope->id == $scope_id){
+						$scope_name = $scope->name;
+					}
+				}
+				$MainSegments= $this->Data_model->get_main_segments($report_id);
+				foreach($MainSegments as $segments)
+				{
+					$mainseg[] = $segments['name'];		
+					$segment_details.= ltrim(rtrim($segments['name']))." - ";	
+					$SubSegments=$this->Data_model->get_sub_segments($report_id, $segments['id']);
+					foreach($SubSegments as $sub_seg)
+					{
+						$sub_seg1[] = $sub_seg['name'];					
+					}
+					$j= count($sub_seg1);
+					for($i = 0; $i< $j ; $i++)
+					{
+						if($i == $j-2)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", and ";
+						}
+						if($i == $j-1)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i]))."; ";
+						}
+						if($i < $j-2)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", ";
+						}						
+					}	
+					unset($sub_seg1);
+				}
+				unset($mainseg);
+				
+				$Report_title = htmlspecialchars($report_title)." (".$segment_details."): ";
+				$Report_title_1 = array_shift(explode('; )', $Report_title));
+				$Report_title_2 = str_replace('And','and',ltrim(rtrim($Report_title_1)));
+				if($scope_name == 'Global'){
+					$report_full_title = $Report_title_2."): ".$scope_name." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				} else {
+					$report_full_title = $scope_name.' '.$Report_title_2."): Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				}
+				$update_rd_title = array(
+					'report_id' => $report_id,
+					'rd_title' => $report_full_title,
+					'updated_at' => date('Y-m-d')
+				);
+				$result = $this->Data_model->update_published_rd_title($report_id, $update_rd_title);
+			/* ./ Update RD Title */
 			}
+				if($result){
+					$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
+				}else{
+					$this->session->set_flashdata("success_code","Sorry! Data has not updated");
+				}
 			redirect('admin/report');
 			// var_dump($updatedata); die;
 		}else{			

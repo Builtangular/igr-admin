@@ -435,6 +435,13 @@ class Data_model extends CI_Model {
 		$result = $this->db->insert('tbl_rd_title_data', $data);
 		return $result;
 	}
+	public function update_published_rd_title($report_id, $data){
+
+		$this->db->where('report_id', $report_id);
+		$result =  $this->db->update('tbl_rd_title_data', $data);
+		// echo $this->db->last_query();	die;
+		return $result;
+	}
 	/* Segments Extract */
 	function get_main_segments($report_id)
 	{

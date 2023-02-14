@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//ini_set('display_errors', '0');
+ini_set('display_errors', '0');
 class Segment extends CI_Controller 
 {    
 	public function __construct()
@@ -26,7 +26,7 @@ class Segment extends CI_Controller
 			$data['segments']= $this->Data_model->get_rd_segments($id);
 			$data['main_segments']= $this->Data_model->get_rd_main_segments($id);
 			$this->load->view('admin/segment/list',$data);			
-		}		
+		}
 		else
 		{			
 			$this->load->view('admin/login');
@@ -70,7 +70,7 @@ class Segment extends CI_Controller
 				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");		
 			}
             redirect('admin/segment/'.$id);
-		}		
+		}
 		else
 		{			
 			$this->load->view('admin/login');
@@ -114,6 +114,69 @@ class Segment extends CI_Controller
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
 			$result = $this->Data_model->update_rd_segment($seg_id,$postcseg);
+
+			/* Update RD Title */
+			if($result == 1){
+				
+				$rd_data = $this->Data_model->get_rd_data($report_id);
+				$scope_id = $rd_data->scope_id;
+				$report_title = $rd_data->title;
+				$forecast_to = $rd_data->forecast_to;
+				/* Get Scope of title */
+				$ScopeList = $this->Data_model->get_scope_master();				
+				foreach($ScopeList as $scope){
+					if($scope->id == $scope_id){
+						$scope_name = $scope->name;
+					}
+				}
+				$MainSegments = $this->Data_model->get_main_segments($report_id);
+				// var_dump($MainSegments); die;
+				foreach($MainSegments as $segments)
+				{
+					$mainseg[] = $segments['name'];		
+					$segment_details.= ltrim(rtrim($segments['name']))." - ";	
+					$SubSegments=$this->Data_model->get_sub_segments($report_id, $segments['id']);
+					foreach($SubSegments as $sub_seg)
+					{
+						$sub_seg1[] = $sub_seg['name'];					
+					}
+					$j= count($sub_seg1);
+					for($i = 0; $i< $j ; $i++)
+					{
+						if($i == $j-2)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", and ";
+						}
+						if($i == $j-1)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i]))."; ";
+						}
+						if($i < $j-2)
+						{
+							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", ";
+						}						
+					}	
+					unset($sub_seg1);
+				}
+				unset($mainseg);
+				
+				$Report_title = htmlspecialchars($report_title)." (".$segment_details."): ";
+				$Report_title_1 = array_shift(explode('; )', $Report_title));
+				$Report_title_2 = str_replace('And','and',ltrim(rtrim($Report_title_1)));
+				if($scope_name == 'Global'){
+					$report_full_title = $Report_title_2."): ".$scope_name." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				} else {
+					$report_full_title = $scope_name.' '.$Report_title_2."): Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				}
+				$update_rd_title = array(
+					'report_id' => $report_id,
+					'rd_title' => $report_full_title,
+					'updated_at' => date('Y-m-d')
+				);
+				$result = $this->Data_model->update_published_rd_title($report_id, $update_rd_title);			
+			}
+			/* ./ Update RD Title */
+
 			if($result){
 				$this->session->set_flashdata("success_code","Data has been updated successfully..!!!");				
 				redirect('admin/segment/'.$report_id);

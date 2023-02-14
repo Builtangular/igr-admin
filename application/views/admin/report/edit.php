@@ -27,7 +27,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Update Report</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/report/update" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/report/update" method="post" class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -101,6 +101,13 @@
                                     <div class="col-md-9">
                                         <input type="text" name="sku" value="<?php echo $sku; ?>"
                                             class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Start Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="start_year_revenue" value="<?php echo $start_year_revenue; ?>" class="form-control"
+                                            placeholder="Revenue">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -192,6 +199,13 @@
                                     <div class="col-md-9">
                                         <input type="text" name="url" value="<?php echo $url; ?>"
                                             class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">End Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="end_year_revenue" value="<?php echo $end_year_revenue; ?>" class="form-control"
+                                            placeholder="Revenue">
                                     </div>
                                 </div>
                                 <div class="form-group">

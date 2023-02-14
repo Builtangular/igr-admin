@@ -3656,6 +3656,7 @@ class Generate_rd extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 
 			$single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
+			// var_dump($single_rd_data); die;
             /* RD base data extract */
             $report_id = $single_rd_data->id;
             $scope_id = $single_rd_data->scope_id;
@@ -3670,6 +3671,8 @@ class Generate_rd extends CI_Controller {
             $analysis_to = $single_rd_data->analysis_to;
             $volume_based_cagr = $single_rd_data->volume_based_cagr;
             $volume_based_unit = $single_rd_data->volume_based_unit;
+            $revenue_start_year = $single_rd_data->revenue_start_year.' '.$value_unit;
+            $revenue_end_year = $single_rd_data->revenue_end_year.' '.$value_unit;
             $largest_region = $single_rd_data->largest_region;
             /* ./ RD base data extract */
             /* get scope data */
@@ -3684,7 +3687,6 @@ class Generate_rd extends CI_Controller {
             $forecast_period =$forecast_from.'-'.$forecast_to;
             $market_period =$analysis_from.'-'.$analysis_to;
             $Report_title_scope =$scope_name.' '.htmlspecialchars($report_title);
-            // $report_name_scope = strtolower($scope_name).' '.$report_name;
 
 			/* description scope name */
 			if($scope_name == 'Global'){
@@ -3693,10 +3695,184 @@ class Generate_rd extends CI_Controller {
 				$desc_scope_name = $scope_name;
 			}
 			$report_name_scope = $desc_scope_name.' '.$report_name;
-			
+
+			// Template processor instance creation
+			$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/mail_template.docx');
+			// Variables on different parts of document
+			$templateProcessor->setValue('RdTitle', htmlspecialchars($Report_title_scope));            // On section/content
+			$templateProcessor->setValue('CagrValue', htmlspecialchars($value_cagr));            // On section/content
+			$templateProcessor->setValue('StartYearRevenue', $revenue_start_year);            // On section/content
+			$templateProcessor->setValue('EndYearRevenue', $revenue_end_year);            // On section/content
+
+			// DRO Writeup
+			/* Drivers */
+			$type = 'Driver';
+			$rd2_drivers = $this->RdData_model->get_rd_dro($report_id, $type);
+			$d = 0;
+			foreach($rd2_drivers as $deivers)
+			{
+				$new_driver=ucwords($deivers->description, " \t\r\n\f\v'");	
+				// $templateProcessor->setValue("Driver{$idd}", $num);
+				$templateProcessor->setValue("DriversValue{$d}", htmlspecialchars($new_driver));
+				$d++;
+			}
+
+			/* Restraints */
+			$type = 'Restraint';
+			$rd2_restraints = $this->RdData_model->get_rd_dro($report_id, $type);
+			$r = 0;
+			foreach($rd2_restraints as $restraints)
+			{
+				$new_restraints=ucwords($restraints->description, " \t\r\n\f\v'");	
+				$templateProcessor->setValue("RestraintValue{$r}", htmlspecialchars($new_restraints));
+				$r++;
+			}
+
+			/* Opportunities */
+			$type = 'Opportunity';
+			$rd2_opportunities = $this->RdData_model->get_rd_dro($report_id, $type);
+			$o = 0;
+			foreach($rd2_opportunities as $opportunities)
+			{
+				$new_opportunities=ucwords($opportunities->description, " \t\r\n\f\v'");	
+				$templateProcessor->setValue("OpportunityValue{$o}", htmlspecialchars($new_opportunities));
+				$o++;
+			}
+
+			if($scope_name == 'Global'){
+				$templateProcessor->setValue('Sectional', "regional"); 
+			} else {
+				$templateProcessor->setValue('Sectional', "country"); 
+			}
+
+			/* Segments List */
+			$parent = 0;
+			$main_segments= $this->RdData_model->get_rd_segments($report_id, $parent);			
+			foreach($main_segments as $segments)
+			{
+				$mainseg[] = $segments->name;					
+					
+				$segment_name.= ltrim(rtrim($segments->name))." (";	
+				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);
+				foreach($sub_segments as $subsegments)
+				{
+					$subseg[] = $subsegments->name;					
+				}
+				$j= count($subseg);
+				for($i = 0; $i< $j ; $i++)
+				{
+					if($i == $j-2)
+					{
+						$segment_name.= ltrim(rtrim($subseg[$i])).", and ";
+					}
+					if($i == $j-1)
+					{
+						$segment_name.= ltrim(rtrim($subseg[$i]))."), ";
+					}
+					if($i < $j-2)
+					{
+						$segment_name.= ltrim(rtrim($subseg[$i])).", ";
+					}						
+				}
+				unset($subseg);					
+			}
+			$segments_list = $segment_name.")";
+			$segment_names=str_replace("), )",")", $segments_list);
+
+			$templateProcessor->setValue('SegmentList', htmlspecialchars($segment_names)); 
+
+			/* Regions List As per Scope */
+			$get_scope_regions= $this->RdData_model->get_scope_regions($scope_id);            
+            foreach($get_scope_regions as $scope_region)
+			{
+				$ScReg[] = $scope_region->name;				
+			}
+			if($ScReg != NULL){
+                $j= count($ScReg);
+    			for($i = 0; $i < $j ; $i++)
+    			{
+    				if($i == $j-2)
+    				{
+    					$Scope_Region .= ltrim(rtrim($ScReg[$i])).", and ";
+    				}
+    				if($i == $j-1)
+    				{
+    					$Scope_Region .= ltrim(rtrim($ScReg[$i]))."";
+    				}
+    				if($i < $j-2)
+    				{
+    					$Scope_Region .= ltrim(rtrim($ScReg[$i])).", ";
+    				}						
+    			}
+    			unset($ScReg);
+			}
+			if($scope_name == 'Global'){
+				$desc_scope_name = strtolower($scope_name);
+				$scope_type = 'Region';
+				$geographic = 'geographic regions';
+			} else {
+				$desc_scope_name = $scope_name;
+				$scope_type = 'Country';
+				$geographic = 'countries';
+			}
+			$templateProcessor->setValue('ScopeType', htmlspecialchars($scope_type)); 
+			$templateProcessor->setValue('RegionsList', htmlspecialchars($Scope_Region)); 
+
+			if($scope_name == 'Global'){
+				$templateProcessor->setValue('section', "regions"); 
+			} else {
+				$templateProcessor->setValue('section', "countries"); 
+			}
+
+			// $templateProcessor->saveAs('results/Sample_07_TemplateCloneRow.docx');
+			$new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));		
+			$new_file_name1=str_replace("/","-", $new_file_name);
+			$new_file_name2=str_replace("&amp;","and", $new_file_name1);
+			$filename = "Mail-Draft-".htmlspecialchars($new_file_name2).".docx";
+			header('Content-Disposition: attachment; filename='.$filename);
+			ob_clean();
+			$templateProcessor->saveAs('php://output');			
 		}else{			
 			$this->load->view('admin/login');
 		}
+	}
+	public function template(){
+
+		/* $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('Template.docx');
+		
+		$templateProcessor->setValue('CAGR', date("d-m-Y"));
+		$templateProcessor->setValue('XYZ Market', 'John Doe');
+		$templateProcessor->setValue(
+			['city', 'street'],
+			['Sunnydale, 54321 Wisconsin', '123 International Lane']);
+			
+		$filename = "MyWordFile.docx";
+		$templateProcessor->saveAs($filename); */
+
+
+		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/mail_template.docx');
+		// Variables on different parts of document
+		$templateProcessor->setValue('RdTitle', "New Market");            // On section/content
+		
+		echo date('H:i:s'), ' Saving the result document...', EOL;
+		// $templateProcessor->saveAs('results/Sample_07_TemplateCloneRow.docx');
+		$filename = "Sample_07_TemplateCloneRow.docx";
+		header('Content-Disposition: attachment; filename='.$filename);
+		$templateProcessor->saveAs('php://output');
+  
+		/* header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename='.$filename);
+		// header('Content-Transfer-Encoding: binary');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($filename));
+		ob_clean();
+		flush();
+		readfile($filename);
+		unlink($filename);
+		exit; // deletes the temporary file	 */
 	}
 }
 ?>
