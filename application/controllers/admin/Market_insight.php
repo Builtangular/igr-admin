@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//ini_set('display_errors', '0');
+ini_set('display_errors', '0');
 class Market_insight extends CI_Controller 
 {    
 	public function __construct()
@@ -56,8 +56,10 @@ class Market_insight extends CI_Controller
 			$data['Role_id']=$session_data['Role_id'];
 			$data['success_code'] = $this->session->userdata('success_code');
             /* Market Insight Overview */
+           
             /* <!-- Report Definition --> */
             $Report_definition=$this->input->post('Report_definition');
+            // var_dump($_POST);die;
             $Definition=$this->input->post('definition');
             $num = 0;
             foreach($Report_definition as $definition)
@@ -104,9 +106,9 @@ class Market_insight extends CI_Controller
             $Executive_summary_DRO=$this->input->post('Executive_summary_DRO');
             $summary_DRO=$this->input->post('summary_DRO');
             $num2 = 0;
-            foreach($$Executive_summary_DRO as $$Executive_summary)
+            foreach($Executive_summary_DRO as $Executive_summary)
             {
-                if($$Executive_summary != "" || $$Executive_summary != null )
+                if($Executive_summary != "" || $Executive_summary != null )
                 {
                     $Insert_summary_DRO=array(
                         'report_id'=>$id,			
@@ -117,11 +119,11 @@ class Market_insight extends CI_Controller
                     );
 					// var_dump($Insert_summary_DRO);die;
                     $insert_summary_DRO=$this->Data_model->insert_market_insight($Insert_summary_DRO);
-					// var_dump($insert_summary_DRO);die;
+					// var_dump($insert_summary_DRO);
                 }
                 $num2++;
             }
-             /* <!-- Report Executive Summary DRO --> */
+             /* <!-- Report Executive Summary Regional Description --> */
              $Executive_summary_regional_description=$this->input->post('Executive_summary_regional_description');
              $summary_regional_description=$this->input->post('summary_regional_description');
              $num3 = 0;
@@ -130,7 +132,7 @@ class Market_insight extends CI_Controller
                  if($regional_description != "" || $regional_description != null )
                  {
                      $Insert_summary_regional_description=array(	
-                        'report_id'=>$id,		
+                         'report_id'=>$id,		
                          'type'=>$summary_regional_description,
                          'description'=>$Executive_summary_regional_description[$num3],
                          'status'=>1,                        
@@ -141,7 +143,28 @@ class Market_insight extends CI_Controller
                  }
                  $num3++;
              }
-			if($insert_report_description || $insert_report_description || $insert_summary_DRO || $insert_summary_regional_description){
+			/* <!-- Report Competitive Landscape --> */
+			$Competitive_landscape_data=$this->input->post('competitive_landscape');
+			$competitive_landscape_type=$this->input->post('competitive_landscape_type');
+			$num4 = 0;
+			foreach($Competitive_landscape_data as $Competitive_landscape)
+			{
+				if($Competitive_landscape != "" || $Competitive_landscape != null )
+                 {
+					$Insert_competitive_landscape_data=array(	
+                        'report_id'=>$id,		
+                        'type'=>$competitive_landscape_type,
+                        'description'=>$Competitive_landscape_data[$num4],
+                        'status'=>1,                        
+                        'updated_at'=>date('Y-m-d H:i:s')
+                     );
+					 //  var_dump($Insert_summary_regional_description);die;
+                     $insert_competitive_landscape_data=$this->Data_model->insert_market_insight($Insert_competitive_landscape_data);
+				 }
+				 $num4++;
+			}
+
+			if($insert_report_description || $insert_report_description || $insert_summary_DRO || $insert_summary_regional_description || $insert_competitive_landscape_data){
 				$this->session->set_flashdata("success_code","Market Insight has been inserted successfully..!!!");				
 				redirect('admin/market-insight/view/'.$id);
 			}else{

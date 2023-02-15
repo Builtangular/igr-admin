@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//ini_set('display_errors', '0');
+ini_set('display_errors', '0');
 class Country_rd extends CI_Controller {    
 	public function __construct(){		
 		parent::__construct();		
@@ -36,13 +36,17 @@ class Country_rd extends CI_Controller {
             $rd_title = $data['global_rds']->title;
             $rd_name = $data['global_rds']->name;
             $forecast_to = $data['global_rds']->forecast_to;
-            $data['countries'] = $this->Country_model->get_countries();            
+            $scope_id = $data['global_rds']->scope_id;
+            $data['countries'] = $this->Country_model->get_countries($scope_id); 
+			// var_dump($data['countries']); die;           
 			$country_title_count = $this->Country_model->get_brazil_report_count();
-			$sku_code = explode('Z', $country_title_count->sku);
+			$sku_code = explode('C', $country_title_count->sku);
+			// var_dump($sku_code[1]); die;
+			$skuno = 1;
             foreach($data['countries'] as $country_data)
 			{
                 $Country_name=$country_data->name;	
-				$Country_Report_title= $Country_name.' '.htmlspecialchars(strtolower($rd_title));
+				$Country_Report_title= $Country_name.' '.htmlspecialchars($rd_title);
                 if($Country_name == 'Africa'){
 					$sku = 'AF';
 					$pages = 60;
@@ -136,7 +140,8 @@ class Country_rd extends CI_Controller {
 					$single_user = 4795;
 					$enterprise = 7195;
 				}
-				$Report_code = $sku.'0'.($sku_code[1] + 1);
+				$sku = 'IGRC';
+				$Report_code = $sku.'0'.($sku_code[1] + $skuno);
 				$report_title_new=str_replace( array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $Country_Report_title);
 				$encoded_report_title= urldecode($report_title_new);	
 				$encoded_report_url = str_replace(' ','-', $encoded_report_title);
@@ -145,7 +150,7 @@ class Country_rd extends CI_Controller {
 				$final_country_rd_title = $Country_Report_title.": Prospects, Trends Analysis, Market Size and Forecasts up to ".$forecast_to;
 				$post_countrydata = array(
 					'report_id'=>$id,
-					'title'=>ucwords($final_country_rd_title),
+					'title'=>$final_country_rd_title,
 					'sku'=>$Report_code,
 					'singleuser_price'=>$single_user,
 					'enterprise_price'=>$enterprise,
@@ -159,6 +164,7 @@ class Country_rd extends CI_Controller {
 				if($insert_country_rd_details){
 					$update_record = $this->Country_model->update_country_status($id);
 				}
+				$skuno++;
             }
            redirect('admin/country_rd');
         		

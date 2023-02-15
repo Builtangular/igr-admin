@@ -11,6 +11,20 @@ class RdData_model extends CI_Model {
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
 		$this->db->where('status', $status);
+		$this->db->order_by("updated_at", "desc");
+		$sql = $this->db->get();
+		// echo $this->db->last_query();	die; 
+		if($sql->num_rows() > 0){			
+			return $sql->result();
+		}else{
+			return array();
+		}
+	}
+	public function get_global_rd_titles(){
+		$this->db->select("*");
+		$this->db->from("tbl_rd_data");
+		// $this->db->where('status', $status);
+		$this->db->order_by("id", "desc");
 		$sql = $this->db->get();
 		// echo $this->db->last_query();	die; 
 		if($sql->num_rows() > 0){			

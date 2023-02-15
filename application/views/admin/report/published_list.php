@@ -50,13 +50,15 @@
                                     <th>Segment</th>
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
+                                    <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?>
                                     <th>DRO</th>
                                     <th>Overview</th>
                                     <th>PR2</th>
-                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
+                                    <?php } ?>
+                                    <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
-                                    <?php  }?>
+                                    <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,12 +87,20 @@
                                 $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = ".$data->id;
                                 $query_pr2_reports = $this->db->query($pr2_reports);
                                 if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "Given"; } else {$pr2_reports_status = "NA";}
+                                /* get scope data */
+                                $ScopeList = $this->Data_model->get_scope_master();	
+                                foreach($ScopeList as $scope){
+                                    if($scope->id == $data->scope_id){
+                                        $scope_name = $scope->name;
+                                    }
+                                }
+                                /* ./ get scope data */
                                 ?>
                                 <tr>
                                     <!-- <td><?php echo $i++; ?></td> -->
                                     <td><?php echo $data->id; ?></td>
                                     <td><?php echo $data->title; ?></td>
-                                    <td><?php echo $data->scope_id; ?></td>
+                                    <td><?php echo $scope_name; ?></td>
                                     <td><?php echo $data->category_id; ?></td>
                                     <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
                                     <td><?php echo $rd_company->rd_companies;?></td>
@@ -99,7 +109,7 @@
                                     <td class="text-center"><b><?php echo $dro_status; ?></b></td>
                                     <td class="text-center"><b><?php echo $segment_status; ?></b></td>
                                     <td class="text-center"><b><?php echo $pr2_reports_status; ?></b></td>
-                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
+                                    <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <td class="text-center"><b><?php echo $rd_image; ?></b></a></td>
                                     <?php if($data->country_status == 1){ ?>
                                     <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><b>
@@ -110,11 +120,6 @@
                                                     class="fa fa-globe"></i> Create</b></a></td>
                                     <?php }?>
                                     <?php }?>
-                                    <form action="" method="post">
-                                        <input type="hidden" name="_token"
-                                            value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                    </form>
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -134,10 +139,10 @@
                                     <th>DRO</th>
                                     <th>Overview</th>
                                     <th>PR2</th>
-                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
+                                    <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
-                                    <?php  }?>
+                                    <?php } ?>
                                 </tr>
                             </tfoot>
                         </table>

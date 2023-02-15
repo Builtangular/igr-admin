@@ -46,6 +46,7 @@
                                         <option value="Report Description">Report Description</option>                                        
                                         <option value="Summary DRO">Summary DRO</option>                                        
                                         <option value="Summary Regional Description">Summary Regional Description</option>                                        
+                                        <option value="Competitive Landscape">Competitive Landscape</option>                                        
                                         <option value="Other">Other</option>                                        
                                     </select>
                                     <input type="hidden" name="report_id" value="<?php echo $report_id; ?>" class="form-control">

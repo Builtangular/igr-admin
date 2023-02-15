@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Report List
+        <?php echo $title; ?> Report List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -41,8 +41,8 @@
                             <thead>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-                                    <th>Title</th>
                                     <th>Scope</th>
+                                    <th>Title</th>
                                     <th>Cat</th>
                                     <th>Forecast</th>
                                     <!-- <th>Vol</th> -->
@@ -51,15 +51,15 @@
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
+                                    <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?> 
                                     <th>Overview</th>
                                     <th>PR2</th>
-                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
+                                    <?php } ?>
+                                    <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
                                     <?php } ?>
-                                    <!-- <th>Action</th>                            -->
-                                    
-                                    <th style="width: 75px;">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,11 +89,19 @@
                                 $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = ".$data->id;
 								$query_pr2_reports = $this->db->query($pr2_reports);
                                 if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$pr2_reports_status = "<i class=\"fa fa-plus\"></i><br>Add";}
-								  ?>
+								/* get scope data */
+                                $ScopeList = $this->Data_model->get_scope_master();	
+                                foreach($ScopeList as $scope){
+                                    if($scope->id == $data->scope_id){
+                                        $scope_name = $scope->name;
+                                    }
+                                }
+                               /* ./ get scope data */
+                                ?>
                                 <tr style="font-size: 14px;">
-                                    <td class="text-center"><?php echo $data->id; ?></td>
+                                    <td class="text-center"><?php echo $data->id; ?></td>                                    
+                                    <td class="text-center"><?php echo $scope_name; ?></td>
                                     <td><?php echo $data->title; ?></td>
-                                    <td class="text-center"><?php echo $data->scope_id; ?></td>
                                     <td class="text-center"><?php echo $data->category_id; ?></td>
                                     <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
                                     <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
@@ -115,16 +123,17 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/market-insight/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a>
                                     </td>
-                                    <?php }?>
+                                    <?php }?>                                   
                                     <?php if($query_dro_reports->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/dro-reports/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
                                     </td>
-                                    <?php }else {?>
+                                    <?php } else {?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
                                     </td>
                                     <?php }?>
+                                    <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?>
                                     <?php if($query_segment_overview->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
@@ -142,9 +151,9 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
                                     </td>
-
                                     <?php } ?>
-                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
+                                    <?php } ?>
+                                    <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a>
                                     </td>
@@ -157,8 +166,14 @@
                                                     class="fa fa-globe"></i> <br />Create</b></a></td>
                                     <?php }?>
                                     <?php }?>
-                                    <td><a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>"
-                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |
+                                    <td>
+                                        <?php if($data->status == 3){ ?>
+                                            <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>"
+                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
+                                        <?php }else { ?>                                            
+                                            <a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>"
+                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> 
+                                            <?php } ?>|
                                         <a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
                                     </td>
@@ -168,8 +183,8 @@
                             <tfoot>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-                                    <th>Title</th>
                                     <th>Scope</th>
+                                    <th>Title</th>
                                     <th>Cat</th>
                                     <th>Forecast</th>
                                     <!-- <th>Analysis</th> -->
@@ -179,14 +194,15 @@
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
+                                    <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?>                                    
                                     <th>Overview</th>
                                     <th>PR2</th>
-                                    <?php if($Role_id == 1 || $Role_id == 2 || $Role_id == 4 || $Role_id == 5){ ?>
+                                    <?php } ?>
+                                    <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
                                     <?php } ?>
-                                    <!-- <th>Action</th> -->
-                                    <th style="width: 75px;">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>

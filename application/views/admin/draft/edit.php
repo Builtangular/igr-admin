@@ -27,7 +27,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Update Report</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/report/rd-update" method="post"
+                    <form action="<?php echo base_url(); ?>admin/report/rd-update" method="post" autocomplete="off"
                         class="form-horizontal">
                         <div class="box-body">
                             <div class="col-md-6">
@@ -116,7 +116,7 @@
                                             <label><input type="radio" name="status" value="0"
                                                     <?php echo ($status==0)?'checked':'' ?> />Draft</label>
                                             <label><input type="radio" name="status" value="3"
-                                                    <?php echo ($status==1)?'checked':'' ?> />Publish</label>
+                                                    <?php echo ($status==3)?'checked':'' ?> />Publish</label>
                                         </div>
                                     </div>
                                 </div>

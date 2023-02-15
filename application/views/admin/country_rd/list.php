@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/report-header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 
@@ -43,14 +43,11 @@
                                     <th>Country</th>
                                     <th>Status</th>
                                     <th>Date</th>
-                                    <th style="width: 89px;">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($Country_Rds as $data){
-                                        
-                                        ?>
-
+                                <?php foreach($Country_Rds as $data){ ?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->id; ?></td>
                                     <td><?php echo $data->title; ?></td>
@@ -75,7 +72,7 @@
                                     <th>Status</th>
                                     <!-- <th>Vol</th> -->
                                     <th>Date</th>
-                                    <th style="width: 89px;">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -130,5 +127,4 @@ $(function() {
 })
 </script>
 </body>
-
 </html>

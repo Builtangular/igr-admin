@@ -27,14 +27,14 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Update Report</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/report/update" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/report/update" method="post" class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Scope</label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="scope">
-                                            <!-- <option value="0">Select</option> -->
+                                            <option value="">Select</option>
                                             <?php foreach($scopes_data as $scopes){
                                             if ($scopes->id == $scope_id){ ?>
                                             <option value="<?php echo $scopes->id; ?>" Selected>
@@ -101,6 +101,13 @@
                                     <div class="col-md-9">
                                         <input type="text" name="sku" value="<?php echo $sku; ?>"
                                             class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Start Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="start_year_revenue" value="<?php echo $start_year_revenue; ?>" class="form-control"
+                                            placeholder="Revenue">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -195,12 +202,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-3">End Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="end_year_revenue" value="<?php echo $end_year_revenue; ?>" class="form-control"
+                                            placeholder="Revenue">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-3">Volume Based Report?</label>
                                     <div class="col-md-9">
                                         <div class="radio">
                                             <label><input type="radio" name="volume" value="1"
                                                     onclick="return HideVunit(1)" <?php echo ($is_volume_based==1)?'checked':'' ?> />Yes</label>
-
                                             <label><input type="radio" name="volume" value="0"
                                                     onclick="return HideVunit(0)" <?php echo ($is_volume_based==0)?'checked':'' ?> />No</label>
                                         </div>
@@ -223,7 +236,7 @@
                                             placeholder="Volume Unit" />
                                     </div>
                                 </div>
-								<?php } else {?>
+								<?php } else { ?>
                                 <div class="form-group" id="div1" style="display: none;">
                                     <label class="control-label col-md-3">Volume CAGR</label>
                                     <div class="col-md-9">
@@ -304,8 +317,7 @@
                                 <div class="col-md-10">
                                     <input type="text" name="Publish_date" value="<?php echo $updated_at; ?>" class="form-control">
                                 </div>
-                            </div>
-                            
+                            </div>                            
                         </div>
                         
                         <div class="box-footer">

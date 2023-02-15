@@ -192,29 +192,11 @@
                                 class="text-bold">Drafts</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 5){ ?>
-                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
+
+                    <li><a href="<?php echo base_url(); ?>sales/custom_link"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Custom Link</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-file-word-o"></i><span
-                                class="text-bold">Sample Queries</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-file-word-o"></i><span
-                                class="text-bold">TOC Queries</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/customization-query"><i
-                                class="fa fa-file-word-o"></i><span class="text-bold">Customization Queries</span></a>
-                    </li>
-                    <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-file-word-o"></i><span
-                                class="text-bold">Enquiry Queries</span></a></li>
-                    <?php } ?>
-                    <?php if($Role_id == 1 || $Role_id == 6){?>
-                    <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-tasks"></i><span
-                                class="text-bold">Job Post</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
-                                class="text-bold">Employee Data</span></a></li>
-                    <?php } ?>
-                    <?php if($Role_id == 7){?>
-                    <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-file-excel-o"></i><span
-                                class="text-bold">Spam Mail</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
-                                class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
+
+                    <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                     <?php } ?>
                 </ul>
             </section>
