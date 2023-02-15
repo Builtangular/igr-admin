@@ -44,9 +44,9 @@
                                     <select class="form-control" name="parent">
                                         <option value="0">Select</option>
                                         <?php foreach($segments as $data){
-                                            if ($data->id == $parent_id){ ?>
+                                            if($data->id == $parent_id){ ?>
                                             <option value="<?php echo $data->id; ?>" Selected><?php echo $data->name; ?></option>
-                                        <?php }else{ ?>
+                                        <?php } else { ?>
                                             <option value="<?php echo $data->id; ?>"><?php echo $data->name; ?></option>
                                         <?php }} ?>
                                     </select>

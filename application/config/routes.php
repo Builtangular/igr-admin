@@ -131,4 +131,5 @@ $route['invoice/index'] ='admin/invoice/index';
 $route['admin/generate-invoice'] ='admin/invoice/add_invoice';
 
 /* employee urls */
-$route['admin/employee-details'] ='admin/Employee_Details/index';
+$route['admin/employee/employee_document/(:num)'] ='admin/Employee/employee_document/$1';
+$route['admin/employee/upload_employee_documents/(:num)'] ='admin/employee/upload_employee_documents/$1';

@@ -135,8 +135,6 @@
                         <a href="#"><i class="fa fa-table"></i><span class="text-bold">Master Setup</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <!-- <li><a href="http://localhost/testapp/public/superadmin/codetype"><span>Code Type</span></a></li>
-							<li><a href="http://localhost/testapp/public/superadmin/codedecode"><span>Code Decode</span></a></li> -->
                             <li><a href="<?php echo base_url(); ?>admin/scope"><span>Scope Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/category"><span>Category Master</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/country"><span>Country Master</span></a></li>
@@ -146,10 +144,12 @@
                             <li><a href="<?php echo base_url(); ?>admin/codedecode_description"><span>Codedecode
                                         Description</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/dro_type"><span>DRO Type</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/image_text_write"><span>Upload Text Write
+                                        Image</span></a></li>
                         </ul>
                     </li>
                     <?php } if($Role_id == 1 || $Role_id == 2){ ?>
-                    <li class="treeview">
+                    <!--  <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -157,8 +157,12 @@
                             <li><a href="<?php echo base_url(); ?>admin/country-rd"><span>Country Reports</span></a>
                             </li>
                         </ul>
-                    </li>
-                    <li><a href="<?php echo base_url(); ?>admin/report/verified"><i class="fa fa-file-word-o"></i><span
+                    </li> -->
+                    <li><a href="<?php echo base_url(); ?>admin/report"><i class="fa fa-file-pdf-o"></i><span
+                                class="text-bold">Published Reports</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/country-rd"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Country Reports</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/verified_rd"><i class="fa fa-file"></i><span
                                 class="text-bold">Verified RDs</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
@@ -167,37 +171,51 @@
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
                     <?php } ?>
-
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i
-                                class="fa fa-files-o"></i><span class="text-bold">Processed Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i class="fa fa-files-o"></i><span
+                                class="text-bold">Processed Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
                                 class="text-bold">Add New RD</span></a></li>
-                    <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
+                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-download"></i><span
+                                class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
-
                     <?php if($Role_id == 4){ ?>
                     <li><a href="<?php echo base_url(); ?>manager/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>manager/report/processed"><i
-                                class="fa fa-files-o"></i><span class="text-bold">Processed Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>manager/report/processed"><i class="fa fa-files-o"></i><span
+                                class="text-bold">Processed Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
-                    <!-- <li><a href="#"><span>Generate Report</span></a></li> -->
                     <?php } ?>
                     <?php if($Role_id == 5){ ?>
-                    <li><a href="<?php echo base_url(); ?>sales/custom_link"><i class="fa fa-file-word-o"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Custom Link</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Sample Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">TOC Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>sales/customization-query"><i
+                                class="fa fa-file-word-o"></i><span class="text-bold">Customization Queries</span></a>
+                    </li>
+                    <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-file-word-o"></i><span
+                                class="text-bold">Enquiry Queries</span></a></li>
                     <?php } ?>
-                </ul>
-                </li>
-                <!-- <li><a href="http://localhost/testapp/public/superadmin/enroll"><span>Enrollment</span></a></li>
-                    <li><a href="#"><span>Generate Report</span></a></li> -->
-
+                    <?php if($Role_id == 1 || $Role_id == 6){?>
+                    <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-tasks"></i><span
+                                class="text-bold">Job Post</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
+                                class="text-bold">Employee Data</span></a></li>
+                    <?php } ?>
+                    <?php if($Role_id == 7){?>
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-file-excel-o"></i><span
+                                class="text-bold">Spam Mail</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
+                    <?php } ?>
                 </ul>
             </section>
             <!-- /.sidebar -->
