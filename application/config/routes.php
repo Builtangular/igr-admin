@@ -77,20 +77,17 @@ $route['admin/dro-reports/(:num)'] ='admin/dro_reports/index/$1';
 $route['admin/dro-reports/add/(:num)'] ='admin/dro_reports/add/$1';
 $route['admin/dro-reports/edit/(:num)'] ='admin/dro_reports/edit/$1';
 $route['admin/dro-reports/delete/(:num)'] ='admin/dro_reports/delete/$1';
-$route['admin/dro-reports/insert_dro_records/(:num)'] ='admin/dro_reports/insert_dro_records/$1';
 
 $route['admin/pr2-reports/(:num)'] ='admin/PR2_Reports/index/$1';
 $route['admin/pr2-reports/add/(:num)'] ='admin/PR2_Reports/add/$1';
 $route['admin/pr2_reports/edit/(:num)'] ='admin/PR2_Reports/edit/$1';
 $route['admin/pr2_reports/delete/(:num)'] ='admin/PR2_Reports/delete/$1';
 
+$route['admin/dro-reports/insert_dro_records/(:num)'] ='admin/dro_reports/insert_dro_records/$1';
 $route['admin/segment-overview/(:num)'] ='admin/segment_overview/index/$1';
 $route['admin/segment-overview/add/(:num)'] ='admin/segment_overview/add/$1';
 $route['admin/image/image_upload'] ='admin/image/image_upload';
 $route['admin/category'] ='admin/category/index';
-
-$route['admin/image-text-write'] ='admin/image_text_write/index';
-$route['admin/image-text-write/(:num)'] ='admin/image_text_write/image_write/$1';
 
 $route['admin/spreadsheet'] = 'admin/PhpspreadsheetController';
 $route['admin/spreadsheet/filter'] = 'admin/PhpspreadsheetController/filter';
@@ -112,19 +109,19 @@ $route['manager/report/drafts'] ='admin/Manager_Report/drafts';
 $route['analyst/generate-rd'] ='admin/generate_rd/index';
 
 /* custom link urls */
-$route['sales/custom-link'] ='admin/custom_link';
-$route['sales/custom-link/add'] ='admin/custom_link/add';
+$route['sales/custom-link'] ='admin/Custom_link';
+$route['sales/custom-link/add'] ='admin/Custom_link/add';
 
 /* Queries urls */
 $route['sales/sample-query'] ='admin/queries';
 $route['sales/toc-query'] ='admin/queries/toc_list';
 $route['sales/customization-query'] ='admin/queries/customization_list';
 $route['sales/enquiry-query'] ='admin/queries/enquiry_list';
-
-$route['admin/spam-mail'] ='admin/spam_mail';
-$route['admin/spam_mail/insert'] ='admin/spam_mail/insert';
-$route['admin/spam-mail/import_file'] ='admin/spam_mail/import_file';
-$route['admin/spam_mail/export_data'] ='admin/spam_mail/export_data';
+$route['admin/spam-mail'] ='admin/Spam_Mail';
+$route['admin/spam-mail/list'] ='admin/Spam_Mail/list';
+$route['admin/Spam_Mail/insert'] ='admin/Spam_Mail/insert';
+$route['admin/spam-mail/import_file'] ='admin/Spam_Mail/import_file';
+$route['admin/spam_mail/export_data'] ='admin/Spam_Mail/export_data';
 
 /* invoice urls */
 $route['invoice/index'] ='admin/invoice/index';
@@ -133,6 +130,3 @@ $route['admin/generate-invoice'] ='admin/invoice/add_invoice';
 /* employee urls */
 $route['admin/employee/employee_document/(:num)'] ='admin/Employee/employee_document/$1';
 $route['admin/employee/upload_employee_documents/(:num)'] ='admin/employee/upload_employee_documents/$1';
-$route['sales/enquiry-query'] ='admin/queries/enquiry_list';
-/* Generate Offer Letter and Releving Letter by Admin */
-$route['admin/employee/offer_letter/'] ='admin/Employee/offer_letter/';

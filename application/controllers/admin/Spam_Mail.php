@@ -59,6 +59,20 @@ class Spam_Mail extends CI_Controller {
             $this->load->view('admin/login');
         }
 	}
+    public function delete($id){
+        // var_dump($id);die;
+        if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['delete'] = $this->Spam_Model->spam_mail_delete($id);
+			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
+			redirect('admin/spam_mail/list');
+		}else{
+			$this->load->view("admin/login");			
+		}
+    }
     public function import_file()
     {
         if($this->session->userdata('logged_in'))

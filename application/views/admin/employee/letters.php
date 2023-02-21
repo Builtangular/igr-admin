@@ -46,7 +46,7 @@
                                     <th>Name</th>
                                     <th>Joining Date</th>
                                     <th>Designation</th>
-                                    <th>Appraisal Date</th>
+                                    <th>Resignation Date</th>
                                     <!-- <th>Vol</th> -->
                                     <!--  <th>Employment</th>
                                     <th>Salary Breakup</th>
@@ -95,7 +95,7 @@
                                 <tr style="font-size: 14px;">
                                     <td class="">
                                         <a href="<?php echo base_url(); ?>admin/employee/offer_letter/?emp_id=<?php echo $data->id;?>"
-                                            title="Download Offer Letter with Letter Head"><b><i class="fa fa-download"></i> &nbsp;Offer Letter (Letter Head)</b>
+                                            title="Download Offer Letter with Letter Head"><b><i class="fa fa-download"></i> &nbsp;Offer Letter</b>
                                         </a> <br />
                                         <a href="<?php echo base_url()?>admin/employee/printable_offer_letter/?emp_id=<?php echo $data->id;?>"
                                             title="Download Printable Offer Letter"><b><i class="fa fa-download"></i> &nbsp;Offer Letter (Printable)</b>
@@ -106,55 +106,13 @@
                                     <td><?php echo $full_name; ?></td>
                                     <td class="text-center"><?php echo date("d-m-Y", strtotime($data->joining_date)); ?>
                                     </td>
-                                    <td class="text-center"><?php echo $data->job_profile; ?></td>
-                                    <td class="text-center"><?php echo $data->appraisal_date; ?></td>
-                                    <?php /* if($query_employment_details->num_rows() > 0){ ?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/employment_list/<?php echo $data->id; ?>"><b><?php echo $employment_status; ?></b></a>
-                                    </td>
-                                    <?php }else {?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/add_employment/<?php echo $data->id; ?>"><b><?php echo $employment_status; ?></b></a>
-                                    </td>
-                                    <?php }?>
-                                    <?php if($query_psalary_details->num_rows() > 0 || $query_tsalary_details->num_rows() > 0){ ?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/salary_list/<?php echo $data->id; ?>"><b><?php echo $salary_status; ?></b></a>
-                                    </td>
-                                    <?php }else {?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/add_salary/<?php echo $data->id; ?>"><b><?php echo $salary_status; ?></b></a>
-                                    </td>
-                                    <?php } ?>
-                                    <?php if($query_bank_details->num_rows() > 0){ ?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/bank_list/<?php echo $data->id; ?>"><b><?php echo $bank_status; ?></b></a>
-                                    </td>
-                                    <?php }else {?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/add_bank/<?php echo $data->id; ?>"><b><?php echo $bank_status; ?></b></a>
-                                    </td>
-                                    <?php }?>
-                                    <?php if($query_documents_details->num_rows() > 0){ ?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/document_list/<?php echo $data->id; ?>"><b><?php echo $document_status; ?></b></a>
-                                    </td>
-                                    <?php }else {?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/employee/add_document/<?php echo $data->id; ?>"><b><?php echo $document_status; ?></b></a>
-                                    </td>
-                                    <?php } ?>
-                                    <td><a href="<?php echo base_url(); ?>admin/employee/edit/<?php echo $data->id; ?>"
-                                            class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> |
-                                        <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
-                                        <a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $data->id; ?>"
-                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-                                    </td> */ ?>
+                                    <td class=""><?php echo $data->job_profile; ?></td>
+                                    <td class="text-center"><?php echo $data->resignation_date; ?></td>
                                     <td class="">                                      
-                                        <a href="<?php echo base_url()?>admin/generate_rd/toc/?report_id=<?php echo $data->id;?>"
-                                            title="Get TOC"><b><i class="fa fa-download"></i> &nbsp;Experience/Relieving (Letter Head)</b>
+                                        <a href="<?php echo base_url()?>admin/employee/releaving_letter/?emp_id=<?php echo $data->id;?>"
+                                            title="Get TOC"><b><i class="fa fa-download"></i> &nbsp;Experience/Relieving</b>
                                         </a> <br />
-                                        <a href="<?php echo base_url()?>admin/generate_rd/sample_pages/?report_id=<?php echo $data->id;?>"
+                                        <a href="<?php echo base_url()?>admin/employee/printable_releaving_letter/?emp_id=<?php echo $data->id;?>"
                                             title="Get Sample Pages"><b><i class="fa fa-download"></i> &nbsp;Experience/Relieving (Printable)</b>
                                         </a> 
                                     </td>
@@ -170,7 +128,7 @@
                                     <th>Name</th>
                                     <th>Joining Date</th>
                                     <th>Designation</th>
-                                    <th>Appraisal Date</th>
+                                    <th>Resignation Date</th>
                                     <!-- <th>Vol</th> -->
                                     <!-- <th>Employment</th>
                                     <th>Salary Breakup</th>

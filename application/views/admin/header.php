@@ -172,7 +172,7 @@
 
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
-                                class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
+                                class="fa fa-file-pdf-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i class="fa fa-files-o"></i><span
                                 class="text-bold">Processed Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
@@ -191,17 +191,16 @@
                     <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 5){ ?>
-                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
+                    <?php if($Role_id == 0 || $Role_id == 5){ ?>
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
                                 class="text-bold">Custom Link</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-file-word-o"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-list"></i><span
                                 class="text-bold">Sample Queries</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-file-word-o"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-list-alt"></i><span
                                 class="text-bold">TOC Queries</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/customization-query"><i
-                                class="fa fa-file-word-o"></i><span class="text-bold">Customization Queries</span></a>
-                    </li>
-                    <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-file-word-o"></i><span
+                                class="fa fa-list-ol"></i><span class="text-bold">Customization Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-list-ul"></i><span
                                 class="text-bold">Enquiry Queries</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 0 || $Role_id == 1 || $Role_id == 6){?>
@@ -210,13 +209,16 @@
                     <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
                                 class="text-bold">Employee Data</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 1){?>
+
+                    <?php if($Role_id == 0 || $Role_id == 1){?>
                     <li><a href="<?php echo base_url(); ?>admin/employee/letters"><i class="fa fa-clipboard"></i><span
                                 class="text-bold">Employment Letters</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/spam_mail/list"><i class="fa fa-envelope"></i><span
+                    <li><a href="<?php echo base_url(); ?>admin/register-user"><i class="fa fa-user-plus"></i><span
+                                class="text-bold">Register User</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/list"><i class="fa fa-envelope"></i><span
                                 class="text-bold">Mail List</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 7 || $Role_id == 1){?>
+                    <?php if($Role_id == 0 || $Role_id == 7 || $Role_id == 1){?>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-envelope-o"></i><span
                                 class="text-bold">Spam Mail</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
