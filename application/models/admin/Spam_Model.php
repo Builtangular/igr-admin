@@ -18,18 +18,6 @@ class Spam_Model extends CI_Model {
         $this->db->insert('tbl_spam_mail', $data);
         return 1;
     }
-    // public function insert_mail_data($file){
-    //     if($file == "")
-	// 	{
-	// 		$file = $this->input->post("email_address");
-	// 	}
-    //     $data= array (
-    //         'email_address' 		         => $file,
-    //     );
-    //     $result = $this->db->insert('tbl_temp_excel_mail',$data);
-    //     return  $result;
-
-    // } 
     public function insert_mail_data($data){
         
         /* $data= array (

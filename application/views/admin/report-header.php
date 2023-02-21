@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Infinium Admin</title>
@@ -9,7 +10,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
         type="text/css" />
     <!-- Ionicons -->
-    <link href="https://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="<?php echo base_url(); ?>assets/admin//css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/admin/css/skin-blue.min.css" rel="stylesheet" type="text/css" />
@@ -79,6 +80,7 @@
         <!-- Header -->
         <!-- Main Header -->
         <header class="main-header">
+
             <!-- Logo -->
             <a href="#" class="logo">
                 <span class="logo-mini"><b>IGR</b></span>
@@ -128,7 +130,7 @@
                     <li class="header"><a href="<?php echo base_url(); ?>admin/dashboard"><span>Dashboard</span></a>
                     </li>
                     <!-- Optionally, you can add icons to the links -->
-                    <?php if($Role_id == 1){ ?>
+                    <?php if($Role_id == 0){ ?>
                     <li class="treeview">
                         <a href="#"><i class="fa fa-table"></i><span class="text-bold">Master Setup</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
@@ -146,7 +148,7 @@
                                         Image</span></a></li>
                         </ul>
                     </li>
-                    <?php } if($Role_id == 1 || $Role_id == 2){ ?>
+                    <?php } if($Role_id == 0 || $Role_id == 2){ ?>
                     <!--  <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
@@ -202,14 +204,18 @@
                     <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Enquiry Queries</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 1 || $Role_id == 6){?>
+                    <?php if($Role_id == 0 || $Role_id == 1 || $Role_id == 6){?>
                     <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-tasks"></i><span
                                 class="text-bold">Job Post</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
                                 class="text-bold">Employee Data</span></a></li>
                     <?php } ?>
+                    <?php if($Role_id == 1){?>
+                        <li><a href="<?php echo base_url(); ?>admin/employee/letters"><i class="fa fa-clipboard"></i><span
+                                class="text-bold">Employment Letters</span></a></li>
+                    <?php } ?>
                     <?php if($Role_id == 7){?>
-                    <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-file-excel-o"></i><span
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-envelope"></i><span
                                 class="text-bold">Spam Mail</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>

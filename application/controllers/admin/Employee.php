@@ -12,8 +12,7 @@ class Employee extends CI_Controller {
 		$this->load->library('pagination');
 		$this->load->library('upload');
 		$this->load->library('Send_mail'); 
-		$this->load->helper(array('form', 'url'));
-		
+		$this->load->helper(array('form', 'url'));		
 	}
 	/* Employee Personal Details Management */
 	public function index(){
@@ -724,6 +723,127 @@ class Employee extends CI_Controller {
 		}
 	}
 	/* / .documents */
+
+	/* Employment Letters */
+	public function letters(){
+        if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['massage'] = $this->session->userdata('msg');
+			$data['employee_details'] = $this->Employee_Model->get_permenent_employee_details();
+			// var_dump($data['employee_details']); die;
+			$this->load->view("admin/employee/letters", $data);
+        }else{
+            $this->load->view("admin/login");
+        }
+		
+    }
+	public function offer_letter(){
+		// var_dump($_REQUEST); die;
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			$employee_data = $this->Employee_Model->get_single_employee_data($_GET["emp_id"]);
+			// var_dump($employee_data); die;
+            /* RD base data extract */
+            $emp_id = $employee_data->id;
+            $job_type = $employee_data->job_type;
+            $emp_code = $employee_data->emp_code;   // title case rd-title
+            $joining_date = $employee_data->joining_date;   // small case rd-title
+            $appraisal_date = $employee_data->appraisal_date;
+            $prefix = $employee_data->prefix;
+			$first_name = $employee_data->first_name;
+            $middle_name = $employee_data->middle_name;
+            $last_name = $employee_data->last_name;
+            $date_of_birth = $employee_data->date_of_birth;
+            $gender = $employee_data->gender;
+            $mobile_number = $employee_data->mobile_number;
+            $personal_email_id = $employee_data->personal_email_id;
+           	$job_profile = $employee_data->job_profile;
+           	$department = $employee_data->department;
+
+			$todays_date = date('d F, Y');
+			$joiningdate = date('d F, Y', strtotime($joining_date));
+			// Template processor instance creation
+			if($department == "Marketing"){
+				$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/marketing_offer_letter.docx');
+			} else if($department == "IT"){
+				$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/developer_offer_letter.docx');
+			} else if($department == "Research"){
+				$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/research_offer_letter.docx');
+			} else if($department == "Back Office"){
+				$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/back_office_offer_letter.docx');
+			} else if($department == "Sales"){
+				$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/sales_offer_letter.docx');
+			} else if($department == "Graphics"){
+				$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/graphics_offer_letter.docx');
+			}
+
+			// Variables on different parts of document
+			$templateProcessor->setValue('TodayDate', htmlspecialchars($todays_date));            // On section/content
+			$templateProcessor->setValue('FirstName', htmlspecialchars($first_name));            // On section/content
+			$templateProcessor->setValue('Designation', htmlspecialchars($job_profile));            // On section/content
+			$templateProcessor->setValue('JoningDate', htmlspecialchars($joiningdate));  
+			/* Salary */
+			if($job_type == "Full Time"){
+				$p_salary_details = $this->Employee_Model->get_single_psalary_data($emp_id);
+				$gross_salary = $p_salary_details->gross_salary;
+				$basic_pay = $p_salary_details->gross_basic_salary;
+				$basic_hra = $p_salary_details->gross_hra;
+				$basic_other = $p_salary_details->gross_other;
+				$emp_prof_tax = $p_salary_details->emp_pt;
+				$emp_provident_fund = $p_salary_details->emp_pf;
+				$emp_esic = $p_salary_details->emp_esic;
+				$net_salary = $p_salary_details->net_salary;
+				$employer_pf = $p_salary_details->employer_pf;
+				$employer_esic = $p_salary_details->employer_esic;
+				$employer_other = $p_salary_details->employer_other;
+				$ctc = $p_salary_details->ctc;
+			}
+
+			$templateProcessor->setValue('GrossSalary', htmlspecialchars(number_format($gross_salary)));
+			$templateProcessor->setValue('AnnualGross', htmlspecialchars(number_format($gross_salary*12)));
+			$templateProcessor->setValue('BasicPay', htmlspecialchars(number_format($basic_pay)));
+			$templateProcessor->setValue('AnnualBasicPay', htmlspecialchars(number_format($basic_pay*12)));
+			$templateProcessor->setValue('BasicHRA', htmlspecialchars(number_format($basic_hra)));
+			$templateProcessor->setValue('AnnualHRA', htmlspecialchars(number_format($basic_hra*12)));
+			$templateProcessor->setValue('BasicOther', htmlspecialchars(number_format($basic_other)));
+			$templateProcessor->setValue('AnnualOther', htmlspecialchars(number_format($basic_other*12)));
+			$templateProcessor->setValue('EmpProfTax', htmlspecialchars(number_format($emp_prof_tax)));
+			$templateProcessor->setValue('EmpAnnualProfTax', htmlspecialchars(number_format($emp_prof_tax*12)));
+			$templateProcessor->setValue('ProvidentFund', htmlspecialchars(number_format($emp_provident_fund)));
+			$templateProcessor->setValue('AnnualPFund', htmlspecialchars(number_format($emp_provident_fund*12)));
+			$templateProcessor->setValue('EmpESIC', htmlspecialchars(number_format($emp_esic)));
+			$templateProcessor->setValue('AnnualEmpESIC', htmlspecialchars(number_format($emp_esic*12)));
+			$templateProcessor->setValue('NetSalary', htmlspecialchars(number_format($net_salary)));
+			$templateProcessor->setValue('AnnualNetSalary', htmlspecialchars(number_format($net_salary*12)));
+			$templateProcessor->setValue('EmplyPF', htmlspecialchars(number_format($employer_pf)));
+			$templateProcessor->setValue('AnnualEmplyPF', htmlspecialchars(number_format($employer_pf*12)));
+			$templateProcessor->setValue('EmplyESIC', htmlspecialchars(number_format($employer_esic)));
+			$templateProcessor->setValue('AnnualEmplyESIC', htmlspecialchars(number_format($employer_esic*12)));
+			$templateProcessor->setValue('EmplyOther', htmlspecialchars(number_format($employer_other)));
+			$templateProcessor->setValue('AnnualEmplyOther', htmlspecialchars(number_format($employer_other*12)));
+			$templateProcessor->setValue('MonthCTC', htmlspecialchars(number_format($ctc)));
+			$templateProcessor->setValue('AnnualCTC', htmlspecialchars(number_format($ctc*12)));
+
+			$templateProcessor->setImageValue('EmpFirstLastName', htmlspecialchars($first_name));
+
+			// $templateProcessor->saveAs('results/Sample_07_TemplateCloneRow.docx');
+			$new_file_name = str_replace(" ","-", strtolower($first_name));
+			$new_file_name1 = str_replace("/","-", $new_file_name);
+			$new_file_name2 = str_replace("&amp;","and", $new_file_name1);
+			$filename = htmlspecialchars($new_file_name2)."-offer-letter.docx";
+			header('Content-Disposition: attachment; filename='.$filename);
+			ob_clean();
+			$templateProcessor->saveAs('php://output');			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	/* /. Employment Letters */
 		
 }
 

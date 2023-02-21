@@ -24,9 +24,7 @@ class Spam_Mail extends CI_Controller {
             $data['spam_mail_count'] = $this->Spam_Model->spam_mail_count();
             $data['unsubscribe_mail_count'] = $this->Spam_Model->unsubscribe_mail_count();
             $this->load->view('admin/spam_mail/add',$data);	
-        }
-        else
-        {			
+        } else {			
             $this->load->view('admin/login');
         }
 	}
@@ -44,11 +42,23 @@ class Spam_Mail extends CI_Controller {
                $this->session->set_flashdata('msg', 'Email Id has been inserted successfully....!!!');
            }
            redirect('admin/spam-mail');
-        }else
-        {
+        }else{
             $this->load->view("admin/login");
         }
     }
+    public function list(){	
+        if($this->session->userdata('logged_in'))
+		{
+            $session_data = $this->session->userdata('logged_in');
+            $data['Login_user_name']=$session_data['Login_user_name'];	
+            $data['Role_id']=$session_data['Role_id'];
+            $data['mail_data'] = $this->Spam_Model->get_spam_mail_data();
+            // var_dump($data['mail_data']); die;
+            $this->load->view('admin/spam_mail/list',$data);	
+        } else {			
+            $this->load->view('admin/login');
+        }
+	}
     public function import_file()
     {
         if($this->session->userdata('logged_in'))
@@ -57,9 +67,7 @@ class Spam_Mail extends CI_Controller {
             $data['Login_user_name']=$session_data['Login_user_name'];	
             $data['Role_id']=$session_data['Role_id'];
             $this->load->view('admin/spam_mail/xl_upload',$data);
-        }
-        else
-        {			
+        }else{			
             $this->load->view('admin/login');
         }
     }
@@ -183,12 +191,9 @@ class Spam_Mail extends CI_Controller {
             $newsheet->SetCellValue('F' . $rowCount, $list->company);
             $newsheet->SetCellValue('G' . $rowCount, $list->exra);
             $rowCount++;  
-        }
-            
+        }            
         
         $writer = new Xlsx($spreadsheet);
-        // $fileName = 'RD Data.xlsx';
-        // $fileName = 'RD Data-'.date('d-m-Y').'.xlsx';     
         $fileName = time().".xlsx";
         header('Content-Description: File Transfer');
         header('Content-Type: application/vnd.ms-excel');
@@ -198,9 +203,6 @@ class Spam_Mail extends CI_Controller {
         header('Pragma: public');
         // header('Content-Length: ' . filesize($fileName));
         ob_clean();
-        // header('Content-Type: application/vnd.ms-excel');
-        // header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"');
-        // header('Cache-Control: max-age=0');
         $writer->save('php://output'); // download file
         /* delete temp excel tabel after export */
         $result_delete = $this->Spam_Model->truncate_temp_tbl();

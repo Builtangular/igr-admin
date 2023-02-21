@@ -124,6 +124,14 @@ class Employee_Model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    public function get_permenent_employee_details()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_emp_enrollement');
+        $this->db->where('job_type', 'Full Time');
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function get_employment_record($id)
     {
         $this->db->select('*');

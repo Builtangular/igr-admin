@@ -1,20 +1,18 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//ini_set('display_errors', '0');
+ini_set('display_errors', '0');
 class Login extends CI_Controller 
 {    
 	// error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 	public function __construct()
 	{
-		
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Login_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
-		$this->load->helper(array('form', 'url'));		
-		
+		$this->load->helper(array('form', 'url'));	
 	}
 	public function index()
 	{	
@@ -23,8 +21,7 @@ class Login extends CI_Controller
         $this->form_validation->set_rules('password', 'password', 'required');
 		if($this->form_validation->run() == FALSE)
         {
-            $data['msg'] = "Welcome";
-            $this->load->view('admin/login', $data);
+            $this->load->view('admin/login');
         }
 		else
         {			
@@ -50,7 +47,7 @@ class Login extends CI_Controller
 					$this->session->set_userdata('logged_in', $sess_array);
 				}
 				$session_data = $this->session->userdata('logged_in');
-				if($session_data['Role_id']==1)
+				if($session_data['Role_id']==0 || $session_data['Role_id']==1)
 				{
 					redirect('admin/dashboard');			
 				}
@@ -67,18 +64,19 @@ class Login extends CI_Controller
 				}
 				else if($session_data['Role_id']==5){
 					redirect('admin/dashboard');
-				}else if($session_data['Role_id']==6){
+				}
+				else if($session_data['Role_id']==6){
 					redirect('admin/dashboard');
 				}else if($session_data['Role_id']==7){
 					redirect('admin/dashboard');
-				}								
+				}	
 			}
 			else
 			{							
 				/////////// If Auth. is fail //////
 				// $data['message'] = "<font class='error'>Invalid username or password..!!</font>";
 				// $this->session->set_flashdata("error_code","Invalid username or password..!!");	
-				$data['msg'] = "<code>Invalid username or password.</code>";
+				$data['msg'] = "Invalid username or password.";
 				$this->load->view('admin/login', $data);			
 				// $this->load->view('admin/login',$data);				
 			}
