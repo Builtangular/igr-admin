@@ -67,7 +67,7 @@ class Spam_Mail extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['delete'] = $this->Spam_Model->spam_mail_delete($id);
- 			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
+			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
 			redirect('admin/spam_mail/list');
 		}else{
 			$this->load->view("admin/login");			

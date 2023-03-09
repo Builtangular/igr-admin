@@ -96,7 +96,7 @@
                                     <td><?php echo $full_name; ?></td>
                                     <td class="text-center"><?php echo date("d-m-Y", strtotime($data->joining_date)); ?>
                                     </td>
-                                    <td class="text-center"><?php echo $data->job_profile; ?></td>
+                                    <td class=""><?php echo $data->job_profile; ?></td>
                                     <?php if($query_employment_details->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/employee/employment_list/<?php echo $data->id; ?>"><b><?php echo $employment_status; ?></b></a>

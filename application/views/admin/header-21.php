@@ -10,7 +10,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
         type="text/css" />
     <!-- Ionicons -->
-    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="<?php echo base_url(); ?>assets/admin//css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/admin/css/skin-blue.min.css" rel="stylesheet" type="text/css" />
@@ -75,19 +75,17 @@
 </script>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+<body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <!-- Header -->
         <!-- Main Header -->
         <header class="main-header">
-
             <!-- Logo -->
             <a href="#" class="logo">
                 <span class="logo-mini"><b>IGR</b></span>
                 <span class="logo-lg"><b>Infinium</b> Admin</span>
             </a>
             <!-- <a href="" class="logo"><b>Infinium Admin</b></a> -->
-
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -149,7 +147,7 @@
                         </ul>
                     </li>
                     <?php } if($Role_id == 0 || $Role_id == 2){ ?>
-                    <!--  <li class="treeview">
+                    <!-- <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -171,6 +169,7 @@
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
                     <?php } ?>
+
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
@@ -180,9 +179,10 @@
                                 class="text-bold">Drafts</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
                                 class="text-bold">Add New RD</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-download"></i><span
+                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-plus"></i><span
                                 class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
+
                     <?php if($Role_id == 4){ ?>
                     <li><a href="<?php echo base_url(); ?>manager/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
@@ -191,16 +191,17 @@
                     <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 0 || $Role_id == 5){ ?>
-                        <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
+                    <?php if($Role_id == 5){ ?>
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Custom Link</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-list"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Sample Queries</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-list-alt"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">TOC Queries</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/customization-query"><i
-                                class="fa fa-list-ol"></i><span class="text-bold">Customization Queries</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-list-ul"></i><span
+                                class="fa fa-file-word-o"></i><span class="text-bold">Customization Queries</span></a>
+                    </li>
+                    <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-file-word-o"></i><span
                                 class="text-bold">Enquiry Queries</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 0 || $Role_id == 1 || $Role_id == 6){?>
@@ -209,20 +210,19 @@
                     <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
                                 class="text-bold">Employee Data</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 0 || $Role_id == 1){?>
+                    <?php if($Role_id == 1){?>
                     <li><a href="<?php echo base_url(); ?>admin/employee/letters"><i class="fa fa-clipboard"></i><span
                                 class="text-bold">Employment Letters</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/register-user"><i class="fa fa-user-plus"></i><span
-                                class="text-bold">Register User</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/list"><i class="fa fa-envelope"></i><span
+                    <li><a href="<?php echo base_url(); ?>admin/spam_mail/list"><i class="fa fa-envelope"></i><span
                                 class="text-bold">Mail List</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 0 || $Role_id == 7 || $Role_id == 1){?>
+                    <?php if($Role_id == 7 || $Role_id == 1){?>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-envelope-o"></i><span
                                 class="text-bold">Spam Mail</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
                     <?php } ?>
+                </ul>
             </section>
             <!-- /.sidebar -->
         </aside>
