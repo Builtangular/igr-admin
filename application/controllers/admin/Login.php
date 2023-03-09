@@ -47,7 +47,15 @@ class Login extends CI_Controller
 					$this->session->set_userdata('logged_in', $sess_array);
 				}
 				$session_data = $this->session->userdata('logged_in');
+
 				if($session_data['Role_id']==0 || $session_data['Role_id']==1)
+
+				if($session_data['Role_id']==0)
+				{
+					redirect('admin/dashboard');			
+				}	
+				if($session_data['Role_id']==1)
+
 				{
 					redirect('admin/dashboard');			
 				}

@@ -134,5 +134,11 @@ $route['admin/generate-invoice'] ='admin/invoice/add_invoice';
 $route['admin/employee/employee_document/(:num)'] ='admin/Employee/employee_document/$1';
 $route['admin/employee/upload_employee_documents/(:num)'] ='admin/employee/upload_employee_documents/$1';
 $route['sales/enquiry-query'] ='admin/queries/enquiry_list';
+
 /* Generate Offer Letter and Releving Letter by Admin */
 $route['admin/employee/offer_letter/'] ='admin/Employee/offer_letter/';
+
+
+/* user register urls */
+$route['admin/register-user'] ='admin/register_user';
+

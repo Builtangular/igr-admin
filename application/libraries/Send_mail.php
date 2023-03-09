@@ -18,21 +18,27 @@ class Send_mail
 			$joining_date = $Email_content['joining_date'];
 			$prefix = $Email_content['prefix'];
 			$full_name = $Email_content['full_name'];
-			$father_name = $Email_content['father_name'];			
+			$father_name = $Email_content['father_name'];
+			$spouse_name = $Email_content['spouse_name'];
 			$gender = $Email_content['gender'];
 			$marital_status = $Email_content['marital_status'];
 			$aadhaar_no = $Email_content['aadhaar_no'];
 			$pan_no = $Email_content['pan_no'];
 			$personal_email_id = $Email_content['personal_email_id'];
 			$mobile_number = $Email_content['mobile_number'];
+			$department = $Email_content['department'];
+			$job_profile = $Email_content['job_profile'];
+			$date_of_birth = $Email_content['date_of_birth'];
 			$alternate_mobile_no = $Email_content['alternate_mobile_no'];
 			$bank_name = $Email_content['bank_name'];
 			$account_no = $Email_content['ac_number'];
 			$ifsc_code = $Email_content['ifsc_code'];
 			$permant_address = $Email_content['permant_address'];
 			$gross_salary = $Email_content['gross_salary'];
+			$aadhaar_file = $Email_content['aadhaar_file'];
+			$pan_file = $Email_content['pan_file'];
 			
-				$subject = " New Joining Details | ".ucfirst($full_name)." | Joining Date".htmlspecialchars(date("d-m-Y", strtotime($joining_date)));
+				$subject = " New Joining Details | ".ucfirst($full_name)." | Joining Date: ".htmlspecialchars(date("d-m-Y", strtotime($joining_date)));
 				$html = '<html xmlns="http://www.w3.org/1999/xhtml">';
 				$html = '<link rel="stylesheet" type="text/css" href="assets/css/email.css">';
 				$html .= '<body yahoo bgcolor="#FFFFFF" style="margin: 0; padding: 0; min-width: 100%!important;">';		
@@ -64,6 +70,10 @@ class Send_mail
 													<td style="width: 20%; vertical-align:top"><b> Father Name </b></td>
 													<td><b> : </b>'.$father_name.'</td>
 												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Spouse Name </b></td>
+													<td><b> : </b>'.$spouse_name.'</td>
+												</tr>
                                                 <tr>
                                                     <td style="width: 20%; vertical-align:top"><b> Gender </b></td>
                                                     <td><b> : </b>'.$gender.'</td>
@@ -88,6 +98,18 @@ class Send_mail
 													<td style="width: 20%; vertical-align:top"><b> Mobile Number </b></td>
 													<td><b> : </b>'.$mobile_number.'</td>
 												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Department </b></td>
+													<td><b> : </b>'.$department.'</td>
+												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Designation </b></td>
+													<td><b> : </b>'.$job_profile.'</td>
+												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Date of Birth </b></td>
+													<td><b> : </b>'.date("d-m-Y", strtotime($date_of_birth)).'</td>
+												</tr>
                                                 <tr>
 													<td style="width: 20%; vertical-align:top"><b> Alternate Number </b></td>
 													<td><b> : </b>'.$alternate_mobile_no.'</td>
@@ -106,9 +128,17 @@ class Send_mail
 												</tr>												
 												<tr>
 													<td style="width: 20%; vertical-align:top"><b> Gross Salary </b></td>
-													<td><b> : </b>'.$gross_salary.'</td>
+													<td style="color:red; font-size: 14px; font-weight:bold"><b> : </b>'.$gross_salary.'</td>
 												</tr>					
 											</table>
+											<br>
+												<b>Download Aadhaar : </b><a href="https://rdtool.infiniumglobalresearch.com/assets/admin/emp_data/document/'.$aadhaar_file.'"
+												target="blank">'.$aadhaar_file.'</a>
+											<br>
+											<br>
+												<b>Download PAN :</b> <a href="https://rdtool.infiniumglobalresearch.com/assets/admin/emp_data/document/'.$pan_file.'"
+												target="blank">'.$pan_file.'</a>
+											<br>
 											<br>
 											Regards,<br>
 											<b>Infinium Global Research Team.</b>
@@ -135,10 +165,95 @@ class Send_mail
 			/* echo $html; 
 			die; */
 		}
+		if($Template_type == "Login_employee_mail")
+		{
+			$full_name = $Email_content['full_name'];
+			$email_id = $Email_content['email_id'];
+			$password = $Email_content['password'];
+			$created_on = $Email_content['created_on'];
+			
+				$subject = " Portal Login Details";
+				$html = '<html xmlns="http://www.w3.org/1999/xhtml">';
+				$html = '<link rel="stylesheet" type="text/css" href="assets/css/email.css">';
+				$html .= '<body yahoo bgcolor="#FFFFFF" style="margin: 0; padding: 0; min-width: 100%!important;">';		
+				$html .= '<table width="100%" bgcolor="#f6f8f1" border="0" cellpadding="0" cellspacing="0"><tr><td>';		
+				$html .= '<table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 600px;">';		
+				$html .= '<tr>
+							<td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px;border-bottom: 1px solid #f2eeed;">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<h1 align="center" style="background-color: #0a5184;height: 75%; padding: 5px; color: #fff">Infinium Global Reasearch</h1>
+									<tr>
+									<td class="h2" style="padding: 0 0 15px 0; font-size: 18px; line-height: 28px; font-weight: bold;color: #153643; font-family: Tahoma;">
+										Dear Member,
+									</td>
+									</tr>
+									<tr>
+									<td class="h2" style="padding: 0 0 15px 0; font-size: 18px; line-height: 28px; font-weight: bold;color: #153643; font-family: Tahoma;">
+										Welcome to Portal !
+									</td>
+									</tr>
+									<tr>
+										<td class="bodycopy" style="color: #153643;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 22px;">
+											This email includes your account details, so please keep it safe!
+											<br/><br/>													
+											<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size: 12px; line-height: 22px;">
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Login URL </b></td>
+													<td><b> : <a href="https://rdtool.infiniumglobalresearch.com/admin/login">
+													https://rdtool.infiniumglobalresearch.com/admin/login</a></td>
+												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> User Name </b></td>
+													<td><b> : </b>'.$email_id.'</td>
+												</tr>
+                                                <tr>
+													<td style="width: 20%; vertical-align:top"><b> Password </b></td>
+													<td><b> : </b>'.$password.'</td>
+												</tr>
+												<tr>
+												<td style="width: 20%; vertical-align:top"><b> Creation Date </b></td>
+												<td><b> : </b>'.date("d-m-Y", strtotime($created_on)).'</td>
+											</tr>			
+											</table>
+											<br><b>We are here to help !</br> 
+											<br>
+											All The best,<br>
+											<b>IGR Team.</b>
+										</td>
+									</tr>
+									<br/>							
+								</table>
+							</td>
+						</tr>';
+				$html .= '<tr><td class="footer" style="padding: 20px 30px 15px 30px; background: #0a5184;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td align="center" class="footercopy" style="font-family: Tahoma; font-size: 14px; color: #ffffff;">
+									You can also visit the below link.
+								</td>
+							</tr>
+							<tr>
+								<td align="center" class="footercopy" style="font-family: Tahoma; font-size: 14px; color: #ffffff;">
+									<a href="https://www.infiniumglobalresearch.com/" target="_blank" style="color: #ffffff; text-decoration: underline;">Visit Website</a>
+								</td>
+							</tr>';
+				$html .= '</table></td></tr>';		
+				$html .= '</table></td></tr></table></body></html>';
+			/* echo $html; 
+			die;   */
+		}
+
 
         if($Template_type == "greythr_employee_mail")
         {	
             $to = 'deochakek@gmail.com';
+            $from_mail = 'vidya.infinium@gmail.com';
+            $header .= 'Cc:  monika23.mrd@gmail.com, gawalipooja249@gmail.com' . "\r\n";
+        }
+		 if($Template_type == "Login_employee_mail")
+        {	
+			// var_dump($email_id);die;
+            $to = $email_id;
             $from_mail = 'vidya.infinium@gmail.com';
             $header .= 'Cc:  monika23.mrd@gmail.com, gawalipooja249@gmail.com' . "\r\n";
         }

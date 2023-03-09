@@ -64,20 +64,19 @@ ul b::before {
                                             <option value="HSC">HSC</option>
                                             <option value="Graduation">Graduation</option>
                                             <option value="Post Graduation">Post Graduation</option>
-                                            <option value="Certificatioin">Certificatioin</option>
+                                            <option value="Certificatioin">Certification</option>
                                             <option value="1">Other</option>
                                         </select>
                                     </div>
-                                    <input type="hidden" id="adhar" name="doc_type" value="Aahaar" class="form-control"
-                                        placeholder="Type">
+                                    
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group" id="my_id" style="display: none;">
                                     <label class="control-label col-md-3">Type <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" value="" id="type_name" class="form-control"
-                                            placeholder=" " />
+                                        <input type="text" id="other_type" name="other_type" class="form-control"
+                                            placeholder="insert type " />
                                     </div>
                                 </div>
                             </div>
@@ -88,8 +87,6 @@ ul b::before {
                                         <input type="file" name="upload_file" id="upload_file" class="form-control"
                                             required>
                                     </div>
-                                    <input type="hidden" id="adhar" name="doc_type" value="Aahaar" class="form-control"
-                                        placeholder="Type">
                                 </div>
                             </div>
                         </div>

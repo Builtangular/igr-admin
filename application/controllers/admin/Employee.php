@@ -98,8 +98,22 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
-			$this->Employee_Model->update_emp_personal_data($id);
+			$file ='';
+			$config = array(
+				'upload_path' 	=> "assets/admin/emp_data/profile",
+				'allowed_types' => "*",
+				'encrypt_name'	=> false,
+			);
+            $this->upload->initialize($config);
+			if($this->upload->do_upload('upload_image')){
+				$data = $this->upload->data();	
+				$file = $data['file_name'];			
+			}else{
+				$error = array('error' => $this->upload->display_errors());	
+				$this->upload->display_errors();
+			}
+			/* /. Image Upload */
+			$this->Employee_Model->update_emp_personal_data($id,$file);
 			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
 			redirect('admin/employee');
 		}else {
@@ -465,7 +479,6 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$emp_id = $this->input->post('emp_id');
 			$result = $this->Employee_Model->update_bank_details($id);
 			if($result){
@@ -541,10 +554,17 @@ class Employee extends CI_Controller {
 			$employee_details = $this->Employee_Model->get_employee_record($id);
 			
 			/* Adhaar Upload */
-			$doc_type = $this->input->post('type');
+			$other_type = $this->input->post('other_type');
+			// var_dump($other_type);die;
+			if($other_type == NULL){
+				$doc_type = $this->input->post('type');
+			}else{
+				$doc_type = $this->input->post('other_type');
+			}
+			
+			// var_dump($doc_type);die;
 			$button = $this->input->post('button');
 			$first_name = $employee_details->first_name;
-			// var_dump($new_name);die;
 			$image = $first_name.'_'.$doc_type;
 			if($button == 'Submit'){
 				$file ='';
@@ -563,7 +583,7 @@ class Employee extends CI_Controller {
 					$error = array('error' => $this->upload->display_errors());	
 					$this->upload->display_errors();
 				}
-				$insert_record = $this->Employee_Model->insert_employee_documents($id,$file);
+				$insert_record = $this->Employee_Model->insert_employee_documents($id,$file,$doc_type);
 				if($insert_record)
 				{
 					$this->session->set_flashdata('msg','Data has been inserted successfully....!!!');
@@ -588,10 +608,16 @@ class Employee extends CI_Controller {
 				$alternate_mobile_no = $employee_details->alternate_mobile_no;
 				$personal_email_id = $employee_details->personal_email_id;
 				$permant_address = $employee_details->permant_address;
-				if($marital_status == 'single'){
-					$father_name = $employee_details->middle_name;
+				$department = $employee_details->department;
+				$job_profile = $employee_details->job_profile;
+				$date_of_birth = $employee_details->date_of_birth;
+				// var_dump($date_of_birth);die;
+				if($marital_status == 'Single'){
+					$father_name = $employee_details->middle_name.' '.$employee_details->last_name;
+					$spouse_name = 'NA';
 				}else{
 					$father_name = $employee_details->father_name;
+					$spouse_name = $employee_details->spouse_name;
 				}				
 				$full_name = $first_name . ' ' . $middle_name . ' ' . $last_name;
 				// var_dump($father_name); die;
@@ -610,16 +636,33 @@ class Employee extends CI_Controller {
 					$emp_temporary_bank_details = $this->Employee_Model->get_emp_temporary_salary_details($id);
 					$gross_salary = $emp_temporary_bank_details->gross_salary;
 				}
+				/* get employee documents */
+				$documents = $this->Employee_Model->get_document_list($id);
+				foreach($documents as $document){
+					$doctype = $document->doc_type;
+					if($doctype == "Aadhaar"){
+						$aadhaar_file = $document->upload_file;
+					}
+					if($doctype == "PAN"){
+						$pan_file = $document->upload_file;
+					}
+				}
+				
+				/* / . get employee documents */
 				/* mail send to greythr  */					
 				$Email_content = array(									
 					'joining_date' => $joining_date,
 					'prefix' => $prefix,
 					'full_name' => $full_name,
 					'father_name' => $father_name,
+					'spouse_name' => $spouse_name,
 					'gender' => $gender,
 					'marital_status' => $marital_status,
 					'aadhaar_no' => $aadhaar_no,
 					'pan_no' => $pan_no,
+					'department' => $department,
+					'job_profile' => $job_profile,
+					'date_of_birth' => $date_of_birth,
 					'personal_email_id' => $personal_email_id,
 					'mobile_number' => $mobile_number,
 					'alternate_mobile_no' => $alternate_mobile_no,
@@ -628,6 +671,8 @@ class Employee extends CI_Controller {
 					'ifsc_code' => $ifsc_code,
 					'permant_address' => $permant_address,
 					'gross_salary' => $gross_salary,
+					'aadhaar_file' => $aadhaar_file,
+					'pan_file' => $pan_file,
 					'Template_type' => 'greythr_employee_mail'
 				);
 				$this->send_mail->send_email_notification($Email_content);

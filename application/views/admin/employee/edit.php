@@ -66,7 +66,7 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                     <div class="col-md-3">
                                         <b>Next Appraisal Date </b>
                                         <input type="date" id="appraisal_date" name="appraisal_date"
-                                            class="form-control" placeholder="Appraisal Date">
+                                        value="<?php echo $employee_data->appraisal_date;?>" class="form-control" placeholder="Appraisal Date">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -245,7 +245,7 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
                                         <input type="text" id="aadhaar_no" name="aadhaar_no" class="form-control"
-                                            value="<?php echo $employee_data->adhar_no;?>" placeholder="Aadhar Number">
+                                            value="<?php echo $employee_data->aadhaar_no;?>" placeholder="Aadhar Number">
                                         <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                     <div class="col-md-3">

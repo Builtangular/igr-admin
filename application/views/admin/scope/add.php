@@ -40,13 +40,13 @@
                                     <select class="form-control b-none" name="parent" placeholder="">
                                         <option value="">--Select Parent--</option>
                                         <?php 						
-							foreach($get_scope_data as $data)						
-							{						
-							?>
-                                <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
-                                <?php						
-							}					
-							?>
+                                        foreach($get_scope_data as $data)						
+                                        {						
+                                        ?>
+                                            <option value="<?php echo $data->id;?>"><?php echo $data->name; ?></option>
+                                            <?php						
+                                        }					
+                                        ?>
                                     </select>
                                 </div>
                             </div>

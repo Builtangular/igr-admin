@@ -65,7 +65,6 @@ class Scope extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$data['get_scope_data'] = $this->Data_model->get_scope_master();
 			$data['single_scope_data'] = $this->Data_model->get_single_scope_data($id);
 			$this->load->view("admin/scope/edit",$data);

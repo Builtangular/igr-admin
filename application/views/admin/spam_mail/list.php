@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/report-header.php'); ?>
+<?php $this->load->view('admin/header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 <!-- Content Wrapper. Contains page content -->
@@ -24,7 +24,7 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title"> Mail List</h3>
-                        <a href="<?php echo base_url(); ?>admin/employee/add" class="btn btn-primary pull-right">
+                        <a href="<?php echo base_url(); ?>admin/spam_mail" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -48,9 +48,9 @@
                                 <?php foreach($mail_data as $data){ ?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->id; ?></td>
-                                    <td class="text-center"><?php echo $data->type; ?></td>
+                                    <td><?php echo $data->type; ?></td>
                                     <td><?php echo $data->email_id; ?></td>
-                                    <td class="text-center"><a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                    <td class="text-center"><a href="<?php echo base_url(); ?>admin/spam_mail/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
                                     </td>
                                 </tr>
                                 <?php } ?>

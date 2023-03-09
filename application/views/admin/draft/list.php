@@ -31,10 +31,10 @@
                         </a>
                     </div>
                     <?php if ($success_code) { ?>
-                        <div class="alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert">x</button>
-                            <p><?php echo $success_code; ?></p>
-                        </div>
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <p><?php echo $success_code; ?></p>
+                    </div>
                     <?php } ?>
                     <div class="box-body">
                         <table id="rddata" class="table table-bordered table-striped">
@@ -42,7 +42,7 @@
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
                                     <th>Scope</th>
-                                    <th>Title</th>                                    
+                                    <th>Title</th>
                                     <th>Cat</th>
                                     <th>Forecast</th>
                                     <!-- <th>Vol</th> -->
@@ -51,15 +51,15 @@
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <?php if ($Role_id == 1 || $Role_id == 3 || $Role_id == 4) { ?>
-                                        <th>DRO</th>
-                                        <th>Overview</th>
-                                        <th>PR2</th>
+                                    <th>DRO</th>
+                                    <th>Overview</th>
+                                    <th>PR2</th>
                                     <?php } ?>
                                     <?php if ($Role_id == 1 || $Role_id == 2) { ?>
-                                        <th>Image</th>
-                                        <th>Country</th>
+                                    <th>Image</th>
+                                    <th>Country</th>
                                     <?php } ?>
-									<th>Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -124,80 +124,101 @@
                                     }
                                     /* ./ get scope data */
                                 ?>
-                                    <tr style="font-size: 14px;">
-                                        <td class="text-center"><?php echo $data->id; ?></td>
-                                        <td class="text-center"><?php echo $scope_name; ?></td>
-                                        <td><?php echo $data->title; ?></td>
-                                        <td class="text-center"><?php echo $data->category_id; ?></td>
-                                        <td><?php echo $data->forecast_from . '-' . $data->forecast_to; ?></td>
-                                        <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; 
+                                <tr style="font-size: 14px;">
+                                    <td class="text-center"><?php echo $data->id; ?></td>
+                                    <td class="text-center"><?php echo $scope_name; ?></td>
+                                    <td><?php echo $data->title; ?></td>
+                                    <td class="text-center"><?php echo $data->category_id; ?></td>
+                                    <td><?php echo $data->forecast_from . '-' . $data->forecast_to; ?></td>
+                                    <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; 
                                                 ?></td>-->
-                                        <!-- <td><?php // echo $data->is_volume_based; 
+                                    <!-- <td><?php // echo $data->is_volume_based; 
                                                     ?></td> -->
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i>
-                                                    List</b></a><br><?php echo $rd_segment->rd_segments . " segment"; ?></td>
-                                        <td class="text-center"><a href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i class="fa fa-pencil"></i>
-                                                    List</b></a><br><?php echo $rd_company->rd_companies . " company"; ?></td>
-                                        <!-- <td class="text-center"><?php echo $data->status; ?></td> -->
-                                        <?php if ($query_market_insight->num_rows() > 0) { ?>
-                                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/view/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a>
-                                            </td>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i
+                                                    class="fa fa-pencil"></i>
+                                                List</b></a><br><?php echo $rd_segment->rd_segments . " segment"; ?>
+                                    </td>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/company/<?php echo $data->id; ?>"><b><i
+                                                    class="fa fa-pencil"></i>
+                                                List</b></a><br><?php echo $rd_company->rd_companies . " company"; ?>
+                                    </td>
+                                    <!-- <td class="text-center"><?php echo $data->status; ?></td> -->
+                                    <?php if ($query_market_insight->num_rows() > 0) { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/market-insight/view/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a>
+                                    </td>
+                                    <?php } else { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/market-insight/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a>
+                                    </td>
+                                    <?php } ?>
+                                    <?php if ($Role_id == 1 || $Role_id == 3 || $Role_id == 4) { ?>
+                                    <?php if ($query_dro_reports->num_rows() > 0) { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/dro-reports/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
+                                    </td>
+                                    <?php } else { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
+                                    </td>
+                                    <?php } ?>
+                                    <?php if ($query_segment_overview->num_rows() > 0) { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
+                                    </td>
+                                    <?php } else { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/segment-overview/add/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
+                                    </td>
+                                    <?php } ?>
+                                    <?php if ($query_pr2_reports->num_rows() > 0) { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/pr2-reports/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
+                                    </td>
+                                    <?php } else { ?>
+                                    <td class="text-center">
+                                        <a
+                                            href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
+                                    </td>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <?php if ($Role_id == 1 || $Role_id == 2) { ?>
+                                    <td class="text-center"><a
+                                            href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a>
+                                    </td>
+                                    <?php if ($data->country_status == 1) { ?>
+                                    <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><br /><b>
+                                            Created</b></td>
+                                    <?php } else { ?>
+                                    <td class="text-center">
+                                        <?php if ($data->scope_id == 1) { ?>
+                                        <a
+                                            href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i
+                                                    class="fa fa-globe"></i> <br />Create</b></a>
                                         <?php } else { ?>
-                                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/market-insight/<?php echo $data->id; ?>"><b><?php echo $insight_status; ?></b></a>
-                                            </td>
+                                        <a
+                                            href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i
+                                                    class="fa fa-globe"></i> <br />Create</b></a>
                                         <?php } ?>
-                                        <?php if ($Role_id == 1 || $Role_id == 3 || $Role_id == 4) { ?>
-                                            <?php if ($query_dro_reports->num_rows() > 0) { ?>
-                                                <td class="text-center"><a href="<?php echo base_url(); ?>admin/dro-reports/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
-                                                </td>
-                                            <?php } else { ?>
-                                                <td class="text-center"><a href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
-                                                </td>
-                                            <?php } ?>
-                                            <?php if ($query_segment_overview->num_rows() > 0) { ?>
-                                                <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
-                                                </td>
-                                            <?php } else { ?>
-                                                <td class="text-center"><a href="<?php echo base_url(); ?>admin/segment-overview/add/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
-                                                </td>
-                                            <?php } ?>
-                                            <?php if ($query_pr2_reports->num_rows() > 0) { ?>
-                                                <td class="text-center"><a href="<?php echo base_url(); ?>admin/pr2-reports/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
-                                                </td>
-                                            <?php } else { ?>
-                                                <td class="text-center">
-                                                    <a href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
-                                                </td>
-                                            <?php } ?>
-                                        <?php } ?>
-                                        <?php if ($Role_id == 1 || $Role_id == 2) { ?>
-                                            <td class="text-center"><a href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a>
-                                            </td>
-                                            <?php if ($data->country_status == 1) { ?>
-                                                <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><br /><b>
-                                                        Created</b></td>
-                                            <?php } else { ?>
-                                                <td class="text-center">
-                                                    <?php if ($data->scope_id == 1) { ?>
-                                                        <a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i> <br />Create</b></a>
-                                                    <?php } else { ?>
-                                                        <a href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i class="fa fa-globe"></i> <br />Create</b></a>
-                                                    <?php } ?>
-                                                </td>
-                                            <?php } ?>
-                                        <?php } ?>
-                                        <td><a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>" class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> |
-                                            <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
-                                            <a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-                                        </td>
-                                    </tr>
+                                    </td>
+                                    <?php } ?>
+                                    <?php } ?>
+                                    <td><a href="<?php echo base_url(); ?>admin/report/view/<?php echo $data->id; ?>"
+                                            class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> |
+                                        <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
+                                        <a href="<?php echo base_url(); ?>admin/report/delete/<?php echo $data->id; ?>"
+                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                    </td>
+                                </tr>
                                 <?php  }  ?>
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
                                     <th>Scope</th>
-                                    <th>Title</th>                                    
+                                    <th>Title</th>
                                     <th>Cat</th>
                                     <th>Forecast</th>
                                     <!-- <th>Analysis</th> -->
@@ -207,13 +228,13 @@
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <?php if ($Role_id == 1 || $Role_id == 3 || $Role_id == 4) { ?>
-                                        <th>DRO</th>
-                                        <th>Overview</th>
-                                        <th>PR2</th>
+                                    <th>DRO</th>
+                                    <th>Overview</th>
+                                    <th>PR2</th>
                                     <?php } ?>
                                     <?php if ($Role_id == 1 || $Role_id == 2) { ?>
-                                        <th>Image</th>
-                                        <th>Country</th>
+                                    <th>Image</th>
+                                    <th>Country</th>
                                     <?php } ?>
                                     <th>Action</th>
                                 </tr>
@@ -226,7 +247,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <!-- Footer -->
-    <footer class="main-footer">
+<footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
         Anything you want
@@ -251,18 +272,19 @@
 
 
 <script>
-    $(document).ready(function() {
-        $('.sidebar-menu').tree()
-    })
+$(document).ready(function() {
+    $('.sidebar-menu').tree()
+})
 </script>
 
 <script>
-    $(function() {
-        $('#rddata').DataTable({
-            'ordering': false,
-        })
-
+$(function() {
+    $('#rddata').DataTable({
+        'ordering': false,
     })
+
+})
 </script>
-        </body>
+</body>
+
 </html>

@@ -11,8 +11,7 @@ class Jobpost extends CI_Controller
 		$this->load->model('admin/Jobpost_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
-		$this->load->helper(array('form', 'url'));		
-		
+		$this->load->helper(array('form', 'url'));	
 	}
 	function index()
 	{	
@@ -35,7 +34,6 @@ class Jobpost extends CI_Controller
         }else{
             $this->load->view("admin/login");
         }
-
     }
     public function insert()
 	{

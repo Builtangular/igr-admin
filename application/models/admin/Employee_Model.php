@@ -41,6 +41,9 @@ class Employee_Model extends CI_Model {
                 'resignation_date'              => $this->input->post('resignation_date'),
                 'department'                    => $this->input->post('department'),
                 'job_profile'                   => $this->input->post('job_profile'),
+                'uan_no'                        => $this->input->post('uan_no'),
+                'pf_no'                         => $this->input->post('pf_no'),         
+                'passing_year'                  => $this->input->post('passing_year'),
                 'created_on'                    => date('Y-m-d'),
                 'updated_on'                    => date('Y-m-d'),
                 'upload_image'                  => $file,
@@ -98,10 +101,10 @@ class Employee_Model extends CI_Model {
         $result = $this->db->insert('tbl_emp_bank_details',$data);
         return $result;
     }
-    public function insert_employee_documents($id,$file){
+    public function insert_employee_documents($id,$file, $doc_type){
         $data = array(
             'emp_id'                        => $id,
-            'doc_type'                      => $this->input->post('type'),
+            'doc_type'                      => $doc_type,
             'upload_file'                   => $file,
             'created_at'                    => date('Y-m-d'),
             'updated_at'                    => date('Y-m-d'),
@@ -149,6 +152,7 @@ class Employee_Model extends CI_Model {
         // echo $this->db->last_query();
         return $query->row();
     }
+    
     public function get_psalary_list($id)
     {
         $this->db->select('*');
@@ -220,7 +224,7 @@ class Employee_Model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    public function update_emp_personal_data($id){
+    public function update_emp_personal_data($id,$file){
         $update = array(
             'job_type'                      => $this->input->post('job_type'),
             'emp_code'                      => $this->input->post('emp_code'),
@@ -255,6 +259,7 @@ class Employee_Model extends CI_Model {
             'job_profile'                   => $this->input->post('job_profile'),
             'uan_no'                        => $this->input->post('uan_no'),
             'pf_no'                         => $this->input->post('pf_no'),            
+            'passing_year'                  => $this->input->post('passing_year'),            
             'upload_image'                  => $file,
             'updated_on'                    => date('Y-m-d'),
             );
