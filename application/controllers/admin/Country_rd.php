@@ -146,7 +146,6 @@ class Country_rd extends CI_Controller {
 				$encoded_report_title= urldecode($report_title_new);	
 				$encoded_report_url = str_replace(' ','-', $encoded_report_title);
 				$url = str_replace('--','-', strtolower($encoded_report_url));
-
 				$final_country_rd_title = $Country_Report_title.": Prospects, Trends Analysis, Market Size and Forecasts up to ".$forecast_to;
 				$post_countrydata = array(
 					'report_id'=>$id,

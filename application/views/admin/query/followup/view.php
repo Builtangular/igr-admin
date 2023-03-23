@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <a href="<?php echo base_url();?>admin/query/view_followup/<?php echo $id;?>"
+                        <a href="<?php echo base_url();?>admin/query/view_followup/<?php echo $query_id;?>"
                             class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
                     </div>
 

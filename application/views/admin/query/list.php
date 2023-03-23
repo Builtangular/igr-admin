@@ -50,9 +50,19 @@
                             <tbody>
                                 <?php foreach($query_details as $data){ 
                                 /* Status */
-                                $status_details = "SELECT * FROM tbl_rd_query_sale_status where query_id = ".$data->id;
+                                $status_details = "SELECT (status)  AS rd_status FROM tbl_rd_query_sale_status where query_id = ".$data->id;
+                                // var_dump($status_details);die;
                                 $query_status_details = $this->db->query($status_details);
-                                if($query_status_details->num_rows() > 0) { $query_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$query_status = "<i class=\"fa fa-plus\"></i><br>Add";}
+                                if($query_status_details->num_rows() > 0) { 
+                                    $query_status = "<i class=\"fa fa-file\"></i><br>View  <br>";
+                                    $rd_status = $query_status_details->row();
+                                    if($rd_status->rd_status == "Sale"){
+                                        $sale_status = '<span class="text-green">';
+                                    }else{
+                                        $sale_status = '<span class="text-red">';
+                                    }
+                                } else {
+                                    $query_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* ./ Status  */
 
                                  /* follow up  */
@@ -63,10 +73,8 @@
                                     $query_followup_details = $this->db->query($followup_details);
                                     if ($query_followup_details->num_rows() > 0) {
                                         $rd_followup = $query_followup_details->row();
-                                        // $rd_followup = "<i class=\"fa fa-file\"></i><br>View"; } else {$rd_followup = "<i class=\"fa fa-plus\"></i><br>Add";
                                     }
                                  /* ./ follow up  */
-
                                 ?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->id; ?></td>
@@ -74,18 +82,12 @@
                                     <td><?php echo $data->report_name; ?></td>
                                     <td><?php echo $data->assigned_to; ?></td>
                                     <?php if($query_followup_details->num_rows() > 0){ ?>
-                                    <!-- <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->id; ?>"><b><?php echo $followup_status; ?></b></a>
-                                    </td> -->
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->id; ?>"><b><i
                                                     class="fa fa-pencil"></i>
                                                 List</b></a><br><?php echo $rd_followup->rd_followup . " Followup"; ?>
                                     </td>
                                     <?php }else {?>
-                                    <!-- <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/add_followup/<?php echo $data->id; ?>"><b><?php echo $followup_status; ?></b></a>
-                                    </td> -->
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/query/add_followup/<?php echo $data->id; ?>"><b><i
                                                     class="fa fa-pencil"></i>
@@ -95,14 +97,14 @@
                                     <?php if($query_status_details->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/query/view/<?php echo $data->id; ?>"><b><?php echo $query_status; ?></b></a>
+                                            <?php echo $sale_status; ?><?php echo $rd_status->rd_status; ?></span>
                                     </td>
                                     <?php }else {?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->id; ?>"><b><?php echo $query_status; ?></b></a>
                                     </td>
                                     <?php }?>
-                                    
-                                    <td><a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>" class="btn btn-info"><i class="fa fa-eye"></i></b></a>
+                                   <td> <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
                                     <a href="<?php echo base_url(); ?>admin/query/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a></td>
                                 </tr>
                                 <?php } ?>

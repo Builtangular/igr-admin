@@ -44,29 +44,40 @@
                                             <option value="Reject">Reject</option>
                                         </select>
                                     </div>
-                                    <div class="form-group hide" id="sale_div">
-                                        <div class="col-md-2">
-                                            <input type="text" name="price" id="price" onblur="reSum();"
-                                                class="form-control" placeholder="Price">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="discount" id="discount" onblur="reSum();"
-                                                class="form-control" placeholder="Discount">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="absolute_price" onblur="reSum();"
-                                                id="absolute_price" class="form-control" placeholder="Absolute Price">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="selling_price" onblur="reSum();" id="selling_price"
-                                                class="form-control" placeholder="Selling Price">
-                                        </div>
+                                    <div class="col-md-2 hide" id="licence">
+                                        <select class="form-control b-none" name="licence_price" id="licence_price"
+                                            placeholder="">
+                                            <option value="" selected>Select</option>
+                                            <option value="USD">USD</option>
+                                            <option value="AED">AED</option>
+                                            <option value="EUR">EUR</option>
+                                            <option value="SAR">SAR</option>
+                                            <option value="INR">INR</option>
+                                        </select>
                                     </div>
-                                    <div class="form-group hide" id="reason_div">
-                                        <div class="col-md-4">
-                                            <input type="text" id="reason" name="reason" class="form-control"
-                                                placeholder="Reason">
-                                        </div>
+                                </div>
+                                <div class="form-group hide" id="sale_div">
+                                    <div class="col-md-3">
+                                        <input type="text" name="price" id="price" onblur="reSum();"
+                                            class="form-control" placeholder="Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="discount" id="discount" onblur="reSum();"
+                                            class="form-control" placeholder="Discount">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="absolute_price" onblur="reSum();" id="absolute_price"
+                                            class="form-control" placeholder="Absolute Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="selling_price" onblur="reSum();" id="selling_price"
+                                            class="form-control" placeholder="Selling Price">
+                                    </div>
+                                </div>
+                                <div class="form-group hide" id="reason_div">
+                                    <div class="col-md-4">
+                                        <input type="text" id="reason" name="reason" class="form-control"
+                                            placeholder="Reason">
                                     </div>
                                 </div>
                             </div>
@@ -86,21 +97,53 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+// var query_status = document.getElementById('query_status');
+// var sale_div = document.getElementById('sale_div');
+// var reason_div = document.getElementById('reason_div');
+// query_status.addEventListener('change', function() {
+//     if (this.value == "Sale") {
+//         sale_div.classList.remove('hide');
+//         reason_div.classList.add('hide');
+//     } else if (this.value == "Reject") {
+//         reason_div.classList.remove('hide');
+//         sale_div.classList.add('hide');
+//     } else {
+//         reason_div.classList.add('hide');
+//         sale_div.classList.add('hide');
+//     }
+// })
 var query_status = document.getElementById('query_status');
-var sale_div = document.getElementById('sale_div');
+var licence = document.getElementById('licence');
 var reason_div = document.getElementById('reason_div');
+
 query_status.addEventListener('change', function() {
     if (this.value == "Sale") {
-        sale_div.classList.remove('hide');
-        reason_div.classList.add('hide');
+        licence.classList.remove('hide');
+        // reason_div.classList.remove('hide');
     } else if (this.value == "Reject") {
         reason_div.classList.remove('hide');
-        sale_div.classList.add('hide');
+        licence.classList.add('hide');
     } else {
+        licence.classList.add('hide');
         reason_div.classList.add('hide');
-        sale_div.classList.add('hide');
     }
 })
+
+var licence = document.getElementById('licence');
+var sale_div = document.getElementById('sale_div');
+var licence_price = document.getElementById('licence_price');
+
+licence.addEventListener('change', function() {
+    // console.log(licence_price.value);
+    if (licence_price.value == "USD" || "AED" || "EUR" || "SAR" || "INR") {
+        sale_div.classList.remove('hide');
+        // reason_div.classList.remove('hide');
+    } else {
+        sale_div.classList.add('hide');
+        // reason_div.classList.add('hide');
+    }
+})
+
 
 function reSum() {
     var discount, result, mult, dis;

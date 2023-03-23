@@ -46,13 +46,32 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Scope Name <span
+                                    <label class="control-label col-md-4">Source Email Id <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-8">
-                                        <input type="text" id="scope_name" name="scope_name"
-                                            value="<?php echo $single_query_data->scope_name;?>" class="form-control"
-                                            placeholder="Scope Name" required>
+                                        <input type="text" id="source_mail_id" name="source_mail_id"
+                                            value="<?php echo $single_query_data->source_mail_id;?>"
+                                            class="form-control" placeholder="Email Id" required>
                                         <span class="help-block margin" id="txtHint"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Scope Name</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control b-none" id="scope_name" name="scope_name">
+                                            <option value="<?php echo $single_query_data->scope_name;?>" selected>
+                                                <?php echo $single_query_data->scope_name;?></option>
+                                            <?php 						
+                                            foreach($ScopeList as $scope)						
+                                            {				
+                                            ?>
+                                            <option value="<?php echo $scope->name;?>">
+                                                <?php echo $scope->name; ?>
+                                            </option>
+                                            <?php						
+                                            }					
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -80,26 +99,34 @@
                                     <label class="control-label col-md-4">Client Meassage <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-8">
-                                        <input type="text" id="client_message" name="client_message"
-                                            value="<?php echo $single_query_data->client_message;?>"
-                                            class="form-control" placeholder="Client Meassage" required>
+                                        <textarea name="client_message" id="client_message" rows="3"
+                                            class="form-control" placeholder="Client Meassage"
+                                            required><?php echo $single_query_data->client_message;?></textarea>
                                         <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
-
                             </div>
-
                             <div class="col-md-6">
+                                <?php if($single_query_data->source == "Reseller"){ ?>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Source Email Id <span
-                                            class="text-red">*</span></label>
+                                    <label class="control-label col-md-4" id="reseller_div">Reseller Name</label>
                                     <div class="col-md-8">
-                                        <input type="text" id="source_mail_id" name="source_mail_id"
-                                            value="<?php echo $single_query_data->source_mail_id;?>"
-                                            class="form-control" placeholder="Email Id" required>
-                                        <span class="help-block margin" id="txtHint"></span>
+                                        <select class="form-control b-none" id="reseller_name" name="reseller_name">
+                                            <option value="<?php echo $single_query_data->reseller_name;?>" selected>
+                                                <?php echo $single_query_data->reseller_name;?></option>
+                                            <?php 						
+                                            foreach($reseller_list as $list)						
+                                            {				
+                                            ?>
+                                            <option value="<?php echo $list->reseller_name;?>">
+                                                <?php echo $list->reseller_name; ?></option>
+                                            <?php						
+                                            }					
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
+                                <?php } ?>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Report Name <span
                                             class="text-red">*</span></label>
@@ -115,6 +142,15 @@
                                     <div class="col-md-8">
                                         <input type="text" id="client_email" name="client_email"
                                             value="<?php echo $single_query_data->client_email;?>" class="form-control"
+                                            placeholder="Client Email" required>
+                                        <span class="help-block margin" id="txtHint"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Client Email1</label>
+                                    <div class="col-md-8">
+                                        <input type="text" id="client_email1" name="client_email1"
+                                            value="<?php echo $single_query_data->client_email1;?>" class="form-control"
                                             placeholder="Client Email" required>
                                         <span class="help-block margin" id="txtHint"></span>
                                     </div>
@@ -168,4 +204,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
+<script>
+var source = document.getElementById('source');
+var reseller_name = document.getElementById('reseller_name');
+var reseller_div = document.getElementById('reseller_div');
+
+source.addEventListener('change', function() {
+    if (this.value == "Reseller") {
+        reseller_name.classList.remove('hide');
+        reseller_div.classList.remove('hide');
+    } else {
+        reseller_name.classList.add('hide');
+        reseller_div.classList.add('hide');
+    }
+})
+
+</script>
 <?php $this->load->view('admin/footer.php'); ?>

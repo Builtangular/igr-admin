@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            FollowUp List
+            Reseller List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -23,9 +23,8 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title"> FollowUp List</h3>
-                        <a href="<?php echo base_url(); ?>admin/query/add_record/<?php echo $id;?>"
-                            class="btn btn-primary pull-right">
+                        <h3 class="box-title"> Reseller List</h3>
+                        <a href="<?php echo base_url(); ?>admin/query/add_reseller/" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -39,27 +38,26 @@
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
-                                    <th>FollowUp Id</th>
-                                    <th>Subject</th>
-                                    <th>FollowUp Date</th>
+                                    <th>Id</th>
+                                    <th>Reseller Name</th>
+                                    <th>Reseller Email Id</th>
+                                    <th>Service No.</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($followup_details as $data){ $i++;
+                                <?php foreach($reseller_details as $data){ $i++;
                                     
                                 ?>
                                 <tr style="font-size: 14px;">
-                                    <td><?php echo "FollowUp ".$i;  ?></td>
-                                    <td><?php echo $data->subject; ?></td>
-                                    <!-- <td><?php echo $data->client_comment; ?></td>
-                                    <td><?php echo $data->user_comment; ?></td> -->
-                                    <td><?php echo date("d-m-Y", strtotime($data->followup_date)); ?></td>
-                                    <td><a href="<?php echo base_url();?>admin/query/edit_followup_details/<?php echo $data->id;?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
+                                    <td><?php echo $i++; ?></td>
+                                    <td><?php echo $data->reseller_name; ?></td>
+                                    <td><?php echo $data->reseller_email; ?></td>
+                                    <td><?php echo $data->service_no; ?></td>
+                                    <td><a href="<?php echo base_url();?>admin/query/reseller_edit/<?php echo $data->id;?>"
+                                            class="btn btn-success"><i class="fa fa-edit"></i></b></a>
                                         <!-- <a href="<?php echo base_url();?>admin/query/delete_followup/<?php echo $data->id;?>" class="btn btn-danger">Delete</a> -->
-                                        <a href="<?php echo base_url();?>admin/query/view_followup_details/<?php echo $data->id;?>"
-                                            class="btn btn-info"><i class="fa fa-eye"></i></b></a>
-                                        <a href="<?php echo base_url(); ?>admin/query/delete_followup/<?php echo $data->id; ?>"
+                                        <a href="<?php echo base_url(); ?>admin/query/reseller_delete/<?php echo $data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
                                     </td>
                                 </tr>
@@ -67,9 +65,10 @@
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
-                                    <th>FollowUp Id</th>
-                                    <th>Subject</th>
-                                    <th>FollowUp Date</th>
+                                    <th>Id</th>
+                                    <th>Reseller Name</th>
+                                    <th>Reseller Email Id</th>
+                                    <th>Service No.</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

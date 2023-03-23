@@ -50,63 +50,87 @@
                                         </select>
                                     </div>
                                     <?php if($status_details->status == "Sale"){ ?>
-                                    <div class="form-group" id="sale_div">
-                                        <div class="col-md-2">
-                                            <input type="text" name="price" id="price"
-                                                value="<?php echo $status_details->price;?>" onblur="reSum();"
-                                                class="form-control" placeholder="Price">
-                                            <input type="text" name="reason" id="reason"
-                                                value="<?php echo $status_details->reason;?>" class="form-control hide"
-                                                placeholder="Reason">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="discount" id="discount"
-                                                value="<?php echo $status_details->discount;?>" onblur="reSum();"
-                                                class="form-control" placeholder="Discount">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="absolute_price"
-                                                value="<?php echo $status_details->absolute_price;?>" onblur="reSum();"
-                                                id="absolute_price" class="form-control" placeholder="Absolute Price">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="selling_price"
-                                                value="<?php echo $status_details->selling_price;?>" onblur="reSum();"
-                                                id="selling_price" class="form-control" placeholder="Selling Price">
-                                        </div>
+                                    <div class="col-md-2" id="licence">
+                                        <select class="form-control b-none" name="licence_price" id="licence_price"
+                                            placeholder="">
+                                            <option value="<?php echo $status_details->licence_price;?>" selected>
+                                                <?php echo $status_details->licence_price;?></option>
+                                            <option value="USD">USD</option>
+                                            <option value="AED">AED</option>
+                                            <option value="EUR">EUR</option>
+                                            <option value="SAR">SAR</option>
+                                            <option value="INR">INR</option>
+                                        </select>
                                     </div>
-                                    <?php } else { ?>
-                                    <div class="form-group" id="reason_div">
-                                        <div class="col-md-2">
-                                            <input type="text" name="price" id="price" onblur="reSum();"
-                                                class="form-control hide" placeholder="Price">
-                                            <input type="text" id="reason" name="reason"
-                                                value="<?php echo $status_details->reason;?>" class="form-control"
-                                                placeholder="Reason">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="discount" id="discount" onblur="reSum();"
-                                                class="form-control hide" placeholder="Discount">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="absolute_price" onblur="reSum();"
-                                                id="absolute_price" class="form-control hide"
-                                                placeholder="Absolute Price">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" name="selling_price" onblur="reSum();" id="selling_price"
-                                                class="form-control hide" placeholder="Selling Price">
-                                        </div>
-                                    </div>
-                                    <?php } ?>
                                 </div>
+
+                                <div class="form-group" id="sale_div">
+                                    <div class="col-md-3">
+                                        <input type="text" name="price" id="price"
+                                            value="<?php echo $status_details->price;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Price">
+                                        <input type="text" name="reason" id="reason"
+                                            value="<?php echo $status_details->reason;?>" class="form-control hide"
+                                            placeholder="Reason">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="discount" id="discount"
+                                            value="<?php echo $status_details->discount;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Discount">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="absolute_price"
+                                            value="<?php echo $status_details->absolute_price;?>" onblur="reSum();"
+                                            id="absolute_price" class="form-control" placeholder="Absolute Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="selling_price"
+                                            value="<?php echo $status_details->selling_price;?>" onblur="reSum();"
+                                            id="selling_price" class="form-control" placeholder="Selling Price">
+                                    </div>
+                                </div>
+                                <?php } else { ?>
+                                <div class="form-group" id="reason_div">
+                                    <div class="col-md-3 hide" id="licence">
+                                        <select class="form-control b-none" name="licence_price" id="licence_price"
+                                            placeholder="">
+                                            <option value="<?php echo $status_details->licence_price;?>" selected>
+                                                <?php echo $status_details->licence_price;?></option>
+                                            <option value="USD">USD</option>
+                                            <option value="AED">AED</option>
+                                            <option value="EUR">EUR</option>
+                                            <option value="SAR">SAR</option>
+                                            <option value="INR">INR</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="price" id="price" onblur="reSum();"
+                                            class="form-control hide" placeholder="Price">
+                                        <input type="text" id="reason" name="reason"
+                                            value="<?php echo $status_details->reason;?>" class="form-control"
+                                            placeholder="Reason">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" name="discount" id="discount" onblur="reSum();"
+                                            class="form-control hide" placeholder="Discount">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" name="absolute_price" onblur="reSum();" id="absolute_price"
+                                            class="form-control hide" placeholder="Absolute Price">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" name="selling_price" onblur="reSum();" id="selling_price"
+                                            class="form-control hide" placeholder="Selling Price">
+                                    </div>
+                                </div>
+                                <?php } ?>
                             </div>
-                        </div>
-                        <div class="box-footer">
-                            <input type="hidden" name="id" class="form-control" id="id"
-                                value="<?php if(!empty($status_details)){echo $status_details->id;}?>">
-                            <input type="submit" class="btn btn-info pull-right" value="Update">
-                        </div>
+                            <div class="box-footer">
+                                <input type="hidden" name="id" class="form-control" id="id"
+                                    value="<?php if(!empty($status_details)){echo $status_details->id;}?>">
+                                <input type="submit" class="btn btn-info pull-right" value="Update">
+                            </div>
                     </form>
                 </div>
             </div>
@@ -121,6 +145,7 @@
 var query_status = document.getElementById('query_status');
 var sale_div = document.getElementById('sale_div');
 var reason_div = document.getElementById('reason_div');
+var licence = document.getElementById('reason_div');
 query_status.addEventListener('change', function() {
     if (this.value == "Sale") {
         price.classList.remove('hide');
@@ -128,14 +153,32 @@ query_status.addEventListener('change', function() {
         absolute_price.classList.remove('hide');
         selling_price.classList.remove('hide');
         reason.classList.add('hide');
+        licence.classList.remove('hide');
     } else {
         price.classList.add('hide');
         discount.classList.add('hide');
         absolute_price.classList.add('hide');
         selling_price.classList.add('hide');
         reason.classList.remove('hide');
+        licence.classList.add('hide');
     }
 })
+
+var licence = document.getElementById('licence');
+var sale_div = document.getElementById('sale_div');
+var licence_price = document.getElementById('licence_price');
+
+licence.addEventListener('change', function() {
+    console.log(licence_price.value);
+    if (licence_price.value == "USD" || "AED" || "EUR" || "SAR" || "INR") {
+        sale_div.classList.remove('hide');
+        // reason_div.classList.remove('hide');
+    } else {
+        sale_div.classList.add('hide');
+        // reason_div.classList.add('hide');
+    }
+})
+
 function reSum() {
     var discount, result, mult, dis;
     var price = parseInt(document.getElementById("price").value);

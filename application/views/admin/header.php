@@ -223,16 +223,25 @@
                     <?php if($Role_id == 0 || $Role_id == 7 || $Role_id == 1){?>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-envelope-o"></i><span
                                 class="text-bold">Spam Mail</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
-                                <li class="treeview">
-                                    <a href="#"><i class="fa fa-table"></i><span class="text-bold">Query Management</span> <i
-                                            class="fa fa-angle-left pull-right"></i></a>
-                                    <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
-                                <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
-                            
-                            </ul>
-                        </li>
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
+                                class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-table"></i><span class="text-bold">Query Management</span> <i
+                                class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-table"></i><span class="text-bold">Reseller</span> <i
+                                class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/add_reseller"><span>Add</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/reseller_list"><span> List</span></a></li>
+
+                        </ul>
+                    </li>
                     <?php } ?>
                 </ul>
             </section>

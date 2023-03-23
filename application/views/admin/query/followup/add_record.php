@@ -26,7 +26,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">FollowUp Details</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/query/update_followup/<?php echo $followup_details->id;?>" method="post"
+                    <form action="<?php echo base_url(); ?>admin/query/insert_record/<?php echo $id;?>" method="post"
                         class="form-horizontal">
                         <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
                         <div class="box-body">
@@ -34,35 +34,35 @@
                                 <label class="control-label col-md-2">Subject</label>
                                 <div class="col-md-10">
                                     <input type="text" name="subject" id="subject"
-                                        value="<?php echo $followup_details->subject;?>" class="form-control" required>
+                                        value="<?php echo $followup_record->subject;?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Client Comment</label>
                                 <div class="col-md-10">
-                                    <textarea id="editor1" name="client_comment" id="client_comment"  rows="5" class="form-control" required><?php echo $followup_details->client_comment;?></textarea>
+                                    <textarea id="editor1" name="client_comment" id="client_comment" rows="5" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">User Comment</label>
                                 <div class="col-md-10">
-                                    <textarea id="editor2" name="user_comment" id="user_comment" rows="5" class="form-control" required><?php echo $followup_details->user_comment;?></textarea>
+                                    <textarea id="editor2" name="user_comment" id="user_comment" rows="5" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">FollowUp Date</label>
                                 <div class="col-md-10">
-                                    <input type="date" name="followup_date" id="followup_date" value="<?php echo $followup_details->followup_date;?>" class="form-control"
+                                    <input type="date" name="followup_date" id="followup_date" class="form-control"
                                         required>
                                 </div>
                             </div>
 
                             <div class="box-footer">
                                 <input type="hidden" name="id" class="form-control" id="id"
-                                    value="<?php if(!empty($followup_details)){echo $followup_details->id;}?>">
-                                <a href="<?php echo base_url();?>admin/query/view_followup/<?php echo $followup_details->query_id;?>"
+                                    value="<?php if(!empty($followup_record)){echo $followup_record->id;}?>">
+                                <a href="<?php echo base_url();?>admin/query/view_followup/<?php echo $id;?>"
                                     class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
-                                <input type="submit" class="btn btn-primary pull-right" value="Update">
+                                <input type="submit" class="btn btn-primary pull-right" value="Submit">
                             </div>
                     </form>
                 </div>
