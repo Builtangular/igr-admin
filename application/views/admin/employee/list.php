@@ -44,6 +44,7 @@
                                     <th>Emp Code</th>
                                     <th>Name</th>
                                     <th>Joining Date</th>
+                                    <th>Appraisal Date</th>
                                     <th>Profile</th>
                                     <!-- <th>Vol</th> -->
                                     <th>Employment</th>
@@ -54,7 +55,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($employee_details as $data){ 
+                                <?php $sr = 1; foreach($employee_details as $data){ 
                                  /* Employment */
                                 $Employment_details = "SELECT * FROM tbl_emp_employment where emp_id = ".$data->id;
                                 $query_employment_details = $this->db->query($Employment_details);
@@ -91,17 +92,28 @@
                                 $full_name = $data->prefix.' '.$data->first_name.' '.$data->middle_name.' '.$data->last_name;
                                 ?>
                                 <tr style="font-size: 14px;">
-                                    <td class="text-center"><?php echo $data->id; ?></td>
+                                    <td class="text-center"><?php echo $sr; ?></td>
                                     <td class="text-center"><?php echo $data->emp_code; ?></td>
                                     <td><?php echo $full_name; ?></td>
                                     <td class="text-center"><?php echo date("d-m-Y", strtotime($data->joining_date)); ?>
                                     </td>
+                                    <?php if($data->appraisal_date == "0000-00-00" ){ ?>
+                                    <td class="text-center">
+                                        <?php echo "00-00-0000"; ?></td>
+                                    <?php } else { ?>
+                                    <td class="text-center">
+                                        <?php echo date("d-m-Y", strtotime($data->appraisal_date)); ?></td>
+                                    <?php } ?>
                                     <td class=""><?php echo $data->job_profile; ?></td>
-                                    <?php if($query_employment_details->num_rows() > 0){ ?>
+
+                                    <?php if($data->user_type == "Fresher"){ ?>
+                                    <td class="text-center"><b><?php echo $data->user_type; ?></b>
+                                    </td>
+                                    <?php } else if($query_employment_details->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/employee/employment_list/<?php echo $data->id; ?>"><b><?php echo $employment_status; ?></b></a>
                                     </td>
-                                    <?php }else {?>
+                                    <?php } else {?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/employee/add_employment/<?php echo $data->id; ?>"><b><?php echo $employment_status; ?></b></a>
                                     </td>
@@ -133,12 +145,16 @@
                                             href="<?php echo base_url(); ?>admin/employee/add_document/<?php echo $data->id; ?>"><b><?php echo $document_status; ?></b></a>
                                     </td>
                                     <?php }?>
-                                    <td><a href="<?php echo base_url(); ?>admin/employee/edit/<?php echo $data->id; ?>" class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> | 
-                                            <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
-											<a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-									</td>                                   
+                                    <td><a href="<?php echo base_url(); ?>admin/employee/edit/<?php echo $data->id; ?>"
+                                            class="btn btn-warning"><b><i class="fa fa-edit"></i></b></a> |
+                                        <a href="<?php echo base_url(); ?>admin/employee/view/<?php echo $data->id; ?>"
+                                            class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> |
+                                        <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
+                                        <a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $data->id; ?>"
+                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                    </td>
                                 </tr>
-                                <?php } ?>
+                                <?php $sr++; } ?>
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
@@ -146,6 +162,7 @@
                                     <th>Emp Code</th>
                                     <th>Name</th>
                                     <th>Joining Date</th>
+                                    <th>Appraisal Date</th>
                                     <th>Profile</th>
                                     <!-- <th>Vol</th> -->
                                     <th>Employment</th>

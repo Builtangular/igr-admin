@@ -29,51 +29,58 @@
                         class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
-                                <label class="control-label col-md-2">Report Id</label>
-                                <div class="col-md-8">
-                                    <input type="text" name="report_id" id="report_id" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">SKU</label>
-                                <div class="col-md-8">
-                                    <input type="text" name="sku" id="sku" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label col-md-2">Title</label>
-                                <div class="col-md-8">
+                                <div class="col-md-10">
                                     <input type="text" name="title" id="title" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label col-md-2">Report Id</label>
+                                <div class="col-md-4">
+                                    <input type="text" name="report_id" id="report_id" class="form-control" required>
+                                </div>
+                                <label class="control-label col-md-2">SKU</label>
+                                <div class="col-md-4">
+                                    <input type="text" name="sku" id="sku" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Currency</label>
+                                <div class="col-md-4">
+                                    <select class="form-control b-none" name="currency" placeholder="" required>
+                                        <option value="" selected>Select</option>
+                                        <option value="USD">USD</option>
+                                        <option value="INR">INR</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="AED">AED</option>
+                                        <option value="SAR">SAR</option>
+                                    </select>
+                                </div>
                                 <label class="control-label col-md-2">Price</label>
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <input type="text" name="price" id="price" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">License Type</label>
-                                <div class="col-md-8">
-                                    <select class="form-control b-none" name="licens_type" placeholder="">
+                                <div class="col-md-4">
+                                    <select class="form-control b-none" name="licens_type" placeholder="" required>
                                         <option value="" selected>Select License Type</option>
                                         <option value="Single User">Single User</option>
                                         <option value="Enterprise">Enterprise</option>
                                         <option value="Data Sheet">Data Sheet</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label col-md-2">Status</label>
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <div class="radio">
-                                        <label><input type="radio" name="status" value="1" checked />Active</label>
+                                        <label><input type="radio" name="status" value="1" checked />Active </label>
                                         <label><input type="radio" name="status" value="0" />Inactive</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-footer">
-                                <input type="submit" class="btn btn-primary" value="Submit">
+                                <input type="submit" class="btn btn-primary pull-right" value="Submit">
                             </div>
                     </form>
                 </div>

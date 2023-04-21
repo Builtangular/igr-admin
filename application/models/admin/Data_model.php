@@ -11,6 +11,7 @@ class Data_model extends CI_Model {
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
 		$this->db->where('status', 3);
+		$this->db->order_by('id',"desc");
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -23,6 +24,7 @@ class Data_model extends CI_Model {
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
 		$this->db->where('status', $status);
+		$this->db->order_by('id',"desc");
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -36,8 +38,7 @@ class Data_model extends CI_Model {
 		$this->db->select("*");
 		$this->db->from("tbl_rd_data");
 		$this->db->where(array('created_user' => $Login_user_name, 'status'=> 0));
-		$this->db->where('status', 0);
-		$this->db->order_by('id',"DESC");
+		$this->db->order_by('id',"desc");
 		$sql = $this->db->get();
 		/* echo $this->otherdb->last_query();
 		die; */
@@ -330,19 +331,20 @@ class Data_model extends CI_Model {
 	}
 	/******** pooja work ***************/
 	function count_global_report(){
-		$this->admindb->where('status','1');
-		$result = $this->admindb->get('igr_global_reports');
+		$this->db->where(array('scope_id' => 1, 'status' => '3'));
+		$result = $this->db->get('tbl_rd_data');
 		$result = $result->num_rows();
 		return $result;
 	}
 	function count_country_report(){
-		$this->admindb->where('status','1');
-		$result = $this->admindb->get('igr_country_reports');
+		$this->db->where('status','1');
+		$result = $this->db->get('tbl_country_rd');
 		$result = $result->num_rows();
 		return $result;
 	}
 	function count_region_report(){
-		$result = $this->admindb->get('igr_regional_reports');
+		$this->db->where(array('scope_id!=' => 1, 'status' => '3'));
+		$result = $this->db->get('tbl_rd_data');
 		$result = $result->num_rows();
 		return $result;
 	}

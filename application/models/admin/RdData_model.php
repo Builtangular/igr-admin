@@ -21,10 +21,10 @@ class RdData_model extends CI_Model {
 		}
 	}
 	public function get_global_rd_titles(){
-		$this->db->select("*");
+		$this->db->select("id, title, scope_id, forecast_from, forecast_to, status, created_user, updated_at");
 		$this->db->from("tbl_rd_data");
 		// $this->db->where('status', $status);
-		$this->db->order_by("id", "desc");
+		$this->db->order_by("id", "DESC");
 		$sql = $this->db->get();
 		// echo $this->db->last_query();	die; 
 		if($sql->num_rows() > 0){			
@@ -153,6 +153,19 @@ class RdData_model extends CI_Model {
 		}else{
 			return array();
 		}
+	}
+	public function get_user_data(){
+		$this->db->select('user_id, Role_id, Full_name, Active_flag');
+		$this->db->from('tbl_user_details');
+		// $this->db->join('tbl_user_details as UD', 'UD.user_id = ULD.user_id');
+		$this->db->where(array('Role_id' => 3,'Active_flag' => '1'));		
+		$login_sql = $this->db->get();	
+		return $login_sql->result_array();	
+	}
+	public function update_rd_user($data, $report_id){
+		$this->db->where(array('id' => $report_id));
+		$result =  $this->db->update('tbl_rd_data', $data);
+		return $result;
 	}
 }
 ?>

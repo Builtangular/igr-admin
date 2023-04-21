@@ -55,7 +55,6 @@
                                     <td><?php echo $data->Report_name; ?></td>
                                     <td><?php echo $data->First_name; ?></td>
                                     <td><?php echo $data->Creation_date; ?></td>
-
                                 </tr>
                                 <?php } ?>
                             </tbody>
@@ -74,6 +73,7 @@
         </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
 <!-- Footer -->
 <footer class="main-footer">
     <!-- To the right -->
@@ -81,7 +81,7 @@
         Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2022<a href="#">Infinium</a>.</strong> All rights reserved.
+    <strong>Copyright © 2023<a href="#">Infinium</a>.</strong> All rights reserved.
 </footer>
 </div><!-- ./wrapper -->
 
@@ -97,7 +97,6 @@
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
-
 
 <script>
 $(document).ready(function() {

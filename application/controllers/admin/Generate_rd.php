@@ -94,13 +94,13 @@ class Generate_rd extends CI_Controller {
 			$main_segments= $this->RdData_model->get_rd_segments($report_id, $parent);
 			foreach($main_segments as $segments)
 			{
-				$mainseg[] = $segments->name;					
+				$mainseg[] = htmlspecialchars($segments->name);					
 					
-				$segment_name.= ltrim(rtrim($segments->name))." (";	
+				$segment_name.= ltrim(rtrim(($segments->name)))." (";	
 				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);
 				foreach($sub_segments as $subsegments)
 				{
-					$subseg[] = $subsegments->name;					
+					$subseg[] = htmlspecialchars($subsegments->name);					
 				}
 				$j= count($subseg);
 				for($i = 0; $i< $j ; $i++)
@@ -122,7 +122,7 @@ class Generate_rd extends CI_Controller {
 			}
 
 			$Meta_title = htmlspecialchars($report_title)." Size, Share, Trends, Analysis, Industry Report ".$forecast_to." | IGR";
-			$Meta_description = htmlspecialchars(strtolower($report_name_scope." covers segments, by ".$segment_name)."size, trends, CAGR, forecast up to ".$forecast_to);
+			$Meta_description = htmlspecialchars(strtolower($report_name_scope." covers segments, by ".htmlspecialchars($segment_name))."size, trends, CAGR, forecast up to ".$forecast_to);
 			$Meta_description=str_replace("amp;","",htmlspecialchars($Meta_description));
 			$Meta_keyword = htmlspecialchars(ucwords($report_name.", ".$report_name_scope.", Trends, Analysis, Share, Forecast, Drivers, Restraints, Market Research Report"));
 			
@@ -153,9 +153,9 @@ class Generate_rd extends CI_Controller {
 
 			foreach($main_segments as $segments)
 			{
-				$mainseg[] = $segments->name;					
+				$mainseg[] = htmlspecialchars($segments->name);					
 					
-				$segment_details.= ltrim(rtrim(strtolower($segments->name)))." - ";	
+				$segment_details.= ltrim(rtrim(strtolower(htmlspecialchars($segments->name))))." - ";	
 				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);
 				foreach($sub_segments as $subsegments)
 				{
@@ -181,9 +181,9 @@ class Generate_rd extends CI_Controller {
 			}
 			if($scope_name == 'Global')
 			{
-				$Report_new_title = htmlspecialchars($report_title)." (".ucwords($segment_details, " \t\r\n\f\v'")."): ".ucwords($scope_name)." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				$Report_new_title = htmlspecialchars($report_title)." (".ucwords(htmlspecialchars($segment_details), " \t\r\n\f\v'")."): ".ucwords($scope_name)." Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
 			} else {
-				$Report_new_title = htmlspecialchars($scope_name.' '.$report_title)." (".ucwords($segment_details, " \t\r\n\f\v'")."): Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
+				$Report_new_title = htmlspecialchars($scope_name.' '.$report_title)." (".ucwords(htmlspecialchars($segment_details), " \t\r\n\f\v'")."): Industry Analysis, Trends, Size, Share and Forecasts to ".$forecast_to;
 			}
 			$Report_new_title=str_replace(" And "," and ",htmlspecialchars($Report_new_title));
 			$Report_new_title=str_replace(" Of "," of ",htmlspecialchars($Report_new_title));
@@ -242,7 +242,7 @@ class Generate_rd extends CI_Controller {
 			$main_segments= $this->RdData_model->get_rd_segments($report_id, $parent);
 			foreach($main_segments as $segments)
 			{
-				$mainseg1[] = strtolower($segments->name);			
+				$mainseg1[] = strtolower(htmlspecialchars($segments->name));			
 				
 				$new_text.="On the basis of ".ltrim(rtrim(strtolower($segments->name))).", the sub-markets include ";	
 				$SubSegments=$this->RdData_model->get_rd_segments($report_id, $segments->id);
@@ -516,7 +516,7 @@ class Generate_rd extends CI_Controller {
 			$main_segments= $this->RdData_model->get_rd_segments($report_id, $parent);			
 			foreach($main_segments as $segments)
 			{
-				$mainseg[] = $segments->name;
+				$mainseg[] = htmlspecialchars($segments->name);
 			}
 			if($mainseg != NULL){
     			$j= count($mainseg);
@@ -714,9 +714,9 @@ class Generate_rd extends CI_Controller {
 			$section->addListItem('Value Chain Analysis of '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 1, 'Header', $listStyle, 'P-Style');
 			$section->addListItem('TAM SAM SOM Analysis for '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 1, 'Header', $listStyle, 'P-Style');
 			$section->addListItem('TAM SAM SOM Forecast Analysis (USD '.$value_unit.') '.$forecast_period, 2, 'Header', $listStyle, 'P-Style');
-			$section->addListItem('TAM', 2, 'Header', $listStyle, 'P-Style');
+			/* $section->addListItem('TAM', 2, 'Header', $listStyle, 'P-Style');
 			$section->addListItem('SAM', 2, 'Header', $listStyle, 'P-Style');
-			$section->addListItem('SOM', 2, 'Header', $listStyle, 'P-Style');
+			$section->addListItem('SOM', 2, 'Header', $listStyle, 'P-Style'); */
 			$section->addTextBreak(1);
 
 			/* Chapter 4 */
@@ -764,6 +764,7 @@ class Generate_rd extends CI_Controller {
 			$get_scope_regions= $this->RdData_model->get_scope_regions($scope_id);            
             foreach($get_scope_regions as $scope_region)
 			{
+				$ScRegId[] = $scope_region->id;				
 				$ScReg[] = $scope_region->name;				
 			}
 			if($ScReg != NULL){
@@ -773,16 +774,58 @@ class Generate_rd extends CI_Controller {
     				$section->addListItem(htmlspecialchars($ScReg[$i]), 1, 'Header', $listStyle, 'P-Style');
     				foreach($main_segments as $segments)
     				{
-    					$mainseg = $segments->name;
+    					$mainseg = htmlspecialchars($segments->name);
     					$region_fix = ltrim(rtrim($ScReg[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'"));
     					$region_report_title = ltrim(rtrim($ScReg[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
     					$section->addListItem(htmlspecialchars($region_report_title), 2, 'Header', $listStyle, 'P-Style');
     				}
 					if($scope_name == 'Global'){
 						if($ScReg[$i] == "RoW"){
-							$section->addListItem(htmlspecialchars($region_fix).' by Sub-region', 2, 'Header', $listStyle, 'P-Style');					
+							$section->addListItem(htmlspecialchars($region_fix).' by Sub-region', 2, 'Header', $listStyle, 'P-Style');
+							/* adding sub contries */
+							$get_scope_regions_country = $this->RdData_model->get_scope_regions($ScRegId[$i]);							
+							foreach($get_scope_regions_country as $region_country)
+							{
+								$RegCntId[] = $region_country->id;
+								$RegCnt[] = $region_country->name;		
+							}
+							if($RegCnt != NULL){
+								$c = count($RegCnt);
+								for($t = 0; $t < $c ; $t++)
+								{
+									$section->addListItem(htmlspecialchars($RegCnt[$t]).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 3, 'Header', $listStyle, 'P-Style');
+									foreach($main_segments as $segments)
+									{
+										$mainseg1 = htmlspecialchars($segments->name);										
+										$country_report_title = ltrim(rtrim($RegCnt[$t])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg1)));
+										$section->addListItem(htmlspecialchars($country_report_title), 4, 'Header', $listStyle, 'P-Style');
+									}
+								}
+								unset($RegCnt);
+							}					
 						}else{
 							$section->addListItem(htmlspecialchars($region_fix).' by Country', 2, 'Header', $listStyle, 'P-Style');
+							/* adding sub contries */
+							$get_scope_regions_country = $this->RdData_model->get_scope_regions($ScRegId[$i]);							
+							foreach($get_scope_regions_country as $region_country)
+							{
+								$RegCntId[] = $region_country->id;
+								$RegCnt[] = $region_country->name;		
+							}
+							if($RegCnt != NULL){
+								$c = count($RegCnt);
+								for($t = 0; $t < $c ; $t++)
+								{
+									$section->addListItem(htmlspecialchars($RegCnt[$t]).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 3, 'Header', $listStyle, 'P-Style');
+									foreach($main_segments as $segments)
+									{
+										$mainseg1 = htmlspecialchars($segments->name);										
+										$country_report_title = ltrim(rtrim($RegCnt[$t])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg1)));
+										$section->addListItem(htmlspecialchars($country_report_title), 4, 'Header', $listStyle, 'P-Style');
+									}
+								}
+								unset($RegCnt);
+							}
 						}
 					}
     			}
@@ -1563,7 +1606,7 @@ class Generate_rd extends CI_Controller {
     		}
 			$section->addPageBreak();
 			/* *************** /. List of Tables Only for value ********************** */
-
+			
 			/* *************** List of Figures ********************** */
 			$section->addText('List of Figures', 'Style1', 'ParaStyle1');
 			$section->addTextBreak(1);
@@ -1741,6 +1784,7 @@ class Generate_rd extends CI_Controller {
     			}
 			}
 			/* /. Regions */
+			
 			/* -------------note style------------- */
 			$PHPWord->addParagraphStyle('noteStyle', array('align'=>'left', 'spacing'=>0, 'spaceBefore' => 120, 'spaceAfter' =>0));
 			$PHPWord->addFontStyle('noteFont', array('align'=>'left', 'size'=>10.5,'name'=>'Franklin Gothic Medium', 'color'=>'red', 'underline' => 'single'));
@@ -1804,7 +1848,7 @@ class Generate_rd extends CI_Controller {
 				$listStyleBullet = array('listType'=>PhpOffice\PhpWord\Style\ListItem::TYPE_BULLET_FILLED, 'name'=>'Franklin Gothic Medium', 'size' => 10.5, 'color'=>'#78777C', 'spaceAfter'=>0, 'spaceBefore'=> 0,  'spacing'=>0);
 				$listStyleBulletEmpty = array('listType'=>PhpOffice\PhpWord\Style\ListItem::TYPE_BULLET_EMPTY , 'name'=>'Franklin Gothic Medium', 'size' => 10.5, 'color'=>'#78777C', 'spaceAfter'=>0, 'spaceBefore'=> 0,  'spacing'=>0);
 
-				$section->addText('Segmentation based on '.ucwords($segments2->name), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
+				$section->addText('Segmentation based on '.htmlspecialchars(ucwords($segments2->name)), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
 				/* sub segments */
 				$sub_segments2= $this->RdData_model->get_rd_segments($report_id, $segments2->id);	
 				foreach($sub_segments2 as $subsegments2)
@@ -1822,6 +1866,7 @@ class Generate_rd extends CI_Controller {
 				}
 			}
 			$section->addTextBreak(1);
+			
 			/* -------------------------- Source style ------------------------------ */
 			$PHPWord->addParagraphStyle('sourceStyle', array('align'=>'left', 'spacing' => 0, 'spaceBefore' => 120,'spaceAfter' => 0));
 			$PHPWord->addFontStyle('Source Note', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>8,'color'=>'#78777C'));
@@ -1973,6 +2018,7 @@ class Generate_rd extends CI_Controller {
 			}
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
+
 			$section->addListItem('Research Methodology', 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addListItem('Methodology', 2, 'childPoint', $listStyle, 'Head 2');
 			$section->addText(htmlspecialchars($research_methodology), 'r2Style', 'paragraphStyle');
@@ -2045,8 +2091,12 @@ class Generate_rd extends CI_Controller {
 			$section->addImage('images/research_approaches_bottom_up.png', array('width'=>520, 'height'=>320, 'align'=>'center'));
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
-			$section->addText(htmlspecialchars('RESEARCH APPROACHES - TOP-DOWN'), 'figureNameStyle', 'Figure _ Title');
-			$section->addImage('images/research_approaches_top_down.png', array('width'=>520, 'height'=>320, 'align'=>'center')); 
+			$section->addText(htmlspecialchars('RESEARCH APPROACHES - TOP-DOWN'), 'figureNameStyle', 'Figure _ Title');			 
+			if($forecast_period == '2023-2030'){
+				$section->addImage('images/research_approaches_top_down_2023_2030.png', array('width'=>560, 'height'=>360, 'align'=>'center'));
+			} else {
+				$section->addImage('images/research_approaches_top_down.png', array('width'=>520, 'height'=>320, 'align'=>'center'));
+			}
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
 			$section->addText(htmlspecialchars($Get_research_approaches_para1_6), 'r2Style', 'paragraphStyle');
@@ -2258,6 +2308,16 @@ class Generate_rd extends CI_Controller {
 				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 				$section->addTextBreak(1);
 			}
+			else if($forecast_period == '2023-2030')
+			{
+				if($Volume_unit){
+					$section->addImage('images/market_projection_2021_2030_volume.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+				} else {
+					$section->addImage('images/market_projection_2021_2030_value.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+				}
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				$section->addTextBreak(1);
+			}
 			else
 			{
 				if($Volume_unit){
@@ -2288,8 +2348,10 @@ class Generate_rd extends CI_Controller {
 			{
 				$section->addImage('images/market_growth_by_region_2023_2029.png', array('width'=>520, 'height'=>220, 'align'=>'center'));
 			}
-			else
+			else if($forecast_period == '2023-2030')
 			{
+				$section->addImage('images/market_growth_by_region_2023_2030.png', array('width'=>520, 'height'=>280, 'align'=>'center'));
+			}else{
 				$section->addText('ADD REGION GROWTH IMAGE', array('font'=>'Franklin Gothic Medium', 'size'=>18, 'align'=>'both'));
 			}
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -2496,6 +2558,8 @@ class Generate_rd extends CI_Controller {
 					$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2022-2028-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 				}else if($forecast_period == '2023-2029'){
 					$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2023-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}else if($forecast_period == '2023-2030'){
+					$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2023-2030-Pie.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 				}else{
 					$section->addText('Add image of segment-revenue-share Pie chart', array('size'=>12, 'color'=>'black'));
 				}
@@ -2515,7 +2579,9 @@ class Generate_rd extends CI_Controller {
 				}else if($forecast_period=='2022-2028') {
 					$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2020-2028-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
 				}else if($forecast_period=='2023-2029')	{
-					$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2027-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+					$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2029-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+				}else if($forecast_period=='2023-2030')	{
+					$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2030-bar.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 				}else {
 					$section->addText('Add image of segment-revenue-share bar chart', array('size'=>12, 'color'=>'black'));
 				}
@@ -2541,6 +2607,9 @@ class Generate_rd extends CI_Controller {
 				$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 				$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 				$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+				if($forecast_period =='2023-2030') {
+					$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+				}
 				$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 				$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 				// Add more rows / cells for sub segment
@@ -2561,6 +2630,9 @@ class Generate_rd extends CI_Controller {
 					$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 					$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 					$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+					if($forecast_period =='2023-2030') {
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+					}
 					$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 					$n++;
 				}
@@ -2577,6 +2649,9 @@ class Generate_rd extends CI_Controller {
 					$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 					$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 					$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+					if($forecast_period =='2023-2030') {
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+					}
 					$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 				$section->addTextBreak(1);
@@ -2600,6 +2675,9 @@ class Generate_rd extends CI_Controller {
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+					if($forecast_period =='2023-2030') {
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+					}
 					$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 					$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');					
 					// Add more rows / cells for sub segment
@@ -2620,6 +2698,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');					
 						$n++;
 					}
@@ -2636,6 +2717,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');					
 					$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 					$section->addTextBreak(1);
@@ -2690,6 +2774,9 @@ class Generate_rd extends CI_Controller {
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+					if($forecast_period =='2023-2030') {
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+					}
 					$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 					$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 					// Add more rows / cells region
@@ -2710,6 +2797,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$n++;
 					}
@@ -2726,6 +2816,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 					
 					$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -2752,6 +2845,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+						}
 						$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 						$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 						// Add more rows / cells region
@@ -2772,6 +2868,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$n++;
 						}
@@ -2788,6 +2887,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						
 						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -2838,6 +2940,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+							}
 							$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 							$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 							// Add more rows / cells
@@ -2858,6 +2963,9 @@ class Generate_rd extends CI_Controller {
 								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+								if($forecast_period =='2023-2030') {
+									$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+								}
 								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 								$n++;
 							}
@@ -2874,6 +2982,9 @@ class Generate_rd extends CI_Controller {
 								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+								if($forecast_period =='2023-2030') {
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+								}
 								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							
 							$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -2899,6 +3010,9 @@ class Generate_rd extends CI_Controller {
 								$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 								$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 								$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+								if($forecast_period =='2023-2030') {
+									$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+								}
 								$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 								$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 								// Add more rows / cells
@@ -2919,6 +3033,9 @@ class Generate_rd extends CI_Controller {
 									$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 									$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 									$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									}
 									$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 									$n++;
 								}
@@ -2935,6 +3052,9 @@ class Generate_rd extends CI_Controller {
 									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									}
 									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 								
 								$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -2995,9 +3115,15 @@ class Generate_rd extends CI_Controller {
 				} else {
 					$section->addImage('images/sample/xyz-market-by-country-2022-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 				}				
+			} else if($forecast_period == '2023-2030') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2022-2030-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2022-2030-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}				
 			} else {
 				$section->addText('add image of xyz-market-by-region-Pie', array('size'=>12, 'color'=>'black'));
-			}
+			}			
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
 			$section->addTextBreak(1);
@@ -3021,6 +3147,12 @@ class Generate_rd extends CI_Controller {
 				} else {
 					$section->addImage('images/sample/xyz-market-by-country-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 				}
+			} else if($forecast_period == '2023-2030') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}
 			} else {
 				$section->addText('add image of xyz-market-by-region-Pie', array('size'=>12, 'color'=>'black'));
 			}
@@ -3040,6 +3172,9 @@ class Generate_rd extends CI_Controller {
 			$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 			$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 			$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+			if($forecast_period =='2023-2030') {
+				$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+			}
 			$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 			$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 			// Add more rows / cells
@@ -3063,6 +3198,9 @@ class Generate_rd extends CI_Controller {
 				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				if($forecast_period =='2023-2030') {
+					$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				}
 				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$n++;
 			}
@@ -3079,6 +3217,9 @@ class Generate_rd extends CI_Controller {
 				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				if($forecast_period =='2023-2030') {
+					$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				}
 				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 				
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -3104,6 +3245,9 @@ class Generate_rd extends CI_Controller {
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+					if($forecast_period =='2023-2030') {
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+					}
 					$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 					$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 					// Add more rows / cells
@@ -3125,6 +3269,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
 						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$n++;
 					}
@@ -3142,6 +3289,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
 						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						
 					$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -3202,6 +3352,8 @@ class Generate_rd extends CI_Controller {
 								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2020-2028-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
 							} else if($forecast_period == '2023-2029') {
 								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2029-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+							} else if($forecast_period == '2023-2030') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2030-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
 							} else {
 								$section->addText('add image of xyz-market-by-segment-revenue-share-Bar', array('size'=>12, 'color'=>'black'));
 							}
@@ -3225,6 +3377,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+						}
 						$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 						$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 						// Add more rows / cells
@@ -3245,6 +3400,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$n++;
 						}
@@ -3261,6 +3419,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');						
 						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 						$section->addTextBreak(1);
@@ -3283,6 +3444,8 @@ class Generate_rd extends CI_Controller {
 							$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 						} else if($forecast_period == '2023-2029') {
 							$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						} else if($forecast_period == '2023-2030') {
+							$section->addImage('images/sample/xyz-market-by-region-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 						} else {
 							$section->addText('Add xyz-market-by-region Bar chart image', array('size'=>12, 'color'=>'black'));
 						}
@@ -3303,6 +3466,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+						}
 						$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 						$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 						// Add more rows / cells
@@ -3323,6 +3489,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$n++;
 						}
@@ -3339,6 +3508,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						
 						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle'); 
@@ -3361,7 +3533,9 @@ class Generate_rd extends CI_Controller {
 						} else if($forecast_period =='2022-2028') {
 							$section->addImage('images/sample/countries-2020-2028-bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 						} else if($forecast_period == '2023-2029') {
-							$section->addImage('images/sample/countries-2021-2029-bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+							$section->addImage('images/sample/xyz-market-by-country-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						}else if($forecast_period == '2023-2030') {
+							$section->addImage('images/sample/xyz-market-by-country-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
 						} else {
 							$section->addText('Add xyz-market-by-countries Bar chart image', array('size'=>12, 'color'=>'black'));
 						}
@@ -3382,6 +3556,9 @@ class Generate_rd extends CI_Controller {
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
 						$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+						}
 						$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
 						$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 						// Add more rows / cells
@@ -3403,6 +3580,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$n++;
 						}
@@ -3419,6 +3599,9 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
 							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
 						
 						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle'); 
@@ -3456,6 +3639,8 @@ class Generate_rd extends CI_Controller {
     										$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
     									}else if($forecast_period =='2023-2029') {
     										$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									}else if($forecast_period =='2023-2030') {
+    										$section->addImage('images/sample/xyz-market-by-region-2021-2030-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
     									}
     										$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
     										$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
@@ -3469,6 +3654,8 @@ class Generate_rd extends CI_Controller {
     										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2020-2028-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
     									} else if($forecast_period =='2023-2029') {
     										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2029-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									} else if($forecast_period =='2023-2030') {
+    										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2030-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
     									}
     										$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
     										$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
@@ -3490,6 +3677,9 @@ class Generate_rd extends CI_Controller {
     								$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
     								$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
     								$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+									if($forecast_period =='2023-2030') {
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+									}
     								$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
     								$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
     								$n = 0;
@@ -3509,6 +3699,9 @@ class Generate_rd extends CI_Controller {
     								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
     								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
     								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									}
     								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
     								$n++;
     							}
@@ -3525,6 +3718,9 @@ class Generate_rd extends CI_Controller {
     								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
     								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
     								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									}
     								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
     							
     								$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -3824,6 +4020,8 @@ class Generate_rd extends CI_Controller {
 				$templateProcessor->setValue('section', "countries"); 
 			}
 
+			// var_dump($Scope_Region); die;
+			// echo date('H:i:s'), ' Saving the result document...', EOL;
 			// $templateProcessor->saveAs('results/Sample_07_TemplateCloneRow.docx');
 			$new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));		
 			$new_file_name1=str_replace("/","-", $new_file_name);

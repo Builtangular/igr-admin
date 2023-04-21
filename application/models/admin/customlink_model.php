@@ -18,10 +18,12 @@ class Customlink_model extends CI_Model {
             'report_id'         =>$this->input->post('report_id'),
             'sku'               =>$this->input->post('sku'),
 			'title'             =>$this->input->post('title'),
+			'currency'          =>$this->input->post('currency'),
 			'price'             =>$this->input->post('price'),
 			'licens_type'       =>$this->input->post('licens_type'),
 			'status'            =>$this->input->post('status'),
 			'created_at'        =>date('Y-m-i'),
+			'updated_at'        =>date('Y-m-i'),
 		);
 		$res = $this->db->insert('tbl_rd_custom_link', $data);
 		return $res;
@@ -44,12 +46,12 @@ class Customlink_model extends CI_Model {
             'report_id'         =>$this->input->post('report_id'),
             'sku'               =>$this->input->post('sku'),
             'title'             =>$this->input->post('title'),
+            'currency'          =>$this->input->post('currency'),
 			'price'             =>$this->input->post('price'),
 			'licens_type'       =>$this->input->post('licens_type'),
 			'status'            =>$this->input->post('status'),
-            'created_at'        =>date('Y-m-d')
+            'updated_at'        =>date('Y-m-d')
             );
-            // var_dump($update);die;
         $this->db->where('id',$id);
         $result= $this->db->update('tbl_rd_custom_link', $update);
         // echo $this->db->last_query();die;

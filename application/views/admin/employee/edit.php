@@ -2,6 +2,8 @@
 
 <?php $Period = array('2010' , '2011' , '2012' , '2013' , '2014' , '2015' , '2016' , '2017' , '2018' , '2019' , '2020' , '2021' , '2022' , '2023' , '2024' , '2025' , '2026' , '2027' , '2028' , '2029' , '2030' , '2031' , '2032' , '2033' , '2034' , '2035' , '2036' , '2037' , '2038' , '2039' , '2040' , '2041' , '2042' , '2043' , '2044' , '2045' , '2046' , '2047' , '2048' , '2049' , '2050' , '2051' , '2052' , '2053' , '2054' , '2055' , '2056' , '2057' , '2058' , '2059' , '2060' , '2061' , '2062' , '2063' , '2064' , '2065' , '2066' , '2067' , '2068' , '2069' , '2070' , '2071' , '2072' , '2073' , '2074' , '2075' , '2076' , '2077' , '2078' , '2079' , '2080' , '2081' , '2082' , '2083' , '2084' , '2085' , '2086' , '2087' , '2088' , '2089' , '2090' , '2091' , '2092' , '2093' , '2094' , '2095' , '2096' , '2097' , '2098' , '2099');
 $Prefix = array('Mr.', 'Mrs.', 'Miss.');
+$Departments = array('Account', 'Research', 'Marketing', 'Business Department', 'IT', 'Back Office', 'HR', 'Sales', 'Graphics');
+$Education_type = array('Diploma', 'Graduation', 'Post Graduation');
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -66,7 +68,8 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                     <div class="col-md-3">
                                         <b>Next Appraisal Date </b>
                                         <input type="date" id="appraisal_date" name="appraisal_date"
-                                            class="form-control" placeholder="Appraisal Date">
+                                            class="form-control" value="<?php echo $employee_data->appraisal_date;?>"
+                                            placeholder="Appraisal Date">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -116,16 +119,26 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                     </div>
                                     <div class="col-md-3">
                                         <label>Gender <span class="text-red">*</span></label><br>
-                                        <input type="radio" name="gender" value="Male" checked /> Male &nbsp;&nbsp;
-                                        <input type="radio" name="gender" value="Female" /> Female
+                                        <input type="radio" name="gender" value="Male"
+                                            <?php echo ($employee_data->gender=="Male")?'checked':'' ?> /> Male
+                                        &nbsp;&nbsp;
+                                        <input type="radio" name="gender" value="Female"
+                                            <?php echo ($employee_data->gender=="Female")?'checked':'' ?> /> Female
                                     </div>
                                     <div class="col-md-3">
-                                        
+                                        <label>User Type <span class="text-red">*</span></label><br>
+                                        <input type="radio" name="user_type" value="Fresher"
+                                            <?php echo ($employee_data->user_type=="Fresher")?'checked':'' ?> /> Fresher
+                                        &nbsp;&nbsp;
+                                        <input type="radio" name="user_type" value="Experienced"
+                                            <?php echo ($employee_data->user_type=="Experienced")?'checked':'' ?> />
+                                        Experienced
                                     </div>
                                     <div class="col-md-3">
                                         <b>Resignation Date </b>
                                         <input type="date" id="resignation_date" name="resignation_date"
-                                            class="form-control"  value="<?php echo $employee_data->resignation_date;?>" placeholder="Termination Date">
+                                            class="form-control" value="<?php echo $employee_data->resignation_date;?>"
+                                            placeholder="Termination Date">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -165,11 +178,13 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                     <div class="col-md-2">
                                         <select class="form-control b-none" name="marital_status"
                                             value="<?php echo $employee_data->marital_status;?>" id="marital_status"
-                                            placeholder="" onChange="visacatOnchange();">
-                                            <option value="<?php echo $employee_data->marital_status; ?>" selected>
-                                                <?php echo $employee_data->marital_status; ?></option>
-                                            <option value="Single">Single</option>
-                                            <option value="Married">Married</option>
+                                            placeholder="">
+                                            <option value="Single"
+                                                <?php echo ($employee_data->marital_status=="Single")?'selected':'' ?>>
+                                                Single</option>
+                                            <option value="Married"
+                                                <?php echo ($employee_data->marital_status=="Married")?'selected':'' ?>>
+                                                Married</option>
                                         </select>
                                     </div>
                                     <?php if($employee_data->marital_status == 'Single'){ ?>
@@ -206,7 +221,7 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                     </div>
                                     <div class="col-md-5">
                                         <textarea name="current_address" id="current_address" rows="5"
-                                             class="form-control"
+                                            class="form-control"
                                             placeholder="Current Address"><?php echo $employee_data->current_address;?></textarea>
                                     </div>
                                 </div>
@@ -245,7 +260,8 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
                                         <input type="text" id="aadhaar_no" name="aadhaar_no" class="form-control"
-                                            value="<?php echo $employee_data->adhar_no;?>" placeholder="Aadhar Number">
+                                            value="<?php echo $employee_data->aadhaar_no;?>"
+                                            placeholder="Aadhar Number">
                                         <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                     <div class="col-md-3">
@@ -264,13 +280,25 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                     <label class="control-label col-md-2">Education <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-2">
-                                        <select class="form-control b-none" name="education_type">
+                                        <select class="form-control b-none" name="education_type" required>
+                                            <option value="">Select</option>
+                                            <?php $i = 0; foreach($Education_type as $education) {
+                                                if ($Education_type[$i] == $employee_data->education_type){ ?>
+                                            <option value="<?php echo $employee_data->education_type; ?>" Selected>
+                                                <?php echo $employee_data->education_type; ?></option>
+                                            <?php }else{ ?>
+                                            <option value="<?php echo $Education_type[$i]; ?>">
+                                                <?php echo $Education_type[$i]; ?>
+                                            </option>
+                                            <?php } $i++; }  ?>
+                                        </select>
+                                        <!-- <select class="form-control b-none" name="education_type">
                                             <option value="<?php echo $employee_data->education_type; ?>" selected>
                                                 <?php echo $employee_data->education_type; ?></option>
                                             <option value="Diploma">Diploma</option>
                                             <option value="Graduation">Graduation</option>
                                             <option value="Post Graduate">Post Graduate</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" id="degree" name="degree" class="form-control"
@@ -288,7 +316,20 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                     <label class="control-label col-md-2">Job Details <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-4">
-                                        <select class="form-control b-none" name="department">
+
+                                        <select class="form-control b-none" name="department" required>
+                                            <option value="">Select</option>
+                                            <?php $i = 0; foreach($Departments as $department) {
+                                                if ($Departments[$i] == $employee_data->department){ ?>
+                                            <option value="<?php echo $employee_data->department; ?>" Selected>
+                                                <?php echo $employee_data->department; ?></option>
+                                            <?php }else{ ?>
+                                            <option value="<?php echo $Departments[$i]; ?>">
+                                                <?php echo $Departments[$i]; ?>
+                                            </option>
+                                            <?php } $i++; }  ?>
+                                        </select>
+                                        <!-- <select class="form-control b-none" name="department">
                                             <option value="<?php echo $employee_data->department; ?>" selected>
                                                 <?php echo $employee_data->department; ?></option>
                                             <option value="Account">Account</option>
@@ -300,7 +341,7 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                                             <option value="HR">HR</option>
                                             <option value="Sales">Sales</option>
                                             <option value="Graphics">Graphics</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" id="job_profile" name="job_profile"
@@ -339,6 +380,8 @@ $Prefix = array('Mr.', 'Mrs.', 'Miss.');
                             </div>
                         </div>
                         <div class="box-footer">
+                            <a href="<?php echo base_url(); ?>admin/employee"
+                                class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
                             <input type="hidden" name="id" class="form-control" id="id"
                                 value="<?php if(!empty($employee_data)){echo $employee_data->id;}?>">
                             <input type="submit" class="btn btn-info pull-right" value="Update">

@@ -275,9 +275,9 @@ function changeyear(inputYear) {
     var FromPeriod
     var ToPeriod */
 
-    var To_forecast = parseInt(inputYear) + parseInt(6);
+    var To_forecast = parseInt(inputYear) + parseInt(7);
     var From_Period = parseInt(inputYear) - parseInt(2);
-    var To_Period = parseInt(inputYear) + parseInt(6);
+    var To_Period = parseInt(inputYear) + parseInt(7);
     // $("#To_forecast_period option[value='United State']");
     //alert(To_forecast);
     $("#forecast_to").val(To_forecast);

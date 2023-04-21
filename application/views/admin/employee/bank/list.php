@@ -44,7 +44,8 @@
                                     <th>Id</th>
                                     <th>Bank Name</th>
                                     <th>Account Name</th>
-                                    <th>Branch Name</th>
+                                    <th>Account Number</th>
+                                    <th>IFSC Code</th>
                                     <th>Type</th>
                                     <th colspan="2">Action</th>
                                 </tr>
@@ -57,9 +58,10 @@
                                     <td><?php echo $i++; ?></td>
                                     <td><?php echo $list->bank_name; ?></td>
                                     <td><?php echo $list->ac_name; ?></td>
-                                    <td><?php echo $list->branch_name; ?></td>
+                                    <td><?php echo $list->ac_no; ?></td>
+                                    <td><?php echo $list->ifsc_code; ?></td>
                                     <td><?php echo $list->type; ?></td>
-                                    <td> 
+                                    <!-- <td>
                                         <form
                                             action="<?php echo base_url();?>admin/employee/edit_bank/<?php echo $list->id;?>"
                                             method="post">
@@ -67,9 +69,15 @@
                                                 value="<?php echo $list->emp_id; ?>">
                                             <input type="submit" class="btn btn-warning" value="Edit">
                                         </form>
-                                    </td>                                   
-                                    <td><a href="<?php echo base_url();?>admin/employee/delete_bank/<?php echo $list->id;?>"
-                                            class="btn btn-danger" type="submit">Delete</a></td>
+                                    </td> -->
+                                    <td>
+                                        <a href="<?php echo base_url(); ?>admin/employee/edit_bank/<?php echo $list->id; ?>"
+                                            class="btn btn-warning"><b><i class="fa fa-edit"></i></b></a> |
+                                        <a href="<?php echo base_url(); ?>admin/employee/view_bank/<?php echo $list->id; ?>"
+                                            class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> |
+                                        <a href="<?php echo base_url();?>admin/employee/delete_bank/<?php echo $list->id;?>"
+                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                    </td>
                                 </tr>
                                 <?php } ?>
                             </tbody>

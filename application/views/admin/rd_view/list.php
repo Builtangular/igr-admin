@@ -39,6 +39,14 @@
                     <div class="box-body">
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
+                                <?php if($Role_id == 8){ ?>
+                                    <tr style="font-size: 14px;">
+                                        <th>Id</th>
+                                        <th>Scope</th>
+                                        <th>Title</th>
+                                        <th>DRO</th>
+                                    </tr>
+                                <?php } else { ?>
                                 <tr style="font-size: 14px;">
                                     <th style="width: 75px;">Action</th>
                                     <th>Id</th>
@@ -61,32 +69,34 @@
                                     <?php } */ ?>
                                     <!-- <th style="width: 75px;">Action</th> -->
                                 </tr>
+                                <?php } ?>
                             </thead>
                             <tbody>
-                                <?php foreach($Published_rds as $data){ /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
+                                <?php foreach($Published_rds as $data){ /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ 
+                                $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
 								$query = $this->db->query($sql);
 								if ($query->num_rows() > 0) { $rd_company = $query->row(); }
 								$sql_seg = "SELECT COUNT(report_id) AS rd_segments FROM tbl_rd_segments where report_id = ".$data->id." And parent_id = 0";
 								$query_seg = $this->db->query($sql_seg);
 								if ($query_seg->num_rows() > 0) { $rd_segment = $query_seg->row(); }
-								$sql_img = "SELECT * FROM tbl_rd_image where report_id = ".$data->id;
+								$sql_img = "SELECT id FROM tbl_rd_image where report_id = ".$data->id;
 								$query_img = $this->db->query($sql_img);
 								/* if ($query_img->num_rows() > 0) { $rd_image = "<img src=\"http://localhost/igr_admin/assets/admin/img-rd/global-automotive-display-system-market.jpg\" class=\"fa \" alt=\"User Image\" style=\"height:20px; width: 40px;\"> <br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";} */
 								if ($query_img->num_rows() > 0) { $rd_image = "<i class=\"fa fa-image\"></i><br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";}
                                 /* Market Insight */
-                                $market_insight = "SELECT * FROM tbl_rd_market_insight_data where report_id = ".$data->id;
+                                $market_insight = "SELECT id FROM tbl_rd_market_insight_data where report_id = ".$data->id;
 								$query_market_insight = $this->db->query($market_insight);
 								if ($query_market_insight->num_rows() > 0) { $insight_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$insight_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* Report DROs */
-                                $dro_reports = "SELECT * FROM tbl_rd_dro_data where report_id = ".$data->id;
+                                $dro_reports = "SELECT id FROM tbl_rd_dro_data where report_id = ".$data->id;
 								$query_dro_reports = $this->db->query($dro_reports);
                                 if ($query_dro_reports->num_rows() > 0) { $dro_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$dro_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* Segment Overview */
-                                $segment_overview = "SELECT * FROM tbl_rd_segment_overview where report_id = ".$data->id;
+                                $segment_overview = "SELECT id FROM tbl_rd_segment_overview where report_id = ".$data->id;
 								$query_segment_overview = $this->db->query($segment_overview);
                                 if ($query_segment_overview->num_rows() > 0) { $segment_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$segment_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* PR2 Writeup */
-                                $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = ".$data->id;
+                                $pr2_reports = "SELECT id FROM tbl_rd_pr2_data where report_id = ".$data->id;
 								$query_pr2_reports = $this->db->query($pr2_reports);
                                 if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$pr2_reports_status = "<i class=\"fa fa-plus\"></i><br>Add";}
 								$ScopeList = $this->Data_model->get_scope_master();	
@@ -96,6 +106,22 @@
                                     }
                                 }
                                 ?>
+                                <?php if($Role_id == 8){ ?>
+                                    <tr style="font-size: 14px;">
+                                        <td><?php echo $data->id; ?></td>                                    
+                                        <td><?php echo $scope_name; ?></td>
+                                        <td><?php echo $data->title; ?></td>
+                                        <?php if($query_dro_reports->num_rows() > 0){ ?>
+                                        <td><a
+                                                href="<?php echo base_url(); ?>admin/dro-reports/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
+                                        </td>
+                                        <?php } else {?>
+                                        <td><a
+                                                href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
+                                        </td>
+                                        <?php }?>
+                                    </tr>
+                                <?php } else { ?>
                                 <tr style="font-size: 14px;">
                                     <td class="">
                                         <a href="<?php echo base_url()?>admin/generate_rd/rd_1/?report_id=<?php echo $data->id;?>"
@@ -111,7 +137,8 @@
                                             title="Get Sample Pages"><b><i class="fa fa-download"></i> &nbsp;Sample</b>
                                         </a> <br />
                                         <a href="<?php echo base_url()?>admin/generate_rd/mail_draft/?report_id=<?php echo $data->id;?>"
-                                            title="Get Sample Pages Mail Draft"><b><i class="fa fa-download"></i> &nbsp;Mail Draft</b>
+                                            title="Get Sample Pages Mail Draft"><b><i class="fa fa-download"></i>
+                                                &nbsp;Mail Draft</b>
                                         </a>
                                     </td>
                                     <td class="text-center"><?php echo $data->id; ?></td>
@@ -121,7 +148,22 @@
                                     <td><?php echo $data->forecast_from.'-'.$data->forecast_to; ?></td>
                                     <!--<td><?php // echo $data->analysis_from.'-'.$data->analysis_to; ?></td>-->
                                     <!-- <td><?php // echo $data->is_volume_based; ?></td> -->
-                                    <td class="te   xt-center"><a
+                                    <?php if($data->status == 3){ ?>
+                                        <td class="text-center"><?php echo $rd_segment->rd_segments." segments"; ?></td>
+                                        <td class="text-center"><?php echo $rd_company->rd_companies." companies"; ?></td>
+                                        <!-- <td class="text-center"><?php echo $data->status; ?></td> -->
+                                        <?php if($query_market_insight->num_rows() > 0){ ?>
+                                        <td class="text-center"><b><?php echo "Added"; ?></b></td>
+                                        <?php } else { ?>
+                                        <td class="text-center"><b><?php echo "NA"; ?></b></td>
+                                        <?php } ?>
+                                        <?php if($query_dro_reports->num_rows() > 0){ ?>
+                                        <td class="text-center"><b><?php echo "Added"; ?></b></td>
+                                        <?php }else {?>
+                                            <td class="text-center"><b><?php echo "NA"; ?></b></td>
+                                    <?php } ?>
+                                    <?php }else{ ?>
+                                    <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/segment/<?php echo $data->id; ?>"><b><i
                                                     class="fa fa-pencil"></i>
                                                 List</b></a><br><?php echo $rd_segment->rd_segments." segment"; ?></td>
@@ -147,7 +189,8 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/dro-reports/add/<?php echo $data->id; ?>"><b><?php echo $dro_status; ?></b></a>
                                     </td>
-                                    <?php }?>
+                                    <?php } ?>
+                                    <?php } ?>
                                     <?php if($query_segment_overview->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/segment_overview/edit/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
@@ -179,9 +222,17 @@
                                                     class="fa fa-globe"></i> <br />Create</b></a></td>
                                     <?php } }  */ ?>
                                 </tr>
-                                <?php  }  ?>
+                                <?php  } } ?>
                             </tbody>
                             <tfoot>
+                                <?php if($Role_id == 8){ ?>
+                                    <tr style="font-size: 14px;">
+                                        <th>Id</th>
+                                        <th>Scope</th>
+                                        <th>Title</th>
+                                        <th>DRO</th>
+                                    </tr>
+                                <?php } else { ?>
                                 <tr style="font-size: 14px;">
                                     <th style="width: 75px;">Action</th>
                                     <th>Id</th>
@@ -202,8 +253,8 @@
                                     <th>Image</th>
                                     <th>Country</th>
                                     <?php } */ ?>
-
                                 </tr>
+                                <?php } ?>
                             </tfoot>
                         </table>
                     </div>
@@ -245,14 +296,13 @@ $(document).ready(function() {
 
 <script>
 $(function() {
-    $('#rddata').DataTable()
-    $('#example2').DataTable({
+    $('#rddata').DataTable({
         'paging': true,
-        'lengthChange': false,
-        'searching': false,
-        'ordering': true,
+       /*  'lengthChange': true,
+        'searching': true,
+        'ordering': false,
         'info': true,
-        'autoWidth': false
+        'autoWidth': true */
     })
 })
 </script>

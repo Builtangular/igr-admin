@@ -120,6 +120,9 @@ $route['sales/enquiry-query'] ='admin/queries/enquiry_list';
 $route['admin/spam-mail'] ='admin/Spam_Mail';
 $route['admin/spam-mail/list'] ='admin/Spam_Mail/list';
 $route['admin/Spam_Mail/insert'] ='admin/Spam_Mail/insert';
+$route['admin/spam-mail/edit/(:any)'] ='admin/Spam_Mail/edit/$1';
+$route['admin/spam-mail/update/(:any)'] ='admin/Spam_Mail/update/$1';
+$route['admin/Spam_Mail/delete/(:any)'] ='admin/Spam_Mail/delete/$1';
 $route['admin/spam-mail/import_file'] ='admin/Spam_Mail/import_file';
 $route['admin/spam_mail/export_data'] ='admin/Spam_Mail/export_data';
 
@@ -130,3 +133,6 @@ $route['admin/generate-invoice'] ='admin/invoice/add_invoice';
 /* employee urls */
 $route['admin/employee/employee_document/(:num)'] ='admin/Employee/employee_document/$1';
 $route['admin/employee/upload_employee_documents/(:num)'] ='admin/employee/upload_employee_documents/$1';
+
+/* user register urls */
+$route['admin/register-user'] ='admin/register_user';

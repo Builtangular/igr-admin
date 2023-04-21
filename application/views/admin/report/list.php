@@ -20,7 +20,6 @@
     <!-- Main content -->
     <section class="content">
         <!-- Your Page Content Here -->
-
         <div class='row'>
             <div class="col-md-12">
                 <div class="box box-primary">
@@ -63,30 +62,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($Global_Rds as $data){ /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
+                                <?php foreach($Global_Rds as $data){ 
+                                /* $sql ="SELECT * FROM tbl_rd_companies where report_id = ".$data->id; */ 
+                                $sql = "SELECT COUNT(report_id) AS rd_companies FROM tbl_rd_companies where report_id = ".$data->id;
 								$query = $this->db->query($sql);
 								if ($query->num_rows() > 0) { $rd_company = $query->row(); }
 								$sql_seg = "SELECT COUNT(report_id) AS rd_segments FROM tbl_rd_segments where report_id = ".$data->id." And parent_id = 0";
 								$query_seg = $this->db->query($sql_seg);
 								if ($query_seg->num_rows() > 0) { $rd_segment = $query_seg->row(); }
-								$sql_img = "SELECT * FROM tbl_rd_image where report_id = ".$data->id;
+								$sql_img = "SELECT id FROM tbl_rd_image where report_id = ".$data->id;
 								$query_img = $this->db->query($sql_img);
 								/* if ($query_img->num_rows() > 0) { $rd_image = "<img src=\"http://localhost/igr_admin/assets/admin/img-rd/global-automotive-display-system-market.jpg\" class=\"fa \" alt=\"User Image\" style=\"height:20px; width: 40px;\"> <br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";} */
 								if ($query_img->num_rows() > 0) { $rd_image = "<i class=\"fa fa-image\"></i><br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";}
                                 /* Market Insight */
-                                $market_insight = "SELECT * FROM tbl_rd_market_insight_data where report_id = ".$data->id;
+                                $market_insight = "SELECT id FROM tbl_rd_market_insight_data where report_id = ".$data->id;
 								$query_market_insight = $this->db->query($market_insight);
 								if ($query_market_insight->num_rows() > 0) { $insight_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$insight_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* Report DROs */
-                                $dro_reports = "SELECT * FROM tbl_rd_dro_data where report_id = ".$data->id;
+                                $dro_reports = "SELECT id FROM tbl_rd_dro_data where report_id = ".$data->id;
 								$query_dro_reports = $this->db->query($dro_reports);
                                 if ($query_dro_reports->num_rows() > 0) { $dro_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$dro_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* Segment Overview */
-                                $segment_overview = "SELECT * FROM tbl_rd_segment_overview where report_id = ".$data->id;
+                                $segment_overview = "SELECT id FROM tbl_rd_segment_overview where report_id = ".$data->id;
 								$query_segment_overview = $this->db->query($segment_overview);
                                 if ($query_segment_overview->num_rows() > 0) { $segment_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$segment_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* PR2 Writeup */
-                                $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = ".$data->id;
+                                $pr2_reports = "SELECT id FROM tbl_rd_pr2_data where report_id = ".$data->id;
 								$query_pr2_reports = $this->db->query($pr2_reports);
                                 if ($query_pr2_reports->num_rows() > 0) { $pr2_reports_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$pr2_reports_status = "<i class=\"fa fa-plus\"></i><br>Add";}
 								/* get scope data */
@@ -157,15 +158,17 @@
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a>
                                     </td>
-                                    <?php if($data->country_status == 1){ ?>
+                                    <?php if($data->scope_id == 1){  if($data->country_status == 1){ ?>
                                     <td class="text-center text-yellow"><i class="fa fa-check-circle"></i><br /><b>
                                             Created</b></td>
                                     <?php }else { ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/country_rd/create/<?php echo $data->id; ?>"><b><i
                                                     class="fa fa-globe"></i> <br />Create</b></a></td>
-                                    <?php }?>
-                                    <?php }?>
+                                    <?php }} else { ?>
+                                        <td class="text-center text-red"><i class="fa fa-cross"></i><br /><b>
+                                            NA</b></td>
+                                    <?php } }?>
                                     <td>
                                         <?php if($data->status == 3){ ?>
                                             <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>"
@@ -187,14 +190,13 @@
                                     <th>Title</th>
                                     <th>Cat</th>
                                     <th>Forecast</th>
-                                    <!-- <th>Analysis</th> -->
                                     <!-- <th>Vol</th> -->
                                     <th>Segment</th>
                                     <th>Company</th>
                                     <!-- <th>Status</th> -->
                                     <th>Insight</th>
                                     <th>DRO</th>
-                                    <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?>                                    
+                                    <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?> 
                                     <th>Overview</th>
                                     <th>PR2</th>
                                     <?php } ?>
@@ -219,7 +221,7 @@
         Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2022 <a href="#">Infinium</a>.</strong> All rights reserved.
+    <strong>Copyright © 2023 <a href="#">Infinium</a>.</strong> All rights reserved.
 </footer>
 </div><!-- ./wrapper -->
 
@@ -236,7 +238,6 @@
 <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
 
-
 <script>
 $(document).ready(function() {
     $('.sidebar-menu').tree()
@@ -245,8 +246,14 @@ $(document).ready(function() {
 
 <script>
 $(function() {
-     $('#rddata').DataTable({
-        'ordering'    : false,
+    $('#rddata').DataTable({
+        'paging': true,
+        'ordering': false,
+       /*  'lengthChange': true,
+        'searching': true,
+        'ordering': false,
+        'info': true,
+        'autoWidth': true */
     })
 })
 </script>

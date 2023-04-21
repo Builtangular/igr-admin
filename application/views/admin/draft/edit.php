@@ -104,6 +104,13 @@
                                         <input type="text" name="sku" value="<?php echo $sku; ?>" class="form-control">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Start Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="start_year_revenue" value="<?php echo $start_year_revenue; ?>" class="form-control"
+                                            placeholder="Revenue">
+                                    </div>
+                                </div>
                                 <?php if($Role_id == 1 || $Role_id == 2){  ?>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Report Status</label>
@@ -121,6 +128,35 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-3">Country RD Status</label>
+                                    <div class="col-md-9">
+                                        <div class="radio">
+                                            <label><input type="radio" name="country_status" value="1"
+                                                    <?php echo ($country_status==1)?'checked':'' ?> />Created</label>
+                                            <label><input type="radio" name="country_status" value="0"
+                                                    <?php echo ($country_status==0)?'checked':'' ?> />Generate</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } else { ?>
+                                <div class="form-group hide">
+                                    <label class="control-label col-md-3">Report Status</label>
+                                    <div class="col-md-9">
+                                        <div class="radio">
+                                            <?php if($status == 2){ ?>
+                                            <label><input type="radio" name="status" value="2"
+                                                    <?php echo ($status==2)?'checked':'' ?> />Verified</label>
+                                            <?php } ?>
+                                            <label><input type="radio" name="status" value="0"
+                                                    <?php echo ($status==0)?'checked':'' ?> />Draft</label>
+                                            <label><input type="radio" name="status" value="3"
+                                                    <?php echo ($status==3)?'checked':'' ?> />Publish</label>
+                                            <label><input type="radio" name="status" value="1"
+                                                    <?php echo ($status==1)?'checked':'' ?> />Process</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group hide">
                                     <label class="control-label col-md-3">Country RD Status</label>
                                     <div class="col-md-9">
                                         <div class="radio">
@@ -202,6 +238,13 @@
                                     <label class="control-label col-md-3">URL Path</label>
                                     <div class="col-md-9">
                                         <input type="text" name="url" value="<?php echo $url; ?>" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">End Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="end_year_revenue" value="<?php echo $end_year_revenue; ?>" class="form-control"
+                                            placeholder="Revenue">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -432,9 +475,9 @@ function changeyear(inputYear) {
     var FromPeriod
     var ToPeriod */
 
-    var To_forecast = parseInt(inputYear) + parseInt(6);
+    var To_forecast = parseInt(inputYear) + parseInt(7);
     var From_Period = parseInt(inputYear) - parseInt(2);
-    var To_Period = parseInt(inputYear) + parseInt(6);
+    var To_Period = parseInt(inputYear) + parseInt(7);
     // $("#To_forecast_period option[value='United State']");
     //alert(To_forecast);
     $("#forecast_to").val(To_forecast);

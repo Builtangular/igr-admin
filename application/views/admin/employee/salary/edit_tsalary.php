@@ -68,7 +68,7 @@
                                     <label class="control-label col-md-2">Gross Salary<span
                                             class="text-red">*</span></label>
                                     <div class="col-md-6">
-                                        <input type="text" id="gross_salary"
+                                        <input type="text" id="net_salary"
                                             value="<?php echo $single_tsalary_data->gross_salary;?>" name="gross_salary"
                                             class="form-control" placeholder="Total" onblur="reSum();">
                                         <span class="help-block margin" id="txtHint"></span>
@@ -93,7 +93,7 @@
 function reSum() {
     var salary = parseInt(document.getElementById("salary").value);
     var TDS = parseInt(document.getElementById("TDS").value);
-    document.getElementById("gross_salary").value = salary + TDS;
+    document.getElementById("net_salary").value = salary - TDS;
 }
 </script>
 

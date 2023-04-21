@@ -47,7 +47,15 @@ class Login extends CI_Controller
 					$this->session->set_userdata('logged_in', $sess_array);
 				}
 				$session_data = $this->session->userdata('logged_in');
+
 				if($session_data['Role_id']==0 || $session_data['Role_id']==1)
+
+				if($session_data['Role_id']==0)
+				{
+					redirect('admin/dashboard');			
+				}	
+				if($session_data['Role_id']==1)
+
 				{
 					redirect('admin/dashboard');			
 				}
@@ -67,9 +75,9 @@ class Login extends CI_Controller
 				}
 				else if($session_data['Role_id']==6){
 					redirect('admin/dashboard');
-				}else if($session_data['Role_id']==7){
+				}else if($session_data['Role_id']==7 || $session_data['Role_id']==8){
 					redirect('admin/dashboard');
-				}	
+				}
 			}
 			else
 			{							

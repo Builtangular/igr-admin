@@ -84,7 +84,9 @@
                         </div>
                         <div class="box-footer">
                             <input type="hidden" name="emp_id" id="emp_id" class="form-control"
-                                value="<?php echo $Emp_id; ?>">
+                                value="<?php echo $single_bank_data->emp_id; ?>">
+                            <a href="<?php echo base_url(); ?>admin/employee/bank_list/<?php echo $single_bank_data->emp_id; ?>"
+                                class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
                             <input type="submit" class="btn btn-info pull-right" style='margin-right:16px' name="button"
                                 value="Submit">
                         </div>

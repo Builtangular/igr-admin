@@ -1,6 +1,11 @@
 <?php $this->load->view('admin/header.php'); ?>
 
-<?php $Prefix = array('Mr.', 'Mrs.', 'Miss.'); ?>
+<?php 
+$Job_type = array('Full Time', 'Part Time', 'Freelance');
+$Prefix = array('Mr.', 'Mrs.', 'Miss.');
+$Departments = array('Account', 'Research', 'Marketing', 'Business Department', 'IT', 'Back Office', 'HR', 'Sales', 'Graphics');
+$Education_type = array('Diploma', 'Graduation', 'Post Graduation');
+?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -40,10 +45,11 @@
                                     <div class="col-md-3">
                                         <b>Job Type <span class="text-red">*</span></b>
                                         <select class="form-control b-none" name="job_type" required>
-                                            <option value="" selected>Select Job Type</option>
-                                            <option value="Full Time">Full Time</option>
-                                            <option value="Part Time">Part Time</option>
-                                            <option value="Part Time">Freelance</option>
+                                            <option value="" selected>Select</option>
+                                            <?php $i = 0; foreach($Job_type as $Jobtype) { ?>
+                                            <option value="<?php echo $Job_type[$i]; ?>"><?php echo $Job_type[$i]; ?>
+                                            </option>
+                                            <?php  $i++; }  ?>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
@@ -71,9 +77,6 @@
                                             <option value="<?php echo $Prefix[$i]; ?>"><?php echo $Prefix[$i]; ?>
                                             </option>
                                             <?php  $i++; }  ?>
-                                            <!--  <option value="Mr.">Mr.</option>
-                                            <option value="Mrs.">Mrs.</option>
-                                            <option value="Miss">Miss.</option> -->
                                         </select>
                                     </div>
                                     <div class="col-md-3">
@@ -97,14 +100,17 @@
                                         <b>Date of Birth <span class="text-red">*</span></b>
                                         <input type="date" id="date_of_birth" name="date_of_birth" class="form-control"
                                             placeholder="Date Of Birth" required>
-                                    </div>                                    
+                                    </div>
                                     <div class="col-md-3">
                                         <label>Gender <span class="text-red">*</span></label><br>
                                         <input type="radio" name="gender" value="Male" checked /> Male &nbsp;&nbsp;
                                         <input type="radio" name="gender" value="Female" /> Female
                                     </div>
                                     <div class="col-md-3">
-                                       
+                                        <label>User Type <span class="text-red">*</span></label><br>
+                                        <input type="radio" name="user_type" value="Fresher" checked /> Fresher
+                                        &nbsp;&nbsp;
+                                        <input type="radio" name="user_type" value="Experienced" /> Experienced
                                     </div>
                                     <div class="col-md-3">
                                         <b>Resignation Date </b>
@@ -171,22 +177,22 @@
                                     <label class="control-label col-md-2">Relative Details </label>
                                     <div class="col-md-5">
                                         <input type="text" id="relative_name" name="relative_name" class="form-control"
-                                            placeholder="Name">
+                                            placeholder="Relative Name">
                                     </div>
                                     <div class="col-md-5">
                                         <input type="text" id="relative_contact_no" name="relative_contact_no"
-                                            class="form-control" placeholder="Contact Number">
+                                            class="form-control" placeholder="Relative Contact Number">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Reference Details</label>
                                     <div class="col-md-5">
                                         <input type="text" id="reference_name" name="reference_name"
-                                            class="form-control" placeholder="Name">
+                                            class="form-control" placeholder="Reference Name">
                                     </div>
                                     <div class="col-md-5">
                                         <input type="text" id="reference_contact_no" name="reference_contact_no"
-                                            class="form-control" placeholder="Contact Number">
+                                            class="form-control" placeholder="Reference Contact Number">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -211,9 +217,10 @@
                                     <div class="col-md-2">
                                         <select class="form-control b-none" name="education_type">
                                             <option value="" selected>Select</option>
-                                            <option value="Diploma">Diploma</option>
-                                            <option value="Graduation">Graduation</option>
-                                            <option value="Post Graduate">Post Graduate</option>
+                                            <?php $i = 0; foreach($Education_type as $education) { ?>
+                                            <option value="<?php echo $Education_type[$i]; ?>"><?php echo $Education_type[$i]; ?>
+                                            </option>
+                                            <?php  $i++; }  ?>
                                         </select>
                                     </div>
                                     <div class="col-md-4">
@@ -231,15 +238,10 @@
                                     <div class="col-md-4">
                                         <select class="form-control b-none" name="department" required>
                                             <option value="" selected>Select Department</option>
-                                            <option value="Account">Account</option>
-                                            <option value="Research">Research</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Business Department">Business Department</option>
-                                            <option value="IT">IT</option>
-                                            <option value="Back Office">Back Office</option>
-                                            <option value="HR">HR</option>
-                                            <option value="Sales">Sales</option>
-                                            <option value="Graphics">Sales</option>
+                                            <?php $i = 0; foreach($Departments as $department) { ?>
+                                            <option value="<?php echo $Departments[$i]; ?>"><?php echo $Departments[$i]; ?>
+                                            </option>
+                                            <?php  $i++; }  ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -265,8 +267,8 @@
                                         <input type="hidden" name="upload_image" class="form-control-file"
                                             id="upload_image">
                                     </div>
-                                    <span class="help-block margin text-red" id="">Note *: Image size should be 20 to 40
-                                        Kb</span>
+                                    <!-- <span class="help-block margin text-red" id="">Note *: Image size should be 20 to 40
+                                        Kb</span> -->
                                 </div>
                             </div>
                         </div>

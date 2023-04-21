@@ -18,21 +18,27 @@ class Send_mail
 			$joining_date = $Email_content['joining_date'];
 			$prefix = $Email_content['prefix'];
 			$full_name = $Email_content['full_name'];
-			$father_name = $Email_content['father_name'];			
+			$father_name = $Email_content['father_name'];
+			$spouse_name = $Email_content['spouse_name'];
 			$gender = $Email_content['gender'];
 			$marital_status = $Email_content['marital_status'];
 			$aadhaar_no = $Email_content['aadhaar_no'];
 			$pan_no = $Email_content['pan_no'];
 			$personal_email_id = $Email_content['personal_email_id'];
 			$mobile_number = $Email_content['mobile_number'];
+			$department = $Email_content['department'];
+			$job_profile = $Email_content['job_profile'];
+			$date_of_birth = $Email_content['date_of_birth'];
 			$alternate_mobile_no = $Email_content['alternate_mobile_no'];
 			$bank_name = $Email_content['bank_name'];
 			$account_no = $Email_content['ac_number'];
 			$ifsc_code = $Email_content['ifsc_code'];
 			$permant_address = $Email_content['permant_address'];
 			$gross_salary = $Email_content['gross_salary'];
+			$aadhaar_file = $Email_content['aadhaar_file'];
+			$pan_file = $Email_content['pan_file'];
 			
-				$subject = " New Joining Details | ".ucfirst($full_name)." | Joining Date".htmlspecialchars(date("d-m-Y", strtotime($joining_date)));
+				$subject = " New Joining Details | ".ucfirst($full_name)." | Joining Date: ".htmlspecialchars(date("d-m-Y", strtotime($joining_date)));
 				$html = '<html xmlns="http://www.w3.org/1999/xhtml">';
 				$html = '<link rel="stylesheet" type="text/css" href="assets/css/email.css">';
 				$html .= '<body yahoo bgcolor="#FFFFFF" style="margin: 0; padding: 0; min-width: 100%!important;">';		
@@ -64,6 +70,10 @@ class Send_mail
 													<td style="width: 20%; vertical-align:top"><b> Father Name </b></td>
 													<td><b> : </b>'.$father_name.'</td>
 												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Spouse Name </b></td>
+													<td><b> : </b>'.$spouse_name.'</td>
+												</tr>
                                                 <tr>
                                                     <td style="width: 20%; vertical-align:top"><b> Gender </b></td>
                                                     <td><b> : </b>'.$gender.'</td>
@@ -88,6 +98,18 @@ class Send_mail
 													<td style="width: 20%; vertical-align:top"><b> Mobile Number </b></td>
 													<td><b> : </b>'.$mobile_number.'</td>
 												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Department </b></td>
+													<td><b> : </b>'.$department.'</td>
+												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Designation </b></td>
+													<td><b> : </b>'.$job_profile.'</td>
+												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Date of Birth </b></td>
+													<td><b> : </b>'.date("d-m-Y", strtotime($date_of_birth)).'</td>
+												</tr>
                                                 <tr>
 													<td style="width: 20%; vertical-align:top"><b> Alternate Number </b></td>
 													<td><b> : </b>'.$alternate_mobile_no.'</td>
@@ -106,9 +128,17 @@ class Send_mail
 												</tr>												
 												<tr>
 													<td style="width: 20%; vertical-align:top"><b> Gross Salary </b></td>
-													<td><b> : </b>'.$gross_salary.'</td>
+													<td style="color:red; font-size: 14px; font-weight:bold"><b> : </b>'.$gross_salary.'</td>
 												</tr>					
 											</table>
+											<br>
+												<b>Download Aadhaar : </b><a href="https://rdtool.infiniumglobalresearch.com/assets/admin/emp_data/document/'.$aadhaar_file.'"
+												target="blank">'.$aadhaar_file.'</a>
+											<br>
+											<br>
+												<b>Download PAN :</b> <a href="https://rdtool.infiniumglobalresearch.com/assets/admin/emp_data/document/'.$pan_file.'"
+												target="blank">'.$pan_file.'</a>
+											<br>
 											<br>
 											Regards,<br>
 											<b>Infinium Global Research Team.</b>

@@ -77,6 +77,55 @@ class Employee extends CI_Controller {
 		}
 	}
 	/* personal edit delete */
+	public function view($id)
+	{
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['employee_data'] = $this->Employee_Model->get_single_employee_data($id);
+			$data['employment_details'] = $this->Employee_Model->get_employment_record($id);
+			$single_empolyment_data = $this->Employee_Model->get_single_employee_data($id);
+			$job_type = $single_empolyment_data->job_type;
+			if($job_type == "Full Time"){
+				$data['p_salary_details'] = $this->Employee_Model->get_p_salary_details($id);	
+			}else{
+				$data['t_salary_details'] = $this->Employee_Model->get_t_salary_details($id);
+			}
+			$data['bank_details'] = $this->Employee_Model->get_employee_bank_details($id);
+			// var_dump($data['bank_details']); die;
+			$data['document_list'] = $this->Employee_Model->get_document_list($id);
+			// var_dump($data['document_list']);die;
+			// var_dump($data['t_salary_details']); die;
+			$this->load->view("admin/employee/view",$data);
+		}else {
+			$this->load->view("admin/login");
+		}
+	}
+	public function print_view($id)
+	{
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['employee_data'] = $this->Employee_Model->get_single_employee_data($id);
+			$data['employment_details'] = $this->Employee_Model->get_employment_record($id);
+			$single_empolyment_data = $this->Employee_Model->get_single_employee_data($id);
+			$job_type = $single_empolyment_data->job_type;
+			if($job_type == "Full Time"){
+				$data['p_salary_details'] = $this->Employee_Model->get_p_salary_details($id);	
+			}else{
+				$data['t_salary_details'] = $this->Employee_Model->get_t_salary_details($id);
+			}
+			$data['bank_details'] = $this->Employee_Model->get_employee_bank_details($id);
+			$data['document_list'] = $this->Employee_Model->get_document_list($id);
+			$this->load->view("admin/employee/print_view",$data);
+		}else {
+			$this->load->view("admin/login");
+		}
+	}
 	public function edit($id)
 	{
 		if($this->session->userdata('logged_in'))
@@ -365,10 +414,10 @@ class Employee extends CI_Controller {
 	public function bank_list($id){
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Login_user_name'] = $session_data['Login_user_name'];	
+			$data['Role_id'] = $session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
-			$data['Emp_id']=$id;
+			$data['Emp_id'] = $id;
 			$data['bank_details'] = $this->Employee_Model->get_employee_bank_details($id);
 			// var_dump($data['bank_details']); die;
 			$this->load->view("admin/employee/bank/list", $data);
@@ -379,8 +428,8 @@ class Employee extends CI_Controller {
 	public function add_bank($id){
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Login_user_name'] = $session_data['Login_user_name'];	
+			$data['Role_id'] = $session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
 			$data['Emp_id'] = $id;
 			// var_dump($data['Emp_id']);die;
@@ -395,8 +444,8 @@ class Employee extends CI_Controller {
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Login_user_name'] = $session_data['Login_user_name'];	
+			$data['Role_id'] = $session_data['Role_id'];
 			$data['Emp_id'] = $id;
 			//var_dump($data['Emp_id']);die;
 			$s_type = $this->input->post('s_type');
@@ -444,6 +493,21 @@ class Employee extends CI_Controller {
 			$this->load->view("admin/login");
 		}		
 	}
+	public function view_bank($id)
+	{
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['single_bank_data'] = $this->Employee_Model->get_single_bank_data($id);
+			$data['Emp_id'] = $this->input->post('emp_id');
+			// var_dump($data['single_bank_data']);die;
+			$this->load->view("admin/employee/bank/view",$data);
+		}else {
+			$this->load->view("admin/login");
+		}
+	}
 	public function edit_bank($id)
 	{
 		if($this->session->userdata('logged_in'))
@@ -453,7 +517,7 @@ class Employee extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 			$data['single_bank_data'] = $this->Employee_Model->get_single_bank_data($id);
 			$data['Emp_id'] = $this->input->post('emp_id');
-			// var_dump($data['Emp_id']);die;
+			// var_dump($data['single_bank_data']);die;
 			$this->load->view("admin/employee/bank/edit",$data);
 		}else {
 			$this->load->view("admin/login");
@@ -541,11 +605,17 @@ class Employee extends CI_Controller {
 			$employee_details = $this->Employee_Model->get_employee_record($id);
 			
 			/* Adhaar Upload */
-			$doc_type = $this->input->post('type');
+			$other_type = $this->input->post('other_type');
+			if($other_type == NULL){
+				$doc_type = $this->input->post('type');
+			}else{
+				$doc_type = $this->input->post('other_type');
+			}
+			
 			$button = $this->input->post('button');
 			$first_name = $employee_details->first_name;
-			// var_dump($new_name);die;
-			$image = $first_name.'_'.$doc_type;
+			$last_name = $employee_details->last_name;
+			$image = $first_name.'_'.$last_name.'_'.$doc_type;
 			if($button == 'Submit'){
 				$file ='';
 				$config = array(
@@ -563,7 +633,7 @@ class Employee extends CI_Controller {
 					$error = array('error' => $this->upload->display_errors());	
 					$this->upload->display_errors();
 				}
-				$insert_record = $this->Employee_Model->insert_employee_documents($id,$file);
+				$insert_record = $this->Employee_Model->insert_employee_documents($id,$file,$doc_type);
 				if($insert_record)
 				{
 					$this->session->set_flashdata('msg','Data has been inserted successfully....!!!');
@@ -588,13 +658,18 @@ class Employee extends CI_Controller {
 				$alternate_mobile_no = $employee_details->alternate_mobile_no;
 				$personal_email_id = $employee_details->personal_email_id;
 				$permant_address = $employee_details->permant_address;
-				if($marital_status == 'single'){
-					$father_name = $employee_details->middle_name;
+				$department = $employee_details->department;
+				$job_profile = $employee_details->job_profile;
+				$date_of_birth = $employee_details->date_of_birth;
+				// var_dump($date_of_birth);die;
+				if($marital_status == 'Single'){
+					$father_name = $employee_details->middle_name.' '.$employee_details->last_name;
+					$spouse_name = 'NA';
 				}else{
 					$father_name = $employee_details->father_name;
+					$spouse_name = $employee_details->spouse_name;
 				}				
 				$full_name = $first_name . ' ' . $middle_name . ' ' . $last_name;
-				// var_dump($father_name); die;
 				/* bank details fetch */
 				$employee_bank_details = $this->Employee_Model->get_employee_personal_bank_details($id);
 				// var_dump($employee_bank_details);die;
@@ -610,16 +685,33 @@ class Employee extends CI_Controller {
 					$emp_temporary_bank_details = $this->Employee_Model->get_emp_temporary_salary_details($id);
 					$gross_salary = $emp_temporary_bank_details->gross_salary;
 				}
+				/* get employee documents */
+				$documents = $this->Employee_Model->get_document_list($id);
+				foreach($documents as $document){
+					$doctype = $document->doc_type;
+					if($doctype == "Aadhaar"){
+						$aadhaar_file = $document->upload_file;
+					}
+					if($doctype == "PAN"){
+						$pan_file = $document->upload_file;
+					}
+				}
+				
+				/* / . get employee documents */
 				/* mail send to greythr  */					
 				$Email_content = array(									
 					'joining_date' => $joining_date,
 					'prefix' => $prefix,
 					'full_name' => $full_name,
 					'father_name' => $father_name,
+					'spouse_name' => $spouse_name,
 					'gender' => $gender,
 					'marital_status' => $marital_status,
 					'aadhaar_no' => $aadhaar_no,
 					'pan_no' => $pan_no,
+					'department' => $department,
+					'job_profile' => $job_profile,
+					'date_of_birth' => $date_of_birth,
 					'personal_email_id' => $personal_email_id,
 					'mobile_number' => $mobile_number,
 					'alternate_mobile_no' => $alternate_mobile_no,
@@ -628,6 +720,8 @@ class Employee extends CI_Controller {
 					'ifsc_code' => $ifsc_code,
 					'permant_address' => $permant_address,
 					'gross_salary' => $gross_salary,
+					'aadhaar_file' => $aadhaar_file,
+					'pan_file' => $pan_file,
 					'Template_type' => 'greythr_employee_mail'
 				);
 				$this->send_mail->send_email_notification($Email_content);
@@ -670,9 +764,9 @@ class Employee extends CI_Controller {
 			$doc_type = $this->input->post('type');
 			$button = $this->input->post('button');
 			
-			$new_name = $employee_details->first_name;
-			// var_dump($new_name);die;
-			$image = $new_name.'_'.$doc_type;
+			$first_name = $employee_details->first_name;
+			$last_name = $employee_details->last_name;
+			$image = $first_name.'_'.$last_name.'_'.$doc_type;
 			// var_dump($image);die;
 			$file ='';
 			$config = array(
@@ -747,7 +841,6 @@ class Employee extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 
 			$employee_data = $this->Employee_Model->get_single_employee_data($_GET["emp_id"]);
-			// var_dump($employee_data); die;
             /* RD base data extract */
             $emp_id = $employee_data->id;
             $job_type = $employee_data->job_type;
@@ -781,7 +874,6 @@ class Employee extends CI_Controller {
 			} else if($department == "Graphics"){
 				$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/graphics_offer_letter.docx');
 			}
-
 			// Variables on different parts of document
 			$templateProcessor->setValue('TodayDate', htmlspecialchars($todays_date));            // On section/content
 			$templateProcessor->setValue('FirstName', htmlspecialchars($first_name));            // On section/content

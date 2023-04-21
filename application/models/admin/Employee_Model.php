@@ -39,11 +39,16 @@ class Employee_Model extends CI_Model {
                 'education_type'                => $this->input->post('education_type'),
                 'degree'                        => $this->input->post('degree'),
                 'resignation_date'              => $this->input->post('resignation_date'),
+                'passing_year'                    => $this->input->post('passing_year'),
                 'department'                    => $this->input->post('department'),
-                'job_profile'                   => $this->input->post('job_profile'),
+                'job_profile'                   => $this->input->post('job_profile'),                
+                'uan_no'                        => $this->input->post('uan_no'),
+                'pf_no'                         => $this->input->post('pf_no'),
+                'upload_image'                  => $file,
+                'user_type'                     => $this->input->post('user_type'),
                 'created_on'                    => date('Y-m-d'),
                 'updated_on'                    => date('Y-m-d'),
-                'upload_image'                  => $file,
+                
         );
         $result = $this->db->insert('tbl_emp_enrollement', $data);
         $insert_id = $this->db->insert_id();
@@ -53,7 +58,7 @@ class Employee_Model extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from('tbl_emp_enrollement');
-        $this->db->where(array('id' => $id));          
+        $this->db->where(array('id' => $id));                  
         $query = $this->db->get();
     //   echo $this->db->last_query();
         return $query->row();        
@@ -121,6 +126,7 @@ class Employee_Model extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from('tbl_emp_enrollement');
+        $this->db->order_by('appraisal_date', 'asc');
         $query = $this->db->get();
         return $query->result();
     }
@@ -250,12 +256,14 @@ class Employee_Model extends CI_Model {
             'passport_no'                   => $this->input->post('passport_no'),
             'education_type'                => $this->input->post('education_type'),
             'degree'                        => $this->input->post('degree'),
+            'passing_year'                  => $this->input->post('passing_year'),
             'resignation_date'              => $this->input->post('resignation_date'),
             'department'                    => $this->input->post('department'),
-            'job_profile'                   => $this->input->post('job_profile'),
+            'job_profile'                   => $this->input->post('job_profile'),            
             'uan_no'                        => $this->input->post('uan_no'),
             'pf_no'                         => $this->input->post('pf_no'),            
             'upload_image'                  => $file,
+            'user_type'                     => $this->input->post('user_type'),
             'updated_on'                    => date('Y-m-d'),
             );
         $this->db->where('id', $id);
@@ -332,8 +340,13 @@ class Employee_Model extends CI_Model {
     /* update salary breackup */
     public function get_single_psalary_data($id)
     {
-        $this->db->where('id',$id);
-        $result = $this->db->get('tbl_emp_salary_permanent');
+        /* $this->db->where(array('emp_id', $id));
+        $result = $this->db->get('tbl_emp_salary_permanent'); */
+        $this->db->select('*');
+        $this->db->from('tbl_emp_salary_permanent');
+        $this->db->where(array('emp_id' => $id));
+        $this->db->order_by('salary_year', 'desc');
+        $result = $this->db->get();
 		// echo $this->db->last_query();die;
 		return $result->row();
     }
@@ -450,8 +463,6 @@ class Employee_Model extends CI_Model {
             //  var_dump($update);die;
          $this->db->where('id',$id);
          return $this->db->update('tbl_emp_document', $update);
-     }
-   
-   
+    } 
 
 }

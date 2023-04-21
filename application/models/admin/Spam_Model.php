@@ -39,10 +39,26 @@ class Spam_Model extends CI_Model {
         return $query->result_array();
     }
     public function get_spam_mail_data() {
-        $this->db->select("*");
+        $this->db->select("id, type, email_id");
         $this->db->from('tbl_spam_mail');
         $query = $this->db->get();
         return $query->result();
+    }
+    public function get_single_spam_mail_data($id) {
+        $this->db->select("*");
+        $this->db->from('tbl_spam_mail');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function update_spam_mail($id){
+        $update = array(
+            'type'        => $this->input->post('type'),
+            'email_id'    => $this->input->post('email_id'),
+            'updated_at'  => date('Y-m-d'),
+        );		
+        $this->db->where('id', $id);
+        return $this->db->update('tbl_spam_mail', $update);
     }
     public function spam_mail_delete($id){
 		$this->db->where('id', $id);

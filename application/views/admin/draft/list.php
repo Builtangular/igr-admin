@@ -59,7 +59,7 @@
                                         <th>Image</th>
                                         <th>Country</th>
                                     <?php } ?>
-									<th>Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,7 +75,7 @@
                                     if ($query_seg->num_rows() > 0) {
                                         $rd_segment = $query_seg->row();
                                     }
-                                    $sql_img = "SELECT * FROM tbl_rd_image where report_id = " . $data->id;
+                                    $sql_img = "SELECT id FROM tbl_rd_image where report_id = " . $data->id;
                                     $query_img = $this->db->query($sql_img);
                                     /* if ($query_img->num_rows() > 0) { $rd_image = "<img src=\"http://localhost/igr_admin/assets/admin/img-rd/global-automotive-display-system-market.jpg\" class=\"fa \" alt=\"User Image\" style=\"height:20px; width: 40px;\"> <br> Edit"; } else {$rd_image = "<i class=\"fa fa-plus\"></i><br> Add";} */
                                     if ($query_img->num_rows() > 0) {
@@ -84,7 +84,7 @@
                                         $rd_image = "<i class=\"fa fa-plus\"></i><br> Add";
                                     }
                                     /* Market Insight */
-                                    $market_insight = "SELECT * FROM tbl_rd_market_insight_data where report_id = " . $data->id;
+                                    $market_insight = "SELECT id FROM tbl_rd_market_insight_data where report_id = " . $data->id;
                                     $query_market_insight = $this->db->query($market_insight);
                                     if ($query_market_insight->num_rows() > 0) {
                                         $insight_status = "<i class=\"fa fa-file\"></i><br>View";
@@ -92,7 +92,7 @@
                                         $insight_status = "<i class=\"fa fa-plus\"></i><br>Add";
                                     }
                                     /* Report DROs */
-                                    $dro_reports = "SELECT * FROM tbl_rd_dro_data where report_id = " . $data->id;
+                                    $dro_reports = "SELECT id FROM tbl_rd_dro_data where report_id = " . $data->id;
                                     $query_dro_reports = $this->db->query($dro_reports);
                                     if ($query_dro_reports->num_rows() > 0) {
                                         $dro_status = "<i class=\"fa fa-file\"></i><br>View";
@@ -100,7 +100,7 @@
                                         $dro_status = "<i class=\"fa fa-plus\"></i><br>Add";
                                     }
                                     /* Segment Overview */
-                                    $segment_overview = "SELECT * FROM tbl_rd_segment_overview where report_id = " . $data->id;
+                                    $segment_overview = "SELECT id FROM tbl_rd_segment_overview where report_id = " . $data->id;
                                     $query_segment_overview = $this->db->query($segment_overview);
                                     if ($query_segment_overview->num_rows() > 0) {
                                         $segment_status = "<i class=\"fa fa-file\"></i><br>View";
@@ -108,7 +108,7 @@
                                         $segment_status = "<i class=\"fa fa-plus\"></i><br>Add";
                                     }
                                     /* PR2 Writeup */
-                                    $pr2_reports = "SELECT * FROM tbl_rd_pr2_data where report_id = " . $data->id;
+                                    $pr2_reports = "SELECT id FROM tbl_rd_pr2_data where report_id = " . $data->id;
                                     $query_pr2_reports = $this->db->query($pr2_reports);
                                     if ($query_pr2_reports->num_rows() > 0) {
                                         $pr2_reports_status = "<i class=\"fa fa-file\"></i><br>View";
@@ -226,7 +226,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <!-- Footer -->
-    <footer class="main-footer">
+<footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
         Anything you want
@@ -259,10 +259,16 @@
 <script>
     $(function() {
         $('#rddata').DataTable({
-            'ordering': false,
+            'paging': true,
+       /*  'lengthChange': true,
+        'searching': true,
+        'ordering': false,
+        'info': true,
+        'autoWidth': true */
         })
 
     })
 </script>
-        </body>
+</body>
+
 </html>

@@ -10,7 +10,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
         type="text/css" />
     <!-- Ionicons -->
-    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="<?php echo base_url(); ?>assets/admin//css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/admin/css/skin-blue.min.css" rel="stylesheet" type="text/css" />
@@ -170,6 +170,10 @@
                                 class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
+                    <!-- <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
+                                class="text-bold">Generate RD</span></a></li> -->
+                    <li><a href="<?php echo base_url(); ?>admin/report/assign_rd"><i class="fa fa-arrow-right"></i><span
+                                class="text-bold">Assign & Generate RDs</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
@@ -180,7 +184,7 @@
                                 class="text-bold">Drafts</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
                                 class="text-bold">Add New RD</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-download"></i><span
+                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
                                 class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 4){ ?>
@@ -192,14 +196,14 @@
                                 class="text-bold">Drafts</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 0 || $Role_id == 5){ ?>
-                        <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
                                 class="text-bold">Custom Link</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-list"></i><span
                                 class="text-bold">Sample Queries</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/toc-query"><i class="fa fa-list-alt"></i><span
                                 class="text-bold">TOC Queries</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>sales/customization-query"><i
-                                class="fa fa-list-ol"></i><span class="text-bold">Customization Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>sales/customization-query"><i class="fa fa-list-ol"></i><span
+                                class="text-bold">Customization Queries</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/enquiry-query"><i class="fa fa-list-ul"></i><span
                                 class="text-bold">Enquiry Queries</span></a></li>
                     <?php } ?>
@@ -222,6 +226,24 @@
                                 class="text-bold">Spam Mail</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
+                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
+                                Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-table"></i><span class="text-bold">Reseller</span> <i
+                                class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/add_reseller"><span>Add</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/reseller_list"><span> List</span></a></li>
+                        </ul>
+                    </li>
+                    <?php } if($Role_id == 8){?>
+                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
+                                class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
             </section>
             <!-- /.sidebar -->

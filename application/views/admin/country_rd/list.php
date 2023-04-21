@@ -54,7 +54,7 @@
                                     <td class="text-center"><?php echo $data->sku; ?></td>
                                     <td class="text-center"><?php echo $data->country; ?></td>
                                     <td class="text-center"><?php echo $data->status; ?></td>
-                                    <td class="text-center"><?php echo date("d-m-Y"); ?></td>
+                                    <td class="text-center"><?php echo date("d-m-Y", strtotime($data->updated_at)); ?></td>
                                     <td><a href="<?php echo base_url(); ?>admin/country_rd/edit/<?php echo $data->id; ?>"
                                             class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |
                                         <a href="<?php echo base_url(); ?>admin/country_rd/contry_rd_delete/<?php echo $data->id; ?>"" class="

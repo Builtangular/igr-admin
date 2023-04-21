@@ -24,14 +24,16 @@ class Drotype_model extends CI_Model {
 		$result = $this->db->get('tbl_master_drotype');
 		//echo $this->db->last_query();die;
 		return $result->row();
-	}public function update_dro_type($id){
+	}
+	public function update_dro_type($id){
         $update = array(
             'name'=>$this->input->post('name'),
 			'status'=>$this->input->post('status')
             );
         $this->db->where('id',$id);
         return $this->db->update('tbl_master_drotype', $update);
-    }function dro_type_delete($id){
+    }
+	function dro_type_delete($id){
 		$this->db->where("id", $id);
     	$res = $this->db->delete("tbl_master_drotype");
 		return $res;
@@ -46,17 +48,15 @@ class Drotype_model extends CI_Model {
 	    $result = $this->db->get('tbl_rd_dro_data');
 		$res = $result->result();
 		return $res;
-		//  $this->db->where('report_id',$report_id);
-		//  $result = $this->db->get('tbl_rd_dro_data');
-		//  $res = $result->result();
-		//  return $res;
 	}
 	public function insert_rd_dro_records($report_id){
 		$data = array(
-				'type'      	=>$this->input->post('type'),
 				'report_id'     =>$report_id,
+				'type'      	=>$this->input->post('type'),				
 				'description'	=>$this->input->post('description'),
 				'status'        =>$this->input->post('status'),
+				'created_at'    => date('Y-m-d'),
+				'updated_at'    => date('Y-m-d'),
 			);
 			$res= $this->db->insert('tbl_rd_dro_data', $data);
 			return $res;
@@ -71,7 +71,8 @@ class Drotype_model extends CI_Model {
         $update = array(
             'type'          =>$this->input->post('type'),
 			'description'	=>$this->input->post('description'),
-			'status'        =>$this->input->post('status')
+			'status'        =>$this->input->post('status'),
+			'updated_at'    => date('Y-m-d'),
             );
         $this->db->where('id',$id);
         return $this->db->update('tbl_rd_dro_data', $update);
@@ -81,6 +82,5 @@ class Drotype_model extends CI_Model {
     	$res= $this->db->delete("tbl_rd_dro_data");
 		return $res;
 	}
-
 }
 ?>

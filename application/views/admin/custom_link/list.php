@@ -42,6 +42,7 @@
                                 <tr style="font-size: 14px;">
                                     <th style="width: 69px;">Action</th>
                                     <th>Title</th>
+                                    <th>Currency</th>
                                     <th>Price</th>
                                     <th>License</th>
                                     <th>SKU</th>
@@ -60,6 +61,7 @@
                                         <a href="http://localhost/infinium_new/custom_report/checkout_form/<?php echo $list->report_id;  ?>" onclick="return confirm('Please click on OK to continue.');">click me</a>
                                     </td>
                                     <td><?php echo $list->title; ?></td>
+                                    <td><?php echo $list->currency; ?></td>
                                     <td><?php echo $list->price; ?></td>
                                     <td class="text-center"><?php echo $list->licens_type; ?></td>
                                     <td class="text-center"><?php echo $list->sku; ?></td>
@@ -72,6 +74,7 @@
                                 <tr style="font-size: 14px;">
                                     <th style="width: 69px;">Action</th>
                                     <th>Title</th>
+                                    <th>Currency</th>
                                     <th>Price</th>
                                     <th>License</th>
                                     <th>SKU</th>
@@ -93,7 +96,7 @@
         Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2022 <a href="#">Infinium</a>.</strong> All rights reserved.
+    <strong>Copyright © 2023 <a href="#">Infinium</a>.</strong> All rights reserved.
 </footer>
 </div><!-- ./wrapper -->
 
@@ -147,14 +150,9 @@ $(function() {
 function AlertIt() {
 var answer = confirm ("Please click on OK to continue.")
 if (answer)
-window.location="http://localhost/infinium_new/custom_report/checkout_form";
+window.location="https://www.infiniumglobalresearch.com/custom_report/checkout_form/";
 }
 </script>
-
-<a href="javascript:AlertIt();">click me</a>
-</script>
-
-
 
 </body>
 

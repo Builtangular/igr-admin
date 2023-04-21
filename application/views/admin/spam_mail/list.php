@@ -24,7 +24,7 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title"> Mail List</h3>
-                        <a href="<?php echo base_url(); ?>admin/employee/add" class="btn btn-primary pull-right">
+                        <a href="<?php echo base_url(); ?>admin/spam-mail" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -38,29 +38,30 @@
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
-                                    <th>Id</th>
+                                    <th class="text-center">Id</th>
                                     <th>Type</th>
                                     <th>Email</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach($mail_data as $data){ ?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->id; ?></td>
-                                    <td class="text-center"><?php echo $data->type; ?></td>
+                                    <td><?php echo $data->type; ?></td>
                                     <td><?php echo $data->email_id; ?></td>
-                                    <td class="text-center"><a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                    <td class="text-center"><a href="<?php echo base_url(); ?>admin/spam-mail/edit/<?php echo $data->id; ?>" class="btn btn-warning"><b><i class="fa fa-edit"></i></b></a>
+                                     | <a href="<?php echo base_url(); ?>admin/Spam_Mail/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
                                     </td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
-                                    <th>Id</th>
+                                    <th class="text-center">Id</th>
                                     <th>Type</th>
                                     <th>Email</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </tfoot>
                         </table>
