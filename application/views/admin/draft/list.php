@@ -260,6 +260,7 @@
     $(function() {
         $('#rddata').DataTable({
             'paging': true,
+            'ordering': false,
        /*  'lengthChange': true,
         'searching': true,
         'ordering': false,

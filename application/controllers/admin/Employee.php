@@ -147,8 +147,22 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
-			$this->Employee_Model->update_emp_personal_data($id);
+			$file ='';
+			$config = array(
+				'upload_path' 	=> "assets/admin/emp_data/profile",
+				'allowed_types' => "*",
+				'encrypt_name'	=> false,
+			);
+            $this->upload->initialize($config);
+			if($this->upload->do_upload('upload_image')){
+				$data = $this->upload->data();	
+				$file = $data['file_name'];			
+			}else{
+				$error = array('error' => $this->upload->display_errors());	
+				$this->upload->display_errors();
+			}
+			/* /. Image Upload */
+			$this->Employee_Model->update_emp_personal_data($id,$file);
 			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
 			redirect('admin/employee');
 		}else {
@@ -529,7 +543,6 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
 			$emp_id = $this->input->post('emp_id');
 			$result = $this->Employee_Model->update_bank_details($id);
 			if($result){

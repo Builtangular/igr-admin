@@ -268,16 +268,12 @@
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>admin/query/add_reseller"><span>Add</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/reseller_list"><span> List</span></a></li>
-
                         </ul>
                     </li>
-
                     <?php } if($Role_id == 8) { ?>
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
                                 class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
-
-
                 </ul>
             </section>
             <!-- /.sidebar -->

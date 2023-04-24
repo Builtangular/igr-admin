@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Bank List
+            Documents List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Bank List</h3>
+                        <h3 class="box-title">Documents List</h3>
                         <a href="<?php echo base_url(); ?>admin/employee/add_document/<?php echo $Emp_id; ?>"
                             class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>

@@ -36,8 +36,13 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3">Job Description</label>
-                                <div class="col-md-8">
+                                <!-- <div class="col-md-8">
                                     <textarea name="description" id="description" rows="5" class="form-control"><?php echo $single_jobpost_data->description;?></textarea>
+                                </div> -->
+                                <div class="col-md-8">
+                                    <!-- <textarea name="description" id="description" rows="5" class="form-control" required></textarea> -->
+                                    <textarea id="editor1" name="description" rows="10" cols="80">
+                                            </textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -65,5 +70,16 @@
         </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
-
+<script src="<?php echo base_url();?>assets/admin/js/jquery.min.js"></script>
+<script src="<?php echo base_url();?>assets/admin/plugins/ckeditor.js"></script>
+<script src="<?php echo base_url();?>assets/admin/plugins/bootstrap3-wysihtml5.all.min.js"></script>
+<script>
+$(function() {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+})
+</script>
 <?php $this->load->view('admin/footer.php'); ?>

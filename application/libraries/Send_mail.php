@@ -165,10 +165,95 @@ class Send_mail
 			/* echo $html; 
 			die; */
 		}
+		if($Template_type == "Login_employee_mail")
+		{
+			$full_name = $Email_content['full_name'];
+			$email_id = $Email_content['email_id'];
+			$password = $Email_content['password'];
+			$created_on = $Email_content['created_on'];
+			
+				$subject = " Portal Login Details";
+				$html = '<html xmlns="http://www.w3.org/1999/xhtml">';
+				$html = '<link rel="stylesheet" type="text/css" href="assets/css/email.css">';
+				$html .= '<body yahoo bgcolor="#FFFFFF" style="margin: 0; padding: 0; min-width: 100%!important;">';		
+				$html .= '<table width="100%" bgcolor="#f6f8f1" border="0" cellpadding="0" cellspacing="0"><tr><td>';		
+				$html .= '<table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 600px;">';		
+				$html .= '<tr>
+							<td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px;border-bottom: 1px solid #f2eeed;">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<h1 align="center" style="background-color: #0a5184;height: 75%; padding: 5px; color: #fff">Infinium Global Reasearch</h1>
+									<tr>
+									<td class="h2" style="padding: 0 0 15px 0; font-size: 18px; line-height: 28px; font-weight: bold;color: #153643; font-family: Tahoma;">
+										Dear Member,
+									</td>
+									</tr>
+									<tr>
+									<td class="h2" style="padding: 0 0 15px 0; font-size: 18px; line-height: 28px; font-weight: bold;color: #153643; font-family: Tahoma;">
+										Welcome to Portal !
+									</td>
+									</tr>
+									<tr>
+										<td class="bodycopy" style="color: #153643;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 22px;">
+											This email includes your account details, so please keep it safe!
+											<br/><br/>													
+											<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size: 12px; line-height: 22px;">
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> Login URL </b></td>
+													<td><b> : <a href="https://rdtool.infiniumglobalresearch.com/admin/login">
+													https://rdtool.infiniumglobalresearch.com/admin/login</a></td>
+												</tr>
+												<tr>
+													<td style="width: 20%; vertical-align:top"><b> User Name </b></td>
+													<td><b> : </b>'.$email_id.'</td>
+												</tr>
+                                                <tr>
+													<td style="width: 20%; vertical-align:top"><b> Password </b></td>
+													<td><b> : </b>'.$password.'</td>
+												</tr>
+												<tr>
+												<td style="width: 20%; vertical-align:top"><b> Creation Date </b></td>
+												<td><b> : </b>'.date("d-m-Y", strtotime($created_on)).'</td>
+											</tr>			
+											</table>
+											<br><b>We are here to help !</br> 
+											<br>
+											All The best,<br>
+											<b>IGR Team.</b>
+										</td>
+									</tr>
+									<br/>							
+								</table>
+							</td>
+						</tr>';
+				$html .= '<tr><td class="footer" style="padding: 20px 30px 15px 30px; background: #0a5184;">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td align="center" class="footercopy" style="font-family: Tahoma; font-size: 14px; color: #ffffff;">
+									You can also visit the below link.
+								</td>
+							</tr>
+							<tr>
+								<td align="center" class="footercopy" style="font-family: Tahoma; font-size: 14px; color: #ffffff;">
+									<a href="https://www.infiniumglobalresearch.com/" target="_blank" style="color: #ffffff; text-decoration: underline;">Visit Website</a>
+								</td>
+							</tr>';
+				$html .= '</table></td></tr>';		
+				$html .= '</table></td></tr></table></body></html>';
+			/* echo $html; 
+			die;   */
+		}
+
 
         if($Template_type == "greythr_employee_mail")
         {	
             $to = 'deochakek@gmail.com';
+            $from_mail = 'vidya.infinium@gmail.com';
+            $header .= 'Cc:  monika23.mrd@gmail.com, gawalipooja249@gmail.com' . "\r\n";
+        }
+		 if($Template_type == "Login_employee_mail")
+        {	
+			// var_dump($email_id);die;
+            $to = $email_id;
             $from_mail = 'vidya.infinium@gmail.com';
             $header .= 'Cc:  monika23.mrd@gmail.com, gawalipooja249@gmail.com' . "\r\n";
         }
