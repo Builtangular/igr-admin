@@ -36,8 +36,7 @@ class Dro_type extends CI_Controller {
 		}
 	}
     function insert_dro_type(){
-        if($this->session->userdata('logged_in'))
-	 	{
+        if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -54,8 +53,7 @@ class Dro_type extends CI_Controller {
 		}
     }
 	function edit($id){
-        if($this->session->userdata('logged_in'))
-		{
+        if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -67,8 +65,7 @@ class Dro_type extends CI_Controller {
 		}
     }
     function update_dro_type(){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -81,8 +78,7 @@ class Dro_type extends CI_Controller {
 		}
     }
     function dro_type_delete($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];

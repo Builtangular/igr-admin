@@ -154,5 +154,18 @@ class RdData_model extends CI_Model {
 			return array();
 		}
 	}
+	public function get_user_data(){
+		$this->db->select('user_id, Role_id, Full_name, Active_flag');
+		$this->db->from('tbl_user_details');
+		// $this->db->join('tbl_user_details as UD', 'UD.user_id = ULD.user_id');
+		$this->db->where(array('Role_id' => 3,'Active_flag' => '1'));		
+		$login_sql = $this->db->get();	
+		return $login_sql->result_array();	
+	}
+	public function update_rd_user($data, $report_id){
+		$this->db->where(array('id' => $report_id));
+		$result =  $this->db->update('tbl_rd_data', $data);
+		return $result;
+	}
 }
 ?>

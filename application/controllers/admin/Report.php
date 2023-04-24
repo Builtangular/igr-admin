@@ -7,6 +7,8 @@ class Report extends CI_Controller {
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Data_model');
+		$this->load->model('admin/RdData_model');
+		$this->load->model('admin/Login_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
@@ -280,11 +282,11 @@ class Report extends CI_Controller {
 				$result = $this->Data_model->update_published_rd_title($report_id, $update_rd_title);
 			/* ./ Update RD Title */
 			}
-			if($result){
-				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
-			}else{
-				$this->session->set_flashdata("success_code","Sorry! Data has not updated");
-			}
+				if($result){
+					$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
+				}else{
+					$this->session->set_flashdata("success_code","Sorry! Data has not updated");
+				}
 			redirect('admin/report');
 			// var_dump($updatedata); die;
 		}else{			
@@ -354,6 +356,8 @@ class Report extends CI_Controller {
 			$data['is_volume_based']= $rd_data->is_volume_based;
 			$data['volume_based_unit']= $rd_data->volume_based_unit;
 			$data['volume_based_cagr']= $rd_data->volume_based_cagr;
+			$data['start_year_revenue']= $rd_data->revenue_start_year;
+			$data['end_year_revenue']= $rd_data->revenue_end_year;
 			$data['singleuser_price']= $rd_data->singleuser_price;
 			$data['enterprise_price']= $rd_data->enterprise_price;
 			$data['datasheet_price']= $rd_data->datasheet_price;
@@ -418,6 +422,8 @@ class Report extends CI_Controller {
 				'is_volume_based'=> $this->input->post('volume'),
 				'volume_based_unit'=> $this->input->post('volume_based_unit'),
 				'volume_based_cagr'=> $this->input->post('volume_cagr'),
+				'revenue_start_year'=> $this->input->post('start_year_revenue'),
+				'revenue_end_year'=> $this->input->post('end_year_revenue'),
 				'singleuser_price'=> $this->input->post('single_user'),
 				'enterprise_price'=> $this->input->post('enterprise_user'),
 				'datasheet_price'=> $this->input->post('datasheet'),
@@ -599,6 +605,67 @@ class Report extends CI_Controller {
 			$status = 2;
 			$data['Global_Rds']= $this->Data_model->get_global_published_rds($status);
 			$this->load->view('admin/report/list',$data);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function assign_rd(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+			$data['title'] = "Verified";
+			// $status = 3;
+			$data['Global_Rds'] = $this->RdData_model->get_global_rd_titles();
+			// var_dump($data['Global_Rds']); die;
+			$this->load->view('admin/report/assign_list',$data);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function assign_user($report_id){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+			$data['title'] = "Assign User";
+			// $status = 3;
+			// $data['Global_Rds'] = $this->RdData_model->get_global_rd_titles();
+			$data['single_rd_data'] = $this->RdData_model->get_single_rd_data($report_id);
+			/* get scope data */
+			$ScopeList = $this->Data_model->get_scope_master();	
+			// var_dump($data['single_rd_data']); die;
+			foreach($ScopeList as $scope){
+				if($scope->id == $data['single_rd_data']->scope_id){
+					$data['scope_name'] = $scope->name;
+				}
+			}
+			$data['user_details'] = $this->RdData_model->get_user_data();
+		   /* ./ get scope data */
+			// var_dump($data['user_details']); die;
+			$this->load->view('admin/report/assign_user',$data);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function update_assigned_user($report_id){
+		// var_dump($_POST); die;
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['title'] = "Update Assigned User";
+
+			$report_id = $report_id;
+			$updatedata = array(
+				'created_user'=>$this->input->post('user_name')
+			);
+			$result = $this->RdData_model->update_rd_user($updatedata, $report_id);
+			// echo $result;
+			redirect('admin/report/assign_rd');
 		}else{			
 			$this->load->view('admin/login');
 		}

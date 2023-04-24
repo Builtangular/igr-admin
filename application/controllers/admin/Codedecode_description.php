@@ -39,8 +39,7 @@ class Codedecode_description extends CI_Controller {
 		}
 	}
     public function insert(){
-		if($this->session->userdata('logged_in'))
-	 	{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];

@@ -79,7 +79,6 @@ class Company extends CI_Controller {
 		}
 	}
 	public function update($cmp_id){
-
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	

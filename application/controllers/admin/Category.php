@@ -40,8 +40,7 @@ class Category extends CI_Controller {
         }
     }
     public function insert_category(){
-		if($this->session->userdata('logged_in'))
-	 	{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];	
@@ -58,8 +57,7 @@ class Category extends CI_Controller {
 		}
 	}
     public function edit($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];	
@@ -72,8 +70,7 @@ class Category extends CI_Controller {
 		}
     }
     public function update_category(){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];	
@@ -88,8 +85,7 @@ class Category extends CI_Controller {
 		}
 	}
     function category_delete($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];	

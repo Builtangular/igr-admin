@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Query List
+            Query List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -39,11 +39,16 @@
                             <thead>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
+                                    <th>Query Id</th>
                                     <th>Scope Name</th>
                                     <th>Report Name</th>
-                                    <th>Assigned Mamber</th>
+                                    <?php if ($Role_id == 10 || $Role_id == 5) { ?>
+                                    <th>Assigned Member</th>
+                                    <?php if ($Role_id == 5 || $Role_id == 7) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
+                                    <?php } ?>
+                                    <?php } ?>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -75,12 +80,29 @@
                                         $rd_followup = $query_followup_details->row();
                                     }
                                  /* ./ follow up  */
+
+                                 /* assigned  */
+                                 $assigned_details = "SELECT (created_user)  AS rd_status FROM tbl_rd_query_data where id = ".$data->id;
+                                 $query_assigned_details = $this->db->query($assigned_details);
+                                //  var_dump($query_assigned_details);die;
+                                 if($query_assigned_details->num_rows() > 0) { 
+                                    if($rd_status->rd_status == "created_user"){
+                                        $assigned_name = '<span class="text-green">';
+                                        // var_dump($assigned_name);die;
+                                    }
+                                }
+
                                 ?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->id; ?></td>
+                                    <td class="text-center"><?php echo $data->query_id; ?></td>
                                     <td><?php echo $data->scope_name; ?></td>
                                     <td><?php echo $data->report_name; ?></td>
-                                    <td><?php echo $data->assigned_to; ?></td>
+                                    <?php if ($Role_id == 10 || $Role_id == 5) { ?>
+                                    <td class=""><a
+                                            href="<?php echo base_url(); ?>admin/query/assign_user/<?php echo $data->id; ?>"><b>Assign</b></a><br><?php echo $data->created_user; ?>
+                                    </td>
+                                    <?php if ($Role_id == 5 || $Role_id == 7) { ?>
                                     <?php if($query_followup_details->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->id; ?>"><b><i
@@ -97,26 +119,38 @@
                                     <?php if($query_status_details->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/query/view/<?php echo $data->id; ?>"><b><?php echo $query_status; ?></b></a>
-                                            <?php echo $sale_status; ?><?php echo $rd_status->rd_status; ?></span>
+                                        <?php echo $sale_status; ?><?php echo $rd_status->rd_status; ?></span>
                                     </td>
                                     <?php }else {?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->id; ?>"><b><?php echo $query_status; ?></b></a>
                                     </td>
                                     <?php }?>
-                                   <td> <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
-                                    <a href="<?php echo base_url(); ?>admin/query/delete/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a></td>
+                                    <?php }?>
+                                    <?php }?>
+                                    <td> <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>"
+                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
+                                        <?php if ($Role_id == 10 || $Role_id == 5) { ?>
+                                        <a href="<?php echo base_url(); ?>admin/query/delete/<?php echo $data->id; ?>"
+                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                    </td>
+                                    <?php } ?>
                                 </tr>
                                 <?php } ?>
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
+                                    <th>Query Id</th>
                                     <th>Scope Name</th>
                                     <th>Report Name</th>
-                                    <th>Assigned Mamber</th>
+                                    <?php if($Role_id == 10 || $Role_id == 5) {?>
+                                    <th>Assigned Member</th>
+                                    <?php if ($Role_id == 5 || $Role_id == 7) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
+                                    <?php } ?>
+                                    <?php } ?>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

@@ -41,10 +41,8 @@ class Employee extends CI_Controller {
 			$this->load->view('admin/login');
 		}
 	}	
-	public function insert()
-	{
-		if($this->session->userdata('logged_in'))
-	 	{
+	public function insert(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -77,10 +75,8 @@ class Employee extends CI_Controller {
 		}
 	}
 	/* personal edit delete */
-	public function edit($id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function edit($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -93,8 +89,7 @@ class Employee extends CI_Controller {
 	}
 	public function update($id){		
 		// var_dump($_POST); die;
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -121,8 +116,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function delete_employee($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -163,8 +157,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function insert_employment($id){
-		if($this->session->userdata('logged_in'))
-	 	{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -185,10 +178,8 @@ class Employee extends CI_Controller {
 				$this->load->view("admin/login");
 			}
 	}
-	public function edit_employment($id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function edit_employment($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name'] = $session_data['Login_user_name'];	
 			$data['Role_id'] = $session_data['Role_id'];
@@ -201,8 +192,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function update_employment($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -219,8 +209,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function delete_employment($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -458,10 +447,8 @@ class Employee extends CI_Controller {
 			$this->load->view("admin/login");
 		}		
 	}
-	public function edit_bank($id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function edit_bank($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -474,8 +461,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function update_bank($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -492,8 +478,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function delete_bank($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -545,8 +530,7 @@ class Employee extends CI_Controller {
 	}
 	public function upload_documents($id){
 		// var_dump($_POST);die;
-		if($this->session->userdata('logged_in'))
-	 	{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -684,10 +668,8 @@ class Employee extends CI_Controller {
 			$this->load->view("admin/login");
 		}
 	}
-	public function edit_document($record_id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function edit_document($record_id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -702,8 +684,7 @@ class Employee extends CI_Controller {
 	}
 	public function update_document($id){
 		// var_dump($_POST);die;
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -751,8 +732,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function delete_document($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];

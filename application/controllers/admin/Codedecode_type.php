@@ -2,10 +2,8 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Codedecode_type extends CI_Controller 
-{    
-	public function __construct()
-	{
+class Codedecode_type extends CI_Controller {    
+	public function __construct(){
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Codedecode_model');
@@ -13,8 +11,7 @@ class Codedecode_type extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));		
 	}
-	function index()
-	{	
+	function index(){	
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -28,8 +25,7 @@ class Codedecode_type extends CI_Controller
             $this->load->view("admin/login");
         }
 	}
-	function add()
-	{
+	function add(){
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -41,10 +37,8 @@ class Codedecode_type extends CI_Controller
 			$this->load->view("admin/login");
 		}
 	}
-    public function insert_codedecode_type()
-	{
-		if($this->session->userdata('logged_in'))
-	 	{
+    public function insert_codedecode_type(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -60,10 +54,8 @@ class Codedecode_type extends CI_Controller
 		}
 	}
    
-    public function edit($id)
-    {
-		if($this->session->userdata('logged_in'))
-		{
+    public function edit($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -75,10 +67,8 @@ class Codedecode_type extends CI_Controller
 			$this->load->view("admin/login");			
 		}
     }
-	public function update_codedecode_type()
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	public function update_codedecode_type(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -91,10 +81,8 @@ class Codedecode_type extends CI_Controller
 			$this->load->view("admin/login");			
 		}
 	}
-	function codedecode_type_delete($id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	function codedecode_type_delete($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];

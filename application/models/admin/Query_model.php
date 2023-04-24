@@ -1,9 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Query_model extends CI_Model {   
-    
-    public function __construct() 
-    {
+class Query_model extends CI_Model { 
+    public function __construct(){
         parent::__construct(); 
         $this->load->database();
         $this->admindb = $this->load->database('admindb', TRUE);
@@ -18,6 +16,7 @@ class Query_model extends CI_Model {
     public function get_query_details(){
         $this->db->select('*');
         $this->db->from('tbl_rd_query_data');
+        $this->db->order_by('id',"DESC");
         $query = $this->db->get();
         return $query->result();
     }
@@ -36,6 +35,7 @@ class Query_model extends CI_Model {
                 'source'                     => $this->input->post('source'),
                 'source_mail_id'             => $this->input->post('source_mail_id'),
                 'scope_name'                 => $this->input->post('scope_name'),
+                'reseller_name'              => $this->input->post('reseller_name'),
                 'report_name'                => $this->input->post('report_name'),
                 'client_name'                => $this->input->post('client_name'),
                 'designation'                => $this->input->post('designation'),
@@ -46,6 +46,7 @@ class Query_model extends CI_Model {
                 'created_user'               => $Login_user_name,
                 'updated_on'                 => date('Y-m-d'),
             );
+            // var_dump($update);die;
             $this->db->where('id', $id);
             return $this->db->update('tbl_rd_query_data', $update);
     }
@@ -257,6 +258,23 @@ public function update_followup($id)
     );
     $this->db->where('id', $id);
     return $this->db->update('tbl_rd_query_followup', $update);
+}
+public function get_single_data($id){
+    $this->db->where('id',$id);
+    $result = $this->db->get('tbl_rd_query_data');
+    return $result->row();
+}
+public function get_user_data(){
+    $this->db->select('user_id, Role_id, Full_name, Active_flag');
+    $this->db->from('tbl_user_details');
+    $this->db->where(array('Role_id' => 5,'Active_flag' => '1'));		
+    $login_sql = $this->db->get();	
+    return $login_sql->result_array();	
+}
+public function update_query_user($data, $id){
+    $this->db->where(array('id' => $id));
+    $result =  $this->db->update('tbl_rd_query_data', $data);
+    return $result;
 }
 }
 ?>

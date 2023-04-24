@@ -2,11 +2,8 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Dro_reports extends CI_Controller 
-{    
-	public function __construct()
-	{
-		
+class Dro_reports extends CI_Controller {    
+	public function __construct(){
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Drotype_model');
@@ -15,8 +12,7 @@ class Dro_reports extends CI_Controller
 		$this->load->helper(array('form', 'url'));		
 		
 	}
-	function index($report_id)
-	{	
+	function index($report_id){	
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -31,8 +27,7 @@ class Dro_reports extends CI_Controller
             $this->load->view("admin/login");
         }
 	}
-	function add($report_id)
-	{
+	function add($report_id){
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -45,10 +40,8 @@ class Dro_reports extends CI_Controller
 			 $this->load->view("admin/login");
 		}
 	}
-    function insert_dro_records($report_id)
-    {
-        if($this->session->userdata('logged_in'))
-	 	{
+    function insert_dro_records($report_id){
+        if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -64,10 +57,8 @@ class Dro_reports extends CI_Controller
 			$this->load->view("admin/login");
 		}
     }
-   	public function edit($id)
-    {
-		if($this->session->userdata('logged_in'))
-		{
+   	public function edit($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -79,10 +70,8 @@ class Dro_reports extends CI_Controller
 			$this->load->view("admin/login");			
 		}
     }
-	public function update($report_id)
-    {
-		if($this->session->userdata('logged_in'))
-		{
+	public function update($report_id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -95,10 +84,8 @@ class Dro_reports extends CI_Controller
 			$this->load->view("admin/login");			
 		}
     }
-	function delete($id)
-	{
-		if($this->session->userdata('logged_in'))
-		{
+	function delete($id){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
