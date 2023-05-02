@@ -77,7 +77,9 @@ class Login extends CI_Controller
 					redirect('admin/dashboard');
 				}else if($session_data['Role_id']==7 || $session_data['Role_id']==8){
 					redirect('admin/dashboard');
-				}
+				}else if($session_data['Role_id']==10){
+					redirect('admin/dashboard');
+				}	
 			}
 			else
 			{							

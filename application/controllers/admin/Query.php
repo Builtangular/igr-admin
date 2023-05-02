@@ -2,10 +2,8 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', '0');
-class Query extends CI_Controller 
-{    
-	public function __construct()
-	{
+class Query extends CI_Controller {    
+	public function __construct(){
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Query_model');
@@ -27,6 +25,42 @@ class Query extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
+	public function assign_user($id){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+			$data['title'] = "Assign User";
+			$data['single_data'] = $this->Query_model->get_single_data($id);
+			$report_name = $data['single_data']->report_name;
+			$data['user_details'] = $this->Query_model->get_user_data();
+			// var_dump($data['user_details']);die;
+			$this->load->view('admin/query/assign_user',$data,$report_name);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function update_assigned_user($id){
+		// var_dump($_POST); die;
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['title'] = "Update Assigned User";
+			$id = $id;
+			$updatedata = array(
+				'created_user'=>$this->input->post('user_name')
+			);
+			// var_dump($updatedata);die;
+			$result = $this->Query_model->update_query_user($updatedata, $id);
+			// echo $result;
+			redirect('admin/query/list');
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
     public function add(){
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
@@ -42,10 +76,8 @@ class Query extends CI_Controller
 			$this->load->view('admin/login');
 		}
     }
-    public function insert()
-	{
-		if($this->session->userdata('logged_in'))
-	 	{
+    public function insert(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$Login_user_name=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -62,8 +94,11 @@ class Query extends CI_Controller
 			// var_dump($serviceno);die;
 			// $num = $data['id'];
 			$service_no = $serviceno.'-'.($last_row_id + 1);
+			$query_id = 'QRIGR' .str_pad($last_row_id+1, 2, "0", STR_PAD_LEFT);
+			// var_dump($query_id);die;
 			if($source == "Reseller"){
 				$data = array(
+					'query_id'                   =>$query_id,
 					'source'                     => $this->input->post('source'),
 					'reseller_name'              => $this->input->post('reseller_name'),
 					'service_no'                 => $service_no,
@@ -74,9 +109,9 @@ class Query extends CI_Controller
 					'designation'                => $this->input->post('designation'),
 					'company_name'               => $this->input->post('company_name'),
 					'client_email'               => $this->input->post('client_email'),
-					'client_email1'              => $this->input->post('client_email1'),
+					'phone_no'                   => $this->input->post('phone_no'),
 					'client_message'             => $this->input->post('client_message'),
-					'assigned_to'                => $this->input->post('assigned_to'),
+					// 'assigned_to'                => $this->input->post('assigned_to'),
 					'created_user'               => $Login_user_name,
 					'created_on'                 => date('Y-m-d'),
 					'updated_on'                 => date('Y-m-d'),
@@ -86,6 +121,7 @@ class Query extends CI_Controller
 			}
 			else if($source == "Email" || "Website"){
 				$source_data = array(
+					'query_id'                   =>$query_id,
 					'source'                     => $this->input->post('source'),
 					'source_mail_id'             => $this->input->post('source_mail_id'),
 					'scope_name'                 => $this->input->post('scope_name'),
@@ -94,9 +130,9 @@ class Query extends CI_Controller
 					'designation'                => $this->input->post('designation'),
 					'company_name'               => $this->input->post('company_name'),
 					'client_email'               => $this->input->post('client_email'),
-					'client_email1'              => $this->input->post('client_email1'),
+					'phone_no'                   => $this->input->post('phone_no'),
 					'client_message'             => $this->input->post('client_message'),
-					'assigned_to'                => $this->input->post('assigned_to'),
+					// 'assigned_to'                => $this->input->post('assigned_to'),
 					'created_user'               => $Login_user_name,
 					'created_on'                 => date('Y-m-d'),
 					'updated_on'                 => date('Y-m-d'),
@@ -114,8 +150,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function edit($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -129,8 +164,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function update(){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -143,8 +177,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function delete($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -171,8 +204,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function insert_status($id){
-		if($this->session->userdata('logged_in'))
-	 	{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -202,8 +234,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function update_status(){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -233,8 +264,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function insert_followup($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 		   $session_data = $this->session->userdata('logged_in');
 		   $data['Login_user_name']=$session_data['Login_user_name'];	
 		   $data['Role_id']=$session_data['Role_id'];
@@ -279,9 +309,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function insert_record($id){
-	
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -297,8 +325,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function delete_followup($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -323,8 +350,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function update_followup($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -374,10 +400,8 @@ class Query extends CI_Controller
 			$this->load->view('admin/login');
 		}
 	}
-	public function insert_reseller()
-	{
-		if($this->session->userdata('logged_in'))
-	 	{
+	public function insert_reseller(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -405,8 +429,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function reseller_edit($id){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -417,8 +440,7 @@ class Query extends CI_Controller
 		}
 	}
 	public function reseller_update(){
-		if($this->session->userdata('logged_in'))
-		{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];

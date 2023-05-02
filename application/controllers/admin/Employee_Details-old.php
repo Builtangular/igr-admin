@@ -37,10 +37,8 @@ class Employee_Details extends CI_Controller {
         }
 
     }
-	public function insert_emp_personal_details()
-	{
-		if($this->session->userdata('logged_in'))
-	 	{
+	public function insert_emp_personal_details(){
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -88,8 +86,7 @@ class Employee_Details extends CI_Controller {
 		}
 	}
 	public function insert_employee_details(){
-		if($this->session->userdata('logged_in'))
-	 	{
+		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
@@ -132,10 +129,6 @@ class Employee_Details extends CI_Controller {
                 }
                 $num++;
             }
-			// var_dump($reference_contact_no);die;
-			// $id = $this->input->post('id'); 
-			// $result = $this->Employee_Model->insert_employee_details($id);
-			// var_dump($result);die;
 			if($result == 1)
 			{
 				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');

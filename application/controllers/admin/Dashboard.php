@@ -2,12 +2,9 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class Dashboard extends CI_Controller 
-{    
+class Dashboard extends CI_Controller {    
 	// error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
-	public function __construct()
-	{
-		
+	public function __construct(){
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Data_model');
@@ -15,8 +12,7 @@ class Dashboard extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
 	}
-    public function index()
-	{	
+    public function index(){	
         if($this->session->userdata('logged_in')){
             $session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -32,24 +28,6 @@ class Dashboard extends CI_Controller
         }
 		
 	}
-	/* function scope()
-	{	
-        if($this->session->userdata('logged_in')){
-       	$session_data = $this->session->userdata('logged_in');
-		$data['Login_user_name']=$session_data['Login_user_name'];	
-		$data['Role_id']=$session_data['Role_id'];	
-		$data['title'] = "Scope Master";
-		$data['list_data'] = $this->Data_model->get_scope_master();
-		//print_r($data);exit();
-		$this->load->view("admin/scope/list", $data);
-        }else{
-            $this->load->view("admin/login");
-        }
-	}
-    function scope_register()
-	{	
-		$this->load->view("admin/scope/register", $data);
-        
-	} */
+
 }
 ?>
