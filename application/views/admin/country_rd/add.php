@@ -1,6 +1,6 @@
 <?php $this->load->view('admin/header.php'); ?>
 
-<?php $Period = array('2010' , '2011' , '2012' , '2013' , '2014' , '2015' , '2016' , '2017' , '2018' , '2019' , '2020' , '2021' , '2022' , '2023' , '2024' , '2025' , '2026' , '2027' , '2028' , '2029' , '2030' , '2031' , '2032' , '2033' , '2034' , '2035' , '2036' , '2037' , '2038' , '2039' , '2040' , '2041' , '2042' , '2043' , '2044' , '2045' , '2046' , '2047' , '2048' , '2049' , '2050' , '2051' , '2052' , '2053' , '2054' , '2055' , '2056' , '2057' , '2058' , '2059' , '2060' , '2061' , '2062' , '2063' , '2064' , '2065' , '2066' , '2067' , '2068' , '2069' , '2070' , '2071' , '2072' , '2073' , '2074' , '2075' , '2076' , '2077' , '2078' , '2079' , '2080' , '2081' , '2082' , '2083' , '2084' , '2085' , '2086' , '2087' , '2088' , '2089' , '2090' , '2091' , '2092' , '2093' , '2094' , '2095' , '2096' , '2097' , '2098' , '2099');
+<?php $Period = array('2015' , '2016' , '2017' , '2018' , '2019' , '2020' , '2021' , '2022' , '2023' , '2024' , '2025' , '2026' , '2027' , '2028' , '2029' , '2030' , '2031' , '2032' , '2033' , '2034' , '2035' , '2036' , '2037' , '2038' , '2039' , '2040' , '2041' , '2042' , '2043' , '2044' , '2045' , '2046' , '2047' , '2048' , '2049' , '2050' , '2051' , '2052' , '2053' , '2054' , '2055' , '2056' , '2057' , '2058' , '2059' , '2060' , '2061' , '2062' , '2063' , '2064' , '2065' , '2066' , '2067' , '2068' , '2069' , '2070' , '2071' , '2072' , '2073' , '2074' , '2075' , '2076' , '2077' , '2078' , '2079' , '2080' , '2081' , '2082' , '2083' , '2084' , '2085' , '2086' , '2087' , '2088' , '2089' , '2090' , '2091' , '2092' , '2093' , '2094' , '2095' , '2096' , '2097' , '2098' , '2099');
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -8,7 +8,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add Contry
+            Add Contry Report
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -27,30 +27,34 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Add Country</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/report/insert" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/country_rd/insert" method="post" class="form-horizontal">
+                        <!-- <form action="<?php echo base_url(); ?>admin/report/insert" method="post" class="form-horizontal" autocomplete="off"> -->
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Scope</label>
+                                    <label class="control-label col-md-3">Country <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="scope">
-                                            <option value="0">Select</option>
-                                            <?php foreach($scopes_data as $scopes){?>
-                                            <option value="<?php echo $scopes->id; ?>"><?php echo $scopes->name; ?>
+                                        <select class="form-control" name="country" required>
+                                            <option value="">Select</option>
+                                            <?php foreach($countries as $country){?>
+                                            <option value="<?php echo $country->id; ?>"><?php echo $country->name; ?>
                                             </option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                 </div>
-								<div class="form-group">
-                                    <label class="control-label col-md-3">Title Case Name</label>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Title Case <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" id="search" name="title" class="form-control">
-										<span class="help-block margin" id="txtHint"></span>
-                                    </div>								
+                                        <input type="text" id="search" name="title" class="form-control"
+                                            placeholder="Name" required>
+                                        <span class="help-block margin" id="txtHint"></span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Forecast From </label>
+                                    <label class="control-label col-md-3">Forecast From <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="forecast_from" id="From_forecast_period"
                                             Onchange="changeyear(this.value)" required>
@@ -66,7 +70,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Forecast To </label>
+                                    <label class="control-label col-md-3">Forecast To <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="forecast_to" id="forecast_to">
                                             <option value="">Select To Forecast Period</option>
@@ -76,45 +81,56 @@
                                         </select>
                                     </div>
                                 </div>
-								<div class="form-group">
-                                    <label class="control-label col-md-3">CAGR</label>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">CAGR <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" name="cagr" class="form-control">
+                                        <input type="text" name="cagr" class="form-control" placeholder="CAGR" required>
                                     </div>
-                                </div>                                
-								<div class="form-group">
-                                    <label class="control-label col-md-3">Report Status</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Start Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="start_year_revenue" class="form-control"
+                                            placeholder="Ex. USD 302">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Report Status <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <div class="radio">
-                                            <label><input type="radio" name="status" value="1" checked />Active</label>
-                                            <label><input type="radio" name="status" value="0" />Inactive</label>
-                                            <label><input type="radio" name="status" value="2" />Draft</label>
+                                            <label><input type="radio" name="status" value="3" />Published</label>
+                                            <label><input type="radio" name="status" value="0" checked />Draft</label>
+                                            <!-- <label><input type="radio" name="status" value="2" />Draft</label> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-								<div class="form-group">
-                                    <label class="control-label col-md-3">Category</label>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Category <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="category">
-                                            <option value="0">Select</option>
-											<?php foreach($category_data as $category){?>
+                                        <select class="form-control" name="category" required>
+                                            <option value="">Select</option>
+                                            <?php foreach($category_data as $category){?>
                                             <option value="<?php echo $category->id; ?>"><?php echo $category->name; ?>
                                             </option>
-											<?php } ?>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Small Case Name</label>
+                                    <label class="control-label col-md-3">Small Case <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" id="search" name="name" class="form-control">
-										<span class="help-block margin" id="txtHint"></span>
-                                    </div>								
+                                        <input type="text" id="search" name="name" class="form-control"
+                                            placeholder="Name" required>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Analysis From </label>
+                                    <label class="control-label col-md-3">Analysis From <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="analysis_form" id="analysis_form">
                                             <option value="">Select From Period</option>
@@ -125,7 +141,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Analysis To </label>
+                                    <label class="control-label col-md-3">Analysis To <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="analysis_to" id="analysis_to">
                                             <option value="">Select To Period</option>
@@ -135,11 +152,19 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Value Unit</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="value_based_unit" class="form-control">
+                                        <input type="text" name="value_based_unit" class="form-control"
+                                            placeholder="Value Unit">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">End Year Value</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="end_year_revenue" class="form-control"
+                                            placeholder="Ex. USD 302">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -148,7 +173,6 @@
                                         <div class="radio">
                                             <label><input type="radio" name="volume" value="1"
                                                     onclick="return HideVunit(1)" />Yes</label>
-
                                             <label><input type="radio" name="volume" value="0"
                                                     onclick="return HideVunit(0)" checked />No</label>
                                         </div>
@@ -169,68 +193,27 @@
                                     </div>
                                 </div>
                             </div>
-						</div>
+                        </div>
                         <div class="col-md-12">
-							<div class="form-group">
+                            <div class="form-group">
                                 <label class="control-label col-md-2">Report Price</label>
                                 <div class="col-md-4">
-                                    <input type="text" id="single_user" name="single_user" class="form-control" placeholder="Single User License" />
+                                    <input type="text" id="single_user" name="single_user" class="form-control"
+                                        placeholder="Single User License" />
                                 </div>
-								<div class="col-md-3">
-                                    <input type="text" id="enterprise_user" name="enterprise_user" class="form-control" placeholder="Enterprise License" />
+                                <div class="col-md-3">
+                                    <input type="text" id="enterprise_user" name="enterprise_user" class="form-control"
+                                        placeholder="Enterprise License" />
                                 </div>
-								<div class="col-md-3">
-                                    <input type="text" id="datasheet" name="datasheet" class="form-control" placeholder="Data Sheet License" />
-                                </div>
-                            </div>
-						</div>
-                        <div class="col-md-12">
-							<div class="form-group">
-                                <label class="control-label col-md-2">CAGR Market Value</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="market_value" name="market_value" class="form-control" placeholder="Market Value During the Forecast Period" />
-                                </div>
-                            </div>
-							<div class="form-group">
-                                <label class="control-label col-md-2">Report Definition</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Report_definition" rows="5"
-                                        class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Report Description</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Report_description" rows="8"
-                                        class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Executive Summary-DRO</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Executive_summary_DRO" rows="8"
-                                        class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Executive Summary - Regional Description</label>
-                                <div class="col-md-10">
-                                    <textarea type="text" name="Executive_summary_regional_description" rows="8"
-                                        class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Largest Region</label>
-                                <div class="col-md-10">
-                                    <input type="text" name="Largest_region" class="form-control">
+                                <div class="col-md-3">
+                                    <input type="text" id="datasheet" name="datasheet" class="form-control"
+                                        placeholder="Data Sheet License" />
                                 </div>
                             </div>
                         </div>
-
                         <div class="box-footer">
                             <input type="submit" class="btn btn-info pull-right" value="Submit">
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -275,37 +258,37 @@ function HideVunit(input) {
 }
 </script>
 <!-- jQuery 2.1.3 -->
-    <script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.2 JS -->
+<script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
 <script>
-$(document).mouseup(function (e) { 
-	if ($(e.target).closest("#txtHint").length === 0) {										
-		$("#txtHint").hide(); 
-	} 
+$(document).mouseup(function(e) {
+    if ($(e.target).closest("#txtHint").length === 0) {
+        $("#txtHint").hide();
+    }
 });
-$( "#txtHint" ).css("display","none");
-$(document).ready(function(){
-	$("#search").keyup(function(){				
-		var str=  $("#search").val();
-		if(str == "") {
-			$("#txtHint" ).css("display","none");
-		} else {
-			$.get("<?php echo base_url(); ?>admin/report/title_exist?name="+str, function(data){
-				//$("#txtHint" ).html("");
-				if(data == ""){
-					// console.log("in if");
-					$("#txtHint" ).css("display","none");
-					//$("#txtHint").removeClass("search-result");								
-				} else {
-					// console.log("in else");
-					$("#txtHint" ).html( data );
-					$("#txtHint" ).css("display","");
-					//$("#txtHint").addClass("search-result");
-				}
-				
-			});
-		}
-	});
+$("#txtHint").css("display", "none");
+$(document).ready(function() {
+    $("#search").keyup(function() {
+        var str = $("#search").val();
+        if (str == "") {
+            $("#txtHint").css("display", "none");
+        } else {
+            $.get("<?php echo base_url(); ?>admin/report/title_exist?name=" + str, function(data) {
+                //$("#txtHint" ).html("");
+                if (data == "") {
+                    // console.log("in if");
+                    $("#txtHint").css("display", "none");
+                    //$("#txtHint").removeClass("search-result");								
+                } else {
+                    // console.log("in else");
+                    $("#txtHint").html(data);
+                    $("#txtHint").css("display", "");
+                    //$("#txtHint").addClass("search-result");
+                }
+
+            });
+        }
+    });
 });
 </script>
 <?php $this->load->view('admin/footer.php'); ?>

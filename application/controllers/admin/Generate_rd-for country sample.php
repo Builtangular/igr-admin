@@ -1354,7 +1354,118 @@ class Generate_rd extends CI_Controller {
 			}
 			// die;
 			
+			/* TOC Chapter 6 Region */
+			if($Volume_unit){
+				$section->addText($regchapt.'.	'.htmlspecialchars($Report_title_scope).', by '.$scope_type.' (USD '.htmlspecialchars($Value_unit).', '.htmlspecialchars($Volume_unit).")", 'ChapStyle', 'PStyle');
+			} else {
+				$section->addText($regchapt.'.	'.htmlspecialchars($Report_title_scope).', by '.$scope_type.' (USD '.htmlspecialchars($Value_unit).")", 'ChapStyle', 'PStyle');
+			}
+			$section->addText('	'.$regchapt.'.1	Overview', 'subpoint', 'P-Style');
+			/* Fetch Region Data */
+			$Scope_Region;
+			$get_scope_regions= $this->RdData_model->get_scope_regions($scope_id);            
+            foreach($get_scope_regions as $scope_region)
+			{
+				$ScReg[] = $scope_region->name;				
+				$ScRegId[] = $scope_region->id;				
+			}
+			if($ScReg != NULL){
+    			$regsubpt = 2;
+                $j= count($ScReg);
+    			for($i = 0; $i < $j ; $i++)
+    			{
+    				$section->addText('	'.$regchapt.'.'.$regsubpt.'	'.htmlspecialchars($ScReg[$i]).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 'subpoint', 'P-Style');
+    
+    				$regchildpt = 1;
+    				foreach($main_segments as $segments)
+    				{
+    					$mainseg = $segments->name;
+    					$region_fix = ltrim(rtrim($ScReg[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'"));
+    					$region_report_title = ltrim(rtrim($ScReg[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.htmlspecialchars(ucwords($mainseg, " \t\r\n\f\v'"));
+    					$section->addText('		'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'	'.htmlspecialchars($region_report_title), 'childpoint', 'P-Style');
+    					$regchildpt++;
+    				}
+				if($scope_name == 'Global'){
+    				if($ScReg[$i] == "RoW"){	
+    					$section->addText('		'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'	'.htmlspecialchars($region_fix).' by Sub-region', 'childpoint', 'P-Style');
+    					/* adding country points */
+    					$get_scope_country = $this->RdData_model->get_scope_regions($ScRegId[$i]); 
+    					foreach($get_scope_country as $Reg_c)
+    					{
+    						$Regcntry[] = $Reg_c->name;				
+    						$Regcntryid[] = $Reg_c->id;	
+    					}
+    					if($Regcntry != NULL){
+        					$x= count($Regcntry);
+        					$c_num = 1;
+        					for($r = 0; $r < $x ; $r++)
+        					{
+        						$Region_country= ltrim(rtrim($Regcntry[$r]))." ";				
+        						$section->addText('			'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'.'.$c_num.'	'.htmlspecialchars($Region_country), 'childpoint', 'P-Style');
+        						$sub_seg = 1;
+        						foreach($main_segments as $segments)
+        						{
+        							$region_country_title = ltrim(rtrim($Region_country)).' '.ltrim(rtrim(ucwords($report_name, " \t\r\n\f\v'"))).', by '.ltrim(rtrim(ucwords($segments->name)));							
+        							$section->addText('				'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'.'.$c_num.'.'.$sub_seg.' '.htmlspecialchars($region_country_title), 'childpoint', 'P-Style');
+        							$sub_seg++;
+        						}
+        						$c_num++;
+        					}
+        					unset($Regcntry);
+    					}
+    				}else{
+    					$section->addText('		'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'	'.htmlspecialchars($region_fix).' by Country', 'childpoint', 'P-Style');
+    					/* adding country points */
+    					$get_scope_country = $this->RdData_model->get_scope_regions($ScRegId[$i]); 
+    					foreach($get_scope_country as $Reg_c)
+    					{
+    						$Regcntry[] = $Reg_c->name;				
+    						$Regcntryid[] = $Reg_c->id;	
+    					}
+    					if($Regcntry != NULL){
+        					$x= count($Regcntry);
+        					$c_num = 1;
+        					for($r = 0; $r < $x ; $r++)
+        					{
+        						$Region_country= ltrim(rtrim($Regcntry[$r]))." ";				
+        						$section->addText('			'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'.'.$c_num.'	'.htmlspecialchars($Region_country), 'childpoint', 'P-Style');
+        						$sub_seg = 1;
+        						foreach($main_segments as $segments)
+        						{
+        							$region_country_title = ltrim(rtrim($Region_country)).' '.ltrim(rtrim(ucwords($report_name, " \t\r\n\f\v'"))).', by '.ltrim(rtrim(ucwords($segments->name)));							
+        							$section->addText('				'.$regchapt.'.'.$regsubpt.'.'.$regchildpt.'.'.$c_num.'.'.$sub_seg.' '.htmlspecialchars($region_country_title), 'childpoint', 'P-Style');
+        							$sub_seg++;
+        						}
+        						$c_num++;
+        					}
+        					unset($Regcntry);
+    					}
+    				}
+				}
+    				$regsubpt++;
+    				$cmpt = $regchapt + 1;
+    			}
+    			unset($ScReg);
+			}
 			
+			/* Company Profiles */
+			$section->addText($cmpt.'.	Company Profiles and Competitive Landscape', 'ChapStyle', 'PStyle');	
+			$section->addText('	'.$cmpt.'.1	Competitive Landscape in the '.htmlspecialchars(ucwords($report_title, " \t\r\n\f\v'")), 'childpoint', 'P-Style');
+			$section->addText('	'.$cmpt.'.2	Companies Profiles', 'childpoint', 'P-Style');
+			$cmpsub = 2;
+			$cmpsubchild = 1;
+			$Get_rd_companies = $this->RdData_model->get_rd_companies($report_id);
+			foreach($Get_rd_companies as $company)
+			{				
+				$cmpProfile = $company->name;					
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style');				
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.2	Company Snapshot', 'childpoint', 'P-Style');
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.3	Product Portfolio', 'childpoint', 'P-Style');	
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.4	Recent Developments', 'childpoint', 'P-Style');	
+				$cmpsubchild++;
+			}
+			$section->addPageBreak();
 			/* ************* /. Report TOC Writing ******************* */
 
 			/* *************** List of Tables Only for value ********************** */
@@ -1382,7 +1493,7 @@ class Generate_rd extends CI_Controller {
 				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);	
 				foreach($sub_segments as $subsegments)
 				{
-					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($segments->name).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 					$num++;
 
 					if($Volume_unit)
@@ -1395,7 +1506,7 @@ class Generate_rd extends CI_Controller {
 					if($child_segments){
 						foreach($child_segments as $childsegments)
 						{
-							$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET BY ".htmlspecialchars(strtoupper($subsegments->name)).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+							$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 							$num++;
 							if($Volume_unit)
 							{
@@ -1408,7 +1519,7 @@ class Generate_rd extends CI_Controller {
 							if($sub_child_segments){
 								foreach($sub_child_segments as $subchildsegments)
 								{
-									$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$subchildsegments->name))." MARKET BY ".htmlspecialchars(strtoupper($childsegments->name)).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+									$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($scope_name." ".$subchildsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($childsegments->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 									$num++;
 									if($Volume_unit)
 									{
@@ -1424,7 +1535,113 @@ class Generate_rd extends CI_Controller {
 				/* /. --- sub segment--- */
 			}
 			/* /. Main Segments */
-			
+			/* Region */
+			$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+			$num++;
+
+			if($Volume_unit)
+			{
+				$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+				$num++;
+			}
+
+			/* Country */
+			$get_scope_regions = $this->RdData_model->get_scope_regions($scope_id); 
+			foreach($get_scope_regions as $scope_region)
+			{
+				$ScRegion[] = $scope_region->name;				
+				$ScRegionId[] = $scope_region->id;				
+			}
+			if($ScRegion != NULL) {
+                $j= count($ScRegion);
+    			for($i = 0; $i < $j ; $i++)
+    			{
+    				foreach($main_segments as $segments)
+    				{
+    					$mainseg = $segments->name;
+    					$region_fix = ltrim(rtrim($ScRegion[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'"));
+    					$region_report_title = ltrim(rtrim($ScRegion[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
+    					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($region_report_title))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    					$num++;
+    
+    					if($Volume_unit)
+    					{
+    						$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($region_report_title))." ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    						$num++;
+    					}
+    				}
+    				/* for sub region & country */
+				/* Scope Global Only */
+				if($scope_name == 'Global'){
+    				if($ScRegion[$i] == "RoW")
+    				{
+    					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($region_fix)).', BY SUB-REGION'." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    					$num++;
+    					if($Volume_unit)
+    					{
+    						$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($region_fix)).', BY SUB-REGION'." ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    						$num++;
+    					}
+    					/* Sub regions */
+    					$get_scope_country1 = $this->RdData_model->get_scope_regions($ScRegionId[$i]); 
+    					foreach($get_scope_country1 as $Reg_c1)
+    					{
+    						$Regcntry1[] = $Reg_c1->name;				
+    						$Regcntryid1[] = $Reg_c1->id;	
+    					}
+    					if($Regcntry1 != NULL){
+        					$ctry1 = count($Regcntry1);
+        					for($r = 0; $r < $ctry1; $r++)
+        					{
+        						$parent = 0;
+        						$main_segments_data = $this->RdData_model->get_rd_segments($report_id, $parent);
+        						foreach($main_segments_data as $segments)
+        						{
+        							$mainseg = $segments->name;
+        							$country_report_title = ltrim(rtrim($Regcntry1[$r])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
+        							
+        							$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($country_report_title))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+        							$num++;
+        						}
+        					}			
+        					unset($Regcntry1);
+    					}
+    				} else {
+    					$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($region_fix)).', BY COUNTRY'." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    					$num++;
+    					if($Volume_unit)
+    					{
+    						$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($region_fix)).', BY COUNTRY'." ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    						$num++;
+    					}
+    					/* Sub regions */
+    					$get_scope_country1 = $this->RdData_model->get_scope_regions($ScRegionId[$i]); 
+    					foreach($get_scope_country1 as $Reg_c1)
+    					{
+    						$Regcntry1[] = $Reg_c1->name;				
+    						$Regcntryid1[] = $Reg_c1->id;	
+    					}
+    					if($Regcntry1 != NULL){
+        					$ctry1 = count($Regcntry1);
+        					for($r = 0; $r < $ctry1; $r++)
+        					{
+        						$parent = 0;
+        						$main_segments_data = $this->RdData_model->get_rd_segments($report_id, $parent);
+        						foreach($main_segments_data as $segments)
+        						{
+        							$mainseg = $segments->name;
+        							$country_report_title = ltrim(rtrim($Regcntry1[$r])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
+        							
+        							$section->addText('TABLE '.$num.'   '.htmlspecialchars(strtoupper($country_report_title))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+        							$num++;
+        						}
+        					}			
+        					unset($Regcntry1);	
+    					}
+    				}
+				}/* /. Scope Global Only */
+    			}
+    		}
 			$section->addPageBreak();
 			/* *************** /. List of Tables Only for value ********************** */
 			
@@ -1472,7 +1689,7 @@ class Generate_rd extends CI_Controller {
 				$sub_segments= $this->RdData_model->get_rd_segments($report_id, $segments->id);	
 				foreach($sub_segments as $subsegments)
 				{
-					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($segments->name).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments->name))." MARKET BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 					$number++;
 					if($Volume_unit)
 					{
@@ -1484,11 +1701,11 @@ class Generate_rd extends CI_Controller {
 					if($child_segments){
 						foreach($child_segments as $childsegments)
 						{
-							$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET BY ".htmlspecialchars(strtoupper($subsegments->name)).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+							$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$childsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 							$number++;
 							if($Volume_unit)
 							{
-								$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$subsegments->name))." MARKET BY ".htmlspecialchars(strtoupper($subsegments->name)).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+								$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$subsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 								$number++;
 							}
 
@@ -1497,7 +1714,7 @@ class Generate_rd extends CI_Controller {
 							if($sub_child_segments){
 								foreach($sub_child_segments as $subchildsegments)
 								{
-									$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$subchildsegments->name))." MARKET BY ".htmlspecialchars(strtoupper($childsegments->name)).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+									$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($scope_name." ".$subchildsegments->name))." MARKET FOR ".htmlspecialchars(strtoupper($childsegments->name))." BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
 									$number++;
 									if($Volume_unit)
 									{
@@ -1513,7 +1730,113 @@ class Generate_rd extends CI_Controller {
 				/* --- /. sub segment---- */
 			}
 			/* /. Segments */
-			
+			/* Regions */
+			$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to." (REVENUE % SHARE)", array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));			
+			$number++;
+			if($Volume_unit){
+				$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+				$number++;
+			}else{
+				$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($Report_title_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+				$number++;
+			}
+			$Scope_Region;
+			$get_scope_regions= $this->RdData_model->get_scope_regions($scope_id);            
+            foreach($get_scope_regions as $scope_region)
+			{
+				$ScReg1[] = $scope_region->name;				
+				$ScRegId1[] = $scope_region->id;				
+			}
+			if($ScReg1 != NULL){
+                $j= count($ScReg1);
+    			for($i = 0; $i < $j ; $i++)
+    			{
+    				$Scope_Region .= ltrim(rtrim($ScReg1[$i]))." ";
+    				foreach($main_segments as $segments)
+    				{
+    					$mainseg = $segments->name;
+    					$region_fix = ltrim(rtrim($ScReg1[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'"));
+    					$region_report_title = ltrim(rtrim($ScReg1[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
+    					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_report_title))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    					$number++;
+    					if($Volume_unit)
+    					{
+    						$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_report_title))." ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    						$number++;
+    					}
+    				}
+				/* Scope Global Only */
+				if($scope_name == 'Global'){
+    				if($ScReg1[$i] == "RoW")
+    				{
+    					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_fix)).', BY SUB-REGION '.$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    					$number++;
+    					if($Volume_unit)
+    					{
+    						$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_fix)).', BY SUB-REGION '.$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    						$number++;
+    					}
+    					/* Sub regions */
+    					$get_scope_country2 = $this->RdData_model->get_scope_regions($ScRegId1[$i]); 
+    					foreach($get_scope_country2 as $Reg_c2)
+    					{
+    						$Regcntry2[] = $Reg_c2->name;				
+    						$Regcntryid2[] = $Reg_c2->id;	
+    					}
+    					if($Regcntry2 != NULL){
+        					$ctry = count($Regcntry2);
+        					for($r = 0; $r < $ctry; $r++)
+        					{
+        						$parent = 0;
+        						$main_segments_Data = $this->RdData_model->get_rd_segments($report_id, $parent);
+        						foreach($main_segments_Data as $segments)
+        						{
+        							$mainseg = $segments->name;
+        							$country_report_title = ltrim(rtrim($Regcntry2[$r])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
+        							
+        							$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($country_report_title)).' '.$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+        							$number++;
+        						}
+        					}			
+        					unset($Regcntry2);
+    					}
+    				} else {
+    					$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_fix)).', BY COUNTRY '.$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    					$number++;
+    					if($Volume_unit)
+    					{
+    						$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($region_fix)).', BY COUNTRY '.$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(strtoupper($Volume_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+    						$number++;
+    					}
+    					/* Sub regions */
+    					$get_scope_country2 = $this->RdData_model->get_scope_regions($ScRegId1[$i]); 
+    					foreach($get_scope_country2 as $Reg_c2)
+    					{
+    						$Regcntry2[] = $Reg_c2->name;				
+    						$Regcntryid2[] = $Reg_c2->id;	
+    					}
+    					if($Regcntry2 != NULL){
+        					$ctry = count($Regcntry2);
+        					for($r = 0; $r < $ctry; $r++)
+        					{
+        						$parent = 0;
+        						$main_segments_Data = $this->RdData_model->get_rd_segments($report_id, $parent);
+        						foreach($main_segments_Data as $segments)
+        						{
+        							$mainseg = $segments->name;
+        							$country_report_title = ltrim(rtrim($Regcntry2[$r])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg)));
+        							
+        							$section->addText('FIGURE '.$number.'   '.htmlspecialchars(strtoupper($country_report_title)).' '.$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>10,'color'=>'#78777C'));
+        							$number++;
+        						}
+        					}			
+        					unset($Regcntry2);
+    					}
+    				}
+				}/* /. Scope Global Only */											
+    			}
+			}
+			/* /. Regions */
 			
 			/* -------------note style------------- */
 			$PHPWord->addParagraphStyle('noteStyle', array('align'=>'left', 'spacing'=>0, 'spaceBefore' => 120, 'spaceAfter' =>0));
@@ -1593,8 +1916,7 @@ class Generate_rd extends CI_Controller {
 							$section->addListItem(htmlspecialchars($childsegments2->name), 1, array('align'=>'left', 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5), $listStyleBulletEmpty, 'P-Style');
 
 							/* sub child segments */
-							$sub_child_segments2 = $this->RdData_model->get_rd_segments($report_id, $childsegments2->id);		
-							// var_dump($sub_child_segments2); 	
+							$sub_child_segments2 = $this->RdData_model->get_rd_segments($report_id, $childsegments->id);			
 							if($sub_child_segments2)
 							{
 								foreach($sub_child_segments2 as $subchildsegments2)
@@ -1607,7 +1929,7 @@ class Generate_rd extends CI_Controller {
 				}
 			}
 			$section->addTextBreak(1);
-			// die;
+			
 			/* -------------------------- Source style ------------------------------ */
 			$PHPWord->addParagraphStyle('sourceStyle', array('align'=>'left', 'spacing' => 0, 'spaceBefore' => 120,'spaceAfter' => 0));
 			$PHPWord->addFontStyle('Source Note', array('align'=>'left','name'=>'Franklin Gothic Medium','size'=>8,'color'=>'#78777C'));
@@ -2472,7 +2794,6 @@ class Generate_rd extends CI_Controller {
 
 				// displaying sub segment data to word file
 				$sub_segments5_2 = $this->RdData_model->get_rd_segments($report_id, $segments5->id);	
-				// var_dump($sub_segments5_2); die;
 				/* for checking child segment */
 				foreach($sub_segments5_2 as $subsegmentsdata)
 				{
@@ -2487,13 +2808,13 @@ class Generate_rd extends CI_Controller {
 					$section->addText(htmlspecialchars('This Point Includes '.$sub_segment5_2.' Segment Analysis and Trends.'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
 					$section->addTextBreak(1);
 					/* adding figure */					
-					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($segments5->name).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
 					$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 					$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 					$section->addTextBreak(1);
 					if($Volume_unit)
 					{
-						$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($segments5->name).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+						$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
 						$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 						$section->addTextBreak(1);
@@ -2501,13 +2822,13 @@ class Generate_rd extends CI_Controller {
 
 					/* Table Writeup - Sub Segment */
 					/* value based table */
-					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($segments5->name).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
+					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
 					// Add table
 					$table = $section->addTable('myOwnTableStyle');
 					// Add row
 					$table->addRow(70);
 					// Add cells header
-					$table->addCell(2500, $styleCell)->addText(htmlspecialchars($sub_segment5_2), $fontStyle, 'thStyle');
+					$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 					$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2523,9 +2844,8 @@ class Generate_rd extends CI_Controller {
 					$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 					// Add more rows / cells region
 					$n =0;
-					// $get_scope_regions1 = $this->RdData_model->get_scope_regions($scope_id);
-					$child_segments3 = $this->RdData_model->get_rd_segments($report_id, $subsegments5_2->id); 
-					foreach($child_segments3 as $scope_region1)
+					$get_scope_regions1 = $this->RdData_model->get_scope_regions($scope_id); 
+					foreach($get_scope_regions1 as $scope_region1)
 					{
 						$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
 						$styleCellColor = array('bgColor'=>$bg_color);
@@ -2655,7 +2975,7 @@ class Generate_rd extends CI_Controller {
 							$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
 							$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
 							$section->addTextBreak(1);
-							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3 ))." MARKET BY ".htmlspecialchars(strtoupper($subsegments5_2->name)).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3 ))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
 							$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 							$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 							$section->addTextBreak(1);
@@ -2668,13 +2988,13 @@ class Generate_rd extends CI_Controller {
 							}							
 							/* Child Segment - Table Writing started*/	
 							/* value based table */							
-							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3))." MARKET BY ".htmlspecialchars(strtoupper($subsegments5_2->name)).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
+							$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($child_segment3))." MARKET FOR ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
 							// Add table
 							$table = $section->addTable('myOwnTableStyle');
 							// Add row
 							$table->addRow(70);
 							// Add cells
-							$table->addCell(2500, $styleCell)->addText(htmlspecialchars($child_segment3), $fontStyle, 'thStyle');
+							$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
 							$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
@@ -2690,9 +3010,8 @@ class Generate_rd extends CI_Controller {
 							$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
 							// Add more rows / cells
 							$n =0;
-							// $get_scope_regions2 = $this->RdData_model->get_scope_regions($scope_id); 
-							$sub_child_segments3 = $this->RdData_model->get_rd_segments($report_id, $childsegments3->id);
-							foreach($sub_child_segments3 as $scope_regions2)
+							$get_scope_regions2 = $this->RdData_model->get_scope_regions($scope_id); 
+							foreach($get_scope_regions2 as $scope_regions2)
 							{
 								$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
 								$styleCellColor = array('bgColor'=>$bg_color);
@@ -2818,9 +3137,89 @@ class Generate_rd extends CI_Controller {
 								{
 									$subchild_segment3 = $subchildsegments3->name;	
 									$section->addListItem(htmlspecialchars($subchild_segment3), 3, 'childPoint', $listStyle, 'Head 3');
-									$section->addText('Same as the preceding segment. Full details will be provided in the complete report.', 'noteFontSeg', 'noteStyle');
-							$section->addTextBreak(1);
-							// $section->addTextBreak(1);
+									$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+									$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+									$section->addTextBreak(1);
+									$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subchild_segment3 ))." MARKET FOR ".htmlspecialchars(strtoupper($childsegments3->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+									$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+									$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+									$section->addTextBreak(1);
+									if($Volume_unit)
+									{
+										$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subchild_segment3))." MARKET FOR ".htmlspecialchars(strtoupper($childsegments3->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+										$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+										$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+										$section->addTextBreak(1);
+									}							
+									/* Sub Child Segment - Table Writing started*/	
+									/* value based table */							
+									$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subchild_segment3))." MARKET FOR ".htmlspecialchars(strtoupper($childsegments3->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
+									// Add table
+									$table = $section->addTable('myOwnTableStyle');
+									// Add row
+									$table->addRow(70);
+									// Add cells
+									$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText(($forecast_from + 2), $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
+									$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+									}
+									$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
+									$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
+									// Add more rows / cells
+									$n =0;
+									$get_scope_regions21 = $this->RdData_model->get_scope_regions($scope_id); 
+									foreach($get_scope_regions21 as $scope_regions21)
+									{
+										$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+										$styleCellColor = array('bgColor'=>$bg_color);
+										$table->addRow();
+										$table->addCell(2500, $styleCellColor)->addText(htmlspecialchars(ucwords($scope_regions21->name)), 'trStyle', 'pStyle');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										if($forecast_period =='2023-2030') {
+											$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										}
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+										$n++;
+									}
+									$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+									$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
+									$table->addRow();
+									$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									}
+									$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+								
+									$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+									$section->addTextBreak(1);
+									$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+									$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+									$section->addTextBreak(1);
 									/* ./ value based table */
 									/* volume based table */
 									if($Volume_unit){								
@@ -2920,6 +3319,729 @@ class Generate_rd extends CI_Controller {
 			$section->addPageBreak(1);
 			/* /. Sample Pages Chapter 5 */
 
+		/* Sample Pages Chapter 6 - Region */
+			if($scope_name == 'Global'){
+				$scope_type = 'Region';
+			} else {
+				$scope_type = 'Country';
+			}
+			$section->addListItem(htmlspecialchars(ucwords($report_name_scope, " \t\r\n\f\v'")).', by '.$scope_type, 0, 'chaptHeading', $listStyle, 'Main Heading');
+			$section->addListItem("	Overview", 1, 'subPoint', $listStyle, 'Head 1');
+			$section->addText(htmlspecialchars($report_regional_description), 'r2Style', 'paragraphStyle');
+			$section->addTextBreak(1);			
+			$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$Base_year." - ".$forecast_to."(REVENUE % SHARE)", 'figureNameStyle', 'Figure _ Title');
+			if($forecast_period == '2021-2027')	{
+				$section->addImage('images/sample/xyz-market-by-region-2020-2027-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+			} else if($forecast_period == '2022-2028') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2021-2028-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2021-2028-Pie.png', array('width'=>760, 'height'=>250, 'align'=>'center'));
+				}
+			} else if($forecast_period == '2023-2029') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2022-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2022-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}				
+			} else if($forecast_period == '2023-2030') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2022-2030-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2022-2030-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}				
+			} else {
+				$section->addText('add image of xyz-market-by-region-Pie', array('size'=>12, 'color'=>'black'));
+			}			
+			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+			$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
+			$section->addTextBreak(1);
+			if($Volume_unit)
+			{
+				$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+			} else {
+				$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(strtoupper($Value_unit)).')', 'figureNameStyle', 'Figure _ Title');
+			}
+			if($forecast_period == '2021-2027')	{
+				$section->addImage('images/sample/xyz-market-by-region-2019-2027-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+			} else if($forecast_period == '2022-2028') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}					
+			} else if($forecast_period == '2023-2029') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}
+			} else if($forecast_period == '2023-2030') {
+				if($scope_name == 'Global'){
+					$section->addImage('images/sample/xyz-market-by-region-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				} else {
+					$section->addImage('images/sample/xyz-market-by-country-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+				}
+			} else {
+				$section->addText('add image of xyz-market-by-region-Pie', array('size'=>12, 'color'=>'black'));
+			}
+			/* value based table */
+			$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'tableNameStyle', 'Table_Title');
+			// Define table style arrays
+			$table = $section->addTable('myOwnTableStyle');
+			// Add row
+			$table->addRow(70);
+			// Add cells
+			$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText(($forecast_from + 2), $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
+			$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+			if($forecast_period =='2023-2030') {
+				$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+			}
+			$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
+			$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
+			// Add more rows / cells
+			$n =0;
+			$get_scope_regions4= $this->RdData_model->get_scope_regions($scope_id);            
+            foreach($get_scope_regions4 as $scope_region4)
+			{
+				$scoperegion4[] = $scope_region4->name;	
+				$scoperegion4id[] = $scope_region4->id;	
+
+				$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+				$styleCellColor = array('bgColor'=>$bg_color);
+				$table->addRow();
+				$table->addCell(2500, $styleCellColor)->addText(htmlspecialchars(ucwords($scope_region4->name)), 'trStyle', 'pStyle');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				if($forecast_period =='2023-2030') {
+					$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				}
+				$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$n++;
+			}
+				$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+				$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
+				$table->addRow();
+				$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				if($forecast_period =='2023-2030') {
+					$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				}
+				$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+				
+			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+			$section->addTextBreak(1);
+			$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+			$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+			$section->addTextBreak(1);
+			/* /. value based table */
+			/* volume based table */
+				if($Volume_unit){
+					$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'tableNameStyle', 'Table_Title');
+					// Define table style arrays
+					$table = $section->addTable('myOwnTableStyle');
+					// Add row
+					$table->addRow(70);
+					// Add cells
+					$table->addCell(2500, $styleCell)->addText($scope_type, $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText(($forecast_from + 2), $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
+					$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+					if($forecast_period =='2023-2030') {
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+					}
+					$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
+					$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
+					// Add more rows / cells
+					$n =0;
+					$get_scope_regions5 = $this->RdData_model->get_scope_regions($scope_id); 
+					foreach($get_scope_regions5 as $scope_region5)
+					{
+						$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+						$styleCellColor = array('bgColor'=>$bg_color);
+						$table->addRow();
+						$table->addCell(2500, $styleCellColor)->addText(htmlspecialchars(ucwords($scope_region5->name)), 'trStyle', 'pStyle');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
+						$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$n++;
+					}
+						$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+						$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
+						$table->addRow();
+						$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						}
+						$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						
+					$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+					$section->addTextBreak(1);
+					$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+					$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+					$section->addTextBreak(1);
+				}
+			/* /. volume based table */
+			/* Scope Region Points */
+			if($scoperegion4 != NULL){
+				$reg = count($scoperegion4);
+				// var_dump($reg); die;
+				for($i = 0; $i < $reg ; $i++)
+				{					
+					$region_name5 .= ltrim(rtrim($scoperegion4[$i]))." ";				
+					$section->addListItem(htmlspecialchars($scoperegion4[$i])." ".htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 1, 'subPoint', $listStyle, 'Head 1');
+					$parent = 0;
+					$main_segments6 = $this->RdData_model->get_rd_segments($report_id, $parent);
+					foreach($main_segments6 as $segments6)
+					{
+						$mainseg6 = $segments6->name;
+						$region_report_title1 = ltrim(rtrim($scoperegion4[$i])).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' by '.ltrim(rtrim(ucwords($mainseg6)));
+						$section->addListItem(htmlspecialchars($region_report_title1), 2, 'childPoint', $listStyle, 'Head 2');						
+						if($Volume_unit){
+							$section->addText(htmlspecialchars(strtoupper($region_report_title1))." ".$Base_year." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+
+							if($forecast_period =='2021-2027') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2027-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));							
+							} else if($forecast_period =='2022-2028') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2022-2028-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));							
+							} else if($forecast_period == '2023-2029') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2023-2029-Pie.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+							} else {
+								$section->addText('add image of xyz-market-by-segment-revenue-share-Pie', array('size'=>12, 'color'=>'black'));
+							}
+
+							$section->addText(htmlspecialchars(strtoupper($region_report_title1))." ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');	
+
+							if($forecast_period =='2021-2027') {
+								$section->addImage('images/sample/xyz-market-by-region-2019-2027-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));							
+							} else if($forecast_period =='2022-2028') {
+								$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));							
+							} else if($forecast_period == '2023-2029') {
+								$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+							} else {
+								$section->addText('add image of xyz-market-by-region-2020-2028-Bar', array('size'=>12, 'color'=>'black'));
+							}						
+							$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+							$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
+							$section->addTextBreak(1);
+						} else {
+							$section->addText(htmlspecialchars(strtoupper($region_report_title1))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+
+							if($forecast_period =='2021-2027') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2019-2027-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+							} else if($forecast_period =='2022-2028') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2020-2028-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+							} else if($forecast_period == '2023-2029') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2029-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+							} else if($forecast_period == '2023-2030') {
+								$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2030-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+							} else {
+								$section->addText('add image of xyz-market-by-segment-revenue-share-Bar', array('size'=>12, 'color'=>'black'));
+							}
+						
+							$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+							$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
+							$section->addTextBreak(1);
+						}
+						$section->addText(htmlspecialchars(strtoupper($region_report_title1))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(ucwords($Value_unit)).')', 'tableNameStyle', 'Table_Title');
+						// Define table style arrays
+						$table = $section->addTable('myOwnTableStyle');
+						// Add row
+						$table->addRow(70);
+						// Add cells
+						$table->addCell(2500, $styleCell)->addText(htmlspecialchars(ucwords($segments6->name, " \t\r\n\f\v'")), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 2), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+						}
+						$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
+						$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
+						// Add more rows / cells
+						$n =0;
+						$sub_segments8 = $this->RdData_model->get_rd_segments($report_id, $segments6->id);			
+						foreach($sub_segments8 as $subsegments8)
+						{
+							$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+							$styleCellColor = array('bgColor'=>$bg_color);
+							$table->addRow();
+							$table->addCell(2500, $styleCellColor)->addText(htmlspecialchars(ucwords($subsegments8->name)), 'trStyle', 'pStyle');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$n++;
+						}
+							$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+							$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
+							$table->addRow();
+							$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');						
+						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+						$section->addTextBreak(1);
+						$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+						$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+						$section->addTextBreak(1);
+					}
+					
+					// Country Figure AND Tables Writing for Regional chapter
+				if($scope_name == 'Global'){
+					if($scoperegion4[$i] == "RoW")
+					{
+						$region_name1 = ltrim(rtrim($scoperegion4[$i])).' '.ltrim(rtrim(ucwords($report_name))).', by Sub-region';
+						$section->addListItem(htmlspecialchars($region_name1), 2, 'childPoint', $listStyle, 'Head 2');						
+						$section->addText(htmlspecialchars(strtoupper($region_name1))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+
+						if($forecast_period =='2021-2027') {
+							$section->addImage('images/sample/xyz-market-by-region-2019-2027-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center')); 
+						} else if($forecast_period =='2022-2028') {
+							$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						} else if($forecast_period == '2023-2029') {
+							$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						} else if($forecast_period == '2023-2030') {
+							$section->addImage('images/sample/xyz-market-by-region-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						} else {
+							$section->addText('Add xyz-market-by-region Bar chart image', array('size'=>12, 'color'=>'black'));
+						}
+						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+						$section->addTextBreak(1);
+						$section->addText(htmlspecialchars(strtoupper($region_name1))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(ucwords($Value_unit)).')', 'tableNameStyle', 'Table_Title');
+						// Define table style arrays
+						$table = $section->addTable('myOwnTableStyle');
+						// Add row
+						$table->addRow(70);
+						// Add cells
+						$table->addCell(2500, $styleCell)->addText('Sub-region', $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 2), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+						}
+						$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
+						$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
+						// Add more rows / cells
+						$n = 0;
+						$get_scope_country4 = $this->RdData_model->get_scope_regions($scoperegion4id[$i]); 
+						foreach($get_scope_country4 as $scope_country4)
+						{
+							$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+							$styleCellColor = array('bgColor'=>$bg_color);
+							$table->addRow();
+							$table->addCell(2500, $styleCellColor)->addText(htmlspecialchars(ucwords($scope_country4->name)), 'trStyle', 'pStyle');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$n++;
+						}
+							$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+							$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
+							$table->addRow();
+							$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						
+						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle'); 
+						$section->addTextBreak(1);
+						$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+						$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+						$section->addTextBreak(1);
+						if($Volume_unit)
+						{
+							$section->addText(htmlspecialchars(strtoupper($region_name1))." ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars(ucwords($Volume_unit)).')', 'tableNameStyle', 'Table_Title');
+						}
+					} else { 
+						// Start of Country figure and table writing
+						$region_name1 = ltrim(rtrim($scoperegion4[$i])).' '.ltrim(rtrim(ucwords($report_name))).', by Country';
+						$section->addListItem(htmlspecialchars($region_name1), 2, 'childPoint', $listStyle, 'Head 2');
+						$section->addText(htmlspecialchars(strtoupper($region_name1))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+
+						if($forecast_period =='2021-2027') {
+							$section->addImage('images/sample/countries-2019-2027-bar.png', array('width'=>760, 'height'=>280, 'align'=>'center')); 
+						} else if($forecast_period =='2022-2028') {
+							$section->addImage('images/sample/countries-2020-2028-bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						} else if($forecast_period == '2023-2029') {
+							$section->addImage('images/sample/xyz-market-by-country-2021-2029-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						}else if($forecast_period == '2023-2030') {
+							$section->addImage('images/sample/xyz-market-by-country-2021-2030-Bar.png', array('width'=>760, 'height'=>280, 'align'=>'center'));
+						} else {
+							$section->addText('Add xyz-market-by-countries Bar chart image', array('size'=>12, 'color'=>'black'));
+						}
+						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+						$section->addTextBreak(1);
+						$section->addText(htmlspecialchars(strtoupper($region_name1))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(ucwords($Value_unit)).')', 'tableNameStyle', 'Table_Title');
+						// Define table style arrays
+						$table = $section->addTable('myOwnTableStyle');
+						// Add row
+						$table->addRow(70);
+						// Add cells
+						$table->addCell(2500, $styleCell)->addText('Country', $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 2), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
+						$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+						if($forecast_period =='2023-2030') {
+							$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+						}
+						$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
+						$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
+						// Add more rows / cells
+						$n = 0;
+						$get_scope_country4 = $this->RdData_model->get_scope_regions($scoperegion4id[$i]); 
+						// var_dump($get_scope_country4);
+						foreach($get_scope_country4 as $scope_country4)
+						{
+							$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+							$styleCellColor = array('bgColor'=>$bg_color);
+							$table->addRow();
+							$table->addCell(2500, $styleCellColor)->addText(htmlspecialchars(ucwords($scope_country4->name)), 'trStyle', 'pStyle');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
+							$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$n++;
+						}
+							$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+							$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
+							$table->addRow();
+							$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							if($forecast_period =='2023-2030') {
+								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+							}
+							$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+						
+						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle'); 
+						$section->addTextBreak(1);
+						$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+						$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+						$section->addTextBreak(1);
+						/* Country chapters added here */
+						$get_scope_country5 = $this->RdData_model->get_scope_regions($scoperegion4id[$i]);
+						foreach($get_scope_country5 as $scope_country5)
+						{
+							$scopecountryname5[] = $scope_country5->name;				
+							$scopecountryid5[] = $scope_country5->id;	
+						}
+						if($scopecountryname5 != NULL){
+    						$x = count($scopecountryname5);
+    						for($r = 0; $r < $x ; $r++)
+    						{
+    							$RegionCountry = ltrim(rtrim($scopecountryname5[$r]))." ";
+    							$section->addListItem(htmlspecialchars($scopecountryname5[$r]), 3, 'childPoint', $listStyle, 'Head 2');
+    							$parent = 0;
+    							$main_segments7 = $this->RdData_model->get_rd_segments($report_id, $parent);
+    							foreach($main_segments7 as $segments7)
+    							{
+    								$country_title=ltrim(rtrim($RegionCountry)).' '.ltrim(rtrim(ucwords($report_name, " \t\r\n\f\v'"))).', by '.ltrim(rtrim(ucwords(strtolower($segments7->name))));
+    								$section->addListItem(htmlspecialchars($country_title), 4, 'childPoint', $listStyle, 'Head 3');
+    								/* Adding Figures as per value and volume unit */
+    								if($Volume_unit)
+    								{
+    									$section->addText(htmlspecialchars(strtoupper($country_title))." ".$Base_year." - ".$analysis_to.' (USD '.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+    									if($forecast_period =='2021-2027')
+    									{
+    										$section->addImage('images/sample/xyz-market-by-region-2019-2027-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									}else if($forecast_period =='2022-2028') {
+    										$section->addImage('images/sample/xyz-market-by-region-2020-2028-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									}else if($forecast_period =='2023-2029') {
+    										$section->addImage('images/sample/xyz-market-by-region-2021-2029-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									}else if($forecast_period =='2023-2030') {
+    										$section->addImage('images/sample/xyz-market-by-region-2021-2030-Bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									}
+    										$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+    										$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
+    										$section->addTextBreak(1);    									
+    								}else{
+    									$section->addText(htmlspecialchars(strtoupper($country_title))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
+    									if($forecast_period =='2021-2027')
+    									{
+    										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2019-2027-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									} else if($forecast_period =='2022-2028') {
+    										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2020-2028-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									} else if($forecast_period =='2023-2029') {
+    										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2029-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									} else if($forecast_period =='2023-2030') {
+    										$section->addImage('images/sample/xyz-market-by-segment-revenue-share-2021-2030-bar.png', array('width'=>760, 'height'=>240, 'align'=>'center'));
+    									}
+    										$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+    										$section->addText('*Note: The above image is only for sample representation. The actual image differs from the above sample image.', 'noteFontFig', 'noteStyle');
+    										$section->addTextBreak(1);									
+    								}
+    								/* Adding Table for country points */
+    								$section->addText(htmlspecialchars(strtoupper($country_title))." ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars(ucwords($Value_unit)).')', 'tableNameStyle', 'Table_Title');
+    								// Define table style arrays
+    								$table = $section->addTable('myOwnTableStyle');
+    								// Add row
+    								$table->addRow(70);
+    								// Add cells
+    								$table->addCell(2500, $styleCell)->addText(htmlspecialchars(ucwords($segments7->name)), $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from - 2), $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from - 1), $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText($forecast_from, $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from + 1), $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from + 2), $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from + 3), $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from + 4), $fontStyle, 'thStyle');
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from + 5), $fontStyle, 'thStyle');
+									if($forecast_period =='2023-2030') {
+    								$table->addCell(1600, $styleCell)->addText(($forecast_from + 6), $fontStyle, 'thStyle');
+									}
+    								$table->addCell(1600, $styleCell)->addText(($forecast_to), $fontStyle, 'thStyle');			
+    								$table->addCell(1600, $styleCell)->addText('CAGR %', $fontStyle,'thStyle');
+    								$n = 0;
+    							$sub_segments9 = $this->RdData_model->get_rd_segments($report_id, $segments7->id);
+    							foreach($sub_segments9 as $subsegments9)
+    							{
+    								$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+    								$styleCellColor = array('bgColor'=>$bg_color);
+    								$table->addRow();
+    								$table->addCell(2500, $styleCellColor)->addText(htmlspecialchars(ucwords($subsegments9->name)), 'trStyle', 'pStyle');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									}
+    								$table->addCell(1600, $styleCellColor)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$n++;
+    							}
+    								$bg_color = $n % 2 === 0 ? "D3D3D3" : "white";
+    								$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
+    								$table->addRow();
+    								$table->addCell(2500, $styleLastCell)->addText('Total', 'trStyle', 'pStyle');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									if($forecast_period =='2023-2030') {
+										$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+									}
+    								$table->addCell(1600, $styleLastCell)->addText("XX.X", 'trStyle', 'Table 1_ Right Center');
+    							
+    								$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+    								$section->addTextBreak(1);
+    								$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+    								$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+    								$section->addTextBreak(1);
+    							}
+    							break;
+    						}
+						}
+						if($scopecountryname5 != NULL){
+    						$x = count($scopecountryname5);
+    						for($r = 1; $r < $x ; $r++)
+    						{
+    							$Country_name= ltrim(rtrim($scopecountryname5[$r]))." ";				
+    							$section->addListItem(htmlspecialchars($Country_name), 3, 'childPoint', $listStyle, 'Head 2');
+    							$section->addText('		Same as that of the preceding country. Full details will be provided in the complete report.', 'noteFontSeg', 'noteStyle');
+    							$section->addTextBreak(1);	
+    						}
+    						unset($scopecountryname5);
+						}
+					}
+				}
+					break;
+					// unset($Segmetn_Region);
+				}
+			}
+			//	$reg = count($scoperegion4);
+			// var_dump($reg); die;
+				/* Only region headings */
+				for($i = 1; $i < $reg; $i++)
+				{
+					$Scope_Region = ltrim(rtrim($scoperegion4[$i]))." ";
+					$section->addListItem(htmlspecialchars($Scope_Region)."".htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 1, 'subPoint', $listStyle, 'Head 1');
+					$section->addText('	Same as that of the preceding region. Full details will be provided in the complete report.', 'noteFontSeg', 'noteStyle');
+					$section->addTextBreak(1);
+				}
+				$section->addPageBreak();
+			/* /. Scope Region Points */
+		/* /. Sample Pages Chapter 6 - Region */
+
+		/* Sample Pages Chapter 7 - Company Profile */
+			$section->addListItem('Company Profiles and Competitive Landscape', 0, 'chaptHeading', $listStyle, 'Main Heading');	
+			$section->addListItem(htmlspecialchars('Competitive Landscape in the '.$report_title), 1, 'subPoint', $listStyle, 'Head 1');
+			$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+			$section->addTextBreak(1);
+			$section->addText(htmlspecialchars($report_compitative_landscape), 'r2Style', 'paragraphStyle');
+			$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+			$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+			$section->addListItem(htmlspecialchars('Companies Profiles'), 1, 'subPoint', $listStyle, 'Head 1');	
+			$rd_companies=$this->RdData_model->get_rd_companies($report_id);	
+			foreach($rd_companies as $companies)
+			{
+				$cmpProfile=$companies->name;	
+				$cmpProfile= ltrim(rtrim(ucwords(strtolower($cmpProfile))))." ";				
+				$section->addListItem(htmlspecialchars($cmpProfile), 2, 'childPoint', $listStyle, 'Head 2');				
+				$section->addListItem('Overview', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+				$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');	
+				$section->addTextBreak(1);					
+				$section->addListItem('Company Snapshot', 3, 'childSubpoint', $listStyle, 'Head 3');
+				//$section->addImage('images/Company_snapshot.png', array('width'=>700, 'height'=>520, 'align'=>'center'));
+				$section->addText('Add Company Snapshot Image of '.htmlspecialchars($cmpProfile), 'subPoint', 'sourceStyle');
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				$section->addTextBreak(1);
+				$section->addListItem('Financial Snapshot', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				$section->addTextBreak(1);
+				$section->addListItem('Product Portfolio', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+				$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');	
+				$section->addTextBreak(1);
+				$section->addListItem('Recent Developments', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$section->addImage('images/Recent_development_sample.png', array('width'=>760, 'height'=>220, 'align'=>'center'));
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				break;
+			}
+			$section->addTextBreak(1);
+			$rd['companies']=$this->RdData_model->get_rd_companies($report_id);
+			$c = 1;
+			foreach($rd['companies'] as $cmpname){
+				$company_names = $rd['companies'][$c];
+				if($company_names){
+					$section->addListItem(htmlspecialchars($company_names->name), 2, 'childPoint', $listStyle, 'Head 2');
+				}
+				$c++;							
+			}
+			$section->addText('(N.B.: Names of companies profiled in the report. Final report will contain the details of each company same as that of the above referenced)', 'noteFontSeg', 'noteStyle');	
+			$section->addPageBreak();
 			$section->addImage('images/our-expertise.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));
 			$section->addPageBreak();				
 			$section->addImage('images/infinium_disclaimer.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));

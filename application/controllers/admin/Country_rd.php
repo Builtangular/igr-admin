@@ -7,6 +7,7 @@ class Country_rd extends CI_Controller {
 		parent::__construct();		
 		$this->load->library('form_validation');		
 		$this->load->model('admin/Country_model');
+		$this->load->model('admin/Data_model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));				
@@ -36,9 +37,7 @@ class Country_rd extends CI_Controller {
             $rd_title = $data['global_rds']->title;
             $rd_name = $data['global_rds']->name;
             $forecast_to = $data['global_rds']->forecast_to;
-            $scope_id = $data['global_rds']->scope_id;
-            $data['countries'] = $this->Country_model->get_countries($scope_id); 
-			// var_dump($data['countries']); die;           
+            $data['countries'] = $this->Country_model->get_countries();            
 			$country_title_count = $this->Country_model->get_brazil_report_count();
 			$sku_code = explode('C', $country_title_count->sku);
 			// var_dump($sku_code[1]); die;
@@ -146,6 +145,7 @@ class Country_rd extends CI_Controller {
 				$encoded_report_title= urldecode($report_title_new);	
 				$encoded_report_url = str_replace(' ','-', $encoded_report_title);
 				$url = str_replace('--','-', strtolower($encoded_report_url));
+
 				$final_country_rd_title = $Country_Report_title.": Prospects, Trends Analysis, Market Size and Forecasts up to ".$forecast_to;
 				$post_countrydata = array(
 					'report_id'=>$id,
@@ -215,6 +215,45 @@ class Country_rd extends CI_Controller {
 		}else{			
 			$this->load->view('admin/login');
 		}
-	}	
+	}
+	/* ********** country rd creation manually ***********/
+	public function add(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			// $scope_id = 1;
+			$data['countries'] = $this->Country_model->get_country_master_data();
+			$data['category_data']= $this->Data_model->get_category_master();
+			// var_dump($data['countries']); die;
+			$this->load->view('admin/country_rd/add', $data);
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function insert(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+
+			/* automated sku */
+			$country_report_sku = $this->Country_model->get_country_report_count();	
+			var_dump($country_report_sku); die;		
+			$sku_code = explode('C', $country_report_sku->sku);
+			$sku = 'IGRC'.'0'.($sku_code[1] + 1);
+			/* ./ automated sku */
+			
+			var_dump($_POST); die;
+			$data['countries'] = $this->Country_model->get_country_master_data();
+			$data['category_data']= $this->Data_model->get_category_master();
+
+			// var_dump($data['countries']); die;
+			$this->load->view('admin/country_rd/add', $data);
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	/* ********** ./ country rd creation manually ***********/	
 }
 ?>

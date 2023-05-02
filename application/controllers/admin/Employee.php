@@ -21,6 +21,8 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
+			$data['rjmenu_active'] = "active menu-open";
+			$data['elist'] = "active";
 			$data['employee_details'] = $this->Employee_Model->get_employee_details();
 			// var_dump($data['employee_details']); die;
 			$this->load->view("admin/employee/list", $data);

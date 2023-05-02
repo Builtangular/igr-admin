@@ -92,11 +92,11 @@ class Country_model extends CI_Model {
 			return $sql->row();
 		}
 	}
-	public function get_countries($scope_id)
+	
+	public function get_countries()
 	{
 		$this->db->select("*");
 		$this->db->from("tbl_master_country");
-		$this->db->where('parent',$scope_id);
 		$sql = $this->db->get();
 		// echo $this->db->last_query();	die;
 		if($sql->num_rows() > 1)
@@ -182,6 +182,34 @@ class Country_model extends CI_Model {
 		$result = $query->row();	
 		return $result;	
 	}
-	
+	/* for country rd creation & generation */
+	public function get_country_master_data()
+	{
+		$this->db->select("*");
+		$this->db->from("tbl_master_country");
+		$this->db->where('active',1);
+		$sql = $this->db->get();
+		// echo $this->db->last_query();	die;
+		if($sql->num_rows() > 1)
+		{			
+			return $sql->result();
+		}
+		else
+		{
+			return array();
+		}
+	}
+	public function get_country_report_count()
+	{	
+		$this->db->select("sku");
+		$this->db->from("tbl_country_rd_data");
+		// $this->db->where('country','brazil');
+		$this->db->limit(1);
+		$this->db->order_by('id',"DESC");
+		$query = $this->db->get();
+		$result = $query->row();	
+		return $result;	
+	}
+	/* ./ for country rd creation & generation */
 }
 ?>

@@ -168,10 +168,8 @@
                                 class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
-                    <!-- <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
-                                class="text-bold">Generate RD</span></a></li> -->
-                    <li><a href="<?php echo base_url(); ?>admin/report/assign_rd"><i class="fa fa-arrow-right"></i><span
-                                class="text-bold">Assign & Generate RDs</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
+                                class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
 
                     <?php if($Role_id == 3){ ?>
@@ -182,11 +180,11 @@
                     <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
-                                class="text-bold">Add Global RD</span></a></li>
+                                class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
-                                class="text-bold">Generate RD</span></a></li> 
-                    <li><a href="<?php echo base_url(); ?>admin/country_rd/add"><i class="fa fa-arrow-down"></i><span
-                                class="text-bold">Add Country RD</span></a></li>                   
+                                class="text-bold">Generate RD</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/assign_rd"><i class="fa fa-arrow-right"></i><span
+                                class="text-bold">Assign RDs</span></a></li>
                     <?php } ?>
 
                     <?php if($Role_id == 4){ ?>
@@ -215,13 +213,9 @@
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Genrate
-                                Invoice</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <!--  <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/add_invoice/<?php echo $id;?>"><span>Add</span></a></li> -->
-                            <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><span>List</span></a></li>
-                        </ul>
-                    </li>
+                    <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><i
+                                class="fa fa-file-text"></i><span class="text-bold">Generate
+                                Invoice</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 6){?>
                     <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-tasks"></i><span
