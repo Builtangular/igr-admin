@@ -17,6 +17,7 @@ class Jobpost_model extends CI_Model {
                 'description'    => $this->input->post('description'),
                 'positions'      => $this->input->post('positions'),
                 'status'         => $this->input->post('status'),
+                'created_at'     =>date('y-m-d'),
         );
         $this->db->insert('tbl_job_post', $data);
         return 1;

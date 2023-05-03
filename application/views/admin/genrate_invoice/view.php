@@ -24,7 +24,7 @@
                 </h2>
             </div>
         </div>
-    
+
         <section class="content">
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
@@ -88,11 +88,11 @@
                                 <tr>
                                     <th style="width:50%">Subtotal:</th>
                                     <td><?php echo $mult;?></td>
-                                </tr>                                
+                                </tr>
                                 <tr>
                                     <th>Discount</th>
                                     <td><?php echo $discount;?>%</td>
-                                </tr>                            
+                                </tr>
                                 <?php if($currency == "INR"){ ?>
                                 <tr>
                                     <th>Tax (18%)</th>
@@ -101,7 +101,7 @@
                                 <?php }?>
                                 <tr>
                                     <th>Total:</th>
-                                   <!--  <td><?php //echo ceil($Total_amount);?></td> -->
+                                    <!--  <td><?php //echo ceil($Total_amount);?></td> -->
                                     <td><?php echo $Total_amount;?></td>
                                 </tr>
                             </tbody>
@@ -113,9 +113,13 @@
                 <div class="col-xs-12">
                     <a href="<?php echo base_url();?>admin/genrate_invoice/list/<?php echo $id;?>"
                         class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
+
                     <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload/<?php echo $id;?>"
                         class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
                         Proforma Invoice</a>
+                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload_main_invoice/<?php echo $id;?>"
+                        class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
+                        Main Invoice</a>
                 </div>
             </div>
         </section>

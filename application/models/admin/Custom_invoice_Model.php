@@ -20,7 +20,15 @@ class Custom_invoice_Model extends CI_Model {
         return $query->row();
     }
     public function insert_custom_invoice_details($data){
+       
         $result = $this->db->insert('tbl_custome_invoice', $data);
+        $last_id = $this->db->insert_id();
+        // var_dump($last_id);die;
+        return $last_id;
+    }
+    public function insert_invoice_details($data){
+       
+        $result = $this->db->insert('tbl_custom_invoice_data', $data);
         return $result;
     }
     public function get_single_custome_invoice_details($discount_type){
@@ -73,6 +81,23 @@ class Custom_invoice_Model extends CI_Model {
         $result = $this->db->get('tbl_custome_invoice');
         //echo $this->db->last_query(); die;
         return $result->row();
+    }
+    public function get_custom_invoice_details($id){
+        // $this->db->where('order_id',$order_id);
+        // $this->db->where(array('order_id' => $id));
+        // $result = $this->db->get('tbl_custom_invoice_data');
+        // //echo $this->db->last_query(); die;
+        // return $result->result_array();
+
+        $this->db->select('*');
+        $this->db->where('order_id',$id);
+		$this->db->from('tbl_custome_invoice');
+		$this->db->join('tbl_custom_invoice_data','tbl_custome_invoice.id=tbl_custom_invoice_data.order_id');
+		// $this->db->order_by("tbl_custome_invoice.id", "desc");
+		$this->db->limit(3);
+		$query = $this->db->get();
+		// echo $this->db->last_query();
+		return $query->result_array();
     }
     public function get_custom_invoice_data($id){
         $this->db->where('id',$id);

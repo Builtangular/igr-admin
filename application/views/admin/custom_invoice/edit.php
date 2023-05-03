@@ -35,7 +35,7 @@ $currency = array('USD','AED','SAR','EUR');
                                 <label class="control-label col-md-2">Invoice Title</label>
                                 <div class="col-md-3">
                                     <input type="text" name="title" id="title"
-                                        value="<?php echo $custom_invoice_data->title;?>" class="form-control"
+                                        value="<?php echo $custom_invoice_data->order_title;?>" class="form-control"
                                         placeholder="Invoice Title" required>
                                 </div>
                                 <?php $invoice = explode("-", $custom_invoice_data->invoice_no);

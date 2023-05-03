@@ -82,7 +82,7 @@
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
                                         <?php if ($Role_id == 1) { ?>
                                         <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload_main_invoice/<?php echo $invoice_data->id;?>"
-                                            title="Genrate Invoice"><b><i class="fa fa-download"></i> &nbsp;Main
+                                            title="Main Invoice"><b><i class="fa fa-download"></i> &nbsp;Main
                                                 Invoice</b> </a>
                                         <?php } ?>
                                     </td>

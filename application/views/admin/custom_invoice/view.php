@@ -119,7 +119,7 @@
                         class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
                     <a href="<?php echo base_url(); ?>admin/custom_invoice/donwload/<?php echo $id;?>"
                         class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
-                        Generat Invoice</a>
+                        Generate Invoice</a>
                 </div>
             </div>
         </section>

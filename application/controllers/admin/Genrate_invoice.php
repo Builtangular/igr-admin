@@ -92,6 +92,7 @@ class Genrate_invoice extends CI_Controller {
                     'query_name'                        => $report_name,
                     'invoice_title'                     => $this->input->post('invoice_title'),
                     'invoice_no'                        => $invoice_no,
+                    'main_invoice_no'                   => $this->input->post('main_invoice_no'),
                     'order_date'                        => $this->input->post('order_date'),
                     'currency'                          => $this->input->post('currency'),
                     'state'                             => $this->input->post('state'),
@@ -125,6 +126,7 @@ class Genrate_invoice extends CI_Controller {
                     'query_name'                        => $report_name,
                     'invoice_title'                     => $this->input->post('invoice_title'),
                     'invoice_no'                        => $invoice_no,
+                    'main_invoice_no'                   => $this->input->post('main_invoice_no'),
                     'order_date'                        => $this->input->post('order_date'),
                     'currency'                          => $this->input->post('currency'),
                     'state'                             => $this->input->post('state'),
@@ -303,10 +305,11 @@ class Genrate_invoice extends CI_Controller {
         // var_dump($total);die;
         $discount_igst = ($percent / 100) * $total;
         // var_dump($discount_igst);die;
+
         $order_date = date('d F, Y', strtotime($order_date));
         $address = $billing_address1.' '.$billing_address2.' '.$billing_city.' '.$billing_state.' - '.$billing_zipcode;
         $templateProcessor->setValue('TodayDate', htmlspecialchars($todays_date));
-        $templateProcessor->setValue('InvoiceNo', htmlspecialchars($invoice_no));
+        $templateProcessor->setValue('InvoiceNo', htmlspecialchars('Proforma Invoice No:'.$invoice_no));
         $templateProcessor->setValue('Invoice', htmlspecialchars($reseller_name));
         $templateProcessor->setValue('PhoneNO', htmlspecialchars($billing_phone_no));
         $templateProcessor->setValue('BName', htmlspecialchars($billing_customer_name));
@@ -512,9 +515,11 @@ class Genrate_invoice extends CI_Controller {
         $total = $total_amount;
         $discount_igst = ($percent / 100) * $total;
         $order_date = date('d F, Y', strtotime($order_date));
+        // $todays_date = date('d F, Y');
+        // var_dump($todays_date);die;
         $address = $billing_address1.' '.$billing_address2.' '.$billing_city.' '.$billing_state.' - '.$billing_zipcode;
         $templateProcessor->setValue('TodayDate', htmlspecialchars($todays_date));
-        $templateProcessor->setValue('InvoiceNo', htmlspecialchars($main_invoice_no));
+        $templateProcessor->setValue('InvoiceNo', htmlspecialchars('Invoice No:'.$main_invoice_no));
         $templateProcessor->setValue('Invoice', htmlspecialchars($reseller_name));
         $templateProcessor->setValue('PhoneNO', htmlspecialchars($billing_phone_no));
         $templateProcessor->setValue('BName', htmlspecialchars($billing_customer_name));

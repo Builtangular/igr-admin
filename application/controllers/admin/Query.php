@@ -19,6 +19,8 @@ class Query extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
+			$data['qmenu_active'] = "active menu-open";
+			$data['qlist'] = "active";
 			$data['query_details'] = $this->Query_model->get_query_details();
 		    $this->load->view('admin/query/list',$data);			
 		}else{			
@@ -70,6 +72,8 @@ class Query extends CI_Controller {
 			$data['user_details'] = $this->Query_model->get_user_details();
 			$data['ScopeList'] = $this->Query_model->get_scope_master();
 			$data['id'] = $id;
+			$data['qmenu_active'] = "active menu-open";
+			$data['qadd'] = "active";
 			$data['reseller_list'] = $this->Query_model->get_reseller_list();
 		    $this->load->view('admin/query/add',$data);		
 		}else{			
@@ -422,6 +426,8 @@ class Query extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
+			$data['rmenu_active'] = "active menu-open";
+			$data['rqlist'] = "active";
 			$data['reseller_details'] = $this->Query_model->get_reseller_details();
 		    $this->load->view('admin/query/reseller/list',$data);			
 		}else{			

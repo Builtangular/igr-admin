@@ -821,6 +821,8 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+			$data['rjmenu_active'] = "active menu-open";
+			$data['ellist'] = "active";
 			$data['massage'] = $this->session->userdata('msg');
 			$data['employee_details'] = $this->Employee_Model->get_permenent_employee_details();
 			// var_dump($data['employee_details']); die;

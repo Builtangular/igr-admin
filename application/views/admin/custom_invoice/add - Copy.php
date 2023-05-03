@@ -6,7 +6,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Add Invoice Details
+                Add Custome Details
                 <small></small>
             </h1>
             <!-- You can dynamically generate breadcrumbs here -->
@@ -25,27 +25,30 @@
                         <div class="box-header with-border">
                             <h1 class="box-title">Order Details</h1>
                         </div>
-                        <form autocomplete="off"
-                            action="<?php echo base_url(); ?>admin/genrate_invoice/insert_invoice/<?php echo $id;?>"
-                            method="post" class="form-horizontal" autofill=>
+                        <form action="<?php echo base_url(); ?>admin/custom_invoice/insert" method="post"
+                            class="form-horizontal">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Invoice Title<span
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
-                                        <input type="text" name="invoice_title" id="invoice_title" class="form-control"
+                                        <input type="text" name="title" id="title" class="form-control"
                                             placeholder="Invoice Title" required>
                                     </div>
-                                    <?php if($Role_id == 1) {?>
-                                    <label class="control-label col-md-2">Main Invoice No.<span
+                                    <label class="control-label col-md-2">Invoice No. <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
-                                        <input type="text" id="main_invoice_no" name="main_invoice_no"
-                                            class="form-control" placeholder="Main Invoice No">
+                                        <input type="text" name="invoice_no" id="invoice_no" class="form-control"
+                                            placeholder="Invoice No." required>
                                     </div>
-                                    <?php }?>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-2">Order No.<span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-3">
+                                        <input type="text" name="order_no" id="order_no" class="form-control"
+                                            placeholder="Order No." required>
+                                    </div>
                                     <label class="control-label col-md-2">Order Date<span
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
@@ -54,6 +57,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-2">Reseller Name<span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-3">
+                                        <select class="form-control b-none" name="reseller_name" id="reseller_name"
+                                            required>
+                                            <option value="" selected>Select Source Type</option>
+                                            <?php 						
+                                            foreach($reseller_list as $list)						
+                                            {				
+                                            ?>
+                                            <option value="<?php echo $list->reseller_name;?>">
+                                                <?php echo $list->reseller_name; ?></option>
+                                            <?php						
+                                            }					
+                                            ?>
+                                        </select>
+                                    </div>
                                     <label class="control-label col-md-2">Currency<span
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
@@ -61,104 +81,15 @@
                                             placeholder="">
                                             <option value="" selected>Select Currency</option>
                                             <option value="USD">USD</option>
-                                            <option value="INR">INR</option>
                                             <option value="EUR">EUR</option>
                                             <option value="AED">AED</option>
                                             <option value="SAR">SAR</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group hide" id="my_div1">
-                                    <label class="control-label col-md-2">State <span class="text-red">*</span></label>
-                                    <div class="col-md-3">
-                                        <input type="radio" name="state" id="maharastra" value="Maharastra" />
-                                        Maharastra &nbsp;&nbsp;
-                                        <input type="radio" name="state" id="other_state" value="Other State" /> Other
-                                        State
-                                    </div>
-                                </div>
-                                <div class="form-group hide" id="my_div">
-                                    <label class="control-label col-md-2">Customer Gst No.<span
-                                            class="text-red">*</span></label>
-                                    <div class="col-md-3">
-                                        <input type="text" id="customer_gst_no" name="customer_gst_no"
-                                            class="form-control" placeholder="Customer Gst No">
-                                    </div>
-                                </div>
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
-                                        <h1 class="box-title">Billing Information</h1>
-                                    </div>
-                                    <div class="form-group">
-                                        <!-- <b>Customer Name<span class="text-red">*</span></b> -->
-                                        <input type="hidden" id="query_name" name="query_name" class="form-control"
-                                            placeholder="Query Name" required>
-                                        <input type="hidden" id="invoice_no" name="invoice_no" class="form-control"
-                                            placeholder="Invoice No" required>
-
-                                        <div class="col-md-5">
-                                            <b>Customer Name<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_customer_name" name="billing_customer_name"
-                                                class="form-control" placeholder="Custome Name" required>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <b>Company Name<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_company_name" name="billing_company_name"
-                                                class="form-control" placeholder="Company Name" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <b>Phone No.<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_phone_no" name="billing_phone_no"
-                                                class="form-control" placeholder="Phone No" required>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>Email Id<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_email_id" name="billing_email_id"
-                                                class="form-control" placeholder="Email Id" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-5">
-                                            <b>Address<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_address1" name="billing_address1"
-                                                class="form-control" placeholder="Street Address Line1" required>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <b>Address</b>
-                                            <input type="text" id="billing_address2" name="billing_address2"
-                                                class="form-control" placeholder="Street Address Line2">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <b>City<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_city" name="billing_city"
-                                                class="form-control" placeholder="City" required>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>State<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_state" name="billing_state"
-                                                class="form-control" placeholder="Billing State" required>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>Zipcode<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_zipcode" name="billing_zipcode"
-                                                class="form-control" placeholder="Zipcode" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="radio" name="s_address_billing" id="s_address_billing"
-                                                value="Yes" /> &nbsp;&nbsp;
-                                            <b>Shipping address same as billing address</b>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="box box-primary" id="displayDS">
-                                    <div class="box-header with-border">
-                                        <h1 class="box-title">Shipping Information</h1>
+                                        <h1 class="box-title">Client Information</h1>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-2">User Name</label>
@@ -169,7 +100,8 @@
                                         </div>
                                         <div class="col-md-1">
                                             <center><span type="button" class="btn btn-block btn-info"
-                                                    id="shipping_addrow"><i class="fa fa-plus"></i> Add</span></center>
+                                                    id="shipping_addrow"><i class="fa fa-plus"></i> Add</span>
+                                            </center>
                                         </div>
                                         <input type="hidden" name="shipping_customer_name" id="shipping_customer_name"
                                             value="Shipping Custome Name" class="form-control">
@@ -184,7 +116,8 @@
                                         </div>
                                         <div class="col-md-1">
                                             <center><span type="button" class="btn btn-block btn-info"
-                                                    id="shipping_addrow1"><i class="fa fa-plus"></i> Add</span></center>
+                                                    id="shipping_addrow1"><i class="fa fa-plus"></i> Add</span>
+                                            </center>
                                         </div>
                                         <input type="hidden" name="shipping_email_id" id="shipping_email_id"
                                             value="Shipping Email Id" class="form-control">
@@ -198,14 +131,13 @@
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <b>Unit Price<span class="text-red">*</span></b>
-                                            <input type="text" id="unit_price" name="unit_price" class="form-control"
+                                            <input type="text" id="price" name="price" class="form-control"
                                                 placeholder="Unit Price">
                                         </div>
                                         <div class="col-md-3">
                                             <b>Unit No.<span class="text-red">*</span></b>
                                             <select class="form-control b-none" id="unit_no" name="unit_no">
                                                 <option value="" selected>Select Unit No.</option>
-                                                <option value="0">0</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -219,23 +151,25 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <b>Discount (%)<span class="text-red">*</span></b>
+                                            <b>Discount Type<span class="text-red">*</span></b>
+                                            <select class="form-control b-none" name="discount_type" id="discount_type"
+                                                required>
+                                                <option value="" selected>Select Discount Type</option>
+                                                <option value="Percentage">Percentage</option>
+                                                <option value="Absolute">Absolute</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 hide" id="discount">
+                                            <b>Percentage (%)<span class="text-red">*</span></b>
                                             <input type="text" id="dis_percentage" name="percentage" onblur="reSum();"
                                                 class="form-control" placeholder="Percentage">
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 hide" id="absolute">
                                             <b>Discount (Absolute)<span class="text-red">*</span></b>
                                             <input type="text" id="absolute_price" name="absolute_price"
                                                 onblur="reSum();" class="form-control" placeholder="Absolute Price">
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <div class="col-md-3">
-                                            <b>total Amount<span class="text-red">*</span></b>
-                                            <input type="text" id="total_amount" name="total_amount" onblur="reSum(); class="form-control"
-                                                placeholder="Total Amount" >
-                                        </div>
-                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-md-2">Total Amount <span class="text-red">*</span></label>
                                         <div class="col-md-3">
@@ -246,8 +180,6 @@
                                     </div>
                                 </div>
                                 <div class="box-footer">
-                                    <input type="hidden" name="id" class="form-control" id="id"
-                                        value="<?php if(!empty($followup_record)){echo $followup_record->id;}?>">
                                     <input type="submit" class="btn btn-primary pull-right" value="Submit">
                                 </div>
                             </div>
@@ -267,47 +199,85 @@ var my_div = document.getElementById('my_div');
 currency.addEventListener('change', function() {
     if (this.value == "INR") {
         my_div.classList.remove('hide');
-        my_div1.classList.remove('hide');
     } else {
         my_div.classList.add('hide');
-        my_div1.classList.add('hide');
 
     }
 })
 
-/* hide and shipping information */
-$("input[name='s_address_billing']").click(function() {
-    $('#displayDS').css('display', ($(this).val() === 'a') ? 'block' : 'none');
-});
+var discount_type = document.getElementById('discount_type');
+var discount = document.getElementById('discount');
+var absolute = document.getElementById('absolute');
 
-/* / .hide and shipping information */
+
+discount_type.addEventListener('change', function() {
+    if (this.value == "Percentage") {
+        discount.classList.remove('hide');
+        absolute.classList.add('hide');
+    } else if (this.value == "Absolute") {
+        discount.classList.add('hide');
+        absolute.classList.remove('hide');
+    } else {
+        discount.classList.add('hide');
+        absolute.classList.add('hide');
+
+    }
+})
 
 function reSum() {
     var percentage, result, result1, mult, multiplication, abs, dis, discount;
-    var unit_price = parseFloat(document.getElementById("unit_price").value);
+    var price = parseFloat(document.getElementById("price").value);
     var unit_no = parseInt(document.getElementById("unit_no").value);
     var percentage = parseFloat(document.getElementById("dis_percentage").value);
     var absolute_price = parseFloat(document.getElementById("absolute_price").value);
+    var total_amt = parseFloat(document.getElementById("total_amount").value);
 
-    // console.log(percentage); 
-    multiplication = unit_price * unit_no;
+    // console.log(price);
+    multiplication = price * unit_no;
     /* calculate discount */
-    if (absolute_price) {
-        discount = (absolute_price / multiplication * 100).toFixed(2);
-        total_amt = multiplication - absolute_price;
+    percentage = (percentage / 100).toFixed(2);
+    mult = multiplication * percentage;
 
-        document.getElementById("absolute_price").value = absolute_price;
-        document.getElementById("dis_percentage").value = discount;
-        document.getElementById("total_amount").value = total_amt;
+    // multiplication = price * percentage;
+    discount = multiplication - mult;
+    // console.log(discount);
+    /* substration of price and absolute value */
+    result = multiplication - absolute_price;
+    // console.log(result); 
+    if (result) {
+        document.getElementById("total_amount").value = result;
     } else {
-        absolute_val = (percentage / 100) * multiplication;
-        total_amt = multiplication - absolute_val;
-        document.getElementById("dis_percentage").value = percentage;
-        document.getElementById("absolute_price").value = absolute_val;
-        document.getElementById("total_amount").value = total_amt;
+        document.getElementById("total_amount").value = discount;
     }
-
 }
+// if(percentage){
+//     percentage = (percentage / 100).toFixed(2);
+//     multiplication = price * percentage;
+//     total_amt = price - multiplication;
+//     // document.getElementById("dis_percentage").value = discount;
+//     document.getElementById("total_amount").value = total_amt;
+// } else {
+//     total_amt = multiplication - absolute_price;
+//     document.getElementById("dis_percentage").value = percentage;
+//     document.getElementById("dis_percentage").value = percentage;
+//     document.getElementById("total_amount").value = total_amt;
+// } 
+// console.log(discount);
+// if (absolute_price) {
+//     discount = (absolute_price / multiplication * 100).toFixed(2);
+//     total_amt = multiplication - absolute_price;
+
+//     document.getElementById("absolute_price").value = absolute_price;
+//     document.getElementById("dis_percentage").value = discount;
+//     document.getElementById("total_amount").value = total_amt;
+// } else {
+//     absolute_val = (percentage / 100) * multiplication;
+//     // console.log(absolute_val);
+//     total_amt = multiplication - absolute_val;
+//     document.getElementById("dis_percentage").value = percentage;
+//     document.getElementById("absolute_price").value = absolute_val;
+//     document.getElementById("total_amount").value = total_amt;
+// }
 
 jQuery(function() {
     var counter = 1;

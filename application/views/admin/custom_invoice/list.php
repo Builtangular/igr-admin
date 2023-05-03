@@ -21,12 +21,12 @@
         <div class='row'>
             <div class="col-md-12">
                 <div class="box box-primary">
-                    <!-- <div class="box-header">
+                    <div class="box-header">
                         <h3 class="box-title">Invoice List</h3>
-                        <a href="<?php echo base_url(); ?>admin/query/add" class="btn btn-primary pull-right">
+                        <a href="<?php echo base_url(); ?>admin/custom_invoice/add" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
-                    </div> -->
+                    </div>
                     <?php if($massage){ ?>
                     <div class="alert alert-success">
                         <button type="button" class="close" data-dismiss="alert">x</button>
@@ -38,7 +38,9 @@
                             <thead>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-                                    <th>Invoice Title</th>
+                                    <th>Order No.</th>
+                                    <th>Order Title</th>
+                                    <th>Reseller Name</th>
                                     <th>Invoice No</th>
                                     <th>Order Date</th>
                                     <th>Invoice</th>
@@ -47,6 +49,8 @@
                             </thead>
                             <tbody>
                             <?php foreach($custom_details as $data){ $i++;
+                                $invoice_no = $data->invoice_no;
+                                // var_dump($invoice_no);die;
                                 $invoice_details = "SELECT * FROM tbl_custome_invoice where id = " . $data->id;                              
                                 $custom_invoice_details = $this->db->query($invoice_details);
                                 $invoice_data = $custom_invoice_details->row();
@@ -60,7 +64,9 @@
                                 ?>  
                                 <tr style="font-size: 14px;">
                                     <td><?php echo $data->id; ?></td>
-                                    <td><?php echo $data->title; ?></td>
+                                    <td><?php echo $data->order_no; ?></td>
+                                    <td><?php echo $data->order_title; ?></td>
+                                    <td><?php echo $data->reseller_name; ?></td>
                                     <td><?php echo $data->invoice_no; ?></td>
                                     <td><?php echo $data->order_date; ?></td>
                                     <td>                                   
@@ -82,7 +88,9 @@
                             <tfoot>
                                 <tr style="font-size: 14px;">
                                     <th>Id</th>
-                                    <th>Invoice Title</th>
+                                    <th>Order No.</th>
+                                    <th>Order Title</th>
+                                    <th>Reseller Name</th>
                                     <th>Invoice No</th>
                                     <th>Order Date</th>
                                     <th>Invoice</th>

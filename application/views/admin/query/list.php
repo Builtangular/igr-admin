@@ -47,8 +47,8 @@
                                     <?php if ($Role_id == 5 || $Role_id == 7) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
-                                    <?php } ?>
-                                    <?php } ?>
+                                    <th>Date</th>
+                                    <?php } } ?>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -126,6 +126,7 @@
                                             href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->id; ?>"><b><?php echo $query_status; ?></b></a>
                                     </td>
                                     <?php }?>
+                                    <td><?php echo date("d-m-Y", strtotime($data->updated_on)); ?></td>
                                     <?php }?>
                                     <?php }?>
                                     <td> <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>"
@@ -149,8 +150,8 @@
                                     <?php if ($Role_id == 5 || $Role_id == 7) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
-                                    <?php } ?>
-                                    <?php } ?>
+                                    <th>Date</th>
+                                    <?php } } ?>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

@@ -21,6 +21,8 @@ class Spam_Mail extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $data['Login_user_name']=$session_data['Login_user_name'];	
             $data['Role_id']=$session_data['Role_id'];
+            $data['smenu_active'] = "active menu-open";
+			$data['sadd'] = "active";
             $data['spam_mail_count'] = $this->Spam_Model->spam_mail_count();
             $data['unsubscribe_mail_count'] = $this->Spam_Model->unsubscribe_mail_count();
             $this->load->view('admin/spam_mail/add',$data);	
@@ -52,6 +54,8 @@ class Spam_Mail extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $data['Login_user_name']=$session_data['Login_user_name'];	
             $data['Role_id']=$session_data['Role_id'];
+            $data['smenu_active'] = "active menu-open";
+			$data['slist'] = "active";
             $data['mail_data'] = $this->Spam_Model->get_spam_mail_data();
             // var_dump($data['mail_data']); die;
             $this->load->view('admin/spam_mail/list',$data);	
@@ -116,6 +120,8 @@ class Spam_Mail extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $data['Login_user_name']=$session_data['Login_user_name'];	
             $data['Role_id']=$session_data['Role_id'];
+            $data['smenu_active'] = "active menu-open";
+			$data['supload'] = "active";
             $this->load->view('admin/spam_mail/xl_upload',$data);
         }else{			
             $this->load->view('admin/login');

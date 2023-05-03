@@ -29,7 +29,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Insert Query Details</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/query/insert" id="employment-form" method="post"
+                    <form autocomplete="off" action="<?php echo base_url(); ?>admin/query/insert" id="employment-form" method="post"
                         class="form-horizontal" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="form-group">
