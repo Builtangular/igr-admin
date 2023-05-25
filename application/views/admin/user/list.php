@@ -50,8 +50,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $i=1;
-                                    foreach($user_details as $list){ ?>
+                        $i=1;
+                        foreach($user_details as $list){ ?>
                                     <tr>
                                         <td><?php echo $i++; ?></td>
                                         <td><?php echo $list->user_type; ?></td>
@@ -111,19 +111,6 @@
 <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
 
-<!-- REQUIRED JS SCRIPTS -->
-
-<!-- jQuery 2.1.3 -->
-<script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
-<!-- Bootstrap 3.3.2 JS -->
-
-<script src="<?php echo base_url(); ?>assets/admin/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/admin/js/dataTables.bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/admin/js/bootstrap.min.js" type="text/javascript"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
-
 
 <script>
 $(document).ready(function() {
@@ -141,21 +128,6 @@ $(function() {
         'ordering': true,
         'info': true,
         'autoWidth': false
-    })
-})
-</script>
-
-<script>
-$(document).ready(function() {
-    $('.sidebar-menu').tree()
-})
-</script>
-
-<script>
-$(function() {
-    $('#rddata').DataTable()
-    $('#example2').DataTable({
-        'paging': true,
     })
 })
 </script>

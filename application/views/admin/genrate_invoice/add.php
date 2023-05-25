@@ -54,6 +54,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-2">Order No.<span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-3">
+                                        <input type="text" name="order_no" id="order_no" class="form-control" placeholder="Order No"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-2">Currency<span
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">

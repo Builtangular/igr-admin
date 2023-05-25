@@ -17,6 +17,8 @@ class Custom_link extends CI_Controller {
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['id'] = $this->input->post('id');
 			$report_id = $this->input->post('report_id');
 			$data['custom_list']= $this->customlink_model->get_customlink_data();
@@ -32,6 +34,8 @@ class Custom_link extends CI_Controller {
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			// var_dump($data['custom_list']); die;
 			$this->load->view('admin/custom_link/add', $data);			
 		}else{			
@@ -45,6 +49,8 @@ class Custom_link extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$result = $this->customlink_model->insert_customlink_data();
 			if($result == 1)
 			{
@@ -61,6 +67,8 @@ class Custom_link extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['single_custom_data'] = $this->customlink_model->get_single_custom_data($id);
 			$this->load->view("admin/custom_link/edit",$data);
 		}else {
@@ -73,7 +81,8 @@ class Custom_link extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$id = $this->input->post('id');
 			$this->customlink_model->update_custom_link($id);
 			$this->session->set_flashdata('success_code', 'Data has been updated successfully....!!!');
@@ -88,7 +97,8 @@ class Custom_link extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['delete'] = $this->customlink_model->custom_link_delete($id);
 			$this->session->set_flashdata('success_code', 'Data has been delete successfully....!!!');
 			redirect('admin/custom_link');

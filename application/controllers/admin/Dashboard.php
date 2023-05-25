@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//ini_set('display_errors', '0');
+ini_set('display_errors', '0');
 class Dashboard extends CI_Controller {    
 	// error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 	public function __construct(){
@@ -17,7 +17,8 @@ class Dashboard extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];	
-
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $data['global_count'] = $this->Data_model->count_global_report();
 			$data['country_count'] = $this->Data_model->count_country_report();
             $data['region_count'] = $this->Data_model->count_region_report();

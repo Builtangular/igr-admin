@@ -11,26 +11,17 @@ class User_Model extends CI_Model {
     public function get_user_details(){
         $this->db->select('*');
         $this->db->from('tbl_registered_user_details');
-        $this->db->where('status', 1);
         $query = $this->db->get();
         return $query->result(); 
-    }
-    public function insert_user_login_details($role_id,$role_type){
-        $data = array(
-            'role_id'               => $role_id,
-            'user_type'             => $role_type,
-            'head_name'             => $this->input->post('head_name'),
-            'full_name'             => $this->input->post('full_name'),
-            'mobile_no'             => $this->input->post('mobile_no'),
-            'email_id'              => $this->input->post('email_id'),
-            'designation'           => $this->input->post('designation'),
-            'department'            => $this->input->post('department'),
-            'password'              => $this->input->post('password'),
-            'created_on'            => date('Y-m-d'),
-            'updated_on'            => date('Y-m-d'),
-        );
+    }    
+    public function insert_user_register_details($data){
         $result = $this->db->insert('tbl_registered_user_details', $data);
-        // $insert_id = $this->db->insert_id();
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+        
+    }
+    public function insert_user_login_details($data){
+        $result = $this->db->insert('tbl_user_login_details', $data);
         return $result;
         
     }
@@ -70,6 +61,10 @@ class User_Model extends CI_Model {
     public function update_user_data($update,$id){
         $this->db->where('id',$id);
         return $this->db->update('tbl_registered_user_details', $update);
+    }
+    public function update_user_details($update_user_details,$id){
+        $this->db->where('user_id',$id);
+        return $this->db->update('tbl_user_login_details', $update_user_details);
     }
     public function delete_user_data($id){
         $this->db->where("id", $id);

@@ -38,11 +38,9 @@
                             <thead>
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
-                                    <th>Query Name</th>
-                                    <th>Client Email</th>
-                                    <th>Company</th>
                                     <th>Invoice Title</th>
-                                    <th>Lead Date</th>
+                                    <th>Invoice NO.</th>
+                                    <th>Date</th>
                                     <th>Invoice</th>
                                     <th width="100px">Action</th>
                                 </tr>
@@ -54,40 +52,38 @@
                                 $invoice_details = "SELECT * FROM tbl_order_invoice_data where query_id = " . $data->id;
                                 // var_dump($invoice_details);die;                              
                                 $query_invoice_details = $this->db->query($invoice_details);
+                                // var_dump($query_invoice_details);die;     
                                 $invoice_data = $query_invoice_details->row();
+                                // var_dump($query_invoice_details);die; 
                                 if ($query_invoice_details->num_rows() > 0) {
                                     $invoice_status = "<i class=\"fa fa-file\"></i><br>View";
                                     $invoice_title = $invoice_data->invoice_title;
                                 } else {
-                                    $invoice_status = "<i class=\"fa fa-plus\"></i><br>Add";
+                                    $invoice_status = "<i class=\"fa fa-file\"></i><br>View";
                                     $invoice_title = "";
                                 }
                                 ?>
                                 <tr style="font-size: 14px;">
                                     <td><?php echo $data->query_code; ?></td>
-                                    <td><?php echo $scope_name; ?></td>
-                                    <td><?php echo $data->client_email; ?></td>
-                                    <td><?php echo $data->company_name; ?></td>
-                                    <td><?php echo $invoice_title; ?></td>
-                                    <td><?php echo $data->lead_date; ?></td>
+                                    <td><?php echo $data->invoice_title; ?></td>
+                                    <td><?php echo $data->invoice_no; ?></td>
+                                    <td><?php echo date('F, Y', strtotime($data->order_date)); ?></td>
                                     <td>
                                         <?php if ($query_invoice_details->num_rows() > 0) { ?>
-
                                         <a
                                             href="<?php echo base_url(); ?>admin/genrate_invoice/view/<?php echo $invoice_data->id; ?>"><b><?php echo $invoice_status; ?></b></a>
                                         <?php } else { ?>
                                         <a
-                                            href="<?php echo base_url(); ?>admin/genrate_invoice/add_invoice/<?php echo $data->id; ?>"><b><?php echo $invoice_status; ?></b></a>
+                                            href="<?php echo base_url(); ?>admin/genrate_invoice/view/<?php echo $data->id; ?>"><b><?php echo $invoice_status; ?></b></a>
 
                                         <?php } ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo base_url();?>admin/genrate_invoice/edit/<?php echo $invoice_data->id;?>"
+                                        <a href="<?php echo base_url();?>admin/genrate_invoice/edit1/<?php echo $data->id;?>"
                                             class="btn btn-success"><i class="fa fa-edit"></i></b></a>
                                         <!-- <a href="<?php echo base_url();?>admin/query/delete_followup/<?php echo $data->id;?>" class="btn btn-danger">Delete</a> -->
-                                        <a href="<?php echo base_url(); ?>admin/genrate_invoice/delete/<?php echo $invoice_data->id; ?>"
+                                        <a href="<?php echo base_url(); ?>admin/genrate_invoice/delete/<?php echo $data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -95,11 +91,9 @@
                             <tfoot>
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
-                                    <th>Query Name</th>
-                                    <th>Client Email</th>
-                                    <th>Company</th>
                                     <th>Invoice Title</th>
-                                    <th>Lead Date</th>
+                                    <th>Invoice NO.</th>
+                                    <th>Date</th>
                                     <th>Invoice</th>
                                     <th width="100px">Action</th>
                                 </tr>

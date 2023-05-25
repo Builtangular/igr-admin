@@ -12,7 +12,7 @@ class Login_model extends CI_Model {
     {	
 		$this->db->select('*');
 		$this->db->from('tbl_user_login_details as ULD');
-		$this->db->join('tbl_user_details as UD', 'UD.user_id = ULD.user_id');
+		$this->db->join('tbl_registered_user_details as RUD', 'RUD.id = ULD.user_id');
 		$this->db->where(array('ULD.Active_flag' => '1','ULD.User_email_id' => $username, 'ULD.Login_password' => $password));		
 		$login_sql = $this->db->get();		
 		// echo"----".$this->db->last_query();	
@@ -21,7 +21,6 @@ class Login_model extends CI_Model {
 		if($login_sql -> num_rows() == 1)
 		{
 			//return $login_sql->result_array();
-			
 			$login_result = $login_sql->result_array();	
 			// var_dump($login_result);
 			// die;			
@@ -29,7 +28,7 @@ class Login_model extends CI_Model {
 			{
 				$enroll = $login_row['log_id'];
 				$userId = $login_row['user_id'];
-				$Role_id = $login_row['Role_id'];
+				$Role_id = $login_row['role_id'];
 				$login_user_name = $login_row['Login_user_name'];
 			}
 			// echo"---enroll----".$enroll;

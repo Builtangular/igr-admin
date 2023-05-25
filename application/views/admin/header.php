@@ -184,9 +184,9 @@
                     <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
                                 class="text-bold">Add Global RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
-                                class="text-bold">Generate RD</span></a></li> 
+                                class="text-bold">Generate RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/country_rd/add"><i class="fa fa-arrow-down"></i><span
-                                class="text-bold">Add Country RD</span></a></li>                   
+                                class="text-bold">Add Country RD</span></a></li>
                     <?php } ?>
 
                     <?php if($Role_id == 4){ ?>
@@ -212,26 +212,19 @@
                                 Management</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/drafts"><span>Drafts</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
                         </ul>
                     </li>
-<<<<<<< Updated upstream
-                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Genrate
-                                Invoice</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <!--  <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/add_invoice/<?php echo $id;?>"><span>Add</span></a></li> -->
-                            <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><span>List</span></a></li>
-                        </ul>
-                    </li>
-
-                    <?php } if($Role_id == 8) { ?>
-                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
-                                class="text-bold">Generate RD</span></a></li>
-=======
-                    <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><i
+                    <?php } ?>
+                    <?php if($Role_id == 5 && $User_Type == "Team Lead" && $department == "Sales"){ ?>
+                    <li><a href="<?php echo base_url(); ?>admin/query/assign_list"><i class="fa fa-file-text"></i><span
+                                class="text-bold">Assigned Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/query/upcoming_query_list"><i
+                                class="fa fa-file-text"></i><span class="text-bold">Upcoming Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/generate_invoice/list"><i
                                 class="fa fa-file-text"></i><span class="text-bold">Generate
                                 Invoice</span></a></li>
->>>>>>> Stashed changes
                     <?php } ?>
                     <?php if($Role_id == 6){?>
                     <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-tasks"></i><span
@@ -290,13 +283,29 @@
                                     href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><i
-                                class="fa fa-file-text"></i><span class="text-bold">Generate Invoice</span></a></li>
-                    <li class="treeview <?php echo $cimenu_active;?>"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Custom Invoice
+                    <!--  <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><i
+                                class="fa fa-file-text"></i><span class="text-bold">Generate Invoice</span></a></li> -->
+
+                    <li class="treeview <?php echo $gimenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
+                                class="text-bold">Generate Invoice
                             </span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li class="<?php echo $ciadd;?>"><a href="<?php echo base_url(); ?>admin/custom_invoice/add"><span>Add</span></a></li>
-                            <li class="<?php echo $cilist;?>"><a href="<?php echo base_url(); ?>admin/custom_invoice/list"><span>List</span></a></li>
+                            <li class="<?php echo $gilist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/generate_invoice/list"><span>List</span></a>
+                            </li>
+                            <li class="<?php echo $ilist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/generate_invoice/generated_invoice_list"><span>Generated</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview <?php echo $cimenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
+                                class="text-bold">Custom Invoice
+                            </span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li class="<?php echo $ciadd;?>"><a
+                                    href="<?php echo base_url(); ?>admin/custom_invoice/add"><span>Add</span></a></li>
+                            <li class="<?php echo $cilist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/custom_invoice/list"><span>List</span></a></li>
                         </ul>
                     </li>
                     <?php } ?>

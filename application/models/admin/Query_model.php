@@ -7,50 +7,146 @@ class Query_model extends CI_Model {
         $this->admindb = $this->load->database('admindb', TRUE);
     }
     /* query management */
-    public function get_user_details(){
+    public function get_user_details($role_id){
         $this->db->select('*');
+        $this->db->where('role_id',$role_id);
         $this->db->from('tbl_registered_user_details');
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_query_details(){
+    public function get_query_details($Login_user_name){
+        $this->db->select('*');
+        $this->db->from('tbl_query_assignment');
+        $this->db->where(array('tbl_query_assignment.assigned_name'=>$Login_user_name,'tbl_query_assignment.status'=>1)); 
+        $this->db->join('tbl_rd_query_data','tbl_query_assignment.query_id = tbl_rd_query_data.id');
+       // $this->db->order_by('id',"DESC");
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result();  
+    }
+    public function get_query_details1($Login_user_name){
+        $this->db->select('*');
+        $this->db->from('tbl_rd_query_data');
+        $this->db->where('created_user',$Login_user_name);
+        // $this->db->join('tbl_query_assignment','tbl_rd_query_data.id = tbl_query_assignment.query_id');
+        $this->db->order_by('id',"DESC");
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result();
+    }
+    public function get_query_list1(){
         $this->db->select('*');
         $this->db->from('tbl_rd_query_data');
         $this->db->order_by('id',"DESC");
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result();
+    }
+    public function get_draft_details($Login_user_name){
+        $this->db->select('*');
+        // $this->db->where('created_user',$Login_user_name);
+        $this->db->from('tbl_rd_query_data');
+        $this->db->where(array('created_user'=>$Login_user_name, 'assign_to_team'=>0));        
+        $this->db->order_by('id',"DESC");
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result();
+    }
+    public function get_query_data($department){
+        $this->db->select('*');
+        $this->db->from('tbl_rd_query_data');
         $query = $this->db->get();
         return $query->result();
     }
     public function insert_query_details($data){
         $result = $this->db->insert('tbl_rd_query_data', $data);
         return $result;
-       
     }
     public function get_single_query_data($id){
         $this->db->where('id',$id);
         $result = $this->db->get('tbl_rd_query_data');
         return $result->row();
     }
-    public function update($id,$Login_user_name){
-            $update = array(        
-                'source'                     => $this->input->post('source'),
-                'source_mail_id'             => $this->input->post('source_mail_id'),
-                'scope_name'                 => $this->input->post('scope_name'),
-                'reseller_name'              => $this->input->post('reseller_name'),
-                'report_name'                => $this->input->post('report_name'),
-                'client_name'                => $this->input->post('client_name'),
-                'designation'                => $this->input->post('designation'),
-                'company_name'               => $this->input->post('company_name'),
-                'client_email'               => $this->input->post('client_email'),
-                'client_message'             => $this->input->post('client_message'),
-                'assigned_to'                => $this->input->post('assigned_to'),
-                'created_user'               => $Login_user_name,
-                'updated_on'                 => date('Y-m-d'),
-            );
-            // var_dump($update);die;
-            $this->db->where('id', $id);
-            return $this->db->update('tbl_rd_query_data', $update);
+    public function get_query_assign_details1($id){
+        $this->db->where(array('query_id'=>$id,'status'=>1));
+        $result = $this->db->get('tbl_query_assignment');
+        return $result->row();
     }
-    public function delete($id) {
+    public function get_query_assign1($id){
+        $this->db->where(array('query_id'=>$id, 'status'=>1));  
+        $result = $this->db->get('tbl_query_assignment');
+        return $result->row();
+       
+    }
+    public function update_query_details($id,$update_assignment){
+        $this->db->where('id', $id);
+        $result = $this->db->update('tbl_rd_query_data', $update_assignment);
+        // $insert_id = $this->db->insert_id();
+        return $result;
+    }
+    public function update_assignment_data($id,$update_query){
+        $this->db->where('query_id', $id);
+        $result = $this->db->update('tbl_query_assignment', $update_query);
+        // $insert_id = $this->db->insert_id();
+        return $result;
+    } 
+    public function update_assignment_data1($id,$update_assignment_query){
+        $this->db->where('query_id', $id);
+        $result = $this->db->update('tbl_query_assignment', $update_assignment_query);
+        // $insert_id = $this->db->insert_id();
+        return $result;
+    } 
+    public function update_upcoming_records($id,$update_upcoming_data){
+        $this->db->where('id', $id);
+        $result = $this->db->update('tbl_rd_query_data', $update_upcoming_data);
+        //$insert_id = $this->db->insert_id();
+        return $result;
+    }
+    public function insert_assignment_details($data){
+        $result = $this->db->insert('tbl_query_assignment', $data);
+        return $result;
+    } 
+    public function update_assignment_details($id,$update_assignment){
+        $result =$this->db->update('tbl_query_assignment',$update_assignment);
+        return $result;
+    }
+    public function get_query_assign_details(){
+        $this->db->select('*');
+        $this->db->from('tbl_query_assignment');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_query_list($Login_user_name){
+        $this->db->select('*');
+        $this->db->where(array('tbl_query_assignment.status' => 1,'tbl_query_assignment.assigned_name!=' => $Login_user_name));
+        $this->db->from('tbl_rd_query_data');
+        $this->db->join('tbl_query_assignment','tbl_rd_query_data.id=tbl_query_assignment.query_id');
+        // $this->db->order_by('id',"DESC");
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function delete_recodes($id) {
+        // $this->db->select('*');
+        // $this->db->from('tbl_query_assignment');
+        // $this->db->where('tbl_query_assignment.query_id',$id);
+        // $this->db->join('tbl_rd_query_data','tbl_query_assignment.query_id=tbl_rd_query_data.id');
+        // $result = $this->db->delete('tbl_query_assignment');
+        // return $result;
+        $this->db->where('query_id',$id);
+        $result = $this->db->delete('tbl_query_assignment');
+        return $result;
+    } 
+    public function draft_delete($id) {
+        $this->db->where('id',$id);
+        $result = $this->db->delete('tbl_rd_query_data');
+        return $result;
+    }   
+    public function delete_assign_query($id) {
+        $this->db->where('query_id',$id);
+        $result = $this->db->delete('tbl_query_assignment');
+        return $result;
+    }
+    public function delete_upcoming_query($id){
         $this->db->where('id',$id);
         $result = $this->db->delete('tbl_rd_query_data');
         return $result;

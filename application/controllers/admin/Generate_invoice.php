@@ -2,7 +2,7 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', '0');
-class Genrate_invoice extends CI_Controller {    
+class Generate_invoice extends CI_Controller {    
 	public function __construct(){
 		parent::__construct();		
 		$this->load->library('form_validation');		
@@ -21,6 +21,8 @@ class Genrate_invoice extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
+            $data['gimenu_active'] = "active menu-open";
+			$data['gilist'] = "active";
 			$data['query_details'] = $this->Genrate_Invoice_Model->get_query_details();
 			$data['invoice_details'] = $this->Genrate_Invoice_Model->get_invoice_details();
             $data['invoice_title']= $data['invoice_details']->invoice_title;
@@ -29,6 +31,22 @@ class Genrate_invoice extends CI_Controller {
 			$this->load->view('admin/login');
 		}
 	}
+    public function generated_invoice_list(){
+        if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$data['massage'] = $this->session->userdata('msg');
+            $data['gimenu_active'] = "active menu-open";
+			$data['gilist'] = "active";
+			$data['query_details'] = $this->Genrate_Invoice_Model->get_query_details1();
+            $data['invoice_details'] = $this->Genrate_Invoice_Model->get_invoice_details();
+            $data['invoice_title']= $data['invoice_details']->invoice_title;
+		    $this->load->view('admin/genrate_invoice/invoice_list',$data);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+    }
     public function add_invoice($id){
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
@@ -36,6 +54,8 @@ class Genrate_invoice extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
 			$data['id'] = $id;
+            $data['gimenu_active'] = "active menu-open";
+			$data['giadd'] = "active";
             $query_details = $this->Genrate_Invoice_Model->get_query_records($id);
             $data['report_name'] = $query_details->report_name;
 		    $this->load->view('admin/genrate_invoice/add',$data);		
@@ -44,6 +64,7 @@ class Genrate_invoice extends CI_Controller {
 		}
     }
     public function insert_invoice($id){
+        // var_dump($_POST);die;
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -64,7 +85,7 @@ class Genrate_invoice extends CI_Controller {
             // $invoice_no = 'INVOICE' .'#'.($todays_date.'-IN'.'-').str_pad($last_row_id+1, 2, "0", STR_PAD_LEFT);
             $newDate = date('M');
             $invoice_no = 'PROINV'.(strtoupper($newDate)).'10'.str_pad($last_row_id+1, 2, "0", STR_PAD_LEFT);
-            $order_no = 'INH'.''.(strtoupper($newDate)).'0'.str_pad($last_id+1, 2, "0", STR_PAD_LEFT);
+            // $order_no = 'INH'.''.(strtoupper($newDate)).'0'.str_pad($last_id+1, 2, "0", STR_PAD_LEFT);
             $Shipping_Custome_Name=$this->input->post('Shipping_Custome_Name');
             $Shipping_Email_Id=$this->input->post('Shipping_Email_Id');
             $Shipping=$this->input->post('shipping_customer_name');
@@ -97,7 +118,7 @@ class Genrate_invoice extends CI_Controller {
                     'currency'                          => $this->input->post('currency'),
                     'state'                             => $this->input->post('state'),
                     'customer_gst_no'                   => $this->input->post('customer_gst_no'),
-                    'order_no'                          => $order_no,
+                    'order_no'                          => $this->input->post('order_no'),
                     'billing_customer_name'             => $this->input->post('billing_customer_name'),
                     'billing_company_name'              => $this->input->post('billing_company_name'),
                     'billing_phone_no'                  => $this->input->post('billing_phone_no'),
@@ -112,7 +133,6 @@ class Genrate_invoice extends CI_Controller {
                     'unit_price'                        => $this->input->post('unit_price'),
                     'unit_no'                           => $this->input->post('unit_no'),
                     'discount'                          => $this->input->post('percentage'),
-                    // 'absolute_price'                    => $this->input->post('absolute_price'),
                     'total_amount'                      => $this->input->post('total_amount'),
                     'created_at'                        => date('Y-m-d'),
                     'updated_at'                        => date('Y-m-d'),			
@@ -131,7 +151,7 @@ class Genrate_invoice extends CI_Controller {
                     'currency'                          => $this->input->post('currency'),
                     'state'                             => $this->input->post('state'),
                     'customer_gst_no'                   => $this->input->post('customer_gst_no'),
-                    'order_no'                          => $order_no,
+                    'order_no'                          => $this->input->post('order_no'),
                     'billing_customer_name'             => $this->input->post('billing_customer_name'),
                     'billing_company_name'              => $this->input->post('billing_company_name'),
                     'billing_phone_no'                  => $this->input->post('billing_phone_no'),
@@ -169,9 +189,7 @@ class Genrate_invoice extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
             $id = $id;
-            // var_dump($id);die;
             $data['invoice_data'] = $this->Genrate_Invoice_Model->get_single_invoice_records($id);
-            // var_dump($data['invoice_data']);die;
 			$this->load->view("admin/genrate_invoice/edit",$data);
 		}else{
 			$this->load->view("admin/login");			
@@ -183,9 +201,58 @@ class Genrate_invoice extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$id = $this->input->post('id');
-			$this->Genrate_Invoice_Model->update($id);
+            $value= $this->input->post('Shipping_Custome_Name');
+            $email= $this->input->post('Shipping_Email_Id');
+            foreach($value as $row)
+            {
+            $s_customer_name.= $row.', ';
+            }
+            
+            foreach($email as $data)
+            {
+            $s_email_address.= $data.', ';
+            }
+            // var_dump($email);die;
+			$this->Genrate_Invoice_Model->update($id,$s_customer_name,$s_email_address);
 			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
 			redirect('admin/genrate_invoice/list');
+		}else{
+			$this->load->view("admin/login");			
+		}
+	}
+    public function edit1($id){
+        if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+            $id = $id;
+            $data['invoice_data'] = $this->Genrate_Invoice_Model->get_single_invoice_records($id);
+			$this->load->view("admin/genrate_invoice/edit1",$data);
+		}else{
+			$this->load->view("admin/login");			
+		}
+    }
+    public function update1(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+			$id = $this->input->post('id');
+            $value= $this->input->post('Shipping_Custome_Name');
+            $email= $this->input->post('Shipping_Email_Id');
+            foreach($value as $row)
+            {
+            $s_customer_name.= $row.', ';
+            }
+            
+            foreach($email as $data)
+            {
+            $s_email_address.= $data.', ';
+            }
+            // var_dump($email);die;
+			$this->Genrate_Invoice_Model->update($id,$s_customer_name,$s_email_address);
+			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
+			redirect('admin/genrate_invoice/genrated_invoice_list');
 		}else{
 			$this->load->view("admin/login");			
 		}
@@ -244,7 +311,6 @@ class Genrate_invoice extends CI_Controller {
             }else{
                 $data['Total_amount']= $amount;
             }
-            // var_dump($data['Total_amount']);die;
             $this->load->view('admin/genrate_invoice/view',$data);		
 		}else{			
 			$this->load->view('admin/login');
@@ -252,9 +318,7 @@ class Genrate_invoice extends CI_Controller {
 	}
     public function donwload($id){
         $invoice_records = $this->Genrate_Invoice_Model->get_invoice_records($id);
-        // var_dump($invoice_records);die;
         $query_details = $this->Genrate_Invoice_Model->get_query_record($id);
-        // var_dump($query_details);die;
         $reseller_name= $query_details->reseller_name;
         $service_no= $query_details->service_no;
         $service = explode("-", $service_no);
@@ -270,7 +334,6 @@ class Genrate_invoice extends CI_Controller {
             $invoice_no = 'INVOICE' .'#'.($todays_date.'-IN').($last_row_id + 1);
         }
         $main_invoice_no = $invoice_records->main_invoice_no;
-        // var_dump($main_invoice_no);die;
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/invoice.docx');
         $todays_date = date('F d, Y');
         $s_address_billing = $invoice_records->s_address_billing;
@@ -298,13 +361,10 @@ class Genrate_invoice extends CI_Controller {
         $discount = $invoice_records->discount;
         $mult = $unit_price * $unit_no;
         $discount_amt = ($discount / 100) * $mult;
-        // $discount_amt1 = number_format($discount_amt,2);
         $discount_amt1 = $discount_amt;
         $percent = 18;
         $total = $total_amount;
-        // var_dump($total);die;
         $discount_igst = ($percent / 100) * $total;
-        // var_dump($discount_igst);die;
 
         $order_date = date('d F, Y', strtotime($order_date));
         $address = $billing_address1.' '.$billing_address2.' '.$billing_city.' '.$billing_state.' - '.$billing_zipcode;
@@ -366,28 +426,23 @@ class Genrate_invoice extends CI_Controller {
             $templateProcessor->setValue('disc_gst_type2', htmlspecialchars(""));
         }
         $total_price = $mult - $discount_amt1;
-        // var_dump($total);die;
         if($currency == "INR"){
             $total_price = $total_price + $discount_igst;            
         }else{
             $total_price = $total_price;
         }
-        // $total_price = ceil($total_price);
         $total_price = $total_price;
         if($currency == "INR"){
             $data['Total_amount']= $amount + $data['discount_igst'];
         }else{
             $data['Total_amount']= $amount;
         }
-        // var_dump( $total_price);die;
         $templateProcessor->setValue('total', htmlspecialchars(number_format($total_price,2)));
         
         if (($total_price < 0) || ($total_price > 999999999)) 
         {
             throw new Exception('Number is out of range');
         }
-        // var_dump($total_price);die;
-      
         $giga = floor($total_price / 1000000);
         // Millions (giga)
         $total_price -= $giga * 1000000;
@@ -405,7 +460,6 @@ class Genrate_invoice extends CI_Controller {
         $tens = array('', '', 'Twenty', 'Thirty', 'Fourty', 'Fifty', 'Sixty', 'Seventy', 'Eigthy', 'Ninety');
         // Ones
         $result = '';
-        // var_dump($total_price);die;
         if ($giga) 
         {
             $result.= $this->convert_number($giga) .  'Million';
@@ -439,21 +493,13 @@ class Genrate_invoice extends CI_Controller {
         {
             $result = 'zero';
         }
-        // return $result;
-        // var_dump($data['Total_amount']);die;
-        
             $templateProcessor->setValue('amt_in_word', htmlspecialchars($result));
          
-            // $templateProcessor->setValue('amt_in_word', htmlspecialchars("In Word: ".$currency.' '.$result));
-      
-        // $templateProcessor->setValue('amt_in_word', htmlspecialchars($result));
+           
         $filename = $report_name."- Proforma Invoice.docx";
         header('Content-Disposition: attachment; filename='.$filename);
         ob_clean();
-        $templateProcessor->saveAs('php://output');		
-        // $data = file_get_contents('resources/Invoice Vertical Farming Market.docx');
-        // force_download('Invoice Vertical Farming Market.docx', $data);
-    
+        $templateProcessor->saveAs('php://output');
 }
     public function convert_number($total_price) {
         if (($total_price < 0) || ($total_price > 999999999)) 
@@ -515,8 +561,6 @@ class Genrate_invoice extends CI_Controller {
         $total = $total_amount;
         $discount_igst = ($percent / 100) * $total;
         $order_date = date('d F, Y', strtotime($order_date));
-        // $todays_date = date('d F, Y');
-        // var_dump($todays_date);die;
         $address = $billing_address1.' '.$billing_address2.' '.$billing_city.' '.$billing_state.' - '.$billing_zipcode;
         $templateProcessor->setValue('TodayDate', htmlspecialchars($todays_date));
         $templateProcessor->setValue('InvoiceNo', htmlspecialchars('Invoice No:'.$main_invoice_no));
@@ -643,8 +687,6 @@ class Genrate_invoice extends CI_Controller {
         {
             $result = 'zero';
         }
-        // return $result;
-        // var_dump($data['Total_amount']);die;
         
             $templateProcessor->setValue('amt_in_word', htmlspecialchars($result));
          

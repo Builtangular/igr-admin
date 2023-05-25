@@ -20,22 +20,12 @@
             <div class="col-xs-12">
                 <h2 class="page-header">
                     <i class="fa fa-globe"></i> View Invoice Details
-                    <small class="pull-right">Date: <?php echo $order_date;?></small>
+                    <small class="pull-right">Date: <?php echo date('d-m-Y', strtotime($order_date));?></small>
                 </h2>
             </div>
         </div>
-    
         <section class="content">
             <div class="row invoice-info">
-                <!-- <div class="col-sm-4 invoice-col">
-                    <b>Bill To,</b><br>
-                    <b>Invoice No.: </b><?php echo $invoice_no;?><br>
-                    <b>Customer: </b><?php echo $reseller_name;?><br>
-                    <b>Customer ID#: </b>IGR/ Reseller-01<br>
-                    <b>Address: </b>Guinness Center, Taylor’s Lane Dublin 8, Ireland<br>
-                    <b>Phone: </b>+353 1 416 8900<br>
-                </div> -->
-
                 <div class="col-sm-8 invoice-col">
                     <b>Ship To,</b><br>
                     <?php 
@@ -66,47 +56,49 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($custom_invoice_details as $data){ 
+                            $total = $data['price'] * $data['unit_no'];
+                            $total1+= $total;
+                            // var_dump($commission_dis);?>
                             <tr style="font-size: 14px;">
-                                <td><?php echo $unit_no; ?></td>
-                                <td><?php echo $order_no; ?></td>
-                                <td><?php echo $title; ?></td>
-                                <td><?php echo $price; ?></td>
-                                <td><?php echo $subtotal; ?></td>
+                                <td><?php echo $unit_no[]= $data['unit_no']; ?></td>
+                                <td><?php echo $order_no[]= $data['order_no']; ?></td>
+                                <td><?php echo $title[]= $data['title']; ?></td>
+                                <td><?php echo $price[]= $data['price']; ?></td>
+                                <td><?php echo $total; ?></td>
                             </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6 pull-right">
-                    <p class="lead">Date :<?php echo $created_at;?></p>
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <th style="width:50%">Subtotal:</th>
-                                    <td><?php echo $subtotal;?></td>
-                                </tr> 
-                                    <?php if($discount_type == "Percentage") { ?>                          
+                                    <th style="width:30%">Subtotal:</th>
+                                    <td><?php echo $total1; ?></td>
+                                </tr>
+                                <?php if($discount_type == "Percentage") { ?>
                                 <tr>
                                     <th>Discount</th>
                                     <td><?php echo $discount_value;?>%</td>
-                                </tr>                            
-                               <?php }else { ?>
+                                </tr>
+                                <?php } else { ?>
                                 <tr>
                                     <th>Discount</th>
                                     <td><?php echo $discount_value;?></td>
                                 </tr>
-                                <?php } ?> 
+                                <?php } ?>
                                 <tr>
                                     <th>Commission Tax (50%)</th>
                                     <td><?php echo $commission_dis;?></td>
                                 </tr>
-                               
                                 <tr>
                                     <th>Total:</th>
-                                    <!-- <td><?php //echo ceil($Total_amount);?></td> -->
-                                    <td><?php echo $total_amount;?></td>
+                                    <td><?php echo $commission_dis;?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -117,7 +109,7 @@
                 <div class="col-xs-12">
                     <a href="<?php echo base_url();?>admin/custom_invoice/list/<?php echo $id;?>"
                         class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
-                    <a href="<?php echo base_url(); ?>admin/custom_invoice/donwload/<?php echo $id;?>"
+                    <a href="<?php echo base_url(); ?>admin/custom_invoice/download/<?php echo $id;?>"
                         class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
                         Generate Invoice</a>
                 </div>

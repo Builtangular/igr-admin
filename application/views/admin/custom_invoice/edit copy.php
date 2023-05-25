@@ -28,26 +28,28 @@ $currency = array('USD','AED','SAR','EUR');
                     <div class="box-header with-border">
                         <h1 class="box-title">Invoice Details</h1>
                     </div>
-                    <form
-                        action="<?php echo base_url(); ?>admin/custom_invoice/update/<?php echo $custom_invoice_data->id;?>"
-                        method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/custom_invoice/update/<?php echo $custom_invoice_data->id;?>" method="post"
+                        class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Invoice Title</label>
                                 <div class="col-md-3">
-                                    <input type="text" name="order_title" id="order_title"
+                                    <input type="text" name="title" id="title"
                                         value="<?php echo $custom_invoice_data->order_title;?>" class="form-control"
                                         placeholder="Invoice Title" required>
                                 </div>
-                                <?php $invoice = explode("#", $custom_invoice_data->invoice_no);
+                                <?php $invoice = explode("-", $custom_invoice_data->invoice_no);
                                     $invoiceno = $invoice[0];
                                     $invoice_no1 = $invoice[1];
+                                    $invoice_no2 = $invoice[2];
                                 ?>
                                 <label class="control-label col-md-2">Invoice No. </label>
                                 <div class="col-md-3">
-                                    <input type="text" name="invoice_no" id="invoice_no"
-                                        value="<?php echo $invoice_no1;?>" class="form-control"
-                                        placeholder="Invoice No." required>                                    
+                                    <input type="text" name="invoice_number" id="invoice_number"
+                                        value="<?php echo $invoice_no2;?>" class="form-control"
+                                        placeholder="Invoice No." required>
+                                    <input type="hidden" name="invoice_no" id="invoice_no"
+                                        value="<?php echo $custom_invoice_data->invoice_no;?>" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -82,7 +84,7 @@ $currency = array('USD','AED','SAR','EUR');
                                 <label class="control-label col-md-2">Currency</label>
                                 <div class="col-md-3">
                                     <select class="form-control b-none" id="currency" name="currency" placeholder="">
-                                        <?php foreach($currency as $data) { 
+                                    <?php foreach($currency as $data) { 
                                         if($custom_invoice_data->currency == $data){ ?>
                                         <option value="<?php echo $custom_invoice_data->currency;?>" selected>
                                             <?php echo $custom_invoice_data->currency;?></option>
@@ -134,46 +136,31 @@ $currency = array('USD','AED','SAR','EUR');
                                 <div class="box-header with-border">
                                     <h1 class="box-title">Price Details</h1>
                                 </div>
-
                                 <div class="form-group">
-                                    <?php foreach($custom_invoice_details as $data){ 
-                                   $title[]= $data['title'];
-                                   $price[]= $data['price'];
-                                   $unit_no[]= $data['unit_no'];
-                                   $total = $data['price'] * $data['unit_no'];
-                                   $total1+= $total;
-                                    // var_dump($total1);?>
-                                    <div class="col-md-4">
-                                        <b>Invoice Title<span class="text-red">*</span></b>
-                                        <input type="text" name="title[]" id="title"
-                                            value="<?php echo $title[]= $data['title']; ?>" class="form-control"
-                                            placeholder="Invoice Title" required>
-                                    </div>
                                     <div class="col-md-3">
                                         <b>Unit Price</b>
-                                        <input type="text" id="price" name="price[]"
-                                            value="<?php echo $price[]= $data['price']; ?>" class="form-control"
-                                            onblur="reSum();" placeholder="Unit Price" data-tag-id="">
+                                        <input type="text" id="price" name="price"
+                                            value="<?php echo $custom_invoice_data->price;?>" class="form-control"
+                                            placeholder="Unit Price">
                                     </div>
                                     <div class="col-md-3">
-                                        <b>Unit No.<span class="text-red">*</span></b>
-                                        <input type="text" id="unit_no" name="unit_no[]"
-                                            value="<?php echo $unit_no[]= $data['unit_no']; ?>" class="form-control"
-                                            onblur="reSum();" placeholder="Unit No.">
-                                        <input type="hidden" id="invoice_id" name="invoice_id[]"
-                                            value="<?php echo $data['id']; ?>" class="form-control">
+                                        <b>Unit No.</b>
+                                        <select class="form-control b-none" id="unit_no" name="unit_no">
+                                            <option value="<?php echo $custom_invoice_data->unit_no;?>" selected>
+                                                <?php echo $custom_invoice_data->unit_no;?></option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
                                     </div>
-                                    <?php } ?>
-                                    <div class="col-md-2">
-                                        <b>Add<span class="text-red">*</span></b>
-                                        <span type="button" class="btn btn-block btn-info" id="invoice_titles"><i
-                                                class="fa fa-plus"></i> Add</span>
-                                    </div>
-                                </div>
-                               <!--  <input type="hidden" id="invoice_id" name="invoice_id" value="<?php echo $custom_invoice_data1->id;?>"
-                                class="form-control"> -->
-                                <span id="Titles"></span>
-                                <div class="form-group">
                                     <div class="col-md-3">
                                         <b>Discount Type</b>
                                         <select class="form-control b-none" name="discount_type" id="discount_type"
@@ -228,9 +215,9 @@ $currency = array('USD','AED','SAR','EUR');
                                     </div>
                                 </div>
                             </div>
-
                             <div class="box-footer">
-                                
+                                <!-- <input type="hidden" name="id" class="form-control" id="id"
+                                    value="<?php if(!empty($custom_invoice_data)){echo $custom_invoice_data->id;}?>"> -->
                                 <input type="submit" class="btn btn-primary pull-right" value="Update">
                             </div>
                         </div>
@@ -261,7 +248,7 @@ var discount = document.getElementById('discount');
 var absolute = document.getElementById('absolute');
 
 discount_type.addEventListener('change', function() {
-    // console.log(discount_type.value);
+    console.log(discount_type.value);
     if (this.value == "Percentage") {
         discount.classList.remove('hide');
         absolute.classList.add('hide');
@@ -282,6 +269,47 @@ $("input[name='s_address_billing']").click(function() {
 });
 
 /* / .hide and shipping information */
+
+function reSum() {
+    var percentage, result, result1, mult, multiplication, abs, dis, discount;
+    var price = parseFloat(document.getElementById("price").value);
+    var unit_no = parseInt(document.getElementById("unit_no").value);
+    var percentage = parseFloat(document.getElementById("dis_percentage").value);
+    var absolute_price = parseFloat(document.getElementById("absolute_price").value);
+    var discount_type = document.getElementById('discount_type');
+    console.log(discount_type.value);
+    multiplication = price * unit_no;
+
+    Percentage = (percentage / 100).toFixed(2);
+    // console.log(Percentage);
+    mult = multiplication * Percentage;
+    // multiplication = price * percentage;
+    discount = multiplication - mult;
+    result = price - absolute_price;
+
+    if (discount_type.value == "Percentage") {
+        document.getElementById("total_amount").value = discount;
+    } else {
+        // console.log(result);
+        document.getElementById("total_amount").value = result;
+    }
+    /* calculate discount */
+    // if (absolute_price) {
+    //     discount = (absolute_price / multiplication * 100).toFixed(2);
+    //     total_amt = multiplication - absolute_price;
+
+    //     document.getElementById("absolute_price").value = absolute_price;
+    //     document.getElementById("dis_percentage").value = discount;
+    //     document.getElementById("total_amount").value = total_amt;
+    // } else {
+    //     absolute_val = (percentage / 100) * multiplication;
+    //     total_amt = multiplication - absolute_val;
+    //     document.getElementById("dis_percentage").value = percentage;
+    //     document.getElementById("absolute_price").value = absolute_val;
+    //     document.getElementById("total_amount").value = total_amt;
+    // }
+
+}
 
 
 jQuery(function() {
@@ -326,86 +354,6 @@ jQuery(function() {
 
 function RemoveRow(rowID) {
     jQuery('#Row_' + rowID).remove();
-
-}
-
-jQuery(function() {
-    var counter = 1;
-    var i = 1;
-    jQuery('#invoice_titles').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery('<div class="form-group" id="Row_' + counter +
-            '"><div class="col-md-4"><b>Invoice Title ' +
-            counter +
-            '<span class="text-red">*</span></b><input type="text" name="title[]" id="title" class="form-control" placeholder="Invoice Title" required></div><div class="col-md-3"><b>Unit Price ' +
-            counter +
-            '<span class="text-red">*</span></b><input type="text" id="price" name="price[]" class="form-control" data-tag-id="" placeholder="Unit Price"></div><div class="col-md-3"><b>Unit No.' +
-            counter +
-            '<span class="text-red">*</span></b><input type="text" id="unit_no" name="unit_no[]" onblur="reSum();" class="form-control" placeholder="Unit No."> <input type="hidden" id="invoice_id" name="invoice_id[]" class="form-control"> </div> <div class="col-md-2"><b>Close<span class="text-red">*</span></b><a id="Rmv_' +
-            counter + '" href="javascript:RemoveRow(' + counter +
-            ');"><span type="button" class="btn btn-block btn-danger" id="invoice_titles"><i class="fa fa-close"></i> Close</span></a></div>   </div>     '
-        );
-
-        jQuery('#Titles').append(newRow);
-        i++;
-        console.log(newRow);
-    });
-});
-
-
-
-
-
-function reSum() {
-    var tags = [];
-    var unit = [];
-    var sum = 0;
-    var total_price = [];
-    
-    var total_amt = [];
-
-    // var unit_no = parseFloat(document.getElementById("unit_no").value);
-    // var price = parseFloat(document.getElementById("price").value);
-    var unit_no = document.getElementById("unit_no");
-    var price = document.getElementById("price");
-    $("[id='unit_no']").each(function() {
-        unit.push($(this).val())
-    });
-    // console.log(unit);
-    $("[id='price']").each(function() {
-        total_price.push($(this).val())
-    });
-    // console.log(total_price);
-    $('[data-tag-id]').each(function() {
-        // $total_amt = price * unit_no;
-        tags.push($(this).val())
-    })
-    // console.log(tags);
-    n = tags.length;
-    // console.log(n);
-
-    for (var i = 0; i < n; i++) {
-        mult = tags[i] * unit[i];
-        //   sum = (sum+parseInt(tags[i]));
-        sum = (sum + parseInt(mult));
-    }
-    console.log(sum);
-    var discount, multiplication;
-    var percentage = parseFloat(document.getElementById("dis_percentage").value);
-    var absolute_price = parseFloat(document.getElementById("absolute_price").value);
-    percentage = (percentage / 100).toFixed(2);
-    multiplication = sum * percentage;
-    discount = sum - multiplication;
-
-    result = sum - absolute_price;
-    // console.log(result);
-
-    if (result) {
-        document.getElementById("total_amount").value = result;
-    } else {
-        document.getElementById("total_amount").value = discount;
-    }
 
 }
 </script>

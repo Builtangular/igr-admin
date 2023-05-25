@@ -149,7 +149,7 @@
                         </ul>
                     </li>
                     <?php } if($Role_id == 0 || $Role_id == 2){ ?>
-                    <!--  <li class="treeview">
+                    <!-- <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -170,14 +170,12 @@
                                 class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spreadsheet/filter"><i
                                 class="fa fa-file-excel-o"></i><span class="text-bold">Export Reports</span></a></li>
-                    <!-- <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
-                                class="text-bold">Generate RD</span></a></li> -->
-                    <li><a href="<?php echo base_url(); ?>admin/report/assign_rd"><i class="fa fa-arrow-right"></i><span
-                                class="text-bold">Assign & Generate RDs</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
+                                class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
-                                class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
+                                class="fa fa-file-pdf-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i class="fa fa-files-o"></i><span
                                 class="text-bold">Processed Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
@@ -186,17 +184,10 @@
                                 class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
                                 class="text-bold">Generate RD</span></a></li>
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-flag"></i><span class="text-bold">Country RD</span> <i
-                                class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="<?php echo base_url(); ?>admin/country_rd/add"><i
-                                        class="fa fa-circle-o"></i>Add</a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/country_rd/drafts"><i
-                                        class="fa fa-circle-o"></i>List</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="<?php echo base_url(); ?>admin/report/assign_rd"><i class="fa fa-arrow-right"></i><span
+                                class="text-bold">Assign RDs</span></a></li>
                     <?php } ?>
+
                     <?php if($Role_id == 4){ ?>
                     <li><a href="<?php echo base_url(); ?>manager/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
@@ -220,7 +211,6 @@
                                 Management</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
-                            <li><a href="<?php echo base_url(); ?>admin/query/drafts"><span>Drafts</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
                         </ul>
                     </li>
@@ -240,18 +230,14 @@
                     <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
                                 class="text-bold">Employee Data</span></a></li>
                     <?php } ?>
-
-
                     <?php if($Role_id == 0 || $Role_id == 1){?>
-                    <li class="treeview <?php echo $rmenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
-                                class="text-bold">Admin</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <li class="treeview <?php echo $rmenu_active;?>"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Admin</span> <i
+                                class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li class="<?php echo $rulist;?>"><a
-                                    href="<?php echo base_url(); ?>admin/register-user"><span>Register
+                            <li class="<?php echo $rulist;?>"><a href="<?php echo base_url(); ?>admin/register-user"><span>Register
                                         User</span></a>
                             </li>
-                            <li class="<?php echo $rqlist;?>"><a
-                                    href="<?php echo base_url(); ?>admin/query/reseller_list"><span>Reseller</span></a>
+                            <li class="<?php echo $rqlist;?>"><a href="<?php echo base_url(); ?>admin/query/reseller_list"><span>Reseller</span></a>
                             </li>
                         </ul>
                     </li>
@@ -316,7 +302,7 @@
                         </ul>
                     </li>
                     <?php } ?>
-                    <?php if($Role_id == 7 || $Role_id == 10){?>
+                    <?php if($Role_id == 0 || $Role_id == 7 || $Role_id == 1){?>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-envelope-o"></i><span
                                 class="text-bold">Spam Mail</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
@@ -328,15 +314,15 @@
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
                         </ul>
                     </li>
-                    <!-- <li class="treeview">
+                    <li class="treeview">
                         <a href="#"><i class="fa fa-table"></i><span class="text-bold">Reseller</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>admin/query/add_reseller"><span>Add</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/reseller_list"><span> List</span></a></li>
                         </ul>
-                    </li> -->
-                    <?php } if($Role_id == 8){?>
+                    </li>
+                    <?php } if($Role_id == 8) { ?>
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
                                 class="text-bold">Generate RD</span></a></li>
                     <?php } ?>

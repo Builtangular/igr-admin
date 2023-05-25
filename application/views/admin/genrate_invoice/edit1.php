@@ -27,7 +27,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title">Order Details</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/genrate_invoice/update" method="post"
+                    <form action="<?php echo base_url(); ?>admin/genrate_invoice/update1" method="post"
                         class="form-horizontal">
                         <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
                         <div class="box-body">

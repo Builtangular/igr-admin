@@ -17,6 +17,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $data['sample_data'] = $this->Queries_model->get_samplequery_data();
 			$data['Report_id'] = $this->input->post('Report_id');
             $this->load->view('admin/sample_query/list', $data);		
@@ -30,6 +32,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $sample_details = $this->Queries_model->get_sample_details($Report_id);
 			$data['Report_name'] = $sample_details->Report_name;
 			$str = array_shift(explode(' (', $data['Report_name']));
@@ -58,6 +62,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['toc_data'] = $this->Queries_model->get_tocquery_data();
 			$data['Report_id'] = $this->input->post('Report_id');
 			$this->load->view('admin/toc_query/list', $data);	
@@ -73,6 +79,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $toc_details = $this->Queries_model->get_toc_details($Report_id);
 			$data['Report_name'] = $toc_details->Report_name;
 			$str = array_shift(explode(' (', $data['Report_name']));
@@ -100,6 +108,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['customization_data'] = $this->Queries_model->get_customization_data();
 			$data['Report_id'] = $this->input->post('Report_id');
 			$this->load->view('admin/customization_query/list', $data);	
@@ -113,6 +123,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $Customization_details = $this->Queries_model->get_Customization_details($Report_id);
 			$data['Report_name'] = $Customization_details->Report_name;
 			$str = array_shift(explode(' (', $data['Report_name']));
@@ -140,6 +152,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['enquiry_data'] = $this->Queries_model->get_enquiry_data();
 			$data['Report_id'] = $this->input->post('Report_id');
 			$this->load->view('admin/enquiry_query/list', $data);	
@@ -153,6 +167,8 @@ class Queries extends CI_Controller {
             $data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$enquiry_details = $this->Queries_model->get_enquiry_details($Report_id);
 			$data['Report_name'] = $enquiry_details->Report_name;
 			$str = array_shift(explode(' (', $data['Report_name']));

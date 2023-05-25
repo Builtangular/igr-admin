@@ -24,6 +24,7 @@ class Custom_invoice extends CI_Controller {
 			$data['cimenu_active'] = "active menu-open";
 			$data['cilist'] = "active";
             $data['custom_details'] = $this->Custom_invoice_Model->get_custom_details();
+            //var_dump($data['custom_details']);die;
 		    $this->load->view('admin/custom_invoice/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -50,8 +51,10 @@ class Custom_invoice extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
             
             $data['id'] =$this->input->post('id');
+            // $reseller_name = $this->input->post('reseller_name');
             $invoiceno = $this->input->post('invoice_no');           
             $invoice_no = 'INVOICE#'.$invoiceno;
+            // var_dump($invoice_no);die;
             /* Discount amount as per type */
             $discount_type = $this->input->post('discount_type');
             if($discount_type == "Absolute"){
@@ -82,8 +85,10 @@ class Custom_invoice extends CI_Controller {
                         $s_customer_name2 .= ltrim(rtrim($s_customer_name1[$i])).",";
                     }
                 }	
-            }
+            }	
+            // var_dump($s_customer_name2); die;
             $s_email_id=$this->input->post('Shipping_Email_Id');
+            // var_dump($s_email_id);die;
             foreach($s_email_id as $email)
             {
                 $s_email_address[]= $email;
@@ -156,13 +161,17 @@ class Custom_invoice extends CI_Controller {
 		}
     }
     public function edit($id){
+        // var_dump($_POST);die;
         if($this->session->userdata('logged_in')){
             $session_data = $this->session->userdata('logged_in');
             $data['Login_user_name']=$session_data['Login_user_name'];	
             $data['Role_id']=$session_data['Role_id'];
 
             $data['custom_invoice_data'] = $this->Custom_invoice_Model->get_single_custom_invoice_data($id);
+            // var_dump($data['custom_invoice_data']); die;
+            // $data['custom_invoice_data1'] = $this->Custom_invoice_Model->get_single_custom_invoice_data1($id);
             $data['custom_invoice_details'] = $this->Custom_invoice_Model->get_custom_invoice_details($id);
+            // var_dump($data['custom_invoice_details']);die;
             $reseller_name = $data['custom_invoice_data']->reseller_name;
             $data['reseller_service_details'] = $this->Custom_invoice_Model->get_single_reseller_details($reseller_name);
             $data['reseller_list'] = $this->Custom_invoice_Model->get_reseller_list();
@@ -172,6 +181,7 @@ class Custom_invoice extends CI_Controller {
         }
     }
     public function update($order_id){
+        // var_dump($_POST);die;
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -209,7 +219,8 @@ class Custom_invoice extends CI_Controller {
                         $s_customer_name2 .= ltrim(rtrim($s_customer_name1[$i])).",";
                     }
                 }	
-            }
+            }	
+            // var_dump($s_customer_name2); die;
             $s_email_id=$this->input->post('Shipping_Email_Id');
             foreach($s_email_id as $email)
             {
@@ -255,6 +266,7 @@ class Custom_invoice extends CI_Controller {
             $Price = $this->input->post('price');
             $Unit_no = $this->input->post('unit_no');
             $total = count($Title);
+            // var_dump($invoice_id);die;
             for($n= 0; $n < $total;  $n++)
             {
                 $invoice_id1 = $invoice_id[$n];
@@ -290,6 +302,7 @@ class Custom_invoice extends CI_Controller {
 		}
 	}
     public function view($id){
+        // var_dump($_POST);die;
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -307,22 +320,20 @@ class Custom_invoice extends CI_Controller {
             $data['discount_type'] = $custom_invoice->discount_type;
             $data['subtotal'] = $data['price'] * $data['unit_no'];
             $data['total_amount'] = $custom_invoice->total_amount;
-           
             if($data['discount_type']=="Percentage"){
                 $percent = 50;
-                $data['commission_dis'] = $data['total_amount']/2;
-                 
+                $data['commission_dis'] = ($percent / 100) * $data['total_amount'];
             }else{
-                $data['commission_dis'] = ($data['total_amount'])/2;
-                //var_dump($data['commission_dis']);die;
+                $data['commission_dis'] = ($data['total_amount']-$data['discount_value'])/2;
             }           
             $this->load->view('admin/custom_invoice/view',$data);	
         }
     }
-    public function download($id){
+    public function donwload($id){
 
         $custom_invoice_data = $this->Custom_invoice_Model->get_custom_invoice_data($id);
         $custom_invoice_details= $this->Custom_invoice_Model->get_custom_invoice_details($id);
+        // var_dump($custom_invoice_details);die;
         foreach($custom_invoice_details as $data)
         {
             $title[]= $data['title'];
@@ -330,13 +341,15 @@ class Custom_invoice extends CI_Controller {
             $unit_no[]= $data['unit_no'];
             $order_no[]= $data['order_no'];
             $subtotal[]= $data['price'] * $data['unit_no'];
+            // $total[]= $data['price'] * $data['unit_no'];
         }
         $title_no = count($title);
-        $order_title= $custom_invoice_data->order_title;
+        // var_dump($title_no); die;
         $last_row_id= $custom_invoice_data->id;
         $todays_date = date('F d, Y');
         $order_date = $custom_invoice_data->order_date;
         $date = date('d F, Y', strtotime($order_date));
+        // var_dump($title);die;
         $reseller_name = $custom_invoice_data->reseller_name;
         $shipping_customer_name = $custom_invoice_data->shipping_customer_name;
         $shipping_email_id = $custom_invoice_data->shipping_email_id;
@@ -346,25 +359,35 @@ class Custom_invoice extends CI_Controller {
         $service = explode("-", $service_no);
         $service_no1 = $service[1];
         $invoice_no = $custom_invoice_data->invoice_no;
-        $discount_type = $custom_invoice_data->discount_type;e;
+        // $order_no = $custom_invoice_data->order_no;
+        // var_dump($order_no);die;
+        $discount_type = $custom_invoice_data->discount_type;
+        $discount_value = $custom_invoice_data->discount_value;
         $total_amount = $custom_invoice_data->total_amount;
         $invoice_id = $custom_invoice_data->id;
+        // var_dump($invoice_id);die;
+        if($discount_type == "Percentage"){
+            $discount_value = $discount_value.'%';
+        }else{
+            $discount_value = $discount_value;
+        }
+        // var_dump($discount_value);die;
+
+        // $invoice_no = 'INVOICE' .'#'.($todays_date.'-'.$service_no1.'-'.$invoiceno.str_pad($last_row_id+1, 2, "0", STR_PAD_LEFT));
+        // $invoice_no = str_pad($last_row_id+1, 2, "0", STR_PAD_LEFT);
         if($reseller_name == "Research and Markets"){
             // $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/invoice_rnm.docx');
-            $short_name = "RnM";
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/invoice_rnm.docx');
         } else if($reseller_name == "Global Information Inc."){
-            $short_name = "GII";
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/invoice_gii.docx');
         } else if($reseller_name == "Scott International"){
-            $short_name = "SCOTT";
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/invoice_scott.docx');
         }else if($reseller_name == "Marketreasearch.com"){
-            $short_name = "MRDC";
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/invoice_mrdc.docx');
         }
        if($title_no>1){
         $templateProcessor->cloneRow('title', $title_no);
+        // var_dump($discount_value);die;
         $n =1;
         for($i=0; $i<$title_no; $i++){
             //var_dump($title[$i]);
@@ -376,36 +399,24 @@ class Custom_invoice extends CI_Controller {
             $total1+= $subtotal[$i];
             $n++;
         }
-        if($discount_type == "Percentage"){
-            $discount_value = $custom_invoice_data->discount_value;
-            $discount_amt = ($discount_value / 100) * $total1;
-            $balance_amt = $total1-$discount_amt;
-            $percent = 50;
-            $commission_dis = ($percent / 100) * $balance_amt;
-        }else{           
-            $discount_value = (($custom_invoice_data->discount_value / $total1)*100);  
-            $discount_value = number_format($discount_value,2);                  
-            $discount_amt = ($discount_value / 100) * $total1;     
-            $commission_dis = ($total1-$discount_amt)/2;
-        }     
+        $discount_amt = ($discount_value / 100) * $total1;
+        $balance_amt = $total1-$discount_amt;
+        $percent = 50;
+        $commission_dis = ($percent / 100) * $balance_amt;
+        //var_dump($balance_amt);die;
     }else{
             $templateProcessor->setValue('title', htmlspecialchars($title[0]));
             $templateProcessor->setValue('Price', htmlspecialchars($price[0]));
             $templateProcessor->setValue('UnitNo', htmlspecialchars($i+1));
             $templateProcessor->setValue('OrderNo', htmlspecialchars($order_no[0]));
             $templateProcessor->setValue('Subtotal', htmlspecialchars($subtotal[0]));
-            if($discount_type == "Percentage"){
-                $discount_value = $custom_invoice_data->discount_value;
-                $discount_amt = ($discount_value / 100) * $subtotal[0];
-                $subtotal = $price[0] * $unit_no[0];
-                $percent = 50;
-                $commission_dis = ($percent / 100) * $total_amount;
-            }else{
-                $discount_value = (($custom_invoice_data->discount_value / $subtotal[0])*100); 
-                $discount_value = number_format($discount_value,2);               
-                $discount_amt = $custom_invoice_data->discount_value;
-                $commission_dis = $total_amount/2;
-            }            
+
+            $discount_amt = ($discount_value / 100) * $subtotal[0];
+            $subtotal = $price[0] * $unit_no[0];
+            $percent = 50;
+            $commission_dis = ($percent / 100) * $total_amount;
+            //var_dump($discount_amt);die;
+            
         }
         // $templateProcessor->setValue('title', implode("\n", $allTitles));
         $templateProcessor->setValue('TodayDate', htmlspecialchars($todays_date));
@@ -413,16 +424,22 @@ class Custom_invoice extends CI_Controller {
         $templateProcessor->setValue('InvoiceNo', htmlspecialchars($invoice_no));        
         $templateProcessor->setValue('Name', htmlspecialchars($shipping_customer_name));
         $templateProcessor->setValue('EmailId', htmlspecialchars($shipping_email_id));
-        $templateProcessor->setValue('discount_value', htmlspecialchars($discount_value.'%'));
+        // $templateProcessor->setValue('Subtotal', htmlspecialchars($subtotal));
+        $templateProcessor->setValue('discount_value', htmlspecialchars($discount_value));
         $templateProcessor->setValue('discount_amt', htmlspecialchars($discount_amt));        
         $templateProcessor->setValue('Commission', htmlspecialchars($commission_dis));
         $templateProcessor->setValue('Total', htmlspecialchars($commission_dis));
-        $templateProcessor->setValue('Currency', htmlspecialchars($currency));
-		$new_file_name1=str_replace("/"," ", htmlspecialchars($order_title));
-		$new_file_name2=str_replace(","," ", $new_file_name1);
+        $templateProcessor->setValue('Currency', htmlspecialchars($currency)); 
+        //var_dump($currency);die;       
+        $new_file_name=str_replace(" ","-", htmlspecialchars($order_title));		
+		$new_file_name1=str_replace("/","-", $new_file_name);
+		$new_file_name2=str_replace(",","-", $new_file_name1);
 		$new_file_name3=str_replace("&amp;","and", $new_file_name2);
-		$new_file_name4=str_replace("--"," ", $new_file_name3);
-        $filename = "Invoice to".' '.$short_name.' '.$new_file_name4. ' '. "Order". ' '.htmlspecialchars($order_no[0]).".docx";
+		$new_file_name4=str_replace("--","-", $new_file_name3);
+        //   $filename = $report_name."- Proforma Invoice.docx";
+        //   $filename = "Invoice.docx";
+        $filename = "Invoice to".' '.$new_file_name4. ' '. "Order". ' '.htmlspecialchars($order_no[0])."- Invoice.docx";
+        //var_dump($filename);die;
         header('Content-Disposition: attachment; filename='.$filename);
         ob_clean();
         $templateProcessor->saveAs('php://output');	

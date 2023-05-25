@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/report-header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 <!-- Content Wrapper. Contains page content -->
@@ -68,7 +68,8 @@
                                     <td><?php echo $data->order_title; ?></td>
                                     <td><?php echo $data->reseller_name; ?></td>
                                     <td><?php echo $data->invoice_no; ?></td>
-                                    <td><?php echo $data->order_date; ?></td>
+                                    <td><?php echo date('F, Y', strtotime($data->order_date)); ?></td>
+                                    
                                     <td>                                   
                                     <?php if ($custom_invoice_details->num_rows() > 0) { ?>
                                     

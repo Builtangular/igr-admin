@@ -19,6 +19,20 @@ class Genrate_Invoice_Model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    public function get_query_details1(){
+        // $this->db->from('tbl_rd_query_data');
+        // $this->db->order_by('id',"DESC");
+        // $query = $this->db->get();
+        // return $query->result();
+
+        $this->db->select('*');
+        $this->db->from('tbl_rd_query_data');
+        $this->db->join('tbl_order_invoice_data','tbl_rd_query_data.id = tbl_order_invoice_data.query_id');
+        // $this->db->order_by('id',"DESC");
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result();  
+    }
     public function insert_invoice_details($data){
         $result = $this->db->insert('tbl_order_invoice_data', $data);
         return $result;
@@ -54,7 +68,7 @@ class Genrate_Invoice_Model extends CI_Model {
 		//echo $this->db->last_query();die;
 		return $result->row();
     }
-    public function update($id){
+    public function update($id,$s_customer_name,$s_email_address){
        $update = array(
         'invoice_title'                     => $this->input->post('invoice_title'),
         'order_date'                        => $this->input->post('order_date'),
@@ -73,8 +87,8 @@ class Genrate_Invoice_Model extends CI_Model {
         'billing_city'                      => $this->input->post('billing_city'),
         'billing_state'                     => $this->input->post('billing_state'),
         's_address_billing'                 => $this->input->post('s_address_billing'),
-        'shipping_customer_name'            => $this->input->post('billing_customer_name'),
-        'shipping_email_id'                 => $this->input->post('billing_email_id'),
+        'shipping_customer_name'            => $s_customer_name,
+        'shipping_email_id'                 => $s_email_address,
         'unit_price'                        => $this->input->post('unit_price'),
         'unit_no'                           => $this->input->post('unit_no'),
         'discount'                          => $this->input->post('percentage'),
