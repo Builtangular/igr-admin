@@ -1,4 +1,7 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/header.php'); 
+$Source = array('Email', 'Website', 'Reseller');
+$Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Discount Request');
+?>
 
 
 <!-- Content Wrapper. Contains page content -->
@@ -33,74 +36,79 @@
                         class="form-horizontal" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="form-group">
-                                <label class="control-label col-md-1">Source </label>
-                                <div class="col-md-3">
+                                <label class="control-label col-md-1">Source <span class="text-red">*</span></label>
+                                <div class="col-md-2">
                                     <select class="form-control b-none" name="source" id="source">
+                                        <?php foreach($Source as $source){ 
+                                                if($source == $single_query_data->source){ ?>
                                         <option value="<?php echo $single_query_data->source;?>" selected>
                                             <?php echo $single_query_data->source;?></option>
-                                        <option value="Email">Email</option>
-                                        <option value="Website">Website</option>
-                                        <option value="Reseller">Reseller</option>
+                                        <?php } else { ?>
+                                        <option value="<?php echo $source;?>"> <?php echo $source; ?> </option>
+                                        <?php } } ?>
                                     </select>
                                 </div>
-                                <label class="control-label col-md-1">Email Id</label>
-                                <div class="col-md-3">
+                                <label class="control-label col-md-1">Type <span class="text-red">*</span></label>
+                                <div class="col-md-2">
+                                    <select class="form-control b-none" name="type" id="type" required>
+                                        <?php foreach($Type as $type){ 
+                                                if($type == $single_query_data->type){ ?>
+                                        <option value="<?php echo $single_query_data->type;?>" selected>
+                                            <?php echo $single_query_data->type;?></option>
+                                        <?php } else { ?>
+                                        <option value="<?php echo $type;?>"> <?php echo $type; ?> </option>
+                                        <?php } } ?>
+                                    </select>
+                                </div>
+                                <label class="control-label col-md-1">Email Id <span class="text-red">*</span></label>
+                                <div class="col-md-2">
                                     <input type="text" id="source_mail_id" name="source_mail_id"
                                         value="<?php echo $single_query_data->source_mail_id;?>" class="form-control"
                                         placeholder="Email Id">
-                                    <span class="help-block margin" id="txtHint"></span>
                                 </div>
                                 <?php if($single_query_data->source == "Reseller"){ ?>
-                                <label class="control-label col-md-1" id="reseller_div">Name</label>
-                                <div class="col-md-3">
+                                <label class="control-label col-md-1" id="reseller_div">Reseller</label>
+                                <div class="col-md-2">
                                     <select class="form-control b-none" id="reseller_name" name="reseller_name">
+                                    <?php foreach($reseller_list as $list) { 
+                                        if($single_query_data->reseller_name == $list->reseller_name){ ?>
                                         <option value="<?php echo $single_query_data->reseller_name;?>" selected>
                                             <?php echo $single_query_data->reseller_name;?></option>
-                                        <?php 						
-                                            foreach($reseller_list as $list)						
-                                            {				
-                                            ?>
+                                        <?php } else { ?>
                                         <option value="<?php echo $list->reseller_name;?>">
                                             <?php echo $list->reseller_name; ?></option>
-                                        <?php						
-                                            }					
-                                            ?>
+                                        <?php } } ?>
                                     </select>
                                 </div>
-                                <?php }else { ?>
-                                <label class="control-label col-md-1 hide" id="reseller_div">Name</label>
-                                <div class="col-md-3">
+                                <?php } else { ?>
+                                <label class="control-label col-md-1 hide" id="reseller_div">Reseller <span
+                                        class="text-red">*</span></label>
+                                <div class="col-md-2">
                                     <select class="form-control b-none hide" id="reseller_name" name="reseller_name">
-                                        <option value="" selected></option>
-                                        <?php 						
-                                            foreach($reseller_list as $list)						
-                                            {				
-                                            ?>
+                                        <option value="" selected>Select Reseller</option>
+                                        <?php foreach($reseller_list as $list) { ?>
                                         <option value="<?php echo $list->reseller_name;?>">
                                             <?php echo $list->reseller_name; ?></option>
-                                        <?php						
-                                            }					
-                                            ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <?php } ?>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Scope Name</label>
+                                    <label class="control-label col-md-4">Scope Name<span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-8">
                                         <select class="form-control b-none" id="scope_name" name="scope_name">
+                                            <?php foreach($scopelist as $scope)	{ 
+                                                if($single_query_data->scope_name == $scope->name){ ?>
                                             <option value="<?php echo $single_query_data->scope_name;?>" selected>
                                                 <?php echo $single_query_data->scope_name;?></option>
-                                            <?php 						
-                                            foreach($ScopeList as $scope)						
-                                            {				
-                                            ?>
-                                            <option value="<?php echo $scope->name;?>"><?php echo $scope->name; ?>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $scope->name;?>">
+                                                <?php echo $scope->name; ?>
                                             </option>
-                                            <?php						
-                                            }					
-                                            ?>
+                                            <?php } } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -110,7 +118,6 @@
                                         <input type="text" id="client_name" name="client_name"
                                             value="<?php echo $single_query_data->client_name;?>" class="form-control"
                                             placeholder="Client Name">
-                                        <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -119,7 +126,6 @@
                                         <input type="text" id="phone_no" name="phone_no"
                                             value="<?php echo $single_query_data->phone_no;?>" class="form-control"
                                             placeholder="Phone No.">
-                                        <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -128,7 +134,6 @@
                                         <input type="text" id="company_name" name="company_name"
                                             value="<?php echo $single_query_data->company_name;?>" class="form-control"
                                             placeholder="Company Name">
-                                        <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -137,17 +142,17 @@
                                         <input type="text" id="designation" name="designation"
                                             value="<?php echo $single_query_data->designation;?>" class="form-control"
                                             placeholder="Designation">
-                                        <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Report Name</label>
+                                    <label class="control-label col-md-4">Report Name <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" id="report_name" name="report_name"
                                             value="<?php echo $single_query_data->report_name;?>" class="form-control"
-                                            placeholder="Report Name">
+                                            placeholder="Report Name" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -161,36 +166,58 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Client Meassage </label>
                                     <div class="col-md-8">
-                                        <textarea name="client_message" id="client_message" rows="6"
+                                        <textarea name="client_message" id="client_message" rows="3"
                                             class="form-control" placeholder="Client Meassage"
                                             required><?php echo $single_query_data->client_message;?></textarea>
                                     </div>
                                 </div>
-                                <!--  <div class="form-group">
-                                    <label class="control-label col-md-4">Assign To</label>
+                                <?php /* if($Role_id == 5) {?>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Assign To Team</label>
                                     <div class="col-md-8">
-                                        <select class="form-control b-none" id="assigned_to" name="assigned_to">
-                                            <option value="<?php echo $single_query_data->assigned_to;?>" selected><?php echo $single_query_data->assigned_to;?></option>
+                                        <select class="form-control b-none" id="assign_to_team" name="assign_to_team">
+                                            <!-- <option value="0" selected>
+                                            </option>                                             -->
                                             <?php 						
-                                            foreach($user_details as $data)						
-                                            {				
-                                            ?>
+                                            foreach($user_details as $data){
+                                                if($assign_details->assigned_name == $list->assigned_name){ ?>
+                                            <option value="<?php echo $assign_details->assigned_name;?>" selected>
+                                                <?php echo $assign_details->assigned_name;?></option>
+                                            <?php } else { ?>
                                             <option value="<?php echo $data->full_name;?>">
                                                 <?php echo $data->full_name; ?>
                                             </option>
                                             <?php						
-                                            }					
+                                            } }				
                                             ?>
                                         </select>
                                     </div>
-                                </div> -->
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Assign To Analysis</label>
+                                    <div class="col-md-8">
+                                        <input type="radio" name="assign_analyst" value="1"  /> Yes
+                                        &nbsp;&nbsp;
+                                        <input type="radio" name="assign_analyst" value="0" checked /> No
+                                    </div>
+                                </div>
+                                <?php }  */?>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Lead Date <span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-8">
+                                        <input type="date" id="lead_date" name="lead_date"
+                                            value="<?php echo $single_query_data->lead_date;?>" class="form-control"
+                                            placeholder="Lead Date" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="box-footer">
                             <input type="hidden" name="id" class="form-control" id="id"
                                 value="<?php if(!empty($single_query_data)){echo $single_query_data->id;}?>">
                             <input type="submit" class="btn btn-info pull-right" style='margin-right:16px' name="button"
-                                value="Submit">
+                                value="Update">
                         </div>
                     </form>
                 </div>

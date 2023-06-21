@@ -43,7 +43,7 @@
                                     <th>Country</th>
                                     <th>Status</th>
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <th style="width: 10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

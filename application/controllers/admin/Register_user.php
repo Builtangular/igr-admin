@@ -18,8 +18,10 @@ class Register_user extends CI_Controller {
     public function index(){
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name'] = $session_data['Login_user_name'];	
-			$data['Role_id'] = $session_data['Role_id'];
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+                        $data['rmenu_active'] = "active menu-open";
+			$data['rulist'] = "active";
 			$data['massage'] = $this->session->userdata('msg');
 			$data['user_details'] = $this->User_Model->get_user_details();
 			$this->load->view("admin/user/list", $data);

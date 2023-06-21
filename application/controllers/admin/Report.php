@@ -80,7 +80,10 @@ class Report extends CI_Controller {
 			$report_title_new = str_replace(array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $report_title);
 			$encoded_report_title = urldecode($report_title_new);	
 			$encoded_report_url = str_replace(' ','-', $encoded_report_title);
-			$new_report_url = str_replace('--','-', strtolower($encoded_report_url));
+			$new_report_url = str_replace('--','-', strtolower($encoded_report_url));$encoded_report_title = urldecode($report_title_new);	
+			$encoded_report_url = str_replace("’",'', $encoded_report_title);
+			$encoded_report_url1 = str_replace(' ','-', $encoded_report_url);
+			$new_report_url = str_replace('--','-', strtolower($encoded_report_url1));
 			// echo"----------new_report_url<-------->".$new_report_url."<--------><br><br>"; die;
 			$postdata=array(
 					'title'=>$this->input->post('title'),
@@ -325,6 +328,8 @@ class Report extends CI_Controller {
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
+			$data['title'] = "Under Study";
+
 			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds($data['Login_user_name']);
 			$this->load->view('admin/draft/list',$data);			
 		}else{			
@@ -615,7 +620,7 @@ class Report extends CI_Controller {
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
 			$data['Role_id'] = $session_data['Role_id'];
-			$data['title'] = "Verified";
+			$data['title'] = "Assign / Generate ";
 			// $status = 3;
 			$data['Global_Rds'] = $this->RdData_model->get_global_rd_titles();
 			// var_dump($data['Global_Rds']); die;

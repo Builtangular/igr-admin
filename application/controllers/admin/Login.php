@@ -15,7 +15,7 @@ class Login extends CI_Controller
 		$this->load->helper(array('form', 'url'));	
 	}
 	public function index()
-	{	
+	{	//var_dump($_POST);die;
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
         $this->form_validation->set_rules('username', 'username', 'required|valid_email');
         $this->form_validation->set_rules('password', 'password', 'required');
@@ -27,6 +27,7 @@ class Login extends CI_Controller
         {			
 			$sess_array = array();
 			$result = $this->Login_model->login($this->input->post('username'),$this->input->post('password'));
+			//  var_dump($result);die;
 			/* var_dump($result);
 			die; */
 			if($result > 0)
@@ -36,7 +37,9 @@ class Login extends CI_Controller
 					$sess_array = array(
 					'log_id' => $row['log_id'],
 					'userid' => $row['user_id'],
-					'Role_id' => $row['Role_id'],
+					'Role_id' => $row['role_id'],
+					'User_Type' => $row['user_type'],
+					'department' => $row['department'],
 					'User_email_id' => $row['User_email_id'],
 					'Login_user_name'=> $row['Login_user_name'],
 					'Active_flag'=> $row['Active_flag'],
@@ -47,39 +50,42 @@ class Login extends CI_Controller
 					$this->session->set_userdata('logged_in', $sess_array);
 				}
 				$session_data = $this->session->userdata('logged_in');
-
-				if($session_data['Role_id']==0 || $session_data['Role_id']==1)
-
-				if($session_data['Role_id']==0)
+				// var_dump($session_data);die;
+				if($_SERVER['HTTP_REFERER'] != base_url().'admin/login'){
+					redirect($_SERVER['HTTP_REFERER']);
+				} else {
+					redirect('admin/dashboard');
+				}
+				/* if($session_data['role_id']==0 || $session_data['user_type']=="Team Lead")
 				{
 					redirect('admin/dashboard');			
 				}	
-				if($session_data['Role_id']==1)
+				if($session_data['role_id']==1 || $session_data['user_type']=="Team Lead")
 
 				{
 					redirect('admin/dashboard');			
 				}
-				else if($session_data['Role_id']==2)
+				else if($session_data['role_id']==2)
 				{
 					redirect('admin/dashboard');			
-				}else if($session_data['Role_id']==3)
+				}else if($session_data['role_id']==3)
 				{
 					redirect('admin/dashboard');			
-				}else if($session_data['Role_id']==4)
+				}else if($session_data['role_id']==4)
 				{
 					// var_dump($_POST);die;
 					redirect('admin/dashboard');			
 				}
-				else if($session_data['Role_id']==5){
+				else if($session_data['role_id']==5 || $session_data['user_type']=="Team Lead" || $session_data['designation']=="Executive"){
 					redirect('admin/dashboard');
 				}
-				else if($session_data['Role_id']==6){
+				else if($session_data['role_id']==6){
 					redirect('admin/dashboard');
-				}else if($session_data['Role_id']==7 || $session_data['Role_id']==8){
+				}else if($session_data['role_id']==7 || $session_data['role_id']==8){
 					redirect('admin/dashboard');
-				}else if($session_data['Role_id']==10){
+				}else if($session_data['role_id']==10){
 					redirect('admin/dashboard');
-				}	
+				}	 */
 			}
 			else
 			{							

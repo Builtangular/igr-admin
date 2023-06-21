@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Report List
+        <?php echo $title; ?> RDs
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Report List</h3>
+                        <h3 class="box-title"><?php echo $title; ?> RDs</h3>
                     </div>
                     <?php if($success_code){ ?>
                     <div class="alert alert-success">

@@ -2108,20 +2108,20 @@ class Generate_rd extends CI_Controller {
 			$section->addText(htmlspecialchars($primary_research_para_1), 'r2Style', 'paragraphStyle');
 			$section->addText(htmlspecialchars("Primary interviews not only help in data validation but also provide critical insights into the market, current business scenario, and future expectations and enhance the quality of our reports. In addition to analyzing the current and historical trends, our analysts predict where the market is headed, over the next five years."), 'r2Style', 'paragraphStyle');
 			$section->addTextBreak(1);
-			$section->addText(htmlspecialchars('Primary Sources considered during this particular study:'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));	
+			$section->addText(htmlspecialchars('Primary Sources Considered During this Particular Study:'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));	
 			$primary_research_source_points2 = explode('\n', $primary_research_source_points1);
 			foreach($primary_research_source_points2 as $source_points) 
 			{
 				$section->addText(htmlspecialchars($source_points), 'r2Style', 'Bullet');
 			}
 			$section->addTextBreak(1);
-			$section->addText(htmlspecialchars('Data Points received through primary research during the course of study:'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));	
+			$section->addText(htmlspecialchars('Data Points Received Through Primary Research During the Course of Study:'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));	
 			$primary_research_data_points1 = explode('\n', $primary_research_data_points);
 			foreach($primary_research_data_points1 as $data_points) 
 			{
 				$section->addText(htmlspecialchars($data_points), 'r2Style', 'Bullet');
 			}
-			$section->addText(htmlspecialchars('Breakdown of the profiles of primaries as follows:'), array('align'=>'left', 'bold'=>false, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
+			$section->addText(htmlspecialchars('Breakdown of the Profiles of Primaries as Follows:'), array('align'=>'left', 'bold'=>false, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
 			if($scope_name == 'Global'){
 				$section->addImage('images/primaries_breakdown.png', array('width'=>770, 'height'=>230, 'align'=>'center'));
 			} else {
@@ -2130,7 +2130,7 @@ class Generate_rd extends CI_Controller {
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addText(htmlspecialchars('Primary interviews not only help in data validation but also provide critical insights into the market, current business scenario, and future expectations and enhance the quality of our reports. In addition to analyzing the current and historical trends, our analysts predict where the market is headed, over the next five years.'), 'r2Style', 'paragraphStyle');
 			$section->addTextBreak(1);
-			$section->addText(htmlspecialchars('Primary Sources considered during this particular study:'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
+			$section->addText(htmlspecialchars('Primary Sources Considered During this Particular Study:'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
 			$section->addImage('images/primary_sources.png', array('width'=>640, 'height'=>280, 'align'=>'center'));
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
@@ -2807,18 +2807,22 @@ class Generate_rd extends CI_Controller {
 					$section->addListItem(htmlspecialchars($sub_segment5_2), 1, 'subPoint', $listStyle, 'Head 1');
 					$section->addText(htmlspecialchars('This Point Includes '.$sub_segment5_2.' Segment Analysis and Trends.'), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
 					$section->addTextBreak(1);
-					/* adding figure */					
-					$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
-					$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
-					$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
-					$section->addTextBreak(1);
-					if($Volume_unit)
-					{
-						$section->addText(htmlspecialchars(strtoupper($scope_name))." ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($scope_type).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+					$child_segments3 = $this->Country_rd->get_country_rd_segments($report_id, $subsegments5_2->id); 
+					var_dump(); die;
+					if($child_segments3){
+						/* adding figure - sub segment */					
+						$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($segments5->name).", ".$analysis_from." - ".$analysis_to.' (USD '.htmlspecialchars($Value_unit).')', 'figureNameStyle', 'Figure _ Title');
 						$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 						$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 						$section->addTextBreak(1);
-					}/* /. adding figure */	
+						if($Volume_unit)
+						{
+							$section->addText(htmlspecialchars(strtoupper($report_name_scope))." BY ".htmlspecialchars(strtoupper($subsegments5_2->name))." BY ".strtoupper($segments5->name).", ".$analysis_from." - ".$analysis_to.' ('.htmlspecialchars($Volume_unit).')', 'figureNameStyle', 'Figure _ Title');
+							$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+							$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+							$section->addTextBreak(1);
+						}/* /. adding figure */	
+					}
 
 					/* Table Writeup - Sub Segment */
 					/* value based table */

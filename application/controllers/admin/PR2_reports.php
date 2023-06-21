@@ -2,13 +2,13 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', '0');
-class PR2_reports extends CI_Controller 
+class PR2_Reports extends CI_Controller 
 {    
 	public function __construct()
 	{
 		parent::__construct();		
 		$this->load->library('form_validation');		
-		$this->load->model('admin/pr2_model');
+		$this->load->model('admin/PR2_Model');
 		$this->load->library('session');
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));		
@@ -23,7 +23,7 @@ class PR2_reports extends CI_Controller
 			$data['massage'] = $this->session->userdata('msg');
 			$data['title'] = "Category Master";
 			$data['report_id'] = $report_id;
-			$data['list_data'] = $this->pr2_model->get_rd_pr2_data($report_id);
+			$data['list_data'] = $this->PR2_Model->get_rd_pr2_data($report_id);
 			$this->load->view("admin/pr2_reports/list", $data);
         }else{
             $this->load->view("admin/login");
@@ -50,7 +50,7 @@ class PR2_reports extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 
-			$result = $this->pr2_model->insert_rd_pr2_records($report_id);
+			$result = $this->PR2_Model->insert_rd_pr2_records($report_id);
 			if($result == 1)
 			{
 				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
@@ -72,7 +72,7 @@ class PR2_reports extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 
-			$data['single_pr2'] = $this->pr2_model->get_rd_single_pr2($id);
+			$data['single_pr2'] = $this->PR2_Model->get_rd_single_pr2($id);
 			$this->load->view("admin/pr2_reports/edit",$data);
 		}else{
 			$this->load->view("admin/login");
@@ -87,7 +87,7 @@ class PR2_reports extends CI_Controller
 			$data['Role_id']=$session_data['Role_id'];
 
 			$id = $this->input->post('id');
-			$this->pr2_model->update_rd_single_pr2($id);
+			$this->PR2_Model->update_rd_single_pr2($id);
 			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
 			redirect('admin/pr2-reports/'.$report_id);
 		}else{
@@ -101,7 +101,7 @@ class PR2_reports extends CI_Controller
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$data['delete'] = $this->pr2_model->delete_rd_pr2($id);
+			$data['delete'] = $this->PR2_Model->delete_rd_pr2($id);
 			$this->session->set_flashdata('msg','Data has been delete successfully....!!!');
 			redirect('admin/pr2-reports/'.$id);
 		}else{

@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Employee List
+            Employment List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title"> Employee List</h3>
+                        <h3 class="box-title"> Employment List</h3>
                         <a href="<?php echo base_url(); ?>admin/employee/add" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
@@ -68,14 +68,14 @@
                                 /* Permant Salary breakup */
                                 $salary_details = "SELECT * FROM tbl_emp_salary_permanent where emp_id = ".$data->id;
                                 $query_psalary_details = $this->db->query($salary_details);
-                               
+                                
                                 /* ./ Permant Salary breakup */
                                 /* temporary Salary breakup */
-                                $salary_details = "SELECT * FROM tbl_emp_salary_temporary where emp_id = ".$data->id;
-                                $query_tsalary_details = $this->db->query($salary_details);
+                                $salary_details1 = "SELECT * FROM tbl_emp_salary_temporary where emp_id = ".$data->id;
+                                $query_tsalary_details = $this->db->query($salary_details1);
                                 if($query_psalary_details->num_rows() > 0 || $query_tsalary_details->num_rows() > 0) { $salary_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$salary_status = "<i class=\"fa fa-plus\"></i><br>Add";}
                                 /* ./ temporary Salary breakup  */
-
+                                // var_dump($salary_status);
                                 /* Bank A/C */
                                 $bank_details = "SELECT * FROM tbl_emp_bank_details where emp_id = ".$data->id;
                                 $query_bank_details = $this->db->query($bank_details);

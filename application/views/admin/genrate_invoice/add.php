@@ -25,7 +25,8 @@
                         <div class="box-header with-border">
                             <h1 class="box-title">Order Details</h1>
                         </div>
-                        <form autocomplete="off" action="<?php echo base_url(); ?>admin/genrate_invoice/insert_invoice/<?php echo $id;?>"
+                        <form autocomplete="off"
+                            action="<?php echo base_url(); ?>admin/genrate_invoice/insert_invoice/<?php echo $id;?>"
                             method="post" class="form-horizontal" autofill=>
                             <div class="box-body">
                                 <div class="form-group">
@@ -35,17 +36,37 @@
                                         <input type="text" name="invoice_title" id="invoice_title" class="form-control"
                                             placeholder="Invoice Title" required>
                                     </div>
+                                    <?php if($Role_id == 1) {?>
+                                    <label class="control-label col-md-2">Main Invoice No.<span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-3">
+                                        <input type="text" id="main_invoice_no" name="main_invoice_no"
+                                            class="form-control" placeholder="Main Invoice No">
+                                    </div>
+                                    <?php }?>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Order Date<span class="text-red">*</span></label>
+                                    <label class="control-label col-md-2">Order Date<span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-3">
-                                        <input type="date" name="order_date" id="order_date" class="form-control" required>
+                                        <input type="date" name="order_date" id="order_date" class="form-control"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Currency<span class="text-red">*</span></label>
+                                    <label class="control-label col-md-2">Order No.<span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-3">
-                                        <select class="form-control b-none" id="currency" name="currency" placeholder="">
+                                        <input type="text" name="order_no" id="order_no" class="form-control" placeholder="Order No"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Currency<span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-3">
+                                        <select class="form-control b-none" id="currency" name="currency"
+                                            placeholder="">
                                             <option value="" selected>Select Currency</option>
                                             <option value="USD">USD</option>
                                             <option value="INR">INR</option>
@@ -68,8 +89,8 @@
                                     <label class="control-label col-md-2">Customer Gst No.<span
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
-                                        <input type="text" id="customer_gst_no" name="customer_gst_no" class="form-control"
-                                            placeholder="Customer Gst No">
+                                        <input type="text" id="customer_gst_no" name="customer_gst_no"
+                                            class="form-control" placeholder="Customer Gst No">
                                     </div>
                                 </div>
                                 <div class="box box-primary">
@@ -121,13 +142,13 @@
                                     <div class="form-group">
                                         <div class="col-md-4">
                                             <b>City<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_city" name="billing_city" class="form-control"
-                                                placeholder="City" required>
+                                            <input type="text" id="billing_city" name="billing_city"
+                                                class="form-control" placeholder="City" required>
                                         </div>
                                         <div class="col-md-4">
                                             <b>State<span class="text-red">*</span></b>
-                                            <input type="text" id="billing_state" name="billing_state" class="form-control"
-                                                placeholder="Billing State" required>
+                                            <input type="text" id="billing_state" name="billing_state"
+                                                class="form-control" placeholder="Billing State" required>
                                         </div>
                                         <div class="col-md-4">
                                             <b>Zipcode<span class="text-red">*</span></b>
@@ -186,11 +207,11 @@
                                         <div class="col-md-3">
                                             <b>Unit Price<span class="text-red">*</span></b>
                                             <input type="text" id="unit_price" name="unit_price" class="form-control"
-                                                placeholder="Unit Price" >
+                                                placeholder="Unit Price">
                                         </div>
                                         <div class="col-md-3">
                                             <b>Unit No.<span class="text-red">*</span></b>
-                                            <select class="form-control b-none" id="unit_no" name="unit_no" >
+                                            <select class="form-control b-none" id="unit_no" name="unit_no">
                                                 <option value="" selected>Select Unit No.</option>
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
@@ -207,13 +228,13 @@
                                         </div>
                                         <div class="col-md-3">
                                             <b>Discount (%)<span class="text-red">*</span></b>
-                                            <input type="text" id="dis_percentage" name="percentage" onblur="reSum();" class="form-control"
-                                                placeholder="Percentage" >
+                                            <input type="text" id="dis_percentage" name="percentage" onblur="reSum();"
+                                                class="form-control" placeholder="Percentage">
                                         </div>
                                         <div class="col-md-3">
                                             <b>Discount (Absolute)<span class="text-red">*</span></b>
-                                            <input type="text" id="absolute_price" name="absolute_price" onblur="reSum();"
-                                                class="form-control" placeholder="Absolute Price" >
+                                            <input type="text" id="absolute_price" name="absolute_price"
+                                                onblur="reSum();" class="form-control" placeholder="Absolute Price">
                                         </div>
                                     </div>
                                     <!-- <div class="form-group">
@@ -224,11 +245,10 @@
                                         </div>
                                     </div> -->
                                     <div class="form-group">
-                                        <label class="col-md-2">Total Amount <span
-                                                class="text-red">*</span></label>
+                                        <label class="col-md-2">Total Amount <span class="text-red">*</span></label>
                                         <div class="col-md-3">
-                                            <input type="text" id="total_amount" name="total_amount" onblur="reSum();" class="form-control"
-                                                placeholder="Total Amount" required>
+                                            <input type="text" id="total_amount" name="total_amount" onblur="reSum();"
+                                                class="form-control" placeholder="Total Amount" required>
                                             <span class="help-block margin" id="txtHint"></span>
                                         </div>
                                     </div>
@@ -249,97 +269,97 @@
     <script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
-    var currency = document.getElementById('currency');
-    var my_div = document.getElementById('my_div');
+var currency = document.getElementById('currency');
+var my_div = document.getElementById('my_div');
 
-    currency.addEventListener('change', function() {
-        if (this.value == "INR") {
-            my_div.classList.remove('hide');
-            my_div1.classList.remove('hide');
-        } else {
-            my_div.classList.add('hide');
-            my_div1.classList.add('hide');
-
-        }
-    }) 
-
-    /* hide and shipping information */
-    $("input[name='s_address_billing']").click(function () {
-        $('#displayDS').css('display', ($(this).val() === 'a') ? 'block':'none');
-    });
-    
-    /* / .hide and shipping information */
-
-    function reSum() {
-        var percentage, result, result1, mult, multiplication, abs, dis, discount;
-        var unit_price = parseFloat(document.getElementById("unit_price").value);
-        var unit_no = parseInt(document.getElementById("unit_no").value);
-        var percentage = parseFloat(document.getElementById("dis_percentage").value);
-        var absolute_price = parseFloat(document.getElementById("absolute_price").value);
-       
-        // console.log(percentage); 
-        multiplication = unit_price * unit_no;        
-        /* calculate discount */
-         if(absolute_price){
-            discount = (absolute_price / multiplication *  100).toFixed(2);
-            total_amt = multiplication - absolute_price;
-
-            document.getElementById("absolute_price").value = absolute_price;
-            document.getElementById("dis_percentage").value = discount;
-            document.getElementById("total_amount").value = total_amt;
-        }else {
-            absolute_val = (percentage / 100) * multiplication;
-            total_amt = multiplication - absolute_val;
-            document.getElementById("dis_percentage").value = percentage;
-            document.getElementById("absolute_price").value = absolute_val;            
-            document.getElementById("total_amount").value = total_amt;
-        }
-       
-    }
-
-    jQuery(function() {
-        var counter = 1;
-        var i = 1;
-        jQuery('#shipping_addrow').click(function(event) {
-            event.preventDefault();
-            counter++;
-            var newRow = jQuery(
-                '<div class="form-group" id="Row_' + counter +
-                '"><label class="control-label col-md-2">Shipping Custome Name ' + counter +
-                '</label> <div class="col-md-5"><input type="text" name="Shipping_Custome_Name[]" class="form-control"></div><div class="col-md-1"><center><a id="Rmv_' +
-                counter + '" href="javascript:RemoveRow(' + counter +
-                ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-            );
-
-            jQuery('#Shipping').append(newRow);
-            i++;
-            console.log(newRow);
-        });
-    });
-
-    jQuery(function() {
-        var counter = 1;
-        var i = 1;
-        jQuery('#shipping_addrow1').click(function(event) {
-            event.preventDefault();
-            counter++;
-            var newRow = jQuery(
-                '<div class="form-group" id="Row_' + counter +
-                '"><label class="control-label col-md-2">Shipping Email Id ' + counter +
-                '</label> <div class="col-md-5"><input type="text" name="Shipping_Email_Id[]" class="form-control"></div><div class="col-md-1"><center><a id="Rmv_' +
-                counter + '" href="javascript:RemoveRow(' + counter +
-                ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-            );
-
-            jQuery('#Email').append(newRow);
-            i++;
-            console.log(newRow);
-        });
-    });
-
-    function RemoveRow(rowID) {
-        jQuery('#Row_' + rowID).remove();
+currency.addEventListener('change', function() {
+    if (this.value == "INR") {
+        my_div.classList.remove('hide');
+        my_div1.classList.remove('hide');
+    } else {
+        my_div.classList.add('hide');
+        my_div1.classList.add('hide');
 
     }
+})
+
+/* hide and shipping information */
+$("input[name='s_address_billing']").click(function() {
+    $('#displayDS').css('display', ($(this).val() === 'a') ? 'block' : 'none');
+});
+
+/* / .hide and shipping information */
+
+function reSum() {
+    var percentage, result, result1, mult, multiplication, abs, dis, discount;
+    var unit_price = parseFloat(document.getElementById("unit_price").value);
+    var unit_no = parseInt(document.getElementById("unit_no").value);
+    var percentage = parseFloat(document.getElementById("dis_percentage").value);
+    var absolute_price = parseFloat(document.getElementById("absolute_price").value);
+
+    // console.log(percentage); 
+    multiplication = unit_price * unit_no;
+    /* calculate discount */
+    if (absolute_price) {
+        discount = (absolute_price / multiplication * 100).toFixed(2);
+        total_amt = multiplication - absolute_price;
+
+        document.getElementById("absolute_price").value = absolute_price;
+        document.getElementById("dis_percentage").value = discount;
+        document.getElementById("total_amount").value = total_amt;
+    } else {
+        absolute_val = (percentage / 100) * multiplication;
+        total_amt = multiplication - absolute_val;
+        document.getElementById("dis_percentage").value = percentage;
+        document.getElementById("absolute_price").value = absolute_val;
+        document.getElementById("total_amount").value = total_amt;
+    }
+
+}
+
+jQuery(function() {
+    var counter = 1;
+    var i = 1;
+    jQuery('#shipping_addrow').click(function(event) {
+        event.preventDefault();
+        counter++;
+        var newRow = jQuery(
+            '<div class="form-group" id="Row_' + counter +
+            '"><label class="control-label col-md-2">Shipping Custome Name ' + counter +
+            '</label> <div class="col-md-5"><input type="text" name="Shipping_Custome_Name[]" class="form-control"></div><div class="col-md-1"><center><a id="Rmv_' +
+            counter + '" href="javascript:RemoveRow(' + counter +
+            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
+        );
+
+        jQuery('#Shipping').append(newRow);
+        i++;
+        console.log(newRow);
+    });
+});
+
+jQuery(function() {
+    var counter = 1;
+    var i = 1;
+    jQuery('#shipping_addrow1').click(function(event) {
+        event.preventDefault();
+        counter++;
+        var newRow = jQuery(
+            '<div class="form-group" id="Row_' + counter +
+            '"><label class="control-label col-md-2">Shipping Email Id ' + counter +
+            '</label> <div class="col-md-5"><input type="text" name="Shipping_Email_Id[]" class="form-control"></div><div class="col-md-1"><center><a id="Rmv_' +
+            counter + '" href="javascript:RemoveRow(' + counter +
+            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
+        );
+
+        jQuery('#Email').append(newRow);
+        i++;
+        console.log(newRow);
+    });
+});
+
+function RemoveRow(rowID) {
+    jQuery('#Row_' + rowID).remove();
+
+}
     </script>
     <?php $this->load->view('admin/footer.php'); ?>

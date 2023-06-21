@@ -24,7 +24,6 @@
                 </h2>
             </div>
         </div>
-    
         <section class="content">
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
@@ -36,7 +35,6 @@
                     <b>Email Id: </b><?php echo $billing_email_id;?><br>
                     <b>Address: </b><?php echo $address1;?><br>
                 </div>
-
                 <div class="col-sm-4 invoice-col">
                     <b>Ship To,</b><br>
                     <?php $address = $billing_address1.' '.$billing_address2.' '.$billing_city.' '.$billing_state.' '.$billing_zipcode;?>
@@ -80,28 +78,29 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-xs-6 pull-left">
+                    <!-- <p class="lead">Date : <?php echo $created_at;?></p> -->
+                </div>
                 <div class="col-xs-6 pull-right">
-                    <p class="lead">Date :<?php echo $created_at;?></p>
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>
                                 <tr>
                                     <th style="width:50%">Subtotal:</th>
                                     <td><?php echo $mult;?></td>
-                                </tr>                                
+                                </tr>
                                 <tr>
                                     <th>Discount</th>
                                     <td><?php echo $discount;?>%</td>
-                                </tr>                            
+                                </tr>
                                 <?php if($currency == "INR"){ ?>
                                 <tr>
                                     <th>Tax (18%)</th>
                                     <td><?php echo $discount_igst;?></td>
                                 </tr>
-                                <?php }?>
+                                <?php } ?>
                                 <tr>
                                     <th>Total:</th>
-                                   <!--  <td><?php //echo ceil($Total_amount);?></td> -->
                                     <td><?php echo $Total_amount;?></td>
                                 </tr>
                             </tbody>
@@ -113,9 +112,15 @@
                 <div class="col-xs-12">
                     <a href="<?php echo base_url();?>admin/genrate_invoice/list/<?php echo $id;?>"
                         class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
+
                     <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload/<?php echo $id;?>"
                         class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
                         Proforma Invoice</a>
+                    <?php if ($Role_id == 1) { ?>
+                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload_main_invoice/<?php echo $id;?>"
+                        class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
+                        Main Invoice</a>
+                    <?php } ?>
                 </div>
             </div>
         </section>

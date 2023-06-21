@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/report-header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 <!-- Content Wrapper. Contains page content -->
@@ -39,16 +39,20 @@
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
                                     <th>Query Name</th>
+                                    <th>Client Email</th>
+                                    <th>Company</th>
                                     <th>Invoice Title</th>
+                                    <th>Lead Date</th>
                                     <th>Invoice</th>
-                                    <th>Action</th>
+                                    <th width="100px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach($query_details as $data){ $i++;
                                 $scope_name = $data->scope_name.' '.$data->report_name;
                                 // var_dump($scope_name);die;
-                                $invoice_details = "SELECT * FROM tbl_order_invoice_data where query_id = " . $data->id;                              
+                                $invoice_details = "SELECT * FROM tbl_order_invoice_data where query_id = " . $data->id;
+                                // var_dump($invoice_details);die;                              
                                 $query_invoice_details = $this->db->query($invoice_details);
                                 $invoice_data = $query_invoice_details->row();
                                 if ($query_invoice_details->num_rows() > 0) {
@@ -60,9 +64,12 @@
                                 }
                                 ?>
                                 <tr style="font-size: 14px;">
-                                    <td><?php echo $data->id; ?></td>
+                                    <td><?php echo $data->query_code; ?></td>
                                     <td><?php echo $scope_name; ?></td>
+                                    <td><?php echo $data->client_email; ?></td>
+                                    <td><?php echo $data->company_name; ?></td>
                                     <td><?php echo $invoice_title; ?></td>
+                                    <td><?php echo $data->lead_date; ?></td>
                                     <td>
                                         <?php if ($query_invoice_details->num_rows() > 0) { ?>
 
@@ -80,11 +87,7 @@
                                         <!-- <a href="<?php echo base_url();?>admin/query/delete_followup/<?php echo $data->id;?>" class="btn btn-danger">Delete</a> -->
                                         <a href="<?php echo base_url(); ?>admin/genrate_invoice/delete/<?php echo $invoice_data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-                                        <?php if ($Role_id == 1) { ?>
-                                        <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload_main_invoice/<?php echo $invoice_data->id;?>"
-                                            title="Genrate Invoice"><b><i class="fa fa-download"></i> &nbsp;Main
-                                                Invoice</b> </a>
-                                        <?php } ?>
+
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -93,9 +96,12 @@
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
                                     <th>Query Name</th>
+                                    <th>Client Email</th>
+                                    <th>Company</th>
                                     <th>Invoice Title</th>
+                                    <th>Lead Date</th>
                                     <th>Invoice</th>
-                                    <th>Action</th>
+                                    <th width="100px">Action</th>
                                 </tr>
                             </tfoot>
                         </table>

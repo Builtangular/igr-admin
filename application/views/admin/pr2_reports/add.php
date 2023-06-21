@@ -27,25 +27,65 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> PR2 Reports</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/pr2_reports/insert/<?php echo $report_id;?>" method="post" class="form-horizontal">
+                    <form action="<?php echo base_url(); ?>admin/pr2_reports/insert/<?php echo $report_id;?>"
+                        method="post" class="form-horizontal">
                         <div class="box-body">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">PR2 Description</label>
-                                    <div class="col-md-9">
-                                        <textarea type="text" name="description" rows="5"
-                                            class="form-control" required></textarea>
-                                        <span></span>
+                                    <label class="control-label col-md-2">PR Title <span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-10">
+                                        <input type="text" id="title" name="title" class="form-control"
+                                            placeholder="PR Title" required>
+                                        <input type="hidden" name="label[]" id="label" value="Title" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Description Para <span
+                                            class="text-red">(DRO)</span></label>
+                                    <div class="col-md-10">
+                                        <textarea type="text" name="description" rows="7" class="form-control"
+                                            required></textarea>
+                                        <input type="hidden" name="label[]" id="label" value="Description Para" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">CAGR Market Line </label>
+                                    <div class="col-md-10">
+                                        <textarea type="text" name="cagr_market_line" rows="3" class="form-control"
+                                            required></textarea>
+                                        <input type="hidden" name="label[]" id="label" value="CAGR Market Line" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Segment Para </label>
+                                    <div class="col-md-10">
+                                        <textarea type="text" name="segment_para" rows="5" class="form-control"
+                                            required></textarea>
+                                        <input type="hidden" name="label[]" id="title" value="Segment Para" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Regional Para </label>
+                                    <div class="col-md-10">
+                                        <textarea type="text" name="regional_para" rows="5" class="form-control"
+                                            required></textarea>
+                                        <input type="hidden" name="label[]" id="title" value="Regional Para" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Competitive Landscape </label>
+                                    <div class="col-md-10">
+                                        <textarea type="text" name="competitive_landscape" rows="5" class="form-control"
+                                            required></textarea>
+                                        <input type="hidden" name="label[]" id="title" value="Competitive Landscape" class="form-control">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                           
-
+                        </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-info pull-right" value="Submit">
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -53,7 +93,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <!-- jQuery 2.1.3 -->
-<script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
 <!-- Bootstrap 3.3.2 JS -->
 <script>
 /* add new description */
@@ -64,7 +104,11 @@ jQuery(function() {
         event.preventDefault();
         counter++;
         var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Report Definition '+counter+'</label> <div class="col-md-9"><textarea type="text" name="Report_definition[]" rows="5" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
+            '<div class="form-group" id="Row_' + counter +
+            '"><label class="control-label col-md-2">Report Definition ' + counter +
+            '</label> <div class="col-md-9"><textarea type="text" name="Report_definition[]" rows="5" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_' +
+            counter + '" href="javascript:RemoveRow(' + counter +
+            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
         );
 
         jQuery('#Definition').append(newRow);
@@ -79,7 +123,11 @@ jQuery(function() {
         event.preventDefault();
         counter++;
         var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Report Description '+counter+'</label> <div class="col-md-9"> <textarea type="text" name="Report_description[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
+            '<div class="form-group" id="Row_' + counter +
+            '"><label class="control-label col-md-2">Report Description ' + counter +
+            '</label> <div class="col-md-9"> <textarea type="text" name="Report_description[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_' +
+            counter + '" href="javascript:RemoveRow(' + counter +
+            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
         );
 
         jQuery('#Description').append(newRow);
@@ -94,7 +142,11 @@ jQuery(function() {
         event.preventDefault();
         counter++;
         var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Summary - DRO Para '+counter+'</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_DRO[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
+            '<div class="form-group" id="Row_' + counter +
+            '"><label class="control-label col-md-2">Summary - DRO Para ' + counter +
+            '</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_DRO[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_' +
+            counter + '" href="javascript:RemoveRow(' + counter +
+            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
         );
 
         jQuery('#Summary_DRO').append(newRow);
@@ -109,7 +161,11 @@ jQuery(function() {
         event.preventDefault();
         counter++;
         var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Summary - Regional Para '+counter+'</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_regional_description[]" rows="8" class="form-control"></textarea></div> <div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center> </div></div>'
+            '<div class="form-group" id="Row_' + counter +
+            '"><label class="control-label col-md-2">Summary - Regional Para ' + counter +
+            '</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_regional_description[]" rows="8" class="form-control"></textarea></div> <div class="col-md-1"><center><a id="Rmv_' +
+            counter + '" href="javascript:RemoveRow(' + counter +
+            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center> </div></div>'
         );
 
         jQuery('#Summary_regional_description').append(newRow);
@@ -119,7 +175,7 @@ jQuery(function() {
 
 function RemoveRow(rowID) {
     jQuery('#Row_' + rowID).remove();
-    
+
 }
 </script>
 <?php $this->load->view('admin/footer.php'); ?>

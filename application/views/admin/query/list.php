@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/report-header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 <!-- Content Wrapper. Contains page content -->
@@ -16,6 +16,12 @@
         </ol>
     </section>
     <!-- Main content -->
+    <style>
+    #search {
+        width: 20em;
+        height: 2em;
+    }
+    </style>
     <section class="content">
         <!-- Your Page Content Here -->
 
@@ -38,25 +44,26 @@
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
-                                    <th>Id</th>
                                     <th>Query Id</th>
-                                    <th>Scope Name</th>
                                     <th>Report Name</th>
-                                    <?php if ($Role_id == 10 || $Role_id == 5) { ?>
-                                    <th>Assigned Member</th>
-                                    <?php if ($Role_id == 5 || $Role_id == 7) { ?>
+                                    <th>Client Email</th>
+                                    <th>Company</th>
+                                    <th>Lead Date</th>
+                                    <th>Created User</th>
+                                    <?php if ($Role_id == 5) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
                                     <?php } ?>
-                                    <?php } ?>
-                                    <th>Action</th>
+                                    <th width="120px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach($query_details as $data){ 
+                                     $scope_name = $data->scope_name.' '.$data->report_name;
+                                    //  var_dump($scope_name);die;
                                 /* Status */
                                 $status_details = "SELECT (status)  AS rd_status FROM tbl_rd_query_sale_status where query_id = ".$data->id;
-                                // var_dump($status_details);die;
+                               
                                 $query_status_details = $this->db->query($status_details);
                                 if($query_status_details->num_rows() > 0) { 
                                     $query_status = "<i class=\"fa fa-file\"></i><br>View  <br>";
@@ -71,66 +78,55 @@
                                 /* ./ Status  */
 
                                  /* follow up  */
-                              /*   $followup_details = "SELECT  * FROM tbl_rd_query_followup where query_id = ".$data->id;
-                                $query_followup_details = $this->db->query($followup_details);
-                                if($query_followup_details->num_rows() > 0) { $followup_status = "<i class=\"fa fa-file\"></i><br>View"; } else {$followup_status = "<i class=\"fa fa-plus\"></i><br>Add";} */
                                     $followup_details = "SELECT COUNT(query_id) AS rd_followup FROM tbl_rd_query_followup where query_id = " . $data->id;
                                     $query_followup_details = $this->db->query($followup_details);
                                     if ($query_followup_details->num_rows() > 0) {
                                         $rd_followup = $query_followup_details->row();
                                     }
                                  /* ./ follow up  */
-
-                                 /* assigned  */
-                                 $assigned_details = "SELECT (created_user)  AS rd_status FROM tbl_rd_query_data where id = ".$data->id;
-                                 $query_assigned_details = $this->db->query($assigned_details);
-                                //  var_dump($query_assigned_details);die;
-                                 if($query_assigned_details->num_rows() > 0) { 
-                                    if($rd_status->rd_status == "created_user"){
-                                        $assigned_name = '<span class="text-green">';
-                                        // var_dump($assigned_name);die;
-                                    }
-                                }
-
                                 ?>
+
                                 <tr style="font-size: 14px;">
-                                    <td class="text-center"><?php echo $data->id; ?></td>
-                                    <td class="text-center"><?php echo $data->query_id; ?></td>
-                                    <td><?php echo $data->scope_name; ?></td>
-                                    <td><?php echo $data->report_name; ?></td>
-                                    <?php if ($Role_id == 10 || $Role_id == 5) { ?>
-                                    <td class=""><a
-                                            href="<?php echo base_url(); ?>admin/query/assign_user/<?php echo $data->id; ?>"><b>Assign</b></a><br><?php echo $data->created_user; ?>
-                                    </td>
-                                    <?php if ($Role_id == 5 || $Role_id == 7) { ?>
+                                    <td class="text-center"><?php echo $data->query_code; ?></td>
+                                    <td><?php echo $scope_name; ?></td>
+                                    <td><?php echo $data->client_email; ?></td>
+                                    <td><?php echo $data->company_name; ?></td>
+                                    <td><?php echo $data->lead_date; ?></td>
+                                    <td><?php echo $data->created_user; ?></td>
+                                    <?php if ($Role_id == 5) { ?>
                                     <?php if($query_followup_details->num_rows() > 0){ ?>
                                     <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->id; ?>"><b><i
+                                            href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->query_id; ?>"><b><i
                                                     class="fa fa-pencil"></i>
                                                 List</b></a><br><?php echo $rd_followup->rd_followup . " Followup"; ?>
                                     </td>
                                     <?php }else {?>
                                     <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/add_followup/<?php echo $data->id; ?>"><b><i
+                                            href="<?php echo base_url(); ?>admin/query/add_followup/<?php echo $data->query_id; ?>"><b><i
                                                     class="fa fa-pencil"></i>
                                                 List</b></a><br><?php echo $rd_followup->rd_followup . " Followup"; ?>
                                     </td>
                                     <?php }?>
                                     <?php if($query_status_details->num_rows() > 0){ ?>
                                     <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/view/<?php echo $data->id; ?>"><b><?php echo $query_status; ?></b></a>
+                                            href="<?php echo base_url(); ?>admin/query/view/<?php echo $data->query_id; ?>"><b><?php echo $query_status; ?></b></a>
                                         <?php echo $sale_status; ?><?php echo $rd_status->rd_status; ?></span>
                                     </td>
                                     <?php }else {?>
                                     <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->id; ?>"><b><?php echo $query_status; ?></b></a>
+                                            href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->query_id; ?>"><b><?php echo $query_status; ?></b></a>
                                     </td>
                                     <?php }?>
+                                    <!-- <td><?php echo date("d-m-Y", strtotime($data->updated_on)); ?></td> -->
                                     <?php }?>
-                                    <?php }?>
-                                    <td> <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>"
+                                    <td> <?php if ($Role_id == 5) { ?>
+                                        <a href="<?php echo base_url();?>admin/query/query_edit/<?php echo $data->id;?>"
                                             class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
-                                        <?php if ($Role_id == 10 || $Role_id == 5) { ?>
+                                        <?php }else{ ?>
+                                        <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>"
+                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
+                                        <?php } ?>
+                                        <?php if ($Role_id == 10 || $Role_id == 5 || $Role_id == 1) { ?>
                                         <a href="<?php echo base_url(); ?>admin/query/delete/<?php echo $data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
                                     </td>
@@ -140,18 +136,17 @@
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
-                                    <th>Id</th>
                                     <th>Query Id</th>
-                                    <th>Scope Name</th>
                                     <th>Report Name</th>
-                                    <?php if($Role_id == 10 || $Role_id == 5) {?>
-                                    <th>Assigned Member</th>
-                                    <?php if ($Role_id == 5 || $Role_id == 7) { ?>
+                                    <th>Client Email</th>
+                                    <th>Company</th>
+                                    <th>Lead Date</th>
+                                    <th>Created User</th>
+                                    <?php if ($Role_id == 5) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
-                                    <?php } ?>
-                                    <?php } ?>
-                                    <th>Action</th>
+                                    <?php }  ?>
+                                    <th width="120px">Action</th>
                                 </tr>
                             </tfoot>
                         </table>

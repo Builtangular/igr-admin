@@ -17,6 +17,8 @@ class PR2_Model extends CI_Model {
         $data = array(
             'report_id'        =>$report_id,
             'description'	   =>$this->input->post('description'),
+            'created_at'  => date('Y-m-d'),
+            'updated_at'  => date('Y-m-d'),
         );
         $res= $this->db->insert('tbl_rd_pr2_data', $data);
         return $res;
@@ -30,6 +32,7 @@ class PR2_Model extends CI_Model {
     public function update_rd_single_pr2($id){
         $update = array(
 			'description'	=>$this->input->post('description'),
+            'updated_at'  => date('Y-m-d')
             );
         $this->db->where('id',$id);
         return $this->db->update('tbl_rd_pr2_data', $update);

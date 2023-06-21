@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            View Status Details
+            Add Status Details
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->

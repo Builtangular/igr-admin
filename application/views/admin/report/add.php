@@ -8,7 +8,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add Report
+            Add Global/Regional RD
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h1 class="box-title"> Add Report</h1>
+                        <h1 class="box-title"> Add Global/Regional RD</h1>
                     </div>
                     <form action="<?php echo base_url(); ?>admin/report/insert" method="post" class="form-horizontal"
                         autocomplete="off">
@@ -84,7 +84,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">CAGR <span class="text-red">*</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" name="cagr" class="form-control" required>
+                                        <input type="text" name="cagr" class="form-control" placeholder="CAGR %" required>
                                     </div>
                                 </div>
                                 <div class="form-group">

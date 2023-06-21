@@ -24,7 +24,7 @@
     <section class="content">
         <!-- Your Page Content Here -->
         <div class='row'>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h1 class="box-title"> Insert Reseller Details</h1>
@@ -32,7 +32,7 @@
                     <form action="<?php echo base_url(); ?>admin/query/insert_reseller" id="employment-form" method="post"
                         class="form-horizontal" enctype="multipart/form-data">
                         <div class="box-body">
-                            <div class="col-md-10">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Reseller Name <span
                                             class="text-red">*</span></label>

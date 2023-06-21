@@ -167,5 +167,19 @@ class RdData_model extends CI_Model {
 		$result =  $this->db->update('tbl_rd_data', $data);
 		return $result;
 	}
+	/* get PR2 data */
+    public function get_pr2_data($report_id)
+	{
+		$this->db->select("*");
+		$this->db->from('tbl_rd_pr2_data');
+		$this->db->where(array('report_id'=>$report_id, 'active'=> 1));
+		$query = $this->db->get();
+		// echo $this->db->last_query();		
+		if($query->num_rows() > 0){			
+			return $query->row();
+		}else{
+			return array();
+		}
+	}
 }
 ?>

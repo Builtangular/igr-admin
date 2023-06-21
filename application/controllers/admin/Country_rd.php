@@ -21,6 +21,7 @@ class Country_rd extends CI_Controller {
 
 			$data['report_id']=$id;	
 			$data['Country_Rds']= $this->Country_model->get_country_rds();
+			// var_dump($data['Country_Rds']); die;
 			$this->load->view('admin/country_rd/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -139,6 +140,7 @@ class Country_rd extends CI_Controller {
 					$single_user = 4795;
 					$enterprise = 7195;
 				}
+				// $sku = 'IGRCTRY';
 				$sku = 'IGRC';
 				$Report_code = $sku.'0'.($sku_code[1] + $skuno);
 				$report_title_new=str_replace( array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $Country_Report_title);
@@ -165,8 +167,7 @@ class Country_rd extends CI_Controller {
 				}
 				$skuno++;
             }
-           redirect('admin/country_rd');
-        		
+           redirect('admin/country_rd');        		
 		}else{			
 			$this->load->view('admin/login');
 		}
@@ -223,33 +224,196 @@ class Country_rd extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			// $scope_id = 1;
-			$data['countries'] = $this->Country_model->get_country_master_data();
+			// $data['countries'] = $this->Country_model->get_country_master_data();
 			$data['category_data']= $this->Data_model->get_category_master();
 			// var_dump($data['countries']); die;
-			$this->load->view('admin/country_rd/add', $data);
+			$this->load->view('admin/country_rd/manual/add', $data);
 		}else{			
 			$this->load->view('admin/login');
 		}
 	}
 	public function insert(){
+	    // var_dump($_POST); die;
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
+            
+			/* automated sku */
+			$country_report_sku = $this->Country_model->get_country_report_count();				
+			$sku_code = explode('Y', $country_report_sku->sku);
+			$sku = 'IGRCTRY'.'0'.($sku_code[1] + 1);
+			/* ./ automated sku */
+			/* Country Name */
+			$country_name = $this->input->post('country');
+			/* $CountryList = $this->Country_model->get_country_master();				
+            foreach($CountryList as $country){
+                if($country->id == $country_id){
+                    $country_name = $country->name;
+                }
+            } */
+           // var_dump($sku); die;	
+			/* automated url */
+			$report_title = $country_name.' '.strtolower($this->input->post('name'));
+			$report_title_new = str_replace(array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $report_title);
+			$encoded_report_title = urldecode($report_title_new);	
+			$encoded_report_url = str_replace(' ','-', $encoded_report_title);
+			$new_report_url = str_replace('--','-', strtolower($encoded_report_url));
+			// echo"----------new_report_url<-------->".$new_report_url."<--------><br><br>"; die;
+			$postdata=array(
+				'name'=>$this->input->post('name'),
+				'title'=>$this->input->post('title'),
+				'sku'=>$sku,
+				'category_id'=>$this->input->post('category'),
+				'country'=>$this->input->post('country'),
+				'url'=>$new_report_url,
+				'pages'=> 80,
+				'forecast_from'=>$this->input->post('forecast_from'),
+				'forecast_to'=>$this->input->post('forecast_to'),
+				'analysis_from'=>$this->input->post('analysis_form'),
+				'analysis_to'=>$this->input->post('analysis_to'),
+				'value_cagr'=>$this->input->post('cagr'),
+				'value_unit'=>$this->input->post('value_based_unit'),
+				'is_volume_based'=>$this->input->post('volume'),
+				'volume_based_unit'=>$this->input->post('volume_based_unit'),
+				'volume_based_cagr'=>$this->input->post('volume_cagr'),
+				'revenue_start_year'=>$this->input->post('start_year_revenue'),
+				'revenue_end_year'=>$this->input->post('end_year_revenue'),
+				'singleuser_price'=>$this->input->post('single_user'),
+				'enterprise_price'=>$this->input->post('enterprise_user'),
+				'datasheet_price'=>0,				
+				'status'=>$this->input->post('status'),
+				'created_user'=>$session_data['Login_user_name'],
+				'created_at'=> date('Y-m-d'),
+				'updated_at'=> date('Y-m-d')
+			);			
+			// var_dump($postdata); die;	
+			$Last_Inserted_id = $this->Country_model->insert_country_rd_data($postdata);
+			if($Last_Inserted_id){
+				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!");
+			}else{
+				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");		
+			}		
+			redirect('admin/country_rd/drafts');
+
+			// var_dump($data['countries']); die;
+			$this->load->view('admin/country_rd/manual/add', $data);
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function drafts(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+
+			$data['Country_rds'] = $this->Country_model->get_drafted_country_rds($data['Login_user_name']);
+			// var_dump($data['Country_rds']); die;
+			$this->load->view('admin/country_rd/draft/list',$data);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function list(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+
+			$data['Country_rds'] = $this->Country_model->get_country_rd_details();
+			// var_dump($data['Country_rds']); die;
+			$this->load->view('admin/country_rd/draft/list',$data);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function edit_rd($id){
+		// echo $id;
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['success_code'] = $this->session->userdata('success_code');
+			$data['Login_user_name'] = $session_data['Login_user_name'];
+			$data['Role_id'] = $session_data['Role_id'];
+
+			$data['countries'] = $this->Country_model->get_country_master_data();
+			$data['category_data'] = $this->Data_model->get_category_master();
+			$data['country_rd_data'] = $this->Country_model->get_country_rd_data($id);
+			// var_dump($country_rd_data); die;
+			$this->load->view('admin/country_rd/manual/edit',$data);			
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function update_rd($id){
+		// var_dump($_POST); die;
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 
-			/* automated sku */
-			$country_report_sku = $this->Country_model->get_country_report_count();	
-			var_dump($country_report_sku); die;		
-			$sku_code = explode('C', $country_report_sku->sku);
-			$sku = 'IGRC'.'0'.($sku_code[1] + 1);
-			/* ./ automated sku */
+			$request = $this->input->post('request');			
+			// var_dump($request);die;
+			if($request == 'Publish'){
+				$status = 3;
+			}else{
+				$status = $this->input->post('status');
+			}
+			$updatedata=array(
+				'title'=> $this->input->post('title'),
+				'name'=> $this->input->post('name'),
+				// 'sku'=> $this->input->post('sku'),
+				'category_id'=> $this->input->post('category'),
+				'country'=> $this->input->post('country'),
+				// 'url'=> $this->input->post('url'),
+				'forecast_from'=> $this->input->post('forecast_from'),
+				'forecast_to'=> $this->input->post('forecast_to'),
+				'analysis_from'=> $this->input->post('analysis_form'),
+				'analysis_to'=> $this->input->post('analysis_to'),
+				'value_cagr'=> $this->input->post('cagr'),
+				'value_unit'=> $this->input->post('value_based_unit'),
+				'is_volume_based'=> $this->input->post('volume'),
+				'volume_based_unit'=> $this->input->post('volume_based_unit'),
+				'volume_based_cagr'=> $this->input->post('volume_cagr'),
+				'revenue_start_year'=> $this->input->post('start_year_revenue'),
+				'revenue_end_year'=> $this->input->post('end_year_revenue'),
+				'singleuser_price'=> $this->input->post('single_user'),
+				'enterprise_price'=> $this->input->post('enterprise_user'),
+				'status'=> $status,
+				'updated_at'=> date('Y-m-d')
+			);	
 			
-			var_dump($_POST); die;
-			$data['countries'] = $this->Country_model->get_country_master_data();
-			$data['category_data']= $this->Data_model->get_category_master();
+			$result = $this->Country_model->update_country_rd_data($id, $updatedata);
+			// var_dump($updatedata); die;
+			$title = $this->input->post('title');
+			if($status == 3){
+				$this->session->set_flashdata("success_code","Report: ".$title." has been published successfully..!!!");
+			}else if($result){
+				$this->session->set_flashdata("success_code","Report: ".$title." has been updated successfully..!!!");
+			}else{
+				$this->session->set_flashdata("success_code","Report: ".$title." has not been updated successfully..!!!");				
+			}
+			redirect('admin/country_rd/drafts');
+		}else{			
+			$this->load->view('admin/login');
+		}
+	}
+	public function delete_rd($id){
+		if($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$data['Login_user_name']=$session_data['Login_user_name'];	
+			$data['Role_id']=$session_data['Role_id'];
 
-			// var_dump($data['countries']); die;
-			$this->load->view('admin/country_rd/add', $data);
+			$result = $this->Country_model->delete_country_rd_data($id);
+			if($result){
+				$this->session->set_flashdata("success_code", "Report has been deleted successfully..!!!");				
+			}else{
+				$this->session->set_flashdata("success_code","Sorry! Record has not been deleted");		
+			}		
+			redirect('admin/country_rd/drafts');
 		}else{			
 			$this->load->view('admin/login');
 		}

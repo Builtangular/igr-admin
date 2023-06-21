@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Report List</h3>
+                        <h3 class="box-title"><?php echo $success_code; ?> Report List</h3>
                         <a href="<?php echo base_url(); ?>admin/report/add" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
@@ -51,9 +51,9 @@
                                     <th>Insight</th>
                                     <th>DRO</th>
                                     <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?> 
-                                    <th>Overview</th>
-                                    <th>PR2</th>
+                                    <th>Overview</th>                                    
                                     <?php } ?>
+                                    <th>PR2</th>
                                     <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <th>Image</th>
                                     <th>Country</th>
@@ -144,6 +144,7 @@
                                             href="<?php echo base_url(); ?>admin/segment-overview/add/<?php echo $data->id; ?>"><b><?php echo $segment_status; ?></b></a>
                                     </td>
                                     <?php }?>
+                                    <?php } ?>
                                     <?php if($query_pr2_reports->num_rows() > 0){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/pr2-reports/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
@@ -153,7 +154,7 @@
                                             href="<?php echo base_url(); ?>admin/pr2-reports/add/<?php echo $data->id; ?>"><b><?php echo $pr2_reports_status; ?></b></a>
                                     </td>
                                     <?php } ?>
-                                    <?php } ?>
+                                   
                                     <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <td class="text-center"><a
                                             href="<?php echo base_url(); ?>admin/image/<?php echo $data->id; ?>"><b><?php echo $rd_image; ?></b></a>
@@ -197,9 +198,9 @@
                                     <th>Insight</th>
                                     <th>DRO</th>
                                     <?php if($Role_id == 1 || $Role_id == 3 || $Role_id == 4){ ?> 
-                                    <th>Overview</th>
-                                    <th>PR2</th>
+                                    <th>Overview</th>                                    
                                     <?php } ?>
+                                    <th>PR2</th>
                                     <?php if($Role_id == 1 || $Role_id == 2){ ?>
                                     <th>Image</th>
                                     <th>Country</th>

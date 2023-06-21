@@ -27,14 +27,16 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> DRO Reports</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/dro_reports/insert_dro_records/<?php echo $report_id;?>" method="post" class="form-horizontal">
+                    <form
+                        action="<?php echo base_url(); ?>admin/dro_reports/insert_dro_records/<?php echo $report_id;?>"
+                        method="post" class="form-horizontal">
                         <div class="box-body">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Description</label>
                                     <div class="col-md-9">
-                                        <textarea type="text" name="description" rows="5"
-                                            class="form-control" required></textarea>
+                                        <textarea type="text" name="description" rows="5" class="form-control"
+                                            required></textarea>
                                         <span></span>
                                     </div>
                                 </div>
@@ -43,37 +45,32 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2">DRO Type</label>
                                     <div class="col-md-9">
-                                    <select class="form-control b-none" name="type" required>
-                                        <option value="0">--Select Type--</option>
-                                        <?php 						
-							            foreach($get_dro_type as $data)						
-                                        {						
-                                        ?>
-                                        <option value="<?php echo $data->name;?>"><?php echo $data->name; ?></option>
-                                        <?php						
-                                        }					
-                                        ?>
-                                    </select>
+                                        <select class="form-control b-none" name="type" required>
+                                            <option value="0">--Select Type--</option>
+                                            <?php foreach($get_dro_type as $data) {	 ?>
+                                            <option value="<?php echo $data->name;?>"><?php echo $data->name; ?>
+                                            </option>
+                                            <?php }	?>
+                                        </select>
                                         <span></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Status</label>
-                                <div class="col-md-8">
-                                    <div class="radio">
-                                        <label><input type="radio" name="status" value="1" checked />Active</label>
-                                        <label><input type="radio" name="status" value="0" />Inactive</label>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Status</label>
+                                    <div class="col-md-8">
+                                        <div class="radio">
+                                            <label><input type="radio" name="status" value="1" checked />Active</label>
+                                            <label><input type="radio" name="status" value="0" />Inactive</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
-
+                        </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-info pull-right" value="Submit">
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -83,71 +80,5 @@
 <!-- jQuery 2.1.3 -->
 <script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
 <!-- Bootstrap 3.3.2 JS -->
-<script>
-/* add new description */
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#definition_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Report Definition '+counter+'</label> <div class="col-md-9"><textarea type="text" name="Report_definition[]" rows="5" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-        );
 
-        jQuery('#Definition').append(newRow);
-        i++;
-        console.log(newRow);
-    });
-});
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#description_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Report Description '+counter+'</label> <div class="col-md-9"> <textarea type="text" name="Report_description[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-        );
-
-        jQuery('#Description').append(newRow);
-        i++;
-        console.log(newRow);
-    });
-});
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#summary_dro_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Summary - DRO Para '+counter+'</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_DRO[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-        );
-
-        jQuery('#Summary_DRO').append(newRow);
-        i++;
-        console.log(newRow);
-    });
-});
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#summary_regional_description_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_'+counter+'"><label class="control-label col-md-2">Summary - Regional Para '+counter+'</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_regional_description[]" rows="8" class="form-control"></textarea></div> <div class="col-md-1"><center><a id="Rmv_'+counter+'" href="javascript:RemoveRow('+counter+');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center> </div></div>'
-        );
-
-        jQuery('#Summary_regional_description').append(newRow);
-        i++;
-    });
-});
-
-function RemoveRow(rowID) {
-    jQuery('#Row_' + rowID).remove();
-    
-}
-</script>
 <?php $this->load->view('admin/footer.php'); ?>

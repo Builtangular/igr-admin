@@ -130,6 +130,109 @@ class Employee_Model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    public function getdepartments(){
+
+        ## Fetch records
+        $this->db->distinct();
+        $this->db->select('department');
+        $this->db->order_by('department','asc');
+        $records = $this->db->get('tbl_emp_enrollement')->result();
+   
+        $department_data = array();
+   
+        foreach($records as $record ){
+           $department_data[] = $record->department;
+        }
+   
+        return $department_data;
+      }
+    public function getprofile(){
+
+        ## Fetch records
+        $this->db->distinct();
+        $this->db->select('job_profile');
+        $this->db->order_by('job_profile','asc');
+        $records = $this->db->get('tbl_emp_enrollement')->result();
+   
+        $data = array();
+   
+        foreach($records as $record ){
+           $data[] = $record->job_profile;
+        }
+   
+        return $data;
+      }
+    public function get_employee_details_with_profile($postData=null)
+    {
+        $response = array();
+
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $columnIndex = $postData['order'][0]['column']; // Column index
+        $columnName = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue = $postData['search']['value']; // Search value
+   
+        // Custom search filter 
+        $searchCity = $postData['searchByGender'];
+        $searchDepartment = $postData['searchByDepartment'];
+
+        /* $this->db->select('*');
+        $this->db->from('tbl_emp_enrollement');
+        // $this->db->order_by('appraisal_date', 'asc');
+        $this->db->where(array('job_profile' => $searchCity)); 
+        $query = $this->db->get();
+        // echo $this->db->last_query(); die;
+        return $query->result(); */
+        ## Fetch records
+         ## Search 
+     $search_arr = array();
+     $searchQuery = "";
+        if($searchCity != ''){
+            $search_arr[] = " job_profile='".$searchCity."' ";
+         }
+         if($searchDepartment != ''){
+            $search_arr[] = " department='".$searchDepartment."' ";
+         }
+         if(count($search_arr) > 0){
+            $searchQuery = implode(" and ",$search_arr);
+         }
+    
+        ## Fetch records
+     $this->db->select('*');
+     if($searchQuery != '')
+     $this->db->where($searchQuery);
+     $this->db->order_by($columnName, $columnSortOrder);
+     $this->db->limit($rowperpage, $start);
+     $records = $this->db->get('tbl_emp_enrollement')->result();
+
+     $data = array();
+
+     foreach($records as $record ){
+
+       $data[] = array( 
+         "emp_code"=>$record->emp_code,
+         "emp_name"=>$record->first_name,
+         "joining_date"=>$record->joining_date,
+         "appraisal_date"=>$record->appraisal_date,
+         "job_profile"=>$record->job_profile,
+         "department"=>$record->department
+       ); 
+     }
+
+     ## Response
+     $response = array(
+       "draw" => intval($draw),
+       "iTotalRecords" => $totalRecords,
+       "iTotalDisplayRecords" => $totalRecordwithFilter,
+       "aaData" => $data
+     );
+
+     return $response; 
+
+    }
     public function get_permenent_employee_details()
     {
         $this->db->select('*');
@@ -334,9 +437,9 @@ class Employee_Model extends CI_Model {
         $this->db->where('id',$id);
         return $this->db->update('tbl_emp_bank_details', $update);
     }
-    public function delete_employment($id){
+    public function delete_employee_data($id){
         $this->db->where("id", $id);
-    	$res = $this->db->delete("tbl_emp_employment");
+    	$res = $this->db->delete("tbl_emp_enrollement");
 		return $res;
     }
     /* update salary breackup */

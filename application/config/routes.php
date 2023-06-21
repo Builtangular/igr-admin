@@ -81,6 +81,7 @@ $route['admin/dro-reports/delete/(:num)'] ='admin/dro_reports/delete/$1';
 $route['admin/pr2-reports/(:num)'] ='admin/PR2_Reports/index/$1';
 $route['admin/pr2-reports/add/(:num)'] ='admin/PR2_Reports/add/$1';
 $route['admin/pr2_reports/edit/(:num)'] ='admin/PR2_Reports/edit/$1';
+$route['admin/pr2_reports/update/(:num)'] ='admin/PR2_Reports/update/$1';
 $route['admin/pr2_reports/delete/(:num)'] ='admin/PR2_Reports/delete/$1';
 
 $route['admin/dro-reports/insert_dro_records/(:num)'] ='admin/dro_reports/insert_dro_records/$1';
@@ -136,3 +137,11 @@ $route['admin/employee/upload_employee_documents/(:num)'] ='admin/employee/uploa
 
 /* user register urls */
 $route['admin/register-user'] ='admin/register_user';
+
+/* Country RD Generation Redirects */
+$route['admin/country_segment/(:num)'] ='admin/Country_segment/index/$1';
+$route['admin/country_segment/overview/(:num)'] ='admin/Country_segment/overview/$1';
+$route['admin/country_company/(:num)'] ='admin/Country_company/index/$1';
+$route['admin/country_insight/(:num)'] ='admin/Country_insight/index/$1';
+$route['admin/country_rd_dro/(:num)'] ='admin/Country_rd_dro/index/$1';
+$route['admin/country_rd_pr/add/(:num)'] ='admin/Country_rd_pr/add/$1';

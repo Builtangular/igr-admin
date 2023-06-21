@@ -126,15 +126,21 @@
                                     <td class="">
                                         <a href="<?php echo base_url()?>admin/generate_rd/rd_1/?report_id=<?php echo $data->id;?>"
                                             title="Get RD1"><b><i class="fa fa-download"></i> &nbsp;RD1</b>
-                                        </a> <br />
+                                        </a> | 
                                         <a href="<?php echo base_url()?>admin/generate_rd/rd_2/?report_id=<?php echo $data->id;?>"
                                             title="Get RD2"><b><i class="fa fa-download"></i> &nbsp;RD2</b>
                                         </a> <br />
                                         <a href="<?php echo base_url()?>admin/generate_rd/toc/?report_id=<?php echo $data->id;?>"
                                             title="Get TOC"><b><i class="fa fa-download"></i> &nbsp;TOC</b>
+                                        </a> | 
+                                        <a href="<?php echo base_url()?>admin/generate_rd/pr_2/?report_id=<?php echo $data->id;?>"
+                                            title="Get PR2"><b><i class="fa fa-download"></i> &nbsp;PR2</b>
                                         </a> <br />
                                         <a href="<?php echo base_url()?>admin/generate_rd/sample_pages/?report_id=<?php echo $data->id;?>"
                                             title="Get Sample Pages"><b><i class="fa fa-download"></i> &nbsp;Sample</b>
+                                        </a> <br />
+                                        <a href="<?php echo base_url()?>admin/generate_rd/new_sample_pages/?report_id=<?php echo $data->id;?>"
+                                            title="Get Sample Pages"><b><i class="fa fa-download"></i> &nbsp;New Sample</b>
                                         </a> <br />
                                         <a href="<?php echo base_url()?>admin/generate_rd/mail_draft/?report_id=<?php echo $data->id;?>"
                                             title="Get Sample Pages Mail Draft"><b><i class="fa fa-download"></i>

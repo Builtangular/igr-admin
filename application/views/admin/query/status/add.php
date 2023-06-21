@@ -1,10 +1,11 @@
 <?php $this->load->view('admin/header.php'); ?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add Status Details
+            Add Status
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -70,7 +71,7 @@
                                             class="form-control" placeholder="Absolute Price">
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" name="selling_price" onblur="reSum();" id="selling_price"
+                                        <input type="text" name="selling_price" id="selling_price"
                                             class="form-control" placeholder="Selling Price">
                                     </div>
                                 </div>
@@ -119,7 +120,7 @@ var reason_div = document.getElementById('reason_div');
 query_status.addEventListener('change', function() {
     if (this.value == "Sale") {
         licence.classList.remove('hide');
-        // reason_div.classList.remove('hide');
+        reason_div.classList.add('hide');
     } else if (this.value == "Reject") {
         reason_div.classList.remove('hide');
         licence.classList.add('hide');
@@ -147,7 +148,10 @@ licence.addEventListener('change', function() {
 
 function reSum() {
     var discount, result, mult, dis;
-    var price = parseInt(document.getElementById("price").value);
+    /* var price = parseInt(document.getElementById("price").value);
+    var discount = parseInt(document.getElementById("discount").value);
+    var absolute_price = parseInt(document.getElementById("absolute_price").value); */
+    var price = document.getElementById("price").value;
     var discount = parseInt(document.getElementById("discount").value);
     var absolute_price = parseInt(document.getElementById("absolute_price").value);
     /* calculate discount */
@@ -156,6 +160,8 @@ function reSum() {
     dis = price - mult;
     /* substration of price and absolute value */
     result = price - absolute_price;
+    console.log(price);
+    console.log(result);
     if (result) {
         document.getElementById("selling_price").value = result;
     } else {
