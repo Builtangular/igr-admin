@@ -175,7 +175,7 @@
                                     <div class="col-md-8">
                                         <textarea name="client_message" id="client_message" rows="3"
                                             class="form-control" placeholder="Client Meassage"
-                                            required><?php echo $single_query_data->client_message;?></textarea>
+                                            ><?php echo $single_query_data->client_message;?></textarea>
                                     </div>
                                 </div>
                                 <?php if($Role_id == 5) {?>
@@ -202,9 +202,9 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Assign To Analysis</label>
                                     <div class="col-md-8">
-                                        <input type="radio" name="assign_analysis" value="1" checked /> Yes
+                                        <input type="radio" name="assign_analyst" value="1" checked /> Yes
                                         &nbsp;&nbsp;
-                                        <input type="radio" name="assign_analysis" value="0" /> No
+                                        <input type="radio" name="assign_analyst" value="0" /> No
                                     </div>
                                 </div>
                                 <?php }?>

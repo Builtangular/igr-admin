@@ -14,7 +14,7 @@ class Query_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_query_details($Login_user_name){
+    public function get_details_assign_user($Login_user_name){
         $this->db->select('*');
         $this->db->from('tbl_query_assignment');
         $this->db->where(array('tbl_query_assignment.assigned_name'=>$Login_user_name,'tbl_query_assignment.status'=>1)); 
@@ -24,12 +24,11 @@ class Query_model extends CI_Model {
         // echo $this->db->last_query();die;
         return $query->result();  
     }
-    public function get_query_details1($Login_user_name){
+    public function get_single_details_marketer($Login_user_name){
         $this->db->select('*');
         $this->db->from('tbl_rd_query_data');
         $this->db->where('created_user',$Login_user_name);
-        // $this->db->join('tbl_query_assignment','tbl_rd_query_data.id = tbl_query_assignment.query_id');
-        $this->db->order_by('id',"DESC");
+         $this->db->order_by('id',"DESC");
         $query = $this->db->get();
         // echo $this->db->last_query();die;
         return $query->result();
@@ -50,11 +49,13 @@ class Query_model extends CI_Model {
         $this->db->order_by('id',"DESC");
         $query = $this->db->get();
         // echo $this->db->last_query();die;
+        
         return $query->result();
     }
     public function get_query_data($department){
         $this->db->select('*');
         $this->db->from('tbl_rd_query_data');
+        $this->db->order_by('id',"DESC");
         $query = $this->db->get();
         return $query->result();
     }
@@ -125,13 +126,7 @@ class Query_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    public function delete_recodes($id) {
-        // $this->db->select('*');
-        // $this->db->from('tbl_query_assignment');
-        // $this->db->where('tbl_query_assignment.query_id',$id);
-        // $this->db->join('tbl_rd_query_data','tbl_query_assignment.query_id=tbl_rd_query_data.id');
-        // $result = $this->db->delete('tbl_query_assignment');
-        // return $result;
+    public function delete($id) {
         $this->db->where('query_id',$id);
         $result = $this->db->delete('tbl_query_assignment');
         return $result;

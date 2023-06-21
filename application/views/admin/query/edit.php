@@ -104,7 +104,7 @@
                                     <div class="col-md-8">
                                         <select class="form-control b-none" id="scope_name" name="scope_name">
                                             <?php foreach($ScopeList as $scope)	{ 
-                                                if($single_query_data->scope_name == $list->scope_name){ ?>
+                                                if($single_query_data->scope_name == $scope->scope_name){ ?>
                                             <option value="<?php echo $single_query_data->scope_name;?>" selected>
                                                 <?php echo $single_query_data->scope_name;?></option>
                                             <?php } else { ?>
@@ -187,7 +187,7 @@
                                             </option>                                             -->
                                             <?php 						
                                             foreach($user_details as $data){
-                                                if($assign_details->assigned_name == $list->assigned_name){ ?>
+                                                if($assign_details->assigned_name == $data->assigned_name){ ?>
                                             <option value="<?php echo $assign_details->assigned_name;?>" selected>
                                                 <?php echo $assign_details->assigned_name;?></option>
                                             <?php } else { ?>

@@ -119,10 +119,10 @@
                                     <?php }?>
                                     <!-- <td><?php echo date("d-m-Y", strtotime($data->updated_on)); ?></td> -->
                                     <?php }?>
-                                    <td> <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->query_id;?>"
+                                    <td> <a href="<?php echo base_url();?>admin/query/edit/<?php echo $data->id;?>"
                                             class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
                                         <?php if ($Role_id == 10 || $Role_id == 5 || $Role_id == 1) { ?>
-                                        <a href="<?php echo base_url(); ?>admin/query/delete/<?php echo $data->query_id; ?>"
+                                        <a href="<?php echo base_url(); ?>admin/query/delete/<?php echo $data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
                                     </td>
                                     <?php } ?>

@@ -63,27 +63,18 @@
                                     </td> -->
                                     <td class="text-center">
                                         <form
-                                            action="<?php echo base_url();?>admin/employee/edit_salary/<?php echo $list->id;?>"
+                                            action="<?php echo base_url();?>admin/employee/edit_salary/<?php echo $list->emp_id;?>"
                                             method="post">
                                             <input type="hidden" id="emp_id" name="emp_id"
                                                 value="<?php echo $list->emp_id; ?>">
                                             <input type="submit" class="btn btn-warning btn-xs" value="Edit">
                                         </form>
                                         <form
-                                            action="<?php echo base_url();?>admin/employee/delete_salary/<?php echo $list->id;?>"
+                                            action="<?php echo base_url();?>admin/employee/delete_salary/<?php echo $list->emp_id;?>"
                                             method="post">
                                             <input type="hidden" id="emp_id" name="emp_id"
                                                 value="<?php echo $list->emp_id; ?>">
                                             <input type="submit" class="btn btn-danger btn-xs" value="Delete">
-                                        </form> 
-                                    </td>
-                                    <td>
-                                        <form
-                                            action="<?php echo base_url();?>admin/employee/delete_salary/<?php echo $list->id;?>"
-                                            method="post">
-                                            <input type="hidden" id="emp_id" name="emp_id"
-                                                value="<?php echo $list->emp_id; ?>">
-                                            <input type="submit" class="btn btn-danger" value="Delete">
                                         </form> 
                                     </td>
                                 </tr>

@@ -12,7 +12,7 @@ class Login_model extends CI_Model {
     {	
 		$this->db->select('*');
 		$this->db->from('tbl_user_login_details as ULD');
-		$this->db->join('tbl_registered_user_details as RUD', 'RUD.id = ULD.user_id');
+		$this->db->join('tbl_emp_enrollement as RUD', 'RUD.id = ULD.user_id');
 		$this->db->where(array('ULD.Active_flag' => '1','ULD.User_email_id' => $username, 'ULD.Login_password' => $password));		
 		$login_sql = $this->db->get();		
 		// echo"----".$this->db->last_query();	

@@ -48,6 +48,7 @@ class Generate_invoice extends CI_Controller {
 		}
     }
     public function add_invoice($id){
+        // var_dump($_POST);die;
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -184,12 +185,14 @@ class Generate_invoice extends CI_Controller {
 		}
 	}
     public function edit($id){
+        var_dump($_POST);die;
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
             $id = $id;
             $data['invoice_data'] = $this->Genrate_Invoice_Model->get_single_invoice_records($id);
+            // var_dump($id);die;
 			$this->load->view("admin/genrate_invoice/edit",$data);
 		}else{
 			$this->load->view("admin/login");			
@@ -528,7 +531,8 @@ class Generate_invoice extends CI_Controller {
         $service_no= $query_details->service_no;
         $service = explode("-", $service_no);
         $service_no1 = $service[1];
-        $main_invoice_no = $invoice_records->main_invoice_no;
+        // $invoice_no = 'INVOICE' .'#'.($todays_date.$service_no1).($last_row_id + 1);
+        $main_invoice_no = 'INVOICE' .'#'.($invoice_records->main_invoice_no);
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('resources/invoice.docx');
         $todays_date = date('F d, Y');
         $s_address_billing = $invoice_records->s_address_billing;
@@ -693,7 +697,7 @@ class Generate_invoice extends CI_Controller {
             // $templateProcessor->setValue('amt_in_word', htmlspecialchars("In Word: ".$currency.' '.$result));
       
         // $templateProcessor->setValue('amt_in_word', htmlspecialchars($result));
-        $filename = $report_name."- Proforma Invoice.docx";
+        $filename = $report_name."- Main Invoice.docx";
         header('Content-Disposition: attachment; filename='.$filename);
         ob_clean();
         $templateProcessor->saveAs('php://output');		

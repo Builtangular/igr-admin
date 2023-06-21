@@ -62,8 +62,8 @@
                                     <td class="text-center"><?php echo $data->query_code; ?></td>
                                     <td><?php echo $scope_name; ?></td>
                                     <td><?php echo $data->client_email; ?></td>
-                                    <td><?php echo $data->lead_date; ?></td>
                                     <td><?php echo $data->company_name; ?></td>
+                                    <td><?php echo $data->lead_date; ?></td>
                                     <td> <a href="<?php echo base_url();?>admin/query/upcoming_query_edit/<?php echo $data->id;?>"
                                             class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
                                         <?php if ($Role_id == 10 || $Role_id == 5) { ?>

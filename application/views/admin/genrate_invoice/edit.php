@@ -1,6 +1,5 @@
 <?php $this->load->view('admin/header.php'); ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/plugins/bootstrap3-wysihtml5.min.css">
-
 <?php $Currency = array('USD', 'INR', 'EUR', 'AED', 'SAR');?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -29,26 +28,24 @@
                     </div>
                     <form action="<?php echo base_url(); ?>admin/genrate_invoice/update" method="post"
                         class="form-horizontal">
-                        <input type="hidden" name="_token" value="Sk3doWItxaoAFLb19cHZYUeNW7yMPNDp1QqkSi60">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Invoice Title<span
                                         class="text-red">*</span></label>
                                 <div class="col-md-3">
-                                    <input type="text" name="invoice_title" id="invoice_title"
-                                        value="<?php echo $invoice_data->invoice_title;?>" class="form-control"
-                                        placeholder="Invoice Title" required>
+                                    <input type="text" name="invoice_title" id="invoice_title" class="form-control"
+                                        value="<?php echo $invoice_data->invoice_title;?>" placeholder="Invoice Title"
+                                        required>
                                 </div>
-                                <?php if ($Role_id == 1) { ?>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Invoice No.</label>
-                                    <div class="col-md-3">
-                                        <input type="text" name="main_invoice_no" id="main_invoice_no"
-                                            value="<?php echo $invoice_data->main_invoice_no;?>" class="form-control"
-                                            placeholder=" Main Invoice No">
-                                    </div>
-                                    <?php } ?>
+                                <?php if($Role_id == 1) {?>
+                                <label class="control-label col-md-2">Main Invoice No.<span
+                                        class="text-red">*</span></label>
+                                <div class="col-md-3">
+                                    <input type="text" id="main_invoice_no" name="main_invoice_no"
+                                        value="<?php echo $invoice_data->main_invoice_no;?>" class="form-control"
+                                        placeholder="Main Invoice No">
                                 </div>
+                                <?php }?>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Order Date<span class="text-red">*</span></label>
@@ -56,22 +53,19 @@
                                     <input type="date" name="order_date" id="order_date"
                                         value="<?php echo $invoice_data->order_date;?>" class="form-control" required>
                                 </div>
-                                <?php if ($Role_id == 1) { ?>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Order No.</label>
-                                    <div class="col-md-3">
-                                        <input type="text" name="order_no" id="order_no"
-                                            value="<?php echo $invoice_data->order_no;?>" class="form-control"
-                                            placeholder="Order No">
-                                    </div>
-                                    <?php } ?>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Order No.<span class="text-red">*</span></label>
+                                <div class="col-md-3">
+                                    <input type="text" name="order_no" id="order_no"
+                                        value="<?php echo $invoice_data->order_no;?>" class="form-control"
+                                        placeholder="Order No" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Currency<span class="text-red">*</span></label>
                                 <div class="col-md-3">
                                     <select class="form-control b-none" id="currency" name="currency" placeholder="">
-
                                         <?php $i = 0; foreach($Currency as $currency) {
                                             if ($Currency[$i] == $invoice_data->currency){ ?>
                                         <option value="<?php echo $invoice_data->currency; ?>" Selected>
@@ -84,36 +78,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <?php if($invoice_data->currency == "INR"){ ?>
-                            <div class="form-group" id="my_div1">
-                                <label class="control-label col-md-2">State <span class="text-red">*</span></label>
-                                <div class="col-md-3">
-                                    <input type="radio" name="state" id="maharastra" value="Maharastra"
-                                        <?php echo ($invoice_data->state=="Maharastra")?'checked':'' ?> />
-                                    Maharastra &nbsp;&nbsp;
-                                    <input type="radio" name="state" id="other_state" value="Other State"
-                                        <?php echo ($invoice_data->state=="Other State")?'checked':'' ?> /> Other
-                                    State
-                                </div>
-                            </div>
-                            <div class="form-group" id="my_div">
-                                <label class="control-label col-md-2">Customer Gst No.<span
-                                        class="text-red">*</span></label>
-                                <div class="col-md-3">
-                                    <input type="text" id="customer_gst_no" name="customer_gst_no"
-                                        value="<?php echo $invoice_data->customer_gst_no;?>" class="form-control"
-                                        placeholder="Customer Gst No">
-                                </div>
-                            </div>
-                            <?php } else{ ?>
                             <div class="form-group hide" id="my_div1">
                                 <label class="control-label col-md-2">State <span class="text-red">*</span></label>
                                 <div class="col-md-3">
-                                    <input type="radio" name="state" id="maharastra" value="Maharastra"
-                                        <?php echo ($invoice_data->state=="Maharastra")?'checked':'' ?> />
+                                    <input type="radio" name="state" id="maharastra" value="Maharastra" />
                                     Maharastra &nbsp;&nbsp;
-                                    <input type="radio" name="state" id="other_state" value="Other State"
-                                        <?php echo ($invoice_data->state=="Other State")?'checked':'' ?> /> Other
+                                    <input type="radio" name="state" id="other_state" value="Other State" /> Other
                                     State
                                 </div>
                             </div>
@@ -121,13 +91,10 @@
                                 <label class="control-label col-md-2">Customer Gst No.<span
                                         class="text-red">*</span></label>
                                 <div class="col-md-3">
-                                    <input type="text" id="customer_gst_no" name="customer_gst_no"
-                                        value="<?php echo $invoice_data->customer_gst_no;?>" class="form-control"
+                                    <input type="text" id="customer_gst_no" name="customer_gst_no" class="form-control"
                                         placeholder="Customer Gst No">
                                 </div>
                             </div>
-                            <?php } ?>
-
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h1 class="box-title">Billing Information</h1>
@@ -174,7 +141,7 @@
                                             placeholder="Street Address Line1" required>
                                     </div>
                                     <div class="col-md-5">
-                                        <b>Address<span class="text-red">*</span></b>
+                                        <b>Address</b>
                                         <input type="text" id="billing_address2" name="billing_address2"
                                             value="<?php echo $invoice_data->billing_address2;?>" class="form-control"
                                             placeholder="Street Address Line2">
@@ -201,9 +168,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="form-group">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <input type="radio" name="s_address_billing" id="s_address_billing"
-                                            value="Yes" <?php echo ($invoice_data->s_address_billing=="Yes")?'checked':'' ?>/> &nbsp;&nbsp;
+                                            value="Yes" /> &nbsp;&nbsp;
                                         <b>Shipping address same as billing address</b>
                                     </div>
                                 </div> -->

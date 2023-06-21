@@ -148,7 +148,7 @@
                                         Image</span></a></li>
                         </ul>
                     </li>
-                    <?php } if($Role_id == 0 || $Role_id == 2){ ?>
+                    <?php } if($Role_id == 0 || $Role_id == 41){ ?>
                     <!--  <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
@@ -175,7 +175,7 @@
                     <li><a href="<?php echo base_url(); ?>admin/report/assign_rd"><i class="fa fa-arrow-right"></i><span
                                 class="text-bold">Assign & Generate RDs</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 3){ ?>
+                    <?php if($Role_id == 5 || $Role_id == 7){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i class="fa fa-files-o"></i><span
@@ -197,7 +197,7 @@
                         </ul>
                     </li>
                     <?php } ?>
-                    <?php if($Role_id == 4){ ?>
+                    <?php if($Role_id == 2){ ?>
                     <li><a href="<?php echo base_url(); ?>manager/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>manager/report/processed"><i class="fa fa-files-o"></i><span
@@ -205,7 +205,7 @@
                     <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 0 || $Role_id == 5){ ?>
+                    <?php if($Role_id == 0 || $Role_id == 27){ ?>
                     <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
                                 class="text-bold">Custom Link</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-list"></i><span
@@ -224,8 +224,16 @@
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
                         </ul>
                     </li>
+                    <li><a href="<?php echo base_url(); ?>admin/query/assign_list"><i class="fa fa-file-text"></i><span
+                                class="text-bold">Assigned Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/query/upcoming_query_list"><i
+                                class="fa fa-file-text"></i><span class="text-bold">Upcoming Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/generate_invoice/list"><i
+                                class="fa fa-file-text"></i><span class="text-bold">Generate
+                                Invoice</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 5 && $User_Type == "Team Lead" && $department == "Sales"){ ?>
+                  
+                   <!--  <?php if($Role_id == 5 && $User_Type == "Team Lead" && $department == "Sales"){ ?>
                     <li><a href="<?php echo base_url(); ?>admin/query/assign_list"><i class="fa fa-file-text"></i><span
                                 class="text-bold">Assigned Queries</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/query/upcoming_query_list"><i
@@ -233,14 +241,26 @@
                     <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><i
                                 class="fa fa-file-text"></i><span class="text-bold">Generate
                                 Invoice</span></a></li>
-                    <?php } ?>
-                    <?php if($Role_id == 6){?>
+                    <?php } ?> -->
+                    <?php if($Role_id == 33){?>
                     <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-tasks"></i><span
                                 class="text-bold">Job Post</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
-                                class="text-bold">Employee Data</span></a></li>
+                    <!-- <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
+                                class="text-bold">Employee Data</span></a></li> -->
+                    <li class="treeview <?php echo $rmenu_active;?>"><a href="#"><i class="fa fa-users"></i><span
+                                class="text-bold">Employee Data</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li class="<?php echo $rulist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/employee"><span>Active List
+                                    </span></a>
+                            </li>
+                            <li class="<?php echo $rqlist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/employee/resigned_list"><span>Inactive
+                                        List</span></a>
+                            </li>
+                        </ul>
+                    </li>
                     <?php } ?>
-
 
                     <?php if($Role_id == 0 || $Role_id == 1){?>
                     <li class="treeview <?php echo $rmenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
@@ -260,9 +280,23 @@
                         <ul class="treeview-menu">
                             <li class="<?php echo $rjlist;?>"><a href="<?php echo base_url(); ?>admin/jobpost"><span>Job
                                         Post</span></a></li>
-                            <li class="<?php echo $elist;?>"><a
+                            <!-- <li class="<?php echo $elist;?>"><a
                                     href="<?php echo base_url(); ?>admin/employee"><span>Employee
-                                        Data</span></a></li>
+                                        Data</span></a></li> -->
+                            <li class="treeview <?php echo $elist;?>"><a href="#"><i class="fa fa-users"></i><span
+                                        class="text-bold">Employee Data</span> <i
+                                        class="fa fa-angle-left pull-right"></i></a>
+                                <ul class="treeview-menu">
+                                    <li class="<?php echo $rulist;?>"><a
+                                            href="<?php echo base_url(); ?>admin/employee"><span>Active List
+                                            </span></a>
+                                    </li>
+                                    <li class="<?php echo $rqlist;?>"><a
+                                            href="<?php echo base_url(); ?>admin/employee/resigned_list"><span>Inactive
+                                                List</span></a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="<?php echo $ellist;?>"><a
                                     href="<?php echo base_url(); ?>admin/employee/letters"><span>Employment
                                         Letters</span></a></li>
@@ -316,7 +350,7 @@
                         </ul>
                     </li>
                     <?php } ?>
-                    <?php if($Role_id == 7 || $Role_id == 10){?>
+                    <?php if($Role_id == 19 || $Role_id == 13){?>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-envelope-o"></i><span
                                 class="text-bold">Spam Mail</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i

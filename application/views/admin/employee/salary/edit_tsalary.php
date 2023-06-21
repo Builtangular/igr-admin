@@ -33,7 +33,7 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Salary Breakup Details</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/employee/update_salary/<?php echo $single_tsalary_data->id; ?>"
+                    <form action="<?php echo base_url(); ?>admin/employee/update_salary/<?php echo $single_tsalary_data->emp_id; ?>"
                         method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="col-md-12">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="box-footer">
                             <input type="hidden" name="emp_id" class="form-control" id="emp_id"
-                                value="<?php if(!empty($single_tsalary_data)){echo $single_tsalary_data->emp_id;}?>">
+                                value="<?php if(!empty($single_tsalary_data)){echo $single_tsalary_data->id;}?>">
                             <input type="submit" class="btn btn-info pull-right" value="Update">
                         </div>
                     </form>

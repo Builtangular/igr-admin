@@ -110,6 +110,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <a href="<?php echo base_url();?>admin/genrate_invoice/list/<?php echo $id;?>"
+                        class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
+
+                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/download/<?php echo $id;?>"
+                        class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
+                        Proforma Invoice</a>
+                    <?php if ($Role_id == 1) { ?>
+                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/download_main_invoice/<?php echo $id;?>"
+                        class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
+                        Main Invoice</a>
+                    <?php } ?>
+                </div>
+            </div>
 
         </section>
 

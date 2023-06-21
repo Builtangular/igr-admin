@@ -28,20 +28,19 @@ class Query extends CI_Controller {
 			$data['qlist'] = "active";
 			if($User_Type == "Admin"){
 				$data['query_details'] = $this->Query_model->get_query_list1();
-				// var_dump($data['query_details']);die;
-			}else if($User_Type == "Team Lead" && $department == "Marketing"){
-				$data['query_details'] = $this->Query_model->get_query_list1();
 			}
-			else if($department == "Marketing")
+			else if($User_Type == "Team Lead" && $department == "Marketing")
 			{
-			  	$data['query_details'] = $this->Query_model->get_query_details1($data['Login_user_name']);
+				$data['query_details'] = $this->Query_model->get_query_list1();
+			}else if($department == "Marketing")
+			{
+			  	$data['query_details'] = $this->Query_model->get_single_details_marketer($data['Login_user_name']);
 			
 			}else{
 
-				$data['query_details'] = $this->Query_model->get_query_details($data['Login_user_name']);
-				// var_dump($data['query_details']);die;
+				$data['query_details'] = $this->Query_model->get_details_assign_user($data['Login_user_name']);
 		   	}
-			
+		
 		    $this->load->view('admin/query/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -144,7 +143,7 @@ class Query extends CI_Controller {
                 'client_email'               => $this->input->post('client_email'),
                 'client_message'             => $this->input->post('client_message'),
                 'assign_to_team'             => $assigntoteam,
-                'assign_analysis'            => $this->input->post('assign_analysis'), 
+                'assign_analyst'            => $this->input->post('assign_analysis'), 
 				'lead_date'                  => $this->input->post('lead_date'), 
                 'created_user'               => $data['Login_user_name'],
                 'updated_on'                 => date('Y-m-d'),
@@ -219,7 +218,7 @@ class Query extends CI_Controller {
                 'client_email'               => $this->input->post('client_email'),
                 'client_message'             => $this->input->post('client_message'),
                 'assign_to_team'             => $assigntoteam,
-                'assign_analysis'            => $this->input->post('assign_analysis'), 
+                'assign_analyst'            => $this->input->post('assign_analysis'), 
 				'lead_date'                  => $this->input->post('lead_date'), 
                 'created_user'               => $data['Login_user_name'],
                 'updated_on'                 => date('Y-m-d'),
@@ -313,7 +312,7 @@ class Query extends CI_Controller {
                 'client_email'               => $this->input->post('client_email'),
                 'client_message'             => $this->input->post('client_message'),
                 'assign_to_team'             => $assigntoteam,
-                'assign_analysis'            => $this->input->post('assign_analysis'), 
+                'assign_analyst'            => $this->input->post('assign_analysis'), 
 				'lead_date'                  => $this->input->post('lead_date'), 
                 'created_user'               => $data['Login_user_name'],
                 'updated_on'                 => date('Y-m-d'),
@@ -467,7 +466,7 @@ class Query extends CI_Controller {
 			$data['ScopeList'] = $this->Query_model->get_scope_master();
 			$data['reseller_list'] = $this->Query_model->get_reseller_list();
 			$data['assign_details'] = $this->Query_model->get_query_assign_details1($id);
-			// var_dump($data['user_details']);die;
+		    //var_dump($data['ScopeList']);die;
 			$this->load->view("admin/query/edit",$data);
 		}else{
 			$this->load->view("admin/login");			
@@ -483,7 +482,7 @@ class Query extends CI_Controller {
 			$data['department']=$session_data['department'];
 			$id = $this->input->post('id');
 			$assign_to_team = $this->input->post('assign_to_team');
-			// var_dump($assign_to_team);die;
+			//var_dump($assign_to_team);die;
 			if($assign_to_team == "0"){
 				$assigntoteam = 0;
 			}else{
@@ -502,7 +501,7 @@ class Query extends CI_Controller {
                 'client_email'               => $this->input->post('client_email'),
                 'client_message'             => $this->input->post('client_message'),
                 'assign_to_team'             => $assigntoteam,
-                'assign_analysis'            => $this->input->post('assign_analysis'), 
+                'assign_analyst'            => $this->input->post('assign_analysis'), 
 				'lead_date'                  => $this->input->post('lead_date'), 
                 'created_user'               => $data['Login_user_name'],
                 'updated_on'                 => date('Y-m-d'),
@@ -529,7 +528,7 @@ class Query extends CI_Controller {
 				$result = $this->Query_model->insert_assignment_details($insert_assignment);
 			}
 			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
-			if($data['Login_user_name'] == $assign_to_team){
+		    if($data['Login_user_name'] == $assign_to_team || $data['department'] == "Marketing"){
 				redirect('admin/query/list');
 			}
 			redirect('admin/query/assign_list');
@@ -537,18 +536,21 @@ class Query extends CI_Controller {
 			$this->load->view("admin/login");			
 		}
 	}
-	public function delete($id){
-		// var_dump($id);die;
+    public function delete($id){
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['User_Type']=$session_data['User_Type'];
 			$data['department']=$session_data['department'];
-			$data['delete'] = $this->Query_model->delete_recodes($id);
-			// var_dump($data['delete']);die;
+			$Query_delete = $this->Query_model->draft_delete($id);
+			$Assing_query_delete = $this->Query_model->delete_assign_query($id);
+			// var_dump($Query_delete);die;
 			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
-			redirect('admin/query/list');
+			if($data['department'] == "Sales" || $data['department'] == "Marketing"){
+				redirect('admin/query/list');
+			}
+		//	redirect('admin/query/assign_list');
 		}else{
 			$this->load->view("admin/login");			
 		}

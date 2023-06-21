@@ -178,7 +178,7 @@
                                     <div class="col-md-8">
                                         <textarea name="client_message" id="client_message" rows="3"
                                             class="form-control" placeholder="Client Meassage"
-                                            required><?php echo $single_query->client_message;?></textarea>
+                                            ><?php echo $single_query->client_message;?></textarea>
                                     </div>
                                 </div>
                                 <?php if($Role_id == 5) {?>

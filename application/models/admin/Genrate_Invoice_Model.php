@@ -28,7 +28,7 @@ class Genrate_Invoice_Model extends CI_Model {
         $this->db->select('*');
         $this->db->from('tbl_rd_query_data');
         $this->db->join('tbl_order_invoice_data','tbl_rd_query_data.id = tbl_order_invoice_data.query_id');
-        // $this->db->order_by('id',"DESC");
+        $this->db->order_by('tbl_rd_query_data.id',"DESC");
         $query = $this->db->get();
         // echo $this->db->last_query();die;
         return $query->result();  

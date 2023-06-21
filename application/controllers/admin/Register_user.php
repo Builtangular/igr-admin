@@ -50,6 +50,7 @@ class Register_user extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
             $role_id = $this->input->post('user_type');
+            // var_dump( $role_id);die;
             $user_record = $this->User_Model->get_single_user_role_record($role_id);
             $role_type = $user_record->role_type;
             $role_id = $user_record->id;
