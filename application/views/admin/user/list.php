@@ -50,8 +50,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $i=1;
-                                    foreach($user_details as $list){ ?>
+                        $i=1;
+                        foreach($user_details as $list){ ?>
                                     <tr>
                                         <td><?php echo $i++; ?></td>
                                         <td><?php echo $list->user_type; ?></td>
@@ -123,6 +123,11 @@ $(function() {
     $('#rddata').DataTable()
     $('#example2').DataTable({
         'paging': true,
+        'lengthChange': false,
+        'searching': false,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false
     })
 })
 </script>

@@ -52,6 +52,7 @@
                 <div class="col-sm-4 invoice-col">
                     <b>Customer GST No:</b> <?php echo $customer_gst_no;?><br>
                 </div>
+
             </div>
             <div class="row">
                 <div class="col-xs-12 table-responsive">
@@ -79,8 +80,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-6 pull-left">
-                    <!-- <p class="lead">Date : <?php echo $created_at;?></p> -->
-                </div>
+                    
+                <!-- <p class="lead">Date : <?php echo $created_at;?></p> -->
+                   </div>
                 <div class="col-xs-6 pull-right">
                     <div class="table-responsive">
                         <table class="table">
@@ -113,17 +115,19 @@
                     <a href="<?php echo base_url();?>admin/genrate_invoice/list/<?php echo $id;?>"
                         class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
 
-                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload/<?php echo $id;?>"
+                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/download/<?php echo $id;?>"
                         class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
                         Proforma Invoice</a>
                     <?php if ($Role_id == 1) { ?>
-                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/donwload_main_invoice/<?php echo $id;?>"
+                    <a href="<?php echo base_url(); ?>admin/genrate_invoice/download_main_invoice/<?php echo $id;?>"
                         class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
                         Main Invoice</a>
                     <?php } ?>
                 </div>
             </div>
+
         </section>
+
     </section>
 </div>
 <?php $this->load->view('admin/footer.php'); ?>

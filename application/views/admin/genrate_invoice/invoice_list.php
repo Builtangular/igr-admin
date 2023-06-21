@@ -66,7 +66,7 @@
                                 <tr style="font-size: 14px;">
                                     <td><?php echo $data->query_code; ?></td>
                                     <td><?php echo $data->invoice_title; ?></td>
-                                    <td><?php echo $data->main_invoice_no; ?></td>
+                                    <td><?php echo $data->invoice_no; ?></td>
                                     <td><?php echo date('F, Y', strtotime($data->order_date)); ?></td>
                                     <td>
                                         <?php if ($query_invoice_details->num_rows() > 0) { ?>

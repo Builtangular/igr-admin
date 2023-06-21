@@ -2,60 +2,68 @@
 
 class Employee_Model extends CI_Model {   
     
-    public function __construct() 
-    {
+    public function __construct(){
         parent::__construct(); 
         $this->load->database();
         $this->admindb = $this->load->database('admindb', TRUE);
     }
-    public function insert_emp_personal_details($file){
-        $data = array(
-                'job_type'                      => $this->input->post('job_type'),
-                'emp_code'                      => $this->input->post('emp_code'),
-                'joining_date'                  => $this->input->post('joining_date'),
-                'appraisal_date'                => $this->input->post('appraisal_date'),
-                'prefix'                        => $this->input->post('prefix'),
-                'first_name'                    => $this->input->post('first_name'),
-                'middle_name'                   => $this->input->post('middle_name'),
-                'last_name'                     => $this->input->post('last_name'),
-                'date_of_birth'                 => $this->input->post('date_of_birth'),
-                'gender'                        => $this->input->post('gender'),
-                'mobile_number'                 => $this->input->post('mobile_number'),
-                'alternate_mobile_no'           => $this->input->post('alternate_mobile_no'),
-                'personal_email_id'             => $this->input->post('personal_email_id'),
-                'official_email_id'             => $this->input->post('official_email_id'),
-                'marital_status'                => $this->input->post('marital_status'),
-                'spouse_name'                   => $this->input->post('spouse_name'),
-                'father_name'                   => $this->input->post('father_name'),
-                'permant_address'               => $this->input->post('permant_address'),
-                'current_address'               => $this->input->post('current_address'),
-                'relative_name'                 => $this->input->post('relative_name'),
-                'relative_contact_no'           => $this->input->post('relative_contact_no'),
-                'reference_name'                => $this->input->post('reference_name'),
-                'reference_contact_no'          => $this->input->post('reference_contact_no'),
-                'aadhaar_no'                    => $this->input->post('aadhaar_no'),
-                'pan_no'                        => $this->input->post('pan_no'),
-                'passport_no'                   => $this->input->post('passport_no'),
-                'education_type'                => $this->input->post('education_type'),
-                'degree'                        => $this->input->post('degree'),
-                'resignation_date'              => $this->input->post('resignation_date'),
-                'passing_year'                    => $this->input->post('passing_year'),
-                'department'                    => $this->input->post('department'),
-                'job_profile'                   => $this->input->post('job_profile'),                
-                'uan_no'                        => $this->input->post('uan_no'),
-                'pf_no'                         => $this->input->post('pf_no'),
-                'upload_image'                  => $file,
-                'user_type'                     => $this->input->post('user_type'),
-                'created_on'                    => date('Y-m-d'),
-                'updated_on'                    => date('Y-m-d'),
+    public function insert_emp_personal_details($data){
+        // $data = array(
+        //         'job_type'                      => $this->input->post('job_type'),
+        //         'emp_code'                      => $this->input->post('emp_code'),
+        //         'joining_date'                  => $this->input->post('joining_date'),
+        //         'appraisal_date'                => $this->input->post('appraisal_date'),
+        //         'prefix'                        => $this->input->post('prefix'),
+        //         'first_name'                    => $this->input->post('first_name'),
+        //         'middle_name'                   => $this->input->post('middle_name'),
+        //         'last_name'                     => $this->input->post('last_name'),
+        //         'date_of_birth'                 => $this->input->post('date_of_birth'),
+        //         'blood_group'                   => $this->input->post('blood_group'),
+        //         'gender'                        => $this->input->post('gender'),
+        //         'mobile_number'                 => $this->input->post('mobile_number'),
+        //         'alternate_mobile_no'           => $this->input->post('alternate_mobile_no'),
+        //         'personal_email_id'             => $this->input->post('personal_email_id'),
+        //         'official_email_id'             => $this->input->post('official_email_id'),
+        //         'marital_status'                => $this->input->post('marital_status'),
+        //         'spouse_name'                   => $this->input->post('spouse_name'),
+        //         'father_name'                   => $this->input->post('father_name'),
+        //         'permant_address'               => $this->input->post('permant_address'),
+        //         'current_address'               => $this->input->post('current_address'),
+        //         'relative_name'                 => $this->input->post('relative_name'),
+        //         'relative_contact_no'           => $this->input->post('relative_contact_no'),
+        //         'relation'                      => $this->input->post('relation'),
+        //         'emergency_name'                => $this->input->post('emergency_name'),
+        //         'emergency_contact_no'          => $this->input->post('emergency_contact_no'),
+        //         'emergency_relation'            => $this->input->post('emergency_relation'),
+        //         'aadhaar_no'                    => $this->input->post('aadhaar_no'),
+        //         'pan_no'                        => $this->input->post('pan_no'),
+        //         'passport_no'                   => $this->input->post('passport_no'),
+        //         'education_type'                => $this->input->post('education_type'),
+        //         'degree'                        => $this->input->post('degree'),
+        //         'resignation_date'              => $this->input->post('resignation_date'),
+        //         'passing_year'                  => $this->input->post('passing_year'),
+        //         'department'                    => $this->input->post('department'),
+        //         'designation'                   => $this->input->post('designation'),                
+        //         'head_name'                     => $this->input->post('head_name'),
+        //         'emp_status'                    => $this->input->post('emp_status'),                
+        //         'uan_no'                        => $this->input->post('uan_no'),
+        //         'pf_no'                         => $this->input->post('pf_no'),
+        //         'upload_image'                  => $file,
+        //         'user_type'                     => $this->input->post('user_type'),
+        //         'created_on'                    => date('Y-m-d'),
+        //         'updated_on'                    => date('Y-m-d'),
                 
-        );
+        // );
         $result = $this->db->insert('tbl_emp_enrollement', $data);
         $insert_id = $this->db->insert_id();
         return $insert_id;
     }
-    public function get_emp_personal_details($id)
-    {
+    public function insert_user_login_details($data){
+        $result = $this->db->insert('tbl_user_login_details', $data);
+        return $result;
+        
+    }
+    public function get_emp_personal_details($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_enrollement');
         $this->db->where(array('id' => $id));                  
@@ -98,7 +106,6 @@ class Employee_Model extends CI_Model {
         $result = $this->db->insert('tbl_emp_salary_temporary',$data);
         return $result;
     }
-
     public function insert_bank_details($data){     
         $result = $this->db->insert('tbl_emp_bank_details',$data);
         return $result;
@@ -113,7 +120,6 @@ class Employee_Model extends CI_Model {
         );
         $result = $this->db->insert('tbl_emp_document',$data);
         return $result;
-
     }
     public function get_employee_doc($id){
         $this->db->select('doc_type');
@@ -122,135 +128,42 @@ class Employee_Model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_employee_details()
-    {
+    public function get_employee_details(){
         $this->db->select('*');
         $this->db->from('tbl_emp_enrollement');
         $this->db->order_by('appraisal_date', 'asc');
         $query = $this->db->get();
         return $query->result();
     }
-    public function getdepartments(){
-
-        ## Fetch records
-        $this->db->distinct();
-        $this->db->select('department');
-        $this->db->order_by('department','asc');
-        $records = $this->db->get('tbl_emp_enrollement')->result();
-   
-        $department_data = array();
-   
-        foreach($records as $record ){
-           $department_data[] = $record->department;
-        }
-   
-        return $department_data;
-      }
-    public function getprofile(){
-
-        ## Fetch records
-        $this->db->distinct();
-        $this->db->select('job_profile');
-        $this->db->order_by('job_profile','asc');
-        $records = $this->db->get('tbl_emp_enrollement')->result();
-   
-        $data = array();
-   
-        foreach($records as $record ){
-           $data[] = $record->job_profile;
-        }
-   
-        return $data;
-      }
-    public function get_employee_details_with_profile($postData=null)
-    {
-        $response = array();
-
-        ## Read value
-        $draw = $postData['draw'];
-        $start = $postData['start'];
-        $rowperpage = $postData['length']; // Rows display per page
-        $columnIndex = $postData['order'][0]['column']; // Column index
-        $columnName = $postData['columns'][$columnIndex]['data']; // Column name
-        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-        $searchValue = $postData['search']['value']; // Search value
-   
-        // Custom search filter 
-        $searchCity = $postData['searchByGender'];
-        $searchDepartment = $postData['searchByDepartment'];
-
-        /* $this->db->select('*');
+    public function get_employee_resigned_list(){
+        $this->db->select('*');
         $this->db->from('tbl_emp_enrollement');
-        // $this->db->order_by('appraisal_date', 'asc');
-        $this->db->where(array('job_profile' => $searchCity)); 
+        $this->db->where(array('emp_status!=' =>'Active', 'status'=> 0));
         $query = $this->db->get();
-        // echo $this->db->last_query(); die;
-        return $query->result(); */
-        ## Fetch records
-         ## Search 
-     $search_arr = array();
-     $searchQuery = "";
-        if($searchCity != ''){
-            $search_arr[] = " job_profile='".$searchCity."' ";
-         }
-         if($searchDepartment != ''){
-            $search_arr[] = " department='".$searchDepartment."' ";
-         }
-         if(count($search_arr) > 0){
-            $searchQuery = implode(" and ",$search_arr);
-         }
-    
-        ## Fetch records
-     $this->db->select('*');
-     if($searchQuery != '')
-     $this->db->where($searchQuery);
-     $this->db->order_by($columnName, $columnSortOrder);
-     $this->db->limit($rowperpage, $start);
-     $records = $this->db->get('tbl_emp_enrollement')->result();
-
-     $data = array();
-
-     foreach($records as $record ){
-
-       $data[] = array( 
-         "emp_code"=>$record->emp_code,
-         "emp_name"=>$record->first_name,
-         "joining_date"=>$record->joining_date,
-         "appraisal_date"=>$record->appraisal_date,
-         "job_profile"=>$record->job_profile,
-         "department"=>$record->department
-       ); 
-     }
-
-     ## Response
-     $response = array(
-       "draw" => intval($draw),
-       "iTotalRecords" => $totalRecords,
-       "iTotalDisplayRecords" => $totalRecordwithFilter,
-       "aaData" => $data
-     );
-
-     return $response; 
-
+        return $query->result();
     }
-    public function get_permenent_employee_details()
-    {
+    public function get_single_user_role_record($roleid){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_designation');
+        $this->db->where('designation_type', $roleid);
+        $query = $this->db->get();
+        return $query->row(); 
+    }
+    public function get_permenent_employee_details(){
         $this->db->select('*');
         $this->db->from('tbl_emp_enrollement');
         $this->db->where('job_type', 'Full Time');
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_employment_record($id)
-    {
+    public function get_employment_record($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_employment');
         $this->db->where(array('emp_id' => $id));
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_employee_record($id)
-    {
+    public function get_employee_record($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_enrollement');
         $this->db->where(array('id' => $id));
@@ -258,72 +171,95 @@ class Employee_Model extends CI_Model {
         // echo $this->db->last_query();
         return $query->row();
     }
-    
-    public function get_psalary_list($id)
-    {
+    public function get_psalary_list($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_salary_permanent');
         $this->db->where(array('emp_id' => $id));
         $query = $this->db->get();
         return $query->result();
     } 
-    public function get_tsalary_list($id)
-    {
+    public function get_tsalary_list($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_salary_temporary');
         $this->db->where(array('emp_id' => $id));
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_employee_bank_details($id)
-    {
+    public function get_employee_bank_details($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_bank_details');
         $this->db->where(array('emp_id' => $id));
         $query = $this->db->get();
         return $query->result();
     } 
-    public function get_employee_personal_bank_details($id)
-    {
+    public function get_employee_personal_bank_details($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_bank_details');
         $this->db->where(array('emp_id' => $id, 'type' => 'Personal'));
         $query = $this->db->get();
         return $query->row();
     } 
-    public function get_emp_permant_salary_details($id)
-    {
+    public function get_emp_permant_salary_details($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_salary_permanent');
         $this->db->where(array('emp_id' => $id));
         $query = $this->db->get();
         return $query->row();
     } 
-    public function get_emp_temporary_salary_details($id)
-    {
+    public function get_emp_temporary_salary_details($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_salary_temporary');
         $this->db->where(array('emp_id' => $id));
         $query = $this->db->get();
         return $query->row();
     }
-    public function get_single_employee_data($id)
-    {
+    public function get_single_employee_data($id){
         $this->db->where('id',$id);
         $result = $this->db->get('tbl_emp_enrollement');
 		//echo $this->db->last_query();die;
 		return $result->row();
     }
-    public function get_p_salary_details($id)
-    {
+    public function get_single_job_type($id){
+        $this->db->where('id',$id);
+        $result = $this->db->get('tbl_emp_type');
+		//echo $this->db->last_query();die;
+		return $result->row();
+    } 
+    public function get_single_dept_type($id){
+        $this->db->where('id',$id);
+        $result = $this->db->get('tbl_emp_enrollement');
+		//echo $this->db->last_query();die;
+		return $result->row();
+    }
+    public function get_single_designation_data($id){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_designation');
+        $this->db->where('id',$id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function get_designation_records($dept_id){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_designation');
+        $this->db->where('dept_id',$dept_id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_single_employee_type($id){
+        $this->db->where('id',$id);
+        $result = $this->db->get('tbl_emp_type');
+		//echo $this->db->last_query();die;
+		return $result->row();
+        
+    }
+    public function get_p_salary_details($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_salary_permanent');
         $this->db->where(array('emp_id' => $id));
         $query = $this->db->get();
         return $query->result();
     }
-     public function get_t_salary_details($id)
-    {
+     public function get_t_salary_details($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_salary_temporary');
         $this->db->where(array('emp_id' => $id));
@@ -341,6 +277,7 @@ class Employee_Model extends CI_Model {
             'middle_name'                   => $this->input->post('middle_name'),
             'last_name'                     => $this->input->post('last_name'),
             'date_of_birth'                 => $this->input->post('date_of_birth'),
+            'blood_group'                   => $this->input->post('blood_group'),
             'gender'                        => $this->input->post('gender'),
             'mobile_number'                 => $this->input->post('mobile_number'),
             'alternate_mobile_no'           => $this->input->post('alternate_mobile_no'),
@@ -353,29 +290,32 @@ class Employee_Model extends CI_Model {
             'current_address'               => $this->input->post('current_address'),
             'relative_name'                 => $this->input->post('relative_name'),
             'relative_contact_no'           => $this->input->post('relative_contact_no'),
-            'reference_name'                => $this->input->post('reference_name'),
-            'reference_contact_no'          => $this->input->post('reference_contact_no'),
+            'relation'                      => $this->input->post('relation'),
+            'emergency_name'                => $this->input->post('emergency_name'),
+            'emergency_contact_no'          => $this->input->post('emergency_contact_no'),
+            'emergency_relation'            => $this->input->post('emergency_relation'),
             'aadhaar_no'                    => $this->input->post('aadhaar_no'),
             'pan_no'                        => $this->input->post('pan_no'),
             'passport_no'                   => $this->input->post('passport_no'),
             'education_type'                => $this->input->post('education_type'),
             'degree'                        => $this->input->post('degree'),
-            'passing_year'                  => $this->input->post('passing_year'),
             'resignation_date'              => $this->input->post('resignation_date'),
+            'passing_year'                  => $this->input->post('passing_year'),
             'department'                    => $this->input->post('department'),
-            'job_profile'                   => $this->input->post('job_profile'),            
+            'designation'                   => $this->input->post('designation'),                
+            'head_name'                     => $this->input->post('head_name'),
+            'emp_status'                    => $this->input->post('emp_status'),                
             'uan_no'                        => $this->input->post('uan_no'),
-            'pf_no'                         => $this->input->post('pf_no'),            
-            'passing_year'                  => $this->input->post('passing_year'),            
+            'pf_no'                         => $this->input->post('pf_no'),
             'upload_image'                  => $file,
             'user_type'                     => $this->input->post('user_type'),
             'updated_on'                    => date('Y-m-d'),
             );
+        // var_dump($update);die;
         $this->db->where('id', $id);
         return $this->db->update('tbl_emp_enrollement', $update);
     }
-    public function insert_employment_details($id)
-      {
+    public function insert_employment_details($id){
           $data = array(
                'emp_id'                      => $id,
                'company_name'                => $this->input->post('company_name'),
@@ -412,13 +352,30 @@ class Employee_Model extends CI_Model {
         return $this->db->update('tbl_emp_employment', $update);
     }
     public function delete_employment_data($id){
+        // $this->db->where("id", $id);
+    	// $res = $this->db->delete("tbl_emp_enrollement");
+        // //echo $this->db->last_query();die;
+		// return $res;
+        $tables = array('tbl_emp_document', 'tbl_emp_bank_details','tbl_emp_salary_permanent','tbl_emp_salary_temporary');
+        // $this->db->where(array('id'=>$id, 'emp_id !=' =>$id));
+        $this->db->where('emp_id', $id);
+        // $this->db->where('emp_id', $id);
+        $this->db->delete($tables);
+
+        // $this->db->select("*");
+        // $this->db->from("tbl_emp_enrollement");
+        // $this->db->join("tbl_emp_bank_details", "tbl_emp_enrollement.id = tbl_emp_bank_details.emp_id");
+        // $this->db->where('tbl_emp_enrollement.id', $id);
+        // $this->db->delete("tbl_emp_enrollement");
+    }
+    public function delete_employment_records($id){
         $this->db->where("id", $id);
-    	$res = $this->db->delete("tbl_emp_employment");
+    	$res = $this->db->delete("tbl_emp_enrollement");
+        //echo $this->db->last_query();die;
 		return $res;
     }
     /* update employment data */
-    public function get_single_empolyment_data($id)
-    {
+    public function get_single_empolyment_data($id){
         $this->db->where('id',$id);
         $result = $this->db->get('tbl_emp_employment');
 		//echo $this->db->last_query();die;
@@ -443,8 +400,7 @@ class Employee_Model extends CI_Model {
 		return $res;
     }
     /* update salary breackup */
-    public function get_single_psalary_data($id)
-    {
+    public function get_single_psalary_data($id){
         /* $this->db->where(array('emp_id', $id));
         $result = $this->db->get('tbl_emp_salary_permanent'); */
         $this->db->select('*');
@@ -455,8 +411,7 @@ class Employee_Model extends CI_Model {
 		// echo $this->db->last_query();die;
 		return $result->row();
     }
-    public function get_single_tsalary_data($id)
-    {
+    public function get_single_tsalary_data($id){
         $this->db->where('id',$id);
         $result = $this->db->get('tbl_emp_salary_temporary');
 		//echo $this->db->last_query();die;
@@ -494,7 +449,7 @@ class Employee_Model extends CI_Model {
         return $this->db->update('tbl_emp_salary_temporary', $update);
     }
     public function delete_psalary($id){
-        $this->db->where("id", $id);
+        $this->db->where("emp_id", $id);
     	$res = $this->db->delete("tbl_emp_salary_permanent");
 		return $res;
     } 
@@ -504,26 +459,12 @@ class Employee_Model extends CI_Model {
 		return $res;
     }
     /* bank details */
-   /*  public function get_p_bank_details($id)
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_emp_bank_details');
-        $this->db->where(array('emp_id' => $id));
-        $query = $this->db->get();
-        return $query->result();
-    } */
-    public function get_single_bank_data($id)
-    {
+    public function get_single_bank_data($id){
         $this->db->where('id',$id);
         $result = $this->db->get('tbl_emp_bank_details');
 		//echo $this->db->last_query();die;
 		return $result->row();
     }
-   /*  public function delete_p_salary($id){
-        $this->db->where("id", $id);
-    	$res = $this->db->delete("tbl_emp_bank_details");
-		return $res;
-    }  */
     public function delete_bank_details($id){
         $this->db->where("id", $id);
     	$res = $this->db->delete("tbl_emp_bank_details");
@@ -532,8 +473,7 @@ class Employee_Model extends CI_Model {
     /* /. bank details */
 
     /* documents */
-    public function get_document_list($id)
-    {
+    public function get_document_list($id){
         $this->db->select('*');
         $this->db->from('tbl_emp_document');
         $this->db->where(array('emp_id' => $id));
@@ -569,5 +509,67 @@ class Employee_Model extends CI_Model {
          $this->db->where('id',$id);
          return $this->db->update('tbl_emp_document', $update);
     } 
+     /* employee type */
+     public function get_emp_type_details(){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_type');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    /* / .employee type */
+    /* employee department */
+     public function get_emp_dept_details(){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_department');
+        $this->db->where('status',1);
+        $query = $this->db->get();
+        return $query->result();
+     }
+    /* / .employee department */
+
+     /* employee designation */
+     public function get_emp_designation_details(){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_designation');
+        $query = $this->db->get();
+        return $query->result();
+     }
+    /* / .employee designation */
+     public function get_emp_head_details($department,$designation){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_enrollement');
+        $this->db->where(array('designation'=>$designation, 'department'=>$department));
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result_array();
+     } 
+     public function get_emp_designation_records($postdata){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_designation');
+        $this->db->where('dept_id', $postdata['dept_id']);
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result_array();
+    }  
+    public function get_emp_designation_data1($postdata){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_enrollement');
+        $this->db->where('head_name', $postdata['designation']);
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result_array();
+    }
+    public function get_emp_designation_data(){
+        $this->db->select('*');
+        $this->db->from('tbl_emp_designation');
+        // $this->db->where('dept_id',$id);
+        $this->db->join('tbl_emp_enrollement','tbl_emp_designation.dept_id = tbl_emp_enrollement.id');
+        // $this->db->order_by('id',"DESC");
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result();
+    }
+    
+   
 
 }

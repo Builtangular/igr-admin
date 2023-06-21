@@ -29,11 +29,11 @@
                             class="form-horizontal">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Invoice Title<span
+                                    <label class="control-label col-md-2">Order Title<span
                                             class="text-red">*</span></label>
                                     <div class="col-md-3">
-                                        <input type="text" name="title" id="title" class="form-control"
-                                            placeholder="Invoice Title" required>
+                                        <input type="text" name="order_title" id="order_title" class="form-control"
+                                            placeholder="Order Title" required>
                                     </div>
                                     <label class="control-label col-md-2">Invoice No. <span
                                             class="text-red">*</span></label>
@@ -128,28 +128,32 @@
                                     <div class="box-header with-border">
                                         <h1 class="box-title">Price Details</h1>
                                     </div>
+
                                     <div class="form-group">
+                                        <div class="col-md-4">
+                                            <b>Invoice Title<span class="text-red">*</span></b>
+                                            <input type="text" name="title[]" id="title" class="form-control"
+                                                placeholder="Invoice Title" required>
+                                        </div>
                                         <div class="col-md-3">
                                             <b>Unit Price<span class="text-red">*</span></b>
-                                            <input type="text" id="price" name="price" class="form-control"
-                                                placeholder="Unit Price">
+                                            <input type="text" id="price" name="price[]" class="form-control"
+                                                placeholder="Unit Price" data-tag-id="">
                                         </div>
                                         <div class="col-md-3">
                                             <b>Unit No.<span class="text-red">*</span></b>
-                                            <select class="form-control b-none" id="unit_no" name="unit_no">
-                                                <option value="" selected>Select Unit No.</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
+                                            <input type="text" id="unit_no" name="unit_no[]" onblur="reSum();"
+                                                class="form-control" placeholder="Unit No.">
                                         </div>
+                                        <div class="col-md-2">
+                                            <b>Add<span class="text-red">*</span></b>
+                                            <span type="button" class="btn btn-block btn-info" id="invoice_titles"><i
+                                                    class="fa fa-plus"></i> Add</span>
+                                        </div>
+                                        <!-- <span id="Titles"></span> -->
+                                    </div>
+                                    <span id="Titles"></span>
+                                    <div class="form-group">
                                         <div class="col-md-3">
                                             <b>Discount Type<span class="text-red">*</span></b>
                                             <select class="form-control b-none" name="discount_type" id="discount_type"
@@ -169,16 +173,15 @@
                                             <input type="text" id="absolute_price" name="absolute_price"
                                                 onblur="reSum();" class="form-control" placeholder="Absolute Price">
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2">Total Amount <span class="text-red">*</span></label>
                                         <div class="col-md-3">
+                                            <b>Total Amount<span class="text-red">*</span></b>
                                             <input type="text" id="total_amount" name="total_amount" onblur="reSum();"
-                                                class="form-control" placeholder="Total Amount" required>
-                                            <span class="help-block margin" id="txtHint"></span>
+                                                class="form-control" placeholder="Total Amount">
                                         </div>
                                     </div>
+
                                 </div>
+
                                 <div class="box-footer">
                                     <input type="submit" class="btn btn-primary pull-right" value="Submit">
                                 </div>
@@ -201,82 +204,8 @@ currency.addEventListener('change', function() {
         my_div.classList.remove('hide');
     } else {
         my_div.classList.add('hide');
-
     }
 })
-
-var discount_type = document.getElementById('discount_type');
-var discount = document.getElementById('discount');
-var absolute = document.getElementById('absolute');
-
-
-discount_type.addEventListener('change', function() {
-    if (this.value == "Percentage") {
-        discount.classList.remove('hide');
-        absolute.classList.add('hide');
-    } else if (this.value == "Absolute") {
-        discount.classList.add('hide');
-        absolute.classList.remove('hide');
-    } else {
-        discount.classList.add('hide');
-        absolute.classList.add('hide');
-
-    }
-})
-
-function reSum() {
-    var percentage, result, result1, mult, multiplication, abs, dis, discount;
-    var price = parseFloat(document.getElementById("price").value);
-    var unit_no = parseInt(document.getElementById("unit_no").value);
-    var percentage = parseFloat(document.getElementById("dis_percentage").value);
-    var absolute_price = parseFloat(document.getElementById("absolute_price").value);
-    var total_amt = parseFloat(document.getElementById("total_amount").value);
-
-    // console.log(price);
-    multiplication = price * unit_no;
-    /* calculate discount */
-    percentage = (percentage / 100).toFixed(2);
-    mult = multiplication * percentage;
-    // multiplication = price * percentage;
-    discount = multiplication - mult;
-    // console.log(discount);
-    /* substration of price and absolute value */
-    result = multiplication - absolute_price;
-    // console.log(result); 
-    if (result) {
-        document.getElementById("total_amount").value = result;
-    } else {
-        document.getElementById("total_amount").value = discount;
-    }
-}
-    // if(percentage){
-    //     percentage = (percentage / 100).toFixed(2);
-    //     multiplication = price * percentage;
-    //     total_amt = price - multiplication;
-    //     // document.getElementById("dis_percentage").value = discount;
-    //     document.getElementById("total_amount").value = total_amt;
-    // } else {
-    //     total_amt = multiplication - absolute_price;
-    //     document.getElementById("dis_percentage").value = percentage;
-    //     document.getElementById("dis_percentage").value = percentage;
-    //     document.getElementById("total_amount").value = total_amt;
-    // } 
-    // console.log(discount);
-    // if (absolute_price) {
-    //     discount = (absolute_price / multiplication * 100).toFixed(2);
-    //     total_amt = multiplication - absolute_price;
-
-    //     document.getElementById("absolute_price").value = absolute_price;
-    //     document.getElementById("dis_percentage").value = discount;
-    //     document.getElementById("total_amount").value = total_amt;
-    // } else {
-    //     absolute_val = (percentage / 100) * multiplication;
-    //     // console.log(absolute_val);
-    //     total_amt = multiplication - absolute_val;
-    //     document.getElementById("dis_percentage").value = percentage;
-    //     document.getElementById("absolute_price").value = absolute_val;
-    //     document.getElementById("total_amount").value = total_amt;
-    // }
 
 jQuery(function() {
     var counter = 1;
@@ -322,5 +251,100 @@ function RemoveRow(rowID) {
     jQuery('#Row_' + rowID).remove();
 
 }
+
+
+jQuery(function() {
+    var counter = 1;
+    var i = 1;
+    jQuery('#invoice_titles').click(function(event) {
+        event.preventDefault();
+        counter++;
+        var newRow = jQuery('<div class="form-group" id="Row_' + counter +
+            '"><div class="col-md-4"><b>Invoice Title ' +
+            counter +
+            '<span class="text-red">*</span></b><input type="text" name="title[]" id="title" class="form-control" placeholder="Invoice Title" required></div><div class="col-md-3"><b>Unit Price ' +
+            counter +
+            '<span class="text-red">*</span></b><input type="text" id="price" name="price[]" class="form-control" data-tag-id="" placeholder="Unit Price"></div><div class="col-md-3"><b>Unit No.' +
+            counter +
+            '<span class="text-red">*</span></b><input type="text" id="unit_no" name="unit_no[]" onblur="reSum();" class="form-control" placeholder="Unit No."></div> <div class="col-md-2"><b>Close<span class="text-red">*</span></b><a id="Rmv_' +
+            counter + '" href="javascript:RemoveRow(' + counter +
+            ');"><span type="button" class="btn btn-block btn-danger" id="invoice_titles"><i class="fa fa-close"></i> Close</span></a></div>   </div>     '
+        );
+
+        jQuery('#Titles').append(newRow);
+        i++;
+        console.log(newRow);
+    });
+});
+
+function RemoveRow(rowID) {
+    jQuery('#Row_' + rowID).remove();
+
+}
+
+var discount_type = document.getElementById('discount_type');
+var discount = document.getElementById('discount');
+var absolute = document.getElementById('absolute');
+
+
+discount_type.addEventListener('change', function() {
+    if (this.value == "Percentage") {
+        discount.classList.remove('hide');
+        absolute.classList.add('hide');
+    } else if (this.value == "Absolute") {
+        discount.classList.add('hide');
+        absolute.classList.remove('hide');
+    } else {
+        discount.classList.add('hide');
+        absolute.classList.add('hide');
+
+    }
+
+
+})
+
+function reSum() {
+    var tags = [];
+    var unit = [];
+    var sum = 0;
+    // console.log(tags);
+    var unit_no = document.getElementById("unit_no");
+    $("[id='unit_no']").each(function() {
+        // value.add($(this).val()),
+        // sum = sum + this.value;
+        unit.push($(this).val())
+    });
+    // console.log(unit);
+    $('[data-tag-id]').each(function() {
+        // value.add($(this).val()),
+        // sum = sum + this.value;
+        tags.push($(this).val())
+    })
+    n = tags.length;
+    // console.log(tags);
+    for (var i = 0; i < n; i++) {
+        mult = tags[i] * unit[i];
+        //   sum = (sum+parseInt(tags[i]));
+        sum = (sum + parseInt(mult));
+    }
+    // console.log(sum);
+    var discount, multiplication;
+    var percentage = parseFloat(document.getElementById("dis_percentage").value);
+    var absolute_price = parseFloat(document.getElementById("absolute_price").value);
+    percentage = (percentage / 100).toFixed(2);
+    multiplication = sum * percentage;
+    discount = sum - multiplication;
+
+    result = sum - absolute_price;
+    // console.log(result);
+
+    if (result) {
+        document.getElementById("total_amount").value = result;
+    } else {
+        document.getElementById("total_amount").value = discount;
+    }
+
+}
     </script>
+
     <?php $this->load->view('admin/footer.php'); ?>

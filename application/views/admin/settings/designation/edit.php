@@ -1,0 +1,94 @@
+<?php $this->load->view('admin/header.php'); ?>
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Update Employee Designation
+            <small></small>
+        </h1>
+        <!-- You can dynamically generate breadcrumbs here -->
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Add</li>
+        </ol>
+    </section>
+    <style>
+    .error {
+        color: red;
+    }
+    </style>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Your Page Content Here -->
+        <div class='row'>
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h1 class="box-title"> Update Employee Designation</h1>
+                    </div>
+                    <form action="<?php echo base_url(); ?>admin/settings/update_designations" id="employment-form"
+                        method="post" class="form-horizontal" enctype="multipart/form-data">
+                        <div class="box-body">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Department Type <span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-8">
+                                        <select class="form-control b-none" name="dept_id" id="dept_id" required>
+                                            <option value="" selected>Select Type</option>
+                                            <?php 						
+                                            foreach($department_details as $data){
+                                                if($single_dept->type == $data->type){ ?>
+                                            <option value="<?php echo $single_dept->type;?>" selected>
+                                                <?php echo $single_dept->type;?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $data->type;?>">
+                                                <?php echo $data->type; ?>
+                                            </option>
+                                            <?php						
+                                            } }				
+                                            ?>
+                                            <!-- <?php 						
+                                            foreach($department_details as $data)						
+                                            {				
+                                            ?>
+                                            <option value="<?php echo $data->id;?>"><?php echo $data->type; ?>
+                                            </option>
+                                            <?php						
+                                            }					
+                                            ?> -->
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Type <span class="text-red">*</span></label>
+                                    <div class="col-md-8">
+                                        <input type="text" id="designation_type" name="designation_type"
+                                            value="<?php echo $designation_data->designation_type;?>" class="form-control"
+                                            placeholder="Designation" required>
+                                        <span class="help-block margin" id="txtHint"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <input type="hidden" name="id" class="form-control" id="id"
+                                value="<?php if(!empty($designation_data)){echo $designation_data->id;}?>">
+                            <input type="submit" class="btn btn-info pull-right" style='margin-right:16px' name="button"
+                                value="Update">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+
+
+<!-- Bootstrap 3.3.2 JS -->
+
+<?php $this->load->view('admin/footer.php'); ?>

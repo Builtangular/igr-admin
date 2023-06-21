@@ -66,6 +66,18 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         value="<?php echo $single_query_data->source_mail_id;?>" class="form-control"
                                         placeholder="Email Id">
                                 </div>
+                                <label class="control-label col-md-1">Type<span class="text-red">*</span></label>
+                                <div class="col-md-2">
+                                    <select class="form-control b-none" name="type" id="type" required>
+                                        <option value="<?php echo $single_query_data->type;?>" selected>
+                                            <?php echo $single_query_data->type;?></option>
+                                        <option value="Sample Request">Sample Request</option>
+                                        <option value="TOC Request">TOC Request</option>
+                                        <option value="Customization">Customization</option>
+                                        <option value="Enquiry">Enquiry</option>
+                                        <option value="Discount Request">Discount Request</option>
+                                    </select>
+                                </div>
                                 <?php if($single_query_data->source == "Reseller"){ ?>
                                 <label class="control-label col-md-1" id="reseller_div">Reseller</label>
                                 <div class="col-md-2">

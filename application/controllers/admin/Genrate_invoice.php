@@ -20,6 +20,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['massage'] = $this->session->userdata('msg');
             $data['gimenu_active'] = "active menu-open";
 			$data['gilist'] = "active";
@@ -36,6 +38,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['massage'] = $this->session->userdata('msg');
             $data['gimenu_active'] = "active menu-open";
 			$data['gilist'] = "active";
@@ -52,6 +56,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['massage'] = $this->session->userdata('msg');
 			$data['id'] = $id;
             $data['gimenu_active'] = "active menu-open";
@@ -69,6 +75,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['id'] = $id;
             // $id = $_POST['id'];
             $query_details = $this->Genrate_Invoice_Model->get_query_records($id);
@@ -132,7 +140,8 @@ class Genrate_invoice extends CI_Controller {
                     'shipping_email_id'                 => $s_email_address,
                     'unit_price'                        => $this->input->post('unit_price'),
                     'unit_no'                           => $this->input->post('unit_no'),
-                    'discount'                          => $this->input->post('percentage'),
+                    'percent_discount'                  => $this->input->post('percentage'),
+                    'absolute_discount'                 => $this->input->post('absolute_price'),
                     'total_amount'                      => $this->input->post('total_amount'),
                     'created_at'                        => date('Y-m-d'),
                     'updated_at'                        => date('Y-m-d'),			
@@ -166,7 +175,8 @@ class Genrate_invoice extends CI_Controller {
                     'shipping_email_id'                 => $this->input->post('billing_email_id'),
                     'unit_price'                        => $this->input->post('unit_price'),
                     'unit_no'                           => $this->input->post('unit_no'),
-                    'discount'                          => $this->input->post('percentage'),
+                    'percent_discount'                  => $this->input->post('percentage'),
+                    'absolute_discount'                 => $this->input->post('absolute_price'),
                     'total_amount'                      => $this->input->post('total_amount'),
                     'created_at'                        => date('Y-m-d'),
                     'updated_at'                        => date('Y-m-d'),
@@ -184,10 +194,13 @@ class Genrate_invoice extends CI_Controller {
 		}
 	}
     public function edit($id){
+        // var_dump($_POST);die;
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $id = $id;
             $data['invoice_data'] = $this->Genrate_Invoice_Model->get_single_invoice_records($id);
 			$this->load->view("admin/genrate_invoice/edit",$data);
@@ -200,6 +213,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$id = $this->input->post('id');
             $value= $this->input->post('Shipping_Custome_Name');
             $email= $this->input->post('Shipping_Email_Id');
@@ -225,6 +240,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $id = $id;
             $data['invoice_data'] = $this->Genrate_Invoice_Model->get_single_invoice_records($id);
 			$this->load->view("admin/genrate_invoice/edit1",$data);
@@ -237,6 +254,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$id = $this->input->post('id');
             $value= $this->input->post('Shipping_Custome_Name');
             $email= $this->input->post('Shipping_Email_Id');
@@ -262,6 +281,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['delete'] = $this->Genrate_Invoice_Model->delete($id);
 			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
 			redirect('admin/genrate_invoice/list');
@@ -274,6 +295,8 @@ class Genrate_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['massage'] = $this->session->userdata('msg');
 			$data['id'] = $id;
 			$invoice_records = $this->Genrate_Invoice_Model->get_invoice_records($id);
@@ -298,7 +321,9 @@ class Genrate_invoice extends CI_Controller {
             $data['order_no'] = $invoice_records->order_no;
             $data['unit_price'] = $invoice_records->unit_price;
             $data['created_at'] = $invoice_records->created_at;
-            $data['discount'] = $invoice_records->discount;
+            $data['discount'] = $invoice_records->percent_discount;
+            // $data['percent_discount'] = $invoice_records->percent_discount;
+            $data['absolute_discount'] = $invoice_records->absolute_discount;
             $data['currency']= $invoice_records->currency;
             $data['mult'] = $data['unit_price'] * $data['unit_no'];
             $data['invoice_title'] = $invoice_records->invoice_title;
@@ -316,7 +341,7 @@ class Genrate_invoice extends CI_Controller {
 			$this->load->view('admin/login');
 		}
 	}
-    public function donwload($id){
+    public function download($id){
         $invoice_records = $this->Genrate_Invoice_Model->get_invoice_records($id);
         $query_details = $this->Genrate_Invoice_Model->get_query_record($id);
         $reseller_name= $query_details->reseller_name;
@@ -358,10 +383,12 @@ class Genrate_invoice extends CI_Controller {
         $total_amount = $invoice_records->total_amount;
         $unit_no = $invoice_records->unit_no;
         $unit_price = $invoice_records->unit_price;
-        $discount = $invoice_records->discount;
+        $discount = $invoice_records->percent_discount;
+        // $percent_discount = $invoice_records->percent_discount;
+        $discount_amt1 = $invoice_records->absolute_discount;
         $mult = $unit_price * $unit_no;
-        $discount_amt = ($discount / 100) * $mult;
-        $discount_amt1 = $discount_amt;
+        // $discount_amt = ($discount / 100) * $mult;
+        // $discount_amt1 = $discount_amt;
         $percent = 18;
         $total = $total_amount;
         $discount_igst = ($percent / 100) * $total;
@@ -521,7 +548,7 @@ class Genrate_invoice extends CI_Controller {
         // var_dump($n);die;
     }
 
-    public function donwload_main_invoice($id){
+    public function download_main_invoice($id){
         $invoice_records = $this->Genrate_Invoice_Model->get_invoice_records($id);
         $query_details = $this->Genrate_Invoice_Model->get_query_record($id);
         $reseller_name= $query_details->reseller_name;
@@ -553,10 +580,11 @@ class Genrate_invoice extends CI_Controller {
         $total_amount = $invoice_records->total_amount;
         $unit_no = $invoice_records->unit_no;
         $unit_price = $invoice_records->unit_price;
-        $discount = $invoice_records->discount;
-        $mult = $unit_price * $unit_no;
+        $discount = $invoice_records->percent_discount;
+        $discount_amt1 = $invoice_records->absolute_discount;
+        /* $mult = $unit_price * $unit_no;
         $discount_amt = ($discount / 100) * $mult;
-        $discount_amt1 = $discount_amt;
+        $discount_amt1 = $discount_amt; */
         $percent = 18;
         $total = $total_amount;
         $discount_igst = ($percent / 100) * $total;

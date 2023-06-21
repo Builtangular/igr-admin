@@ -62,6 +62,7 @@
                                     $invoice_status = "<i class=\"fa fa-plus\"></i><br>Add";
                                     $invoice_title = "";
                                 }
+
                                 ?>
                                 <tr style="font-size: 14px;">
                                     <td><?php echo $data->query_code; ?></td>
@@ -70,9 +71,8 @@
                                     <td><?php echo $data->company_name; ?></td>
                                     <td><?php echo $invoice_title; ?></td>
                                     <td><?php echo $data->lead_date; ?></td>
-                                    <td>
+                                    <td style="align:center">
                                         <?php if ($query_invoice_details->num_rows() > 0) { ?>
-
                                         <a
                                             href="<?php echo base_url(); ?>admin/genrate_invoice/view/<?php echo $invoice_data->id; ?>"><b><?php echo $invoice_status; ?></b></a>
                                         <?php } else { ?>
@@ -82,12 +82,13 @@
                                         <?php } ?>
                                     </td>
                                     <td>
+                                    <?php if ($query_invoice_details->num_rows() > 0) { ?>
                                         <a href="<?php echo base_url();?>admin/genrate_invoice/edit/<?php echo $invoice_data->id;?>"
                                             class="btn btn-success"><i class="fa fa-edit"></i></b></a>
                                         <!-- <a href="<?php echo base_url();?>admin/query/delete_followup/<?php echo $data->id;?>" class="btn btn-danger">Delete</a> -->
                                         <a href="<?php echo base_url(); ?>admin/genrate_invoice/delete/<?php echo $invoice_data->id; ?>"
                                             class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-
+                                            <?php } ?>
                                     </td>
                                 </tr>
                                 <?php } ?>
