@@ -209,7 +209,7 @@
                     <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <?php } ?>
-                    <?php if($Role_id == 0 || $Role_id == 27){ ?>
+                    <?php if($Role_id == 0 || $Role_id == 5){ ?>
                     <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
                                 class="text-bold">Custom Link</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-list"></i><span
@@ -241,23 +241,9 @@
                     <?php if($Role_id == 6){?>
                     <li><a href="<?php echo base_url(); ?>admin/jobpost"><i class="fa fa-tasks"></i><span
                                 class="text-bold">Job Post</span></a></li>
-                    <!-- <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
-                                class="text-bold">Employee Data</span></a></li> -->
-                    <li class="treeview <?php echo $rmenu_active;?>"><a href="#"><i class="fa fa-users"></i><span
-                                class="text-bold">Employee Data</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li class="<?php echo $rulist;?>"><a
-                                    href="<?php echo base_url(); ?>admin/employee"><span>Active List
-                                    </span></a>
-                            </li>
-                            <li class="<?php echo $rqlist;?>"><a
-                                    href="<?php echo base_url(); ?>admin/employee/resigned_list"><span>Inactive
-                                        List</span></a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
+                                class="text-bold">Employee Data</span></a></li>
                     <?php } ?>
-
                     <?php if($Role_id == 0 || $Role_id == 1){?>
                     <li class="treeview <?php echo $rmenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
                                 class="text-bold">Admin</span> <i class="fa fa-angle-left pull-right"></i></a>

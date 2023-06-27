@@ -193,6 +193,7 @@
                                             <a href="<?php echo base_url(); ?>admin/country_rd/edit_rd/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> | 
                                             <a href="<?php echo base_url(); ?>admin/country_rd/delete_rd/<?php echo $data->id; ?>" class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a> |
                                             <a href="<?php echo base_url(); ?>admin/country_rd_generate/sample_pages/<?php echo $data->id; ?>" class="btn btn-info" title="Sample Pages"><b><i class="fa fa-download"></i></b></a>
+                                            <a href="<?php echo base_url(); ?>admin/countrysample/sample_pages/<?php echo $data->id; ?>" class="btn btn-warning" title="Sample Pages"><b><i class="fa fa-download"></i></b></a>
                                         </td>
                                     </tr>
                                 <?php  }  ?>

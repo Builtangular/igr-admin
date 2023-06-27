@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title"><?php echo $success_code; ?> Report List</h3>
+                        <h3 class="box-title"><?php echo $title; ?> Report List</h3>
                         <a href="<?php echo base_url(); ?>admin/report/add" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
