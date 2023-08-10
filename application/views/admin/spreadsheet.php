@@ -26,11 +26,16 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">RD List</h3>
-                        <form action="<?php echo  base_url('admin/spreadsheet/export'); ?>" method="post">
+
+                        <form action="<?php echo  base_url('admin/spreadsheet/export'); ?>" method="post" >
+                       
                                 <input type="submit" value="Export Excel" class="btn btn-primary pull-right"></td>
+                   
                         <input type="hidden" name="from_date" class="form-control" value="<?php echo $from_date; ?>">
                         <input type="hidden" name="to_date" class="form-control" value="<?php echo $to_date; ?>">
                     </form>
+
+
                     </div>
 					<!-- <form method="post" action="<?php echo form_open_multipart('admin/spreadsheet/export',array('name' => 'spreadsheet'));?>"> -->
                     <div class="box-body">
@@ -54,7 +59,8 @@
                                 <th class="header">Valume CAGR</th>                      
                                 <th class="header">SingleUser Price</th>                      
                                 <th class="header">Enterprise Price</th>                      
-                                <th class="header">Datasheet Price</th>   
+                                <th class="header">Datasheet Price</th>                      
+
                                 <th class="header">CAGR Market Value</th>   
                                 <th class="header">Report Defination</th>                      
                                 <th class="header">Report Description</th>                      

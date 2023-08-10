@@ -50,6 +50,7 @@
                                     <th>Company</th>
                                     <th>Lead Date</th>
                                     <th>Created User</th>
+                                    <th>Assign To Analyst</th>
                                     <?php if ($Role_id == 5) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
@@ -59,66 +60,80 @@
                             </thead>
                             <tbody>
                                 <?php foreach($query_details as $data){ 
-                                     $scope_name = $data->scope_name.' '.$data->report_name;
-                                    //  var_dump($scope_name);die;
+                                     $scope_name = $data->scope_name.' '.$data->report_name;                                     
+                                     if($data->assign_analyst == 1){
+                                        $status = "Yes";
+                                     }else {
+                                        $status = "No";
+                                     }
                                 /* Status */
-                                $status_details = "SELECT (status)  AS rd_status FROM tbl_rd_query_sale_status where query_id = ".$data->id;
-                               
-                                $query_status_details = $this->db->query($status_details);
-                                if($query_status_details->num_rows() > 0) { 
-                                    $query_status = "<i class=\"fa fa-file\"></i><br>View  <br>";
+                                    $status_details = "SELECT * FROM tbl_rd_query_current_status where query_id = ".$data->id;                               
+                                    $query_status_details = $this->db->query($status_details);
                                     $rd_status = $query_status_details->row();
-                                    if($rd_status->rd_status == "Sale"){
-                                        $sale_status = '<span class="text-green">';
-                                    }else{
-                                        $sale_status = '<span class="text-red">';
-                                    }
-                                } else {
-                                    $query_status = "<i class=\"fa fa-plus\"></i><br>Add";}
+                                    // $query_status = "<i class=\"fa fa-plus\"></i><br>Add";
                                 /* ./ Status  */
-
+                                
                                  /* follow up  */
                                     $followup_details = "SELECT COUNT(query_id) AS rd_followup FROM tbl_rd_query_followup where query_id = " . $data->id;
+                                    $followup_data = "SELECT * FROM tbl_rd_query_followup where query_id = " . $data->id;
                                     $query_followup_details = $this->db->query($followup_details);
+                                    $followup_data = "SELECT * FROM tbl_rd_query_followup where query_id = " . $data->id;
+                                    $query_followup_data = $this->db->query($followup_data);
                                     if ($query_followup_details->num_rows() > 0) {
                                         $rd_followup = $query_followup_details->row();
+                                    } 
+                                    if ($query_followup_data->num_rows() > 0) {
+                                        $followup = $query_followup_data->result();
                                     }
                                  /* ./ follow up  */
                                 ?>
-
+                                <?php // if($rd_status->query_id!= $data->id){?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->query_code; ?></td>
                                     <td><?php echo $scope_name; ?></td>
                                     <td><?php echo $data->client_email; ?></td>
                                     <td><?php echo $data->company_name; ?></td>
-                                    <td><?php echo $data->lead_date; ?></td>
+                                    <td><?php echo date("d-m-Y", strtotime($data->lead_date)); ?></td>
                                     <td><?php echo $data->created_user; ?></td>
+                                    <!-- <td> <button type="button" class="btn btn-primary" data-toggle="popover" title="Dates" data-content="<?php foreach($followup as $followup_date){ print "{$followup_date->followup_date}&nbsp;&nbsp;"; } ?>">Popover</button></td> -->
+                                    <td class="text-center"><?php echo $status; ?></td>
                                     <?php if ($Role_id == 5) { ?>
-                                    <?php if($query_followup_details->num_rows() > 0){ ?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->query_id; ?>"><b><i
-                                                    class="fa fa-pencil"></i>
-                                                List</b></a><br><?php echo $rd_followup->rd_followup . " Followup"; ?>
-                                    </td>
-                                    <?php }else {?>
-                                    <td class="text-center"><a
+                                    <td class="text-center">
+                                        <?php if($rd_followup->rd_followup != "0"){ ?>
+                                        <a
+                                            href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->query_id; ?>">
+                                            <span
+                                                class="badge bg-light-blue" data-toggle="popover" title="Dates" data-content="<?php foreach($followup as $followup_date){ print date('d-M-Y', strtotime($followup_date->followup_date)).'&nbsp;&nbsp;'; } ?>"><?php echo $rd_followup->rd_followup; ?></span>
+                                        </a><!-- <br><?php echo $rd_followup->rd_followup . " Followup"; ?> -->
+                                        <?php }else { ?>
+                                        <a
                                             href="<?php echo base_url(); ?>admin/query/add_followup/<?php echo $data->query_id; ?>"><b><i
-                                                    class="fa fa-pencil"></i>
-                                                List</b></a><br><?php echo $rd_followup->rd_followup . " Followup"; ?>
+                                                    class="fa fa-plus"></i> Add</b></a>
+                                        <?php } ?>
                                     </td>
-                                    <?php }?>
-                                    <?php if($query_status_details->num_rows() > 0){ ?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/view/<?php echo $data->query_id; ?>"><b><?php echo $query_status; ?></b></a>
-                                        <?php echo $sale_status; ?><?php echo $rd_status->rd_status; ?></span>
+                                    <td class="text-center">
+                                        <?php if($query_status_details->num_rows() > 0){ ?>
+                                        <!-- <a href="<?php echo base_url(); ?>admin/query/view/<?php echo $data->query_id; ?>"> -->
+                                            <?php if($rd_status->status == 'Sale'){ ?>
+                                                <span class="label label-success"><?php echo "Sale"; ?></span>
+                                            <?php } else if($rd_status->status == 'Reject') { ?>
+                                                <span class="label label-danger">Rejected</span>
+                                            <?php } else if($rd_status->status == 'Spam') { ?>
+                                                <span class="label label-warning">Spam</span>
+                                            <?php } else if($rd_status->status == 'Student') { ?>
+                                                <span class="label label-primary">Student</span>
+                                            <?php } else { ?>
+                                                <a href="<?php echo base_url(); ?>admin/query/view_status/<?php echo $data->query_id; ?>"><span class="label label-info">Inprocess</span></a>
+                                            <?php } ?>
+                                        <!-- </a> -->
+                                        <?php } else { ?>
+                                        <a href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->query_id; ?>">
+                                            <b><i class="fa fa-plus"></i> Add</b>
+                                        </a>
+                                        <?php } ?>
                                     </td>
-                                    <?php }else {?>
-                                    <td class="text-center"><a
-                                            href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->query_id; ?>"><b><?php echo $query_status; ?></b></a>
-                                    </td>
-                                    <?php }?>
                                     <!-- <td><?php echo date("d-m-Y", strtotime($data->updated_on)); ?></td> -->
-                                    <?php }?>
+                                    <?php } ?>
                                     <td> <?php if ($Role_id == 5) { ?>
                                         <a href="<?php echo base_url();?>admin/query/query_edit/<?php echo $data->id;?>"
                                             class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
@@ -133,6 +148,7 @@
                                     <?php } ?>
                                 </tr>
                                 <?php } ?>
+                                <?php // } }?>
                             </tbody>
                             <tfoot>
                                 <tr style="font-size: 14px;">
@@ -142,6 +158,7 @@
                                     <th>Company</th>
                                     <th>Lead Date</th>
                                     <th>Created User</th>
+                                    <th>Assign To Analyst</th>
                                     <?php if ($Role_id == 5) { ?>
                                     <th>Follow Up</th>
                                     <th>Status</th>
@@ -183,7 +200,11 @@
 
 <script>
 $(document).ready(function() {
-    $('.sidebar-menu').tree()
+    $('.sidebar-menu').tree();
+    $('[data-toggle="popover"]').popover({
+        placement : 'top',
+        trigger : 'hover'
+    });
 })
 </script>
 
@@ -195,6 +216,7 @@ $(function() {
 
 })
 </script>
+
 </body>
 
 </html>

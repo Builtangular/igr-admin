@@ -42,7 +42,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <option value="<?php echo $source;?>"> <?php echo $source; ?> </option>
                                         <?php } } ?>
                                     </select>
-                                </div>                               
+                                </div>
                                 <label class="control-label col-md-1">Type</label>
                                 <div class="col-md-2">
                                     <select class="form-control b-none" name="type" id="type" required>
@@ -66,7 +66,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                 <label class="control-label col-md-1" id="reseller_div">Name</label>
                                 <div class="col-md-2">
                                     <select class="form-control b-none" id="reseller_name" name="reseller_name">
-                                    <?php foreach($reseller_list as $list) { 
+                                        <?php foreach($reseller_list as $list) { 
                                         if($single_query_data->reseller_name == $list->reseller_name){ ?>
                                         <option value="<?php echo $single_query_data->reseller_name;?>" selected>
                                             <?php echo $single_query_data->reseller_name;?></option>
@@ -96,12 +96,12 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <select class="form-control b-none" id="scope_name" name="scope_name">
                                             <?php foreach($scopelist as $scope)	{ 
                                             if($single_query_data->scope_name == $scope->name){ ?>
-                                                <option value="<?php echo $single_query_data->scope_name;?>" selected>
-                                                    <?php echo $single_query_data->scope_name;?></option>
+                                            <option value="<?php echo $single_query_data->scope_name;?>" selected>
+                                                <?php echo $single_query_data->scope_name;?></option>
                                             <?php } else { ?>
-                                                <option value="<?php echo $scope->name;?>">
-                                                    <?php echo $scope->name; ?>
-                                                </option>
+                                            <option value="<?php echo $scope->name;?>">
+                                                <?php echo $scope->name; ?>
+                                            </option>
                                             <?php } } ?>
                                         </select>
                                     </div>
@@ -174,12 +174,12 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                             required><?php echo $single_query_data->client_message;?></textarea>
                                     </div>
                                 </div>
-                                <?php if($Role_id == 5) {?>
+                                <?php if($Role_id == 5 || $Role_id == 1) {?>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Assign To Team</label>
                                     <div class="col-md-8">
                                         <select class="form-control b-none" id="assign_to_team" name="assign_to_team">
-                                            <?php foreach($user_details as $data) {	
+                                            <?php foreach($user_details as $data) {
                                                 if($assign_query->assigned_name == $data->full_name){ ?>
                                             <option value="<?php echo $assign_query->assigned_name;?>" selected>
                                                 <?php echo $assign_query->assigned_name;?></option>
@@ -187,6 +187,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                             <option value="<?php echo $data->full_name;?>">
                                                 <?php echo $data->full_name; ?>
                                             </option>
+                                            
                                             <?php } } ?>
                                         </select>
                                     </div>
@@ -195,12 +196,13 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                     <label class="control-label col-md-4">Assign To Analyst</label>
                                     <div class="col-md-8">
                                         <input type="radio" name="assign_analyst" value="1"
-                                            <?php echo ($single_query_data->assign_analyst == 1)?'checked':'' ?> /> Yes &nbsp;&nbsp;
+                                            <?php echo ($single_query_data->assign_analyst == 1)?'checked':'' ?> /> Yes
+                                        &nbsp;&nbsp;
                                         <input type="radio" name="assign_analyst" value="0"
                                             <?php echo ($single_query_data->assign_analyst == 0)?'checked':'' ?> /> No
                                     </div>
                                 </div>
-                                <?php } ?>                                
+                               <?php }?>
                             </div>
                         </div>
                         <div class="box-footer">
@@ -244,4 +246,4 @@ source.addEventListener('change', function() {
     }
 })
 </script>
-<?php $this->load->view('admin/footer.php'); ?>assign_edit
+<?php $this->load->view('admin/footer.php'); ?>

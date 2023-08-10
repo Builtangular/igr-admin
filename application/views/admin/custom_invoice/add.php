@@ -144,7 +144,39 @@
                                             <b>Unit No.<span class="text-red">*</span></b>
                                             <input type="text" id="unit_no" name="unit_no[]" onblur="reSum();"
                                                 class="form-control" placeholder="Unit No.">
+                                            <!-- <select class="form-control b-none" id="unit_no" name="unit_no[]">
+                                                <option value="" selected>Select Unit No.</option>
+                                                <option value="1" onclick="reSum();">1</option>
+                                                <option value="2" onclick="reSum();">2</option>
+                                                <option value="3" onclick="reSum();">3</option>
+                                                <option value="4" onclick="reSum();">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select> -->
                                         </div>
+                                        <!-- <div class="col-md-2">
+                                            <b>Discount Type<span class="text-red">*</span></b>
+                                            <select class="form-control b-none" name="discount_type[]"
+                                                id="discount_type" required>
+                                                <option value="" selected>Select Discount Type</option>
+                                                <option value="Percentage">Percentage</option>
+                                                <option value="Absolute">Absolute</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 hide" id="discount">
+                                            <b>Percentage (%)<span class="text-red">*</span></b>
+                                            <input type="text" id="dis_percentage" name="percentage[]" onblur="reSum();"
+                                                class="form-control" placeholder="Percentage">
+                                        </div>
+                                        <div class="col-md-2 hide" id="absolute">
+                                            <b>Discount (Absolute)<span class="text-red">*</span></b>
+                                            <input type="text" id="absolute_price" name="absolute_price[]"
+                                                onblur="reSum();" class="form-control" placeholder="Absolute Price">
+                                        </div> -->
                                         <div class="col-md-2">
                                             <b>Add<span class="text-red">*</span></b>
                                             <span type="button" class="btn btn-block btn-info" id="invoice_titles"><i
@@ -178,6 +210,18 @@
                                             <input type="text" id="total_amount" name="total_amount" onblur="reSum();"
                                                 class="form-control" placeholder="Total Amount">
                                         </div>
+                                        <!-- <label class="col-md-2">Total Amount <span class="text-red">*</span></label>
+                                        <div class="col-md-2">
+                                            <input type="text" id="total_amount" name="total_amount[]" onblur="reSum();"
+                                                class="form-control" placeholder="Total Amount" required>
+                                            <span class="help-block margin" id="txtHint"></span>
+                                        </div> -->
+                                        <!-- <div class="col-md-3">
+                                            <input type="hidden">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="hidden">
+                                        </div> -->
                                     </div>
 
                                 </div>
@@ -345,6 +389,34 @@ function reSum() {
     }
 
 }
+// function reSum() {
+//     var percentage, result, result1, mult, multiplication, abs, dis, discount;
+//     var price = parseFloat(document.getElementById("price").value);
+//     var unit_no = parseInt(document.getElementById("unit_no").value);
+//     var percentage = parseFloat(document.getElementById("dis_percentage").value);
+//     var percentage1 = parseFloat(document.getElementById("dis_percentage1").value);
+//     var absolute_price = parseFloat(document.getElementById("absolute_price").value);
+
+//     console.log(price);
+//     multiplication = price * unit_no;
+//     /* calculate discount */
+//     percentage = (percentage / 100).toFixed(2);
+//     mult = multiplication * percentage;
+
+//     percentage1 = (percentage1 / 100).toFixed(2);
+//     mult = multiplication * percentage1;
+//     // multiplication = price * percentage;
+//     discount = multiplication - mult;
+//     // console.log(discount);
+//     /* substration of price and absolute value */
+//     result = multiplication - absolute_price;
+//     // console.log(result); 
+//     if (result) {
+//         document.getElementById("total_amount").value = result;
+//     } else {
+//         document.getElementById("total_amount").value = discount;
+//     }
+// }
     </script>
 
     <?php $this->load->view('admin/footer.php'); ?>

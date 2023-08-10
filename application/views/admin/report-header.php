@@ -97,6 +97,39 @@
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        <?php if($todays_followup){ ?>
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning"><?php echo count($todays_followup); ?> </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have <?php echo count($todays_followup); ?> notifications</li>
+                                <li>
+                                    <ul class="menu">
+                                        <?php foreach($todays_followup as $followup){ ?>
+                                        <li>
+                                            <?php if($followup->id){ ?>
+                                            <a
+                                                href="<?php echo base_url(); ?>admin/query/view_followup_details/<?php echo $followup->id; ?>">
+                                                <i class="fa fa-file text-yellow"></i>
+                                                <?php echo $followup->query_code; ?> followup today
+                                            </a>
+                                            <?php } else { ?>
+                                            <a
+                                                href="<?php echo base_url(); ?>admin/query/view_status/<?php echo $followup->query_id; ?>">
+                                                <i class="fa fa-file text-yellow"></i>
+                                                <?php echo $followup->query_code; ?> followup today
+                                            </a>
+                                            <?php } ?>
+                                        </li>
+                                        <?php } ?>
+                                    </ul>
+                                </li>
+                                <!-- <li class="footer"><a href="#">View all</a></li> -->
+                            </ul>
+                        </li>
+                        <?php } ?>
                         <!-- User Logout Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
@@ -149,7 +182,7 @@
                         </ul>
                     </li>
                     <?php } if($Role_id == 0 || $Role_id == 2){ ?>
-                    <!-- <li class="treeview">
+                    <!--  <li class="treeview">
                         <a href="#"><i class="fa fa-files-o"></i><span class="text-bold">Report Management</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -175,12 +208,45 @@
                     <li><a href="<?php echo base_url(); ?>admin/report/assign_rd"><i class="fa fa-arrow-right"></i><span
                                 class="text-bold">Assign & Generate RDs</span></a></li>
                     <?php } ?>
-
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
-                                class="fa fa-file-pdf-o"></i><span class="text-bold">Published Report</span></a></li>
+                                class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i class="fa fa-files-o"></i><span
                                 class="text-bold">Processed Report</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
+                                class="text-bold">Drafts</span></a></li>
+                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
+                                Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/research_assign_query_list"><span>Assign
+                                        Queries
+                                    </span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
+                                class="text-bold">Add New RD</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
+                                class="text-bold">Generate RD</span></a></li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-flag"></i><span class="text-bold">Country RD</span> <i
+                                class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/country_rd/add"><i
+                                        class="fa fa-circle-o"></i>Add</a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/country_rd/drafts"><i
+                                        class="fa fa-circle-o"></i>Drafts</a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/country_rd/list"><i
+                                        class="fa fa-circle-o"></i>List</a></li>
+                        </ul>
+                    </li>
+                    <?php } ?>
+                    <?php if($Role_id == 4){ ?>
+                    <li><a href="<?php echo base_url(); ?>manager/report/published"><i
+                                class="fa fa-file-word-o"></i><span class="text-bold">Published RDs</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>manager/report/processed"><i class="fa fa-files-o"></i><span
+                                class="text-bold">Processed RDs</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
+                                class="text-bold">Upcoming RDs</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
@@ -199,17 +265,33 @@
                                         class="fa fa-circle-o"></i>List</a></li>
                         </ul>
                     </li>
-                    <?php } ?>
+                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
+                                Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/upcoming_research_query_list"><span>New
+                                        Queries</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/research_assign_list"><span>Assigned
+                                        Queries</span></a></li>
+                        </ul>
 
-                    <?php if($Role_id == 4){ ?>
-                    <li><a href="<?php echo base_url(); ?>manager/report/published"><i
-                                class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>manager/report/processed"><i class="fa fa-files-o"></i><span
-                                class="text-bold">Processed Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>manager/report/drafts"><i class="fa fa-file-code-o"></i><span
-                                class="text-bold">Drafts</span></a></li>
+                    </li>
                     <?php } ?>
-                    <?php if($Role_id == 0 || $Role_id == 5){ ?>
+                    <?php if($Role_id == 5 && $User_Type == "Sales" && $department == "Sales"){ ?>
+                    <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
+                                class="text-bold">Custom Link</span></a></li>
+                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
+                                Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/drafts"><span>Drafts</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="<?php echo base_url(); ?>admin/generate_invoice/list"><i
+                                class="fa fa-file-text"></i><span class="text-bold">Generate
+                                Invoice</span></a></li>
+                    <?php } ?>
+                    <?php if($Role_id == 0 || $Role_id == 5 && $User_Type == "Team Lead" && $department == "Sales"){ ?>
                     <li><a href="<?php echo base_url(); ?>sales/custom-link"><i class="fa fa-link"></i><span
                                 class="text-bold">Custom Link</span></a></li>
                     <li><a href="<?php echo base_url(); ?>sales/sample-query"><i class="fa fa-list"></i><span
@@ -226,15 +308,23 @@
                             <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/drafts"><span>Drafts</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/status/1"><span>Acknowledgement
+                                        Sent</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/status/2"><span>Sample Sent</span></a>
+                            </li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/status/3"><span>Need to Discuss with
+                                        Seniors/Team</span></a>
+                            <li><a href="<?php echo base_url(); ?>admin/query/status/4"><span>Budget Issues/Discount
+                                        Required</span></a>
+                            <li><a href="<?php echo base_url(); ?>admin/query/status/5"><span>Need More Time</span></a>
+                            </li>
                         </ul>
                     </li>
-                    <?php } ?>
-                    <?php if($Role_id == 5 && $User_Type == "Team Lead" && $department == "Sales"){ ?>
                     <li><a href="<?php echo base_url(); ?>admin/query/assign_list"><i class="fa fa-file-text"></i><span
                                 class="text-bold">Assigned Queries</span></a></li>
                     <li><a href="<?php echo base_url(); ?>admin/query/upcoming_query_list"><i
-                                class="fa fa-file-text"></i><span class="text-bold">Upcoming Queries</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><i
+                                class="fa fa-file-text"></i><span class="text-bold">New Queries</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/generate_invoice/list"><i
                                 class="fa fa-file-text"></i><span class="text-bold">Generate
                                 Invoice</span></a></li>
                     <?php } ?>
@@ -244,6 +334,8 @@
                     <li><a href="<?php echo base_url(); ?>admin/employee"><i class="fa fa-users"></i><span
                                 class="text-bold">Employee Data</span></a></li>
                     <?php } ?>
+
+
                     <?php if($Role_id == 0 || $Role_id == 1){?>
                     <li class="treeview <?php echo $rmenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
                                 class="text-bold">Admin</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -262,9 +354,20 @@
                         <ul class="treeview-menu">
                             <li class="<?php echo $rjlist;?>"><a href="<?php echo base_url(); ?>admin/jobpost"><span>Job
                                         Post</span></a></li>
-                            <li class="<?php echo $elist;?>"><a
-                                    href="<?php echo base_url(); ?>admin/employee"><span>Employee
-                                        Data</span></a></li>
+                            <li class="treeview <?php echo $rjmenu_active;?>"><a href="#"><i
+                                        class="fa fa-users"></i><span class="text-bold">Employee Data</span> <i
+                                        class="fa fa-angle-left pull-right"></i></a>
+                                <ul class="treeview-menu">
+                                    <li class="<?php echo $elist;?>"><a
+                                            href="<?php echo base_url(); ?>admin/employee"><span>Active List
+                                            </span></a>
+                                    </li>
+                                    <li class="<?php echo $rlist;?>"><a
+                                            href="<?php echo base_url(); ?>admin/employee/resigned_list"><span>Inactive
+                                                List</span></a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="<?php echo $ellist;?>"><a
                                     href="<?php echo base_url(); ?>admin/employee/letters"><span>Employment
                                         Letters</span></a></li>
@@ -278,11 +381,11 @@
                                     href="<?php echo base_url(); ?>admin/spam-mail/list"><span>Mail
                                         List</span></a></li>
                             <li class="<?php echo $sadd;?>"><a
-                                    href="<?php echo base_url(); ?>admin/spam-mail"><span>Spam Mail</span></a>
+                                    href="<?php echo base_url(); ?>admin/spam-mail"><span>Spam Mail Verifier</span></a>
                             </li>
                             <li class="<?php echo $supload;?>"><a
-                                    href="<?php echo base_url(); ?>admin/spam-mail/import_file"><span>Verify
-                                        Mail</span></a></li>
+                                    href="<?php echo base_url(); ?>admin/spam-mail/email-formater"><span>Email
+                                        Formater</span></a></li>
                         </ul>
                     </li>
                     <li class="treeview <?php echo $qmenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
@@ -293,20 +396,26 @@
                                     href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
                             <li class="<?php echo $qlist; ?>"><a
                                     href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
+                            <li class="<?php echo $qlist; ?>"><a
+                                    href="<?php echo base_url(); ?>admin/query/assign_list"><span>Assign List</span></a>
+                            </li>
+                            <li class="<?php echo $qlist; ?>"><a
+                                    href="<?php echo base_url(); ?>admin/query/close_query_list"><span>Close
+                                        List</span></a></li>
                         </ul>
                     </li>
-                    <!--  <li><a href="<?php echo base_url(); ?>admin/genrate_invoice/list"><i
-                                class="fa fa-file-text"></i><span class="text-bold">Generate Invoice</span></a></li> -->
-
                     <li class="treeview <?php echo $gimenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
                                 class="text-bold">Generate Invoice
                             </span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li class="<?php echo $gilist;?>"><a
-                                    href="<?php echo base_url(); ?>admin/genrate_invoice/list"><span>List</span></a>
+                                    href="<?php echo base_url(); ?>admin/generate_invoice/list"><span>List</span></a>
                             </li>
                             <li class="<?php echo $ilist;?>"><a
-                                    href="<?php echo base_url(); ?>admin/genrate_invoice/genrated_invoice_list"><span>Generated</span></a>
+                                    href="<?php echo base_url(); ?>admin/generate_invoice/generated_invoice_list"><span>Generated</span></a>
+                            </li>
+                            <li class="<?php echo $ilist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/generate_invoice/filter"><span>Export</span></a>
                             </li>
                         </ul>
                     </li>
@@ -318,14 +427,17 @@
                                     href="<?php echo base_url(); ?>admin/custom_invoice/add"><span>Add</span></a></li>
                             <li class="<?php echo $cilist;?>"><a
                                     href="<?php echo base_url(); ?>admin/custom_invoice/list"><span>List</span></a></li>
+                            <li class="<?php echo $cilist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/custom_invoice/filter"><span>Export</span></a>
+                            </li>
                         </ul>
                     </li>
                     <?php } ?>
                     <?php if($Role_id == 7 || $Role_id == 10){?>
                     <li><a href="<?php echo base_url(); ?>admin/spam-mail"><i class="fa fa-envelope-o"></i><span
-                                class="text-bold">Spam Mail</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/import_file"><i
-                                class="fa fa-file-excel-o"></i><span class="text-bold">Verify Mail</span></a></li>
+                                class="text-bold">Spam Mail Verifier</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/spam-mail/email-formater"><i
+                                class="fa fa-envelope-square"></i><span class="text-bold">Email Formater</span></a></li>
                     <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
                                 Management</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -333,11 +445,18 @@
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
                         </ul>
                     </li>
-                    <?php } if($Role_id == 8) { ?>
+                    <!-- <li class="treeview">
+                        <a href="#"><i class="fa fa-table"></i><span class="text-bold">Reseller</span> <i
+                                class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/add_reseller"><span>Add</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/reseller_list"><span> List</span></a></li>
+                        </ul>
+                    </li> -->
+                    <?php } if($Role_id == 8){?>
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
                                 class="text-bold">Generate RD</span></a></li>
                     <?php } ?>
-                </ul>
             </section>
             <!-- /.sidebar -->
         </aside>

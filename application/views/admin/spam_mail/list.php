@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/report-header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 <!-- Content Wrapper. Contains page content -->
@@ -105,6 +105,7 @@ $(document).ready(function() {
 <script>
 $(function() {
     $('#rddata').DataTable({
+        'paging': true,
         'ordering': false,
     })
 

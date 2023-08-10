@@ -22,7 +22,7 @@
         <!-- Your Page Content Here -->
 
         <div class='row'>
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Salary List</h3>
@@ -46,7 +46,7 @@
                                     <th>Id</th>
                                     <th>Year</th>
                                     <th>Gross Salary</th>
-                                    <th colspan="2"  class="text-center">Action</th>
+                                    <th colspan="2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,18 +63,20 @@
                                     </td> -->
                                     <td class="text-center">
                                         <form
-                                            action="<?php echo base_url();?>admin/employee/edit_salary/<?php echo $list->emp_id;?>"
+                                            action="<?php echo base_url();?>admin/employee/edit_salary/<?php echo $list->id;?>"
                                             method="post">
                                             <input type="hidden" id="emp_id" name="emp_id"
                                                 value="<?php echo $list->emp_id; ?>">
-                                            <input type="submit" class="btn btn-warning btn-xs" value="Edit">
+                                            <input type="submit" class="btn btn-warning" value="Edit">
                                         </form>
+                                    </td>
+                                    <td>
                                         <form
-                                            action="<?php echo base_url();?>admin/employee/delete_salary/<?php echo $list->emp_id;?>"
+                                            action="<?php echo base_url();?>admin/employee/delete_salary/<?php echo $list->id;?>"
                                             method="post">
                                             <input type="hidden" id="emp_id" name="emp_id"
                                                 value="<?php echo $list->emp_id; ?>">
-                                            <input type="submit" class="btn btn-danger btn-xs" value="Delete">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
                                         </form> 
                                     </td>
                                 </tr>

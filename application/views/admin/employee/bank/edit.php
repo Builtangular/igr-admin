@@ -45,15 +45,15 @@
                                     <div class="col-md-10">
                                         <input type="text" id="bank_name" name="bank_name"
                                             value="<?php echo $single_bank_data->bank_name;?>" class="form-control"
-                                            placeholder="Name" required>
+                                            placeholder="Bank Name" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Account Name. <span
+                                    <label class="control-label col-md-2">Account Name <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-5">
                                         <input type="text" id="account_name" name="account_name" class="form-control"
-                                            value="<?php echo $single_bank_data->ac_name;?>" placeholder="Name"
+                                            value="<?php echo $single_bank_data->ac_name;?>" placeholder="Account Name"
                                             required>
                                     </div>
                                     <div class="col-md-5">
@@ -88,7 +88,7 @@
                             <a href="<?php echo base_url(); ?>admin/employee/bank_list/<?php echo $single_bank_data->emp_id; ?>"
                                 class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
                             <input type="submit" class="btn btn-info pull-right" style='margin-right:16px' name="button"
-                                value="Submit">
+                                value="Update">
                         </div>
                     </form>
                 </div>
@@ -127,6 +127,3 @@ $(document).ready(function() {
 });
 </script>
 <?php $this->load->view('admin/footer.php'); ?>
-
-
-</script>

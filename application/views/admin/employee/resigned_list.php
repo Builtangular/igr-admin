@@ -7,7 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Employee List
+            Employee Inactive List
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title"> Employee List</h3>
+                        <h3 class="box-title"> Employee Inactive List</h3>
                         <a href="<?php echo base_url(); ?>admin/employee/add" class="btn btn-primary pull-right">
                             <i class="fa fa-plus"></i>
                         </a>
@@ -44,7 +44,7 @@
                                     <th>Emp Code</th>
                                     <th>Name</th>
                                     <th>Joining Date</th>
-                                    <th>Appraisal Date</th>
+                                    <th>Resign Date</th>
                                     <th>Profile</th>
                                     <!-- <th>Vol</th> -->
                                     <th>Employment</th>
@@ -95,17 +95,9 @@
                                     <td class="text-center"><?php echo $sr; ?></td>
                                     <td class="text-center"><?php echo $data->emp_code; ?></td>
                                     <td><?php echo $full_name; ?></td>
-                                    <td class="text-center"><?php echo date("d-m-Y", strtotime($data->joining_date)); ?>
-                                    </td>
-                                    <?php if($data->appraisal_date == "0000-00-00" ){ ?>
-                                    <td class="text-center">
-                                        <?php echo "00-00-0000"; ?></td>
-                                    <?php } else { ?>
-                                    <td class="text-center">
-                                        <?php echo date("d-m-Y", strtotime($data->appraisal_date)); ?></td>
-                                    <?php } ?>
-                                    <td class=""><?php echo $data->job_profile; ?></td>
-
+                                    <td class="text-center"><?php echo date("d-m-Y", strtotime($data->joining_date)); ?></td>
+                                    <td><?php echo date("d-m-Y", strtotime($data->resignation_date)); ?></td>
+                                    <td><?php echo $data->job_profile; ?></td>
                                     <?php if($data->user_type == "Fresher"){ ?>
                                     <td class="text-center"><b><?php echo $data->user_type; ?></b>
                                     </td>
@@ -162,7 +154,7 @@
                                     <th>Emp Code</th>
                                     <th>Name</th>
                                     <th>Joining Date</th>
-                                    <th>Appraisal Date</th>
+                                    <th>Resign Date</th>
                                     <th>Profile</th>
                                     <!-- <th>Vol</th> -->
                                     <th>Employment</th>

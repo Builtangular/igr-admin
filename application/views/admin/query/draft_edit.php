@@ -28,7 +28,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                         <h1 class="box-title"> Update Query Details</h1>
                     </div>
                     <form action="<?php echo base_url(); ?>admin/query/draft_update" id="query-form" method="post"
-                        class="form-horizontal" enctype="multipart/form-data">
+                        class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-1">Source <span class="text-red">*</span></label>
@@ -42,7 +42,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <option value="<?php echo $source;?>"> <?php echo $source; ?> </option>
                                         <?php } } ?>
                                     </select>
-                                </div>                                
+                                </div>
                                 <label class="control-label col-md-1">Type <span class="text-red">*</span></label>
                                 <div class="col-md-2">
                                     <select class="form-control b-none" name="type" id="type" required>
@@ -65,7 +65,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                 <label class="control-label col-md-1" id="reseller_div">Reseller</label>
                                 <div class="col-md-2">
                                     <select class="form-control b-none" id="reseller_name" name="reseller_name">
-                                    <?php foreach($reseller_list as $list) { 
+                                        <?php foreach($reseller_list as $list) { 
                                         if($single_query->reseller_name == $list->reseller_name){ ?>
                                         <option value="<?php echo $single_query->reseller_name;?>" selected>
                                             <?php echo $single_query->reseller_name;?></option>
@@ -79,7 +79,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                 <label class="control-label col-md-1 hide" id="reseller_div">Reseller</label>
                                 <div class="col-md-2">
                                     <select class="form-control b-none hide" id="reseller_name" name="reseller_name">
-                                    <option value="" selected>Select Reseller</option>
+                                        <option value="" selected>Select Reseller</option>
                                         <?php foreach($reseller_list as $list) { ?>
                                         <option value="<?php echo $list->reseller_name;?>">
                                             <?php echo $list->reseller_name; ?></option>
@@ -90,17 +90,18 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Scope Name <span class="text-red">*</span></label>
+                                    <label class="control-label col-md-4">Scope Name <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-8">
                                         <select class="form-control b-none" id="scope_name" name="scope_name">
-                                        <?php foreach($scopelist as $scope)	{ 
+                                            <?php foreach($scopelist as $scope)	{ 
                                             if($single_query->scope_name == $scope->name){ ?>
-                                                <option value="<?php echo $single_query->scope_name;?>" selected>
-                                                    <?php echo $single_query->scope_name;?></option>
+                                            <option value="<?php echo $single_query->scope_name;?>" selected>
+                                                <?php echo $single_query->scope_name;?></option>
                                             <?php } else { ?>
-                                                <option value="<?php echo $scope->name;?>">
-                                                    <?php echo $scope->name; ?>
-                                                </option>
+                                            <option value="<?php echo $scope->name;?>">
+                                                <?php echo $scope->name; ?>
+                                            </option>
                                             <?php } } ?>
                                         </select>
                                     </div>
@@ -111,6 +112,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <input type="text" id="client_name" name="client_name"
                                             value="<?php echo $single_query->client_name;?>" class="form-control"
                                             placeholder="Client Name">
+                                        <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -119,6 +121,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <input type="text" id="phone_no" name="phone_no"
                                             value="<?php echo $single_query->phone_no;?>" class="form-control"
                                             placeholder="Phone No.">
+                                        <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -136,21 +139,22 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <input type="text" id="designation" name="designation"
                                             value="<?php echo $single_query->designation;?>" class="form-control"
                                             placeholder="Designation">
+                                        <span class="help-block margin" id="txtHint"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Lead Date <span
-                                            class="text-red">*</span></label>
+                                    <label class="control-label col-md-4">LinkedIn Profile </label>
                                     <div class="col-md-8">
-                                        <input type="date" id="lead_date" name="lead_date"
-                                            value="<?php echo $single_query->lead_date; ?>" class="form-control"
-                                            placeholder="Lead Date" required>
+                                        <input type="text" id="linkedin_profile" name="linkedin_profile"
+                                            value="<?php echo $single_query->linkedin_profile;?>" class="form-control"
+                                            placeholder="LinkedIn Profile">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Report Name <span class="text-red">*</span></label>
+                                    <label class="control-label col-md-4">Report Name<span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" id="report_name" name="report_name"
                                             value="<?php echo $single_query->report_name;?>" class="form-control"
@@ -168,7 +172,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Client Meassage </label>
                                     <div class="col-md-8">
-                                        <textarea name="client_message" id="client_message" rows="4"
+                                        <textarea name="client_message" id="client_message" rows="3"
                                             class="form-control" placeholder="Client Meassage"
                                             required><?php echo $single_query->client_message;?></textarea>
                                     </div>
@@ -178,7 +182,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                     <label class="control-label col-md-4">Assign to Team</label>
                                     <div class="col-md-8">
                                         <select class="form-control b-none" id="assign_to_team" name="assign_to_team">
-                                            <option value="0" selected>Select</option>                                            
+                                            <option value="0" selected>Select</option>
                                             <?php foreach($user_details as $data) {	?>
                                             <option value="<?php echo $data->full_name;?>">
                                                 <?php echo $data->full_name; ?>
@@ -187,15 +191,16 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         </select>
                                     </div>
                                 </div>
+                                <?php }?>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Assign to Analyst</label>
+                                    <label class="control-label col-md-4">Lead Date <span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-8">
-                                        <input type="radio" name="assign_analyst" value="1" /> Yes
-                                        &nbsp;&nbsp;
-                                        <input type="radio" name="assign_analyst" value="0" checked/> No
+                                        <input type="date" id="lead_date" name="lead_date"
+                                            value="<?php echo $single_query->lead_date; ?>" class="form-control"
+                                            placeholder="Lead Date" required>
                                     </div>
                                 </div>
-                                <?php } ?>                                
                             </div>
                         </div>
                         <div class="box-footer">

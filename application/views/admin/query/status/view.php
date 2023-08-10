@@ -1,10 +1,13 @@
-<?php $this->load->view('admin/header.php'); ?>
+<?php $this->load->view('admin/header.php'); 
+$status_option = array('Acknowledgement Sent - Analyst Response Pending', 'Sample Sent', 'Client Interested - Need to Discuss with Seniors/Team', 'Client Interested - Budget Issues/Discount Required', 'Client Interested - Need More Time', 'Sale','Reject','Spam','Student');
+$currency = array('USD','AED','EUR','SAR','INR');
+?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add Status Details
+            Status Details
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -37,41 +40,223 @@
                         class="form-horizontal" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="col-md-12">
+                                <?php if($status_details->status == "Sale"){ ?>
                                 <div class="form-group">
-                                    <label class="control-label col-md-1"> Status <span
-                                            class="text-red">*</span></label>
-                                    <div class="col-md-2">
-                                        <select class="form-control b-none" name="status" id="query_status"
-                                            placeholder="" onblur="reSum();">
+                                    <div class="col-md-6">
+                                        <label>Status <span class="text-red">*</span></label>
+                                        <select class="form-control select2 select2-hidden-accessible" name="status"
+                                            id="query_status" onblur="reSum();" required>
+                                            <?php foreach($status_option as $statuses){ if($status_details->status == $statuses){ ?>
                                             <option value="<?php echo $status_details->status;?>" selected>
                                                 <?php echo $status_details->status;?></option>
-                                            <option value="Sale">Sale</option>
-                                            <option value="Reject">Reject</option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $statuses;?>"><?php echo $statuses;?></option>
+                                            <?php } } ?>
                                         </select>
                                     </div>
-                                    <?php if($status_details->status == "Sale"){ ?>
                                     <div class="col-md-2" id="licence">
-                                        <select class="form-control b-none" name="licence_price" id="licence_price"
-                                            placeholder="">
+                                        <label>Currency <span class="text-red">*</span></label>
+                                        <select class="form-control b-none" name="currency" id="currency">
+                                            <?php foreach($currency as $currencies){ if($status_details->licence_price == $currencies){ ?>
                                             <option value="<?php echo $status_details->licence_price;?>" selected>
                                                 <?php echo $status_details->licence_price;?></option>
-                                            <option value="USD">USD</option>
-                                            <option value="AED">AED</option>
-                                            <option value="EUR">EUR</option>
-                                            <option value="SAR">SAR</option>
-                                            <option value="INR">INR</option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $currencies;?>" selected>
+                                                <?php echo $currencies;?></option>
+                                            <?php } } ?>
                                         </select>
                                     </div>
+                                    <div class="col-md-6 hide" id="reason_div">
+                                        <label>Reason <span class="text-red">*</span></label>
+                                        <input type="text" id="reason" name="reason"
+                                            value="<?php echo $status_details->reason;?>" class="form-control"
+                                            placeholder="Reason">
+                                    </div>
+                                    <div class="col-md-2 hide" id="next_followup_div">
+                                        <label>Next FollowUp <span class="text-red">*</span></label>
+                                        <input type="date" id="next_followup" name="next_followup"
+                                            value="<?php echo $status_details->followup_date;?>" class="form-control">
+                                    </div>
                                 </div>
-
                                 <div class="form-group" id="sale_div">
                                     <div class="col-md-3">
                                         <input type="text" name="price" id="price"
                                             value="<?php echo $status_details->price;?>" onblur="reSum();"
                                             class="form-control" placeholder="Price">
-                                        <input type="text" name="reason" id="reason"
-                                            value="<?php echo $status_details->reason;?>" class="form-control hide"
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="discount" id="discount"
+                                            value="<?php echo $status_details->discount;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Discount">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="absolute_price"
+                                            value="<?php echo $status_details->absolute_price;?>" onblur="reSum();"
+                                            id="absolute_price" class="form-control" placeholder="Absolute Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="selling_price"
+                                            value="<?php echo $status_details->selling_price;?>" onblur="reSum();"
+                                            id="selling_price" class="form-control" placeholder="Selling Price">
+                                    </div>
+                                </div>
+                                <?php } else if($status_details->status == "Reject") { ?>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Status <span class="text-red">*</span></label>
+                                        <select class="form-control select2 select2-hidden-accessible" name="status"
+                                            id="query_status" onblur="reSum();" required>
+                                            <?php foreach($status_option as $statuses){ if($status_details->status == $statuses){ ?>
+                                            <option value="<?php echo $status_details->status;?>" selected>
+                                                <?php echo $status_details->status;?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $statuses;?>"><?php echo $statuses;?></option>
+                                            <?php } } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 hide" id="licence">
+                                        <label>Currency <span class="text-red">*</span></label>
+                                        <select class="form-control b-none" name="currency" id="currency">
+                                            <option value="" selected>Select Currency</option>
+                                            <?php foreach($currency as $currencies){ ?>
+                                            <option value="<?php echo $currencies;?>">
+                                                <?php echo $currencies;?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" id="reason_div">
+                                        <label>Reason <span class="text-red">*</span></label>
+                                        <input type="text" id="reason" name="reason"
+                                            value="<?php echo $status_details->reason;?>" class="form-control"
                                             placeholder="Reason">
+                                    </div>
+                                    <div class="col-md-2 hide" id="next_followup_div">
+                                        <label>Next FollowUp <span class="text-red">*</span></label>
+                                        <input type="date" id="next_followup" name="next_followup"
+                                            value="<?php echo $status_details->followup_date;?>" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group hide" id="sale_div">
+                                    <div class="col-md-3">
+                                        <input type="text" name="price" id="price"
+                                            value="<?php echo $status_details->price;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="discount" id="discount"
+                                            value="<?php echo $status_details->discount;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Discount">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="absolute_price"
+                                            value="<?php echo $status_details->absolute_price;?>" onblur="reSum();"
+                                            id="absolute_price" class="form-control" placeholder="Absolute Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="selling_price"
+                                            value="<?php echo $status_details->selling_price;?>" onblur="reSum();"
+                                            id="selling_price" class="form-control" placeholder="Selling Price">
+                                    </div>
+                                </div>
+                                <?php }else if($status_details->status == "Spam") { ?>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Status <span class="text-red">*</span></label>
+                                        <select class="form-control select2 select2-hidden-accessible" name="status"
+                                            id="query_status" onblur="reSum();" required>
+                                            <?php foreach($status_option as $statuses){ if($status_details->status == $statuses){ ?>
+                                            <option value="<?php echo $status_details->status;?>" selected>
+                                                <?php echo $status_details->status;?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $statuses;?>"><?php echo $statuses;?></option>
+                                            <?php } } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 hide" id="licence">
+                                        <label>Currency <span class="text-red">*</span></label>
+                                        <select class="form-control b-none" name="currency" id="currency">
+                                            <option value="" selected>Select Currency</option>
+                                            <?php foreach($currency as $currencies){ ?>
+                                            <option value="<?php echo $currencies;?>">
+                                                <?php echo $currencies;?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 hide" id="reason_div">
+                                        <label>Reason <span class="text-red">*</span></label>
+                                        <input type="text" id="reason" name="reason"
+                                            value="<?php echo $status_details->reason;?>" class="form-control"
+                                            placeholder="Reason">
+                                    </div>
+                                    <div class="col-md-2 hide" id="next_followup_div">
+                                        <label>Next FollowUp <span class="text-red">*</span></label>
+                                        <input type="date" id="next_followup" name="next_followup"
+                                            value="<?php echo $status_details->followup_date;?>" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group hide" id="sale_div">
+                                    <div class="col-md-3">
+                                        <input type="text" name="price" id="price"
+                                            value="<?php echo $status_details->price;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="discount" id="discount"
+                                            value="<?php echo $status_details->discount;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Discount">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="absolute_price"
+                                            value="<?php echo $status_details->absolute_price;?>" onblur="reSum();"
+                                            id="absolute_price" class="form-control" placeholder="Absolute Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="selling_price"
+                                            value="<?php echo $status_details->selling_price;?>" onblur="reSum();"
+                                            id="selling_price" class="form-control" placeholder="Selling Price">
+                                    </div>
+                                </div>
+                                <?php }else if($status_details->status == "Student") { ?>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Status <span class="text-red">*</span></label>
+                                        <select class="form-control select2 select2-hidden-accessible" name="status"
+                                            id="query_status" onblur="reSum();" required>
+                                            <?php foreach($status_option as $statuses){ if($status_details->status == $statuses){ ?>
+                                            <option value="<?php echo $status_details->status;?>" selected>
+                                                <?php echo $status_details->status;?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $statuses;?>"><?php echo $statuses;?></option>
+                                            <?php } } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 hide" id="licence">
+                                        <label>Currency <span class="text-red">*</span></label>
+                                        <select class="form-control b-none" name="currency" id="currency">
+                                            <option value="" selected>Select Currency</option>
+                                            <?php foreach($currency as $currencies){ ?>
+                                            <option value="<?php echo $currencies;?>">
+                                                <?php echo $currencies;?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 hide" id="reason_div">
+                                        <label>Reason <span class="text-red">*</span></label>
+                                        <input type="text" id="reason" name="reason"
+                                            value="<?php echo $status_details->reason;?>" class="form-control"
+                                            placeholder="Reason">
+                                    </div>
+                                    <div class="col-md-2 hide" id="next_followup_div">
+                                        <label>Next FollowUp <span class="text-red">*</span></label>
+                                        <input type="date" id="next_followup" name="next_followup"
+                                            value="<?php echo $status_details->followup_date;?>" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group hide" id="sale_div">
+                                    <div class="col-md-3">
+                                        <input type="text" name="price" id="price"
+                                            value="<?php echo $status_details->price;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Price">
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" name="discount" id="discount"
@@ -90,38 +275,61 @@
                                     </div>
                                 </div>
                                 <?php } else { ?>
-                                <div class="form-group" id="reason_div">
-                                    <div class="col-md-3 hide" id="licence">
-                                        <select class="form-control b-none" name="licence_price" id="licence_price"
-                                            placeholder="">
-                                            <option value="<?php echo $status_details->licence_price;?>" selected>
-                                                <?php echo $status_details->licence_price;?></option>
-                                            <option value="USD">USD</option>
-                                            <option value="AED">AED</option>
-                                            <option value="EUR">EUR</option>
-                                            <option value="SAR">SAR</option>
-                                            <option value="INR">INR</option>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Status <span class="text-red">*</span></label>
+                                        <select class="form-control select2 select2-hidden-accessible" name="status"
+                                            id="query_status" onblur="reSum();" required>
+                                            <?php foreach($status_option as $statuses){ if($status_details->status == $statuses){ ?>
+                                            <option value="<?php echo $status_details->status;?>" selected>
+                                                <?php echo $status_details->status;?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $statuses;?>"><?php echo $statuses;?></option>
+                                            <?php } } ?>
                                         </select>
                                     </div>
+                                    <div class="col-md-2 hide" id="licence">
+                                        <label>Currency <span class="text-red">*</span></label>
+                                        <select class="form-control b-none" name="currency" id="currency">
+                                            <option value="" selected>Select Currency</option>
+                                            <?php foreach($currency as $currencies){ ?>
+                                            <option value="<?php echo $currencies;?>">
+                                                <?php echo $currencies;?></option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="text" name="price" id="price" onblur="reSum();"
-                                            class="form-control hide" placeholder="Price">
+                                    <div class="col-md-6 hide" id="reason_div">
+                                        <label>Reason <span class="text-red">*</span></label>
                                         <input type="text" id="reason" name="reason"
                                             value="<?php echo $status_details->reason;?>" class="form-control"
                                             placeholder="Reason">
                                     </div>
-                                    <div class="col-md-2">
-                                        <input type="text" name="discount" id="discount" onblur="reSum();"
-                                            class="form-control hide" placeholder="Discount">
+                                    <div class="col-md-2" id="next_followup_div">
+                                        <label>Next FollowUp <span class="text-red">*</span></label>
+                                        <input type="date" id="next_followup" name="next_followup"
+                                            value="<?php echo $status_details->followup_date;?>" class="form-control">
                                     </div>
-                                    <div class="col-md-2">
-                                        <input type="text" name="absolute_price" onblur="reSum();" id="absolute_price"
-                                            class="form-control hide" placeholder="Absolute Price">
+                                </div>
+                                <div class="form-group hide" id="sale_div">
+                                    <div class="col-md-3">
+                                        <input type="text" name="price" id="price"
+                                            value="<?php echo $status_details->price;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Price">                                        
                                     </div>
-                                    <div class="col-md-2">
-                                        <input type="text" name="selling_price" onblur="reSum();" id="selling_price"
-                                            class="form-control hide" placeholder="Selling Price">
+                                    <div class="col-md-3">
+                                        <input type="text" name="discount" id="discount"
+                                            value="<?php echo $status_details->discount;?>" onblur="reSum();"
+                                            class="form-control" placeholder="Discount">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="absolute_price"
+                                            value="<?php echo $status_details->absolute_price;?>" onblur="reSum();"
+                                            id="absolute_price" class="form-control" placeholder="Absolute Price">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="selling_price"
+                                            value="<?php echo $status_details->selling_price;?>" onblur="reSum();"
+                                            id="selling_price" class="form-control" placeholder="Selling Price">
                                     </div>
                                 </div>
                                 <?php } ?>
@@ -131,36 +339,43 @@
                                     value="<?php if(!empty($status_details)){echo $status_details->id;}?>">
                                 <input type="submit" class="btn btn-info pull-right" value="Update">
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> -->
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 var query_status = document.getElementById('query_status');
 var sale_div = document.getElementById('sale_div');
 var reason_div = document.getElementById('reason_div');
-var licence = document.getElementById('reason_div');
+var licence = document.getElementById('licence');
+var next_followup_div = document.getElementById('next_followup_div');
+
 query_status.addEventListener('change', function() {
+    console.log(this.value);
     if (this.value == "Sale") {
-        price.classList.remove('hide');
-        discount.classList.remove('hide');
-        absolute_price.classList.remove('hide');
-        selling_price.classList.remove('hide');
-        reason.classList.add('hide');
+        sale_div.classList.remove('hide');
         licence.classList.remove('hide');
-    } else {
-        price.classList.add('hide');
-        discount.classList.add('hide');
-        absolute_price.classList.add('hide');
-        selling_price.classList.add('hide');
-        reason.classList.remove('hide');
+        next_followup_div.classList.add('hide');
+        reason_div.classList.add('hide');
+    } else if (this.value == "Reject") {
+        sale_div.classList.add('hide');
         licence.classList.add('hide');
+        next_followup_div.classList.add('hide');
+        reason_div.classList.remove('hide');
+    } else if (this.value == "Spam" || this.value == "Student") {
+        sale_div.classList.add('hide');
+        licence.classList.add('hide');
+        next_followup_div.classList.add('hide');
+        reason_div.classList.add('hide');
+    } else {
+        sale_div.classList.add('hide');
+        licence.classList.add('hide');
+        next_followup_div.classList.remove('hide');
+        reason_div.classList.add('hide');
     }
 })
 

@@ -32,14 +32,15 @@ $Type = array('spam', 'unsubscribe');
                         <span class="pull-right text-red"><b><i class="fa fa-envelope"></i> Unsubscribe Mail:
                                 <?=$unsubscribe_mail_count ?></b> || &nbsp; </span>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/spam-mail/update/<?php echo $single_mail_data->id; ?>"
-                        method="post" class="form-horizontal" autocomplete="off">
+                    <form action="<?php echo base_url(); ?>admin/spam-mail/update/<?php echo $single_mail_data->id; ?>" method="post" class="form-horizontal"
+                        autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-10">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Type<span class="text-red">*</span></label>
+                                    <label class="control-label col-md-2">Type<span
+                                            class="text-red">*</span></label>
                                     <div class="col-md-4">
-                                        <select class="form-control b-none" name="type">
+                                    <select class="form-control b-none" name="type">
                                             <?php $i = 0; foreach($Type as $type) {
                                             if ($Type[$i] == $single_mail_data->type){ ?>
                                             <option value="<?php echo $single_mail_data->type; ?>" Selected>
@@ -52,15 +53,14 @@ $Type = array('spam', 'unsubscribe');
                                     </div>
                                     <div class="col-md-6">
                                         <input type="email" class="form-control" name="email_id" id="email_id"
-                                            value="<?php echo $single_mail_data->email_id; ?>" placeholder="Email"
-                                            required />
-                                    </div>
+                                            value="<?php echo $single_mail_data->email_id; ?>" placeholder="Email" required/>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
                         <div class="box-footer">
                             <a href="<?php echo base_url(); ?>admin/spam-mail/list"
-                                class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>
+                                class="btn btn-default pull-left"><b><i class="fa fa-arrow-left"></i> Back</b></a>                            
                             <input type="submit" class="btn btn-info pull-right" value="Update">
                         </div>
                     </form>

@@ -30,10 +30,16 @@
                                 <label class="control-label col-md-1">Source <span class="text-red">*</span></label>
                                 <div class="col-md-2">
                                     <select class="form-control b-none" name="source" id="source" required>
+                                        <?php if($Role_id == 7 || $Role_id == 10) { ?>
+                                        <option value="Email" selected>Email</option>
+                                        <option value="Website">Website</option>
+                                        <option value="Reseller">Reseller</option>
+                                        <?php }else{ ?>
                                         <option value="" selected>Select Source</option>
                                         <option value="Email">Email</option>
                                         <option value="Website">Website</option>
                                         <option value="Reseller">Reseller</option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <label class="control-label col-md-1">Type <span class="text-red">*</span></label>
@@ -105,6 +111,13 @@
                                             placeholder="Designation">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">LinkedIn Profile </label>
+                                    <div class="col-md-8">
+                                        <input type="text" id="linkedin_profile" name="linkedin_profile" class="form-control"
+                                            placeholder="LinkedIn Profile">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -125,10 +138,10 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Client Meassage </label>
                                     <div class="col-md-8">
-                                        <textarea name="client_message" id="client_message" rows="4"
+                                        <textarea name="client_message" id="client_message" rows="6"
                                             class="form-control" placeholder="Client Meassage"></textarea>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Lead Date <span
                                             class="text-red">*</span></label>

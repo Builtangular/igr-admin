@@ -92,6 +92,20 @@ $currency = array('USD','AED','SAR','EUR');
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Inward No.</label>
+                                <div class="col-md-3">
+                                    <input type="text" name="inward_no" id="inward_no"
+                                        value="<?php echo $custom_invoice_data->inward_no;?>" class="form-control"
+                                        placeholder="Order No." required>
+                                </div>
+                                <label class="control-label col-md-2">Inward Date</label>
+                                <div class="col-md-3">
+                                    <input type="date" name="inward_date" id="inward_date"
+                                        value="<?php echo $custom_invoice_data->inward_date;?>" class="form-control"
+                                        required>
+                                </div>
+                            </div>
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h1 class="box-title">Shipping Information</h1>
@@ -282,6 +296,32 @@ $("input[name='s_address_billing']").click(function() {
 });
 
 /* / .hide and shipping information */
+
+// function reSum() {
+//     var percentage, result, result1, mult, multiplication, abs, dis, discount;
+//     var price = parseFloat(document.getElementById("price").value);
+//     var unit_no = parseInt(document.getElementById("unit_no").value);
+//     var percentage = parseFloat(document.getElementById("dis_percentage").value);
+//     var absolute_price = parseFloat(document.getElementById("absolute_price").value);
+//     var discount_type = document.getElementById('discount_type');
+//     console.log(discount_type.value);
+//     multiplication = price * unit_no;
+
+//     Percentage = (percentage / 100).toFixed(2);
+//     // console.log(Percentage);
+//     mult = multiplication * Percentage;
+//     // multiplication = price * percentage;
+//     discount = multiplication - mult;
+//     result = price - absolute_price;
+
+//     if (discount_type.value == "Percentage") {
+//         document.getElementById("total_amount").value = discount;
+//     } else {
+//         // console.log(result);
+//         document.getElementById("total_amount").value = result;
+//     }
+
+// }
 
 
 jQuery(function() {

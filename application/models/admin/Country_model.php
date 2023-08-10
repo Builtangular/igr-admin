@@ -202,6 +202,7 @@ class Country_model extends CI_Model {
 		$this->db->order_by('id',"DESC");
 		$query = $this->db->get();
 		$result = $query->row();	
+		// echo $this->db->last_query();	die;
 		return $result;	
 	}
 	public function insert_country_rd_data($postdata){
@@ -236,7 +237,7 @@ class Country_model extends CI_Model {
 		$this->db->select("*");
 		$this->db->from("tbl_country_rd_data");
 		// $this->db->where(array('id' => $id));
-		// $this->db->order_by('id',"desc");
+		$this->db->order_by('id',"desc");
 		$sql = $this->db->get();
 		/* echo $this->db->last_query();
 		die; */

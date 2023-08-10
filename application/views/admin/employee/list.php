@@ -51,7 +51,7 @@
                                     <th>Salary Breakup</th>
                                     <th>Bank A/C</th>
                                     <th>Documents</th>
-                                    <th width="200px">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -169,7 +169,7 @@
                                     <th>Salary Breakup</th>
                                     <th>Bank A/C</th>
                                     <th>Documents</th>
-                                    <th width="200px">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>

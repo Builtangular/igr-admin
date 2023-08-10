@@ -15,12 +15,21 @@
 		"phpoffice/phpspreadsheet": "^1.25",
 		"phpoffice/phpword": "^1.0",
 		"zendframework/zend-escaper": "^2.6",
-		"zendframework/zend-stdlib": "^3.2"
+		"zendframework/zend-stdlib": "^3.2",
+		"ultramsg/whatsapp-php-sdk": "^2.0",
+		"deeplcom/deepl-php": "^1.5",
+		"symfony/http-client": "^5.4",
+		"nyholm/psr7": "^1.8"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.* || 5.*"
+	},
+	"config": {
+		"allow-plugins": {
+			"php-http/discovery": true
+		}
 	}
 }

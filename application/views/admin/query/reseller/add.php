@@ -29,38 +29,32 @@
                     <div class="box-header with-border">
                         <h1 class="box-title"> Insert Reseller Details</h1>
                     </div>
-                    <form action="<?php echo base_url(); ?>admin/query/insert_reseller" id="employment-form" method="post"
-                        class="form-horizontal" enctype="multipart/form-data">
+                    <form action="<?php echo base_url(); ?>admin/query/insert_reseller" id="employment-form"
+                        method="post" class="form-horizontal" enctype="multipart/form-data">
                         <div class="box-body">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Reseller Name <span
-                                            class="text-red">*</span></label>
-                                    <div class="col-md-8">
-                                        <input type="text" id="reseller_name" name="reseller_name" class="form-control"
-                                            placeholder="Reseller Name" required>
-                                        <span class="help-block margin" id="txtHint"></span>
-                                    </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Reseller Name <span
+                                        class="text-red">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="text" id="reseller_name" name="reseller_name" class="form-control"
+                                        placeholder="Reseller Name" required>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Reseller Email Id <span
-                                            class="text-red">*</span></label>
-                                    <div class="col-md-8">
-                                        <input type="text" id="reseller_email" name="reseller_email" class="form-control"
-                                            placeholder="Reseller Email" required>
-                                        <span class="help-block margin" id="txtHint"></span>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Reseller Email Id <span
+                                        class="text-red">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="text" id="reseller_email" name="reseller_email" class="form-control"
+                                        placeholder="Reseller Email" required>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Service No.
-                                    <span
-                                            class="text-red">*</span>
-                                    </label>
-                                    <div class="col-md-8">
-                                        <input type="text" id="service_no" name="service_no" class="form-control"
-                                            placeholder="Service No" required>
-                                        <span class="help-block margin" id="txtHint"></span>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Service No.
+                                    <span class="text-red">*</span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" id="service_no" name="service_no" class="form-control"
+                                        placeholder="Service No" required>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +69,5 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-
-<!-- Bootstrap 3.3.2 JS -->
 
 <?php $this->load->view('admin/footer.php'); ?>

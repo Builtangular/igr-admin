@@ -21,7 +21,6 @@ class Country_rd extends CI_Controller {
 
 			$data['report_id']=$id;	
 			$data['Country_Rds']= $this->Country_model->get_country_rds();
-			// var_dump($data['Country_Rds']); die;
 			$this->load->view('admin/country_rd/list',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -38,23 +37,20 @@ class Country_rd extends CI_Controller {
             $rd_title = $data['global_rds']->title;
             $rd_name = $data['global_rds']->name;
             $forecast_to = $data['global_rds']->forecast_to;
-            $data['countries'] = $this->Country_model->get_countries();     
-			// var_dump($data['countries']);die;       
+            $data['countries'] = $this->Country_model->get_countries();            
 			$country_title_count = $this->Country_model->get_brazil_report_count();
-			// var_dump($country_title_count);die;
 			$sku_code = explode('C', $country_title_count->sku);
-			// var_dump($sku_code); die;
+			// var_dump($sku_code[1]); die;
 			$skuno = 1;
-			var_dump($skuno); die;
             foreach($data['countries'] as $country_data)
 			{
                 $Country_name=$country_data->name;	
 				$Country_Report_title= $Country_name.' '.htmlspecialchars($rd_title);
-                if($Country_name == 'Africa'){
+                /* if($Country_name == 'Africa'){
 					$sku = 'AF';
 					$pages = 60;
-					$single_user = 4395;
-					$enterprise = 7995;
+					$single_user = 3795;
+					$enterprise = 5195;
 				}else if ($Country_name == 'Brazil'){
 					$sku = 'BZ';
 					$pages = 40;
@@ -142,17 +138,24 @@ class Country_rd extends CI_Controller {
 					$pages = 40;
 					$single_user = 4795;
 					$enterprise = 7195;
+				} */
+				if($Country_name == 'Africa'){
+					$pages = 60;
+					$single_user = 3795;
+					$enterprise = 5195;
+				}else{
+					$pages = 40;
+					$single_user = 2595;
+					$enterprise = 4095;
 				}
 				// $sku = 'IGRCTRY';
 				$sku = 'IGRC';
-				// var_dump($sku);die;
 				$Report_code = $sku.'0'.($sku_code[1] + $skuno);
-				var_dump($Report_code);die;
 				$report_title_new=str_replace( array( '\'', '"', ',' , ';', '<', '>', '-', '(',')' ), ' ', $Country_Report_title);
 				$encoded_report_title= urldecode($report_title_new);	
 				$encoded_report_url = str_replace(' ','-', $encoded_report_title);
 				$url = str_replace('--','-', strtolower($encoded_report_url));
-				var_dump($url);die;
+
 				$final_country_rd_title = $Country_Report_title.": Prospects, Trends Analysis, Market Size and Forecasts up to ".$forecast_to;
 				$post_countrydata = array(
 					'report_id'=>$id,
@@ -167,7 +170,6 @@ class Country_rd extends CI_Controller {
 				);
 				
 				$insert_country_rd_details = $this->Country_model->insert_country_rd_details($post_countrydata);
-				// var_dump($insert_country_rd_details);die;
 				if($insert_country_rd_details){
 					$update_record = $this->Country_model->update_country_status($id);
 				}

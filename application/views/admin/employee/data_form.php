@@ -251,8 +251,8 @@
                                         <input type="hidden" name="upload_image" class="form-control-file"
                                             id="upload_image">
                                     </div>
-                                    <!-- <span class="help-block margin text-red" id="">Note *: Image size should be 20 to 40
-                                        Kb</span> -->
+                                    <span class="help-block margin text-red" id="">Note *: Image size should be 20 to 40
+                                        Kb</span>
                                 </div>
                                 <div class="box-footer">
                                     <!-- <label> <a href="" class="btn btn-info pull-right" data-role="button" data-inline="true">Skip</a></label> -->

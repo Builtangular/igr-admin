@@ -129,40 +129,22 @@ $Education_type = array('Diploma', 'Graduation', 'Post Graduation');
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2">Relative Details : </label>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <span><?php echo $employee_data->relative_name; ?></span>
                                     </div>
                                     <label class="col-md-2">Relative Number : </label>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <span><?php echo $employee_data->relative_contact_no; ?></span>
                                     </div>
-                                    <label class="col-md-2">Relation : </label>
-                                    <div class="col-md-2">
-                                        <span><?php echo $employee_data->relation; ?></span>
-                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2">Emergency Details : </label>
-                                    <div class="col-md-2">
-                                        <span><?php echo $employee_data->emergency_name; ?></span>
-                                    </div>
-                                    <label class="col-md-2">Mobile No. : </label>
-                                    <div class="col-md-2">
-                                        <span><?php echo $employee_data->emergency_contact_no; ?></span>
-                                    </div>
-                                    <label class="col-md-2">Relation : </label>
-                                    <div class="col-md-2">
-                                        <span><?php echo $employee_data->emergency_relation; ?></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2">Employee Status : </label>
+                                    <label class="col-md-2">Reference Details : </label>
                                     <div class="col-md-4">
-                                        <span><?php echo $employee_data->emp_status; ?></span>
+                                        <span><?php echo $employee_data->reference_name; ?></span>
                                     </div>
-                                    <label class="col-md-2">Blood Group : </label>
+                                    <label class="col-md-2">Ref Mobile No. : </label>
                                     <div class="col-md-4">
-                                        <span><?php echo $employee_data->blood_group; ?></span>
+                                        <span><?php echo $employee_data->reference_contact_no; ?></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -198,16 +180,12 @@ $Education_type = array('Diploma', 'Graduation', 'Post Graduation');
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2">Department : </label>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <span><?php echo $employee_data->department; ?></span>
                                     </div>
                                     <label class="col-md-2">Job Profile : </label>
-                                    <div class="col-md-2">
-                                        <span><?php echo $employee_data->designation; ?></span>
-                                    </div>
-                                    <label class="col-md-2">Head Name : </label>
-                                    <div class="col-md-2">
-                                        <span><?php echo $employee_data->head_name; ?></span>
+                                    <div class="col-md-4">
+                                        <span><?php echo $employee_data->job_profile; ?></span>
                                     </div>
                                 </div>
                                 <div class="form-group">

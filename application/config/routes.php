@@ -94,6 +94,8 @@ $route['admin/spreadsheet'] = 'admin/PhpspreadsheetController';
 $route['admin/spreadsheet/filter'] = 'admin/PhpspreadsheetController/filter';
 $route['admin/spreadsheet/index'] = 'admin/PhpspreadsheetController/index';
 $route['admin/spreadsheet/export'] = 'admin/PhpspreadsheetController/export';
+$route['admin/spreadsheet/metadata'] = 'admin/PhpspreadsheetController/metadata';
+$route['admin/spreadsheet/export_metadata'] = 'admin/PhpspreadsheetController/export_metadata';
 
 /* analyst urls */
 $route['analyst/report/processed'] ='admin/Analyst_Report/analyst_processed_rd';
@@ -126,6 +128,7 @@ $route['admin/spam-mail/update/(:any)'] ='admin/Spam_Mail/update/$1';
 $route['admin/Spam_Mail/delete/(:any)'] ='admin/Spam_Mail/delete/$1';
 $route['admin/spam-mail/import_file'] ='admin/Spam_Mail/import_file';
 $route['admin/spam_mail/export_data'] ='admin/Spam_Mail/export_data';
+$route['admin/spam-mail/email-formater'] ='admin/Spam_Mail/email_formater';
 
 /* invoice urls */
 $route['invoice/index'] ='admin/invoice/index';

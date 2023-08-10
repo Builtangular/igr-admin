@@ -44,7 +44,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($query_data as $data){ 
+                                <?php foreach($query_data as $data){ //var_dump($query_data);die;
                                      $scope_name = $data->scope_name.' '.$data->report_name;
                                      $user_name = $data->created_user; 
                                      $sql = "SELECT full_name FROM `tbl_registered_user_details` WHERE `department` = 'Sales' AND `full_name` = '$user_name'";
@@ -53,6 +53,7 @@
                                             $user_full_name = $query->row(); 
                                         }
                                      $register_user_name = $user_full_name->full_name;
+                                    //  var_dump($user_name);die;
                                 ?>
                                 <?php if($register_user_name != $user_name){ ?>
                                 <tr style="font-size: 14px;">

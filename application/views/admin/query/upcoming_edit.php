@@ -95,12 +95,12 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <select class="form-control b-none" id="scope_name" name="scope_name">
                                             <?php foreach($scopelist as $scope)	{ 
                                             if($single_query_data->scope_name == $scope->name){ ?>
-                                                <option value="<?php echo $single_query_data->scope_name;?>" selected>
-                                                    <?php echo $single_query_data->scope_name;?></option>
+                                            <option value="<?php echo $single_query_data->scope_name;?>" selected>
+                                                <?php echo $single_query_data->scope_name;?></option>
                                             <?php } else { ?>
-                                                <option value="<?php echo $scope->name;?>">
-                                                    <?php echo $scope->name; ?>
-                                                </option>
+                                            <option value="<?php echo $scope->name;?>">
+                                                <?php echo $scope->name; ?>
+                                            </option>
                                             <?php } } ?>
                                         </select>
                                     </div>
@@ -110,7 +110,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                     <div class="col-md-8">
                                         <input type="text" id="client_name" name="client_name"
                                             value="<?php echo $single_query_data->client_name;?>" class="form-control"
-                                            placeholder="Client Name">                                        
+                                            placeholder="Client Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -127,7 +127,7 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         <input type="text" id="company_name" name="company_name"
                                             value="<?php echo $single_query_data->company_name;?>" class="form-control"
                                             placeholder="Company Name">
-                                    </div>                                    
+                                    </div>
                                     <span class="help-block margin" id="txtHint"></span>
                                 </div>
                                 <div class="form-group">
@@ -188,19 +188,18 @@ $Type = array('Sample Request', 'TOC Request', 'Customization', 'Enquiry', 'Disc
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                               <!--  <div class="form-group">
                                     <label class="control-label col-md-4">Assign to Analyst</label>
                                     <div class="col-md-8">
-                                        <!-- <input type="radio" name="assign_analyst" value="1" /> Yes
-                                        &nbsp;&nbsp;
-                                        <input type="radio" name="assign_analysis" value="0" checked/> No -->
                                         <input type="radio" name="assign_analyst" value="1"
-                                            <?php echo ($single_query_data->assign_analyst == 1)?'checked':'' ?> /> Yes &nbsp;&nbsp;
+                                            <?php echo ($single_query_data->assign_analyst == 1)?'checked':'' ?> /> Yes
+                                        &nbsp;&nbsp;
                                         <input type="radio" name="assign_analyst" value="0"
                                             <?php echo ($single_query_data->assign_analyst == 0)?'checked':'' ?> /> No
                                     </div>
-                                </div>
-                                <?php } ?>                                
+                                </div> -->
+                               
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="box-footer">

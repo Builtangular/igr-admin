@@ -1,4 +1,4 @@
-<?php $this->load->view('admin/report-header.php'); ?>
+<?php $this->load->view('admin/header.php'); ?>
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/dataTables.bootstrap.min.css">
 <!-- Content Wrapper. Contains page content -->
@@ -43,6 +43,8 @@
                                     <th>Reseller Name</th>
                                     <th>Invoice No</th>
                                     <th>Order Date</th>
+                                    <th>Inward No.</th>
+                                    <th>Inward Date</th>
                                     <th>Invoice</th>
                                     <th>Action</th>
                                 </tr>
@@ -69,15 +71,18 @@
                                     <td><?php echo $data->reseller_name; ?></td>
                                     <td><?php echo $data->invoice_no; ?></td>
                                     <td><?php echo date('F, Y', strtotime($data->order_date)); ?></td>
+                                    <td><?php echo $data->inward_no; ?></td>
+                                    <td><?php echo $data->inward_date; ?></td>
                                     
-                                    <td>                                   
-                                    <?php if ($custom_invoice_details->num_rows() > 0) { ?>
+                                    <td class="text-center">                                   
+                                    <?php /* if ($custom_invoice_details->num_rows() > 0) { ?>
                                     
                                         <a href="<?php echo base_url(); ?>admin/custom_invoice/view/<?php echo $data->id; ?>"><b><?php echo $invoice_status; ?></b></a>
                                     <?php } else { ?>
                                         <a href="<?php echo base_url(); ?>admin/custom_invoice/view/<?php echo $data->id; ?>"><b><?php echo $invoice_status; ?></b></a>
                                     
-                                    <?php } ?>
+                                    <?php } */ ?>
+                                    <a href="<?php echo base_url(); ?>admin/custom_invoice/view/<?php echo $data->id; ?>"><b><?php echo $invoice_status; ?></b></a>
                                     </td>
                                     <td>
                                     <a href="<?php echo base_url();?>admin/custom_invoice/edit/<?php echo $data->id;?>"
@@ -94,6 +99,8 @@
                                     <th>Reseller Name</th>
                                     <th>Invoice No</th>
                                     <th>Order Date</th>
+                                    <th>Inward No.</th>
+                                    <th>Inward Date</th>
                                     <th>Invoice</th>
                                     <th>Action</th>
                                 </tr>

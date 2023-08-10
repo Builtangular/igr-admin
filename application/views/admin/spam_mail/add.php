@@ -8,7 +8,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add Spam Mail
+            Spam Mail Varifier
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,27 +25,30 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h1 class="box-title"> Spam Mail</h1>
+                        <h1 class="box-title"> Add Mail</h1>
+                        <span class="pull-right text-blue"><b><i class="fa fa-envelope"></i> Email Formats:
+                                <?=$mail_count ?></b></span>
+                        <span class="pull-right text-blue"><b><i class="fa fa-institution"></i> Companies:
+                                <?=$company_count ?></b> || &nbsp; </span>
                         <span class="pull-right text-red"><b><i class="fa fa-envelope"></i> Spam Mail:
-                            <?=$spam_mail_count ?></b></span>  
-                            <span class="pull-right text-red"><b><i class="fa fa-envelope"></i> Unsubscribe Mail:
-                            <?=$unsubscribe_mail_count ?></b> || &nbsp; </span>
+                                <?=$spam_mail_count ?> || &nbsp; </b></span>
+                        <span class="pull-right text-red"><b><i class="fa fa-envelope"></i> Unsubscribe Mail:
+                                <?=$unsubscribe_mail_count ?></b> || &nbsp; </span>
                     </div>
                     <form action="<?php echo base_url(); ?>admin/Spam_Mail/insert" method="post" class="form-horizontal"
                         autocomplete="off">
                         <div class="box-body">
                             <div class="col-md-14">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Spam Email<span
+                                    <label class="control-label col-md-2">Spam Email <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-8">
                                         <input type="email" class="form-control" name="email_id" id="email_id"
-                                            placeholder="Email" autofocus/>
+                                            placeholder="Email" autofocus required />
                                         <input type="hidden" name="type" id="type" value="spam" class="form-control">
                                     </div>
                                     <div class="col-md-1">
-                                        <center><input type="submit" class="btn btn-info pull-right" value="Submit">
-                                        </center>
+                                        <input type="submit" class="btn btn-info pull-right" value="Submit">
                                     </div>
                                 </div>
                             </div>
@@ -56,18 +59,62 @@
                         <div class="box-body">
                             <div class="col-md-14">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Unsubscribe Email<span
+                                    <label class="control-label col-md-2">Unsubscribe Email <span
                                             class="text-red">*</span></label>
                                     <div class="col-md-8">
                                         <input type="email" class="form-control" name="email_id" id="email_id"
-                                            placeholder="Email" />
-                                        <input type="hidden" name="type" id="type" class="form-control">
+                                            placeholder="Email" required />
                                         <input type="hidden" name="type" id="type" value="unsubscribe"
                                             class="form-control">
                                     </div>
                                     <div class="col-md-1">
-                                        <center><input type="submit" class="btn btn-info pull-right" value="Submit">
-                                        </center>
+                                        <input type="submit" class="btn btn-info pull-right" value="Submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="<?php echo base_url(); ?>admin/Spam_Mail/insert" method="post" class="form-horizontal"
+                        autocomplete="off">
+                        <div class="box-body">
+                            <div class="col-md-14">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Unsubscribe Domain <span
+                                            class="text-red">*</span></label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="email_id" id="email_id"
+                                            placeholder="Domain" required />
+                                        <input type="hidden" name="type" id="type" value="domain" class="form-control">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="submit" class="btn btn-info pull-right" value="Submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-primary">
+
+                    <div class="box-header with-border">
+                        <h1 class="box-title"> Verify Mail</h1>
+                    </div>
+                    <form action="<?php echo base_url(); ?>admin/spam_mail/export_data" method="post"
+                        class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+                        <div class="box-body">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputImage" class="col-md-2 control-label">Export File</label>
+                                    <div class="col-md-8">
+                                        <input type="file" name="xl_file" class="form-control" required>
+                                        <input type="hidden" name="xl_file" class="form-control-file" id="xl_file">
+                                        <span class="text-red"><b>Note:</b> File should be less than 2 MB</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="submit" value="Export Excel" class="btn btn-info pull-left"
+                                            value="Submit">
                                     </div>
                                 </div>
                             </div>

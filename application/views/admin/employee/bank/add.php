@@ -42,14 +42,14 @@
                                     <label class="control-label col-md-2">Bank Name </label>
                                     <div class="col-md-10">
                                         <input type="text" id="p_bank_name" name="p_bank_name" class="form-control"
-                                            placeholder="Name">
+                                            placeholder="Bank Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Account Name. </label>
+                                    <label class="control-label col-md-2">Account Name </label>
                                     <div class="col-md-5">
                                         <input type="text" id="p_account_name" name="p_account_name"
-                                            class="form-control" placeholder="Name">
+                                            class="form-control" placeholder="Account Name">
                                     </div>
                                     <div class="col-md-5">
                                         <input type="text" id="p_account_no" name="p_account_no" class="form-control"
@@ -78,14 +78,14 @@
                                     <label class="control-label col-md-2">Bank Name </label>
                                     <div class="col-md-10">
                                         <input type="text" id="s_bank_name" name="s_bank_name" class="form-control"
-                                            placeholder="Name">
+                                            placeholder="Bank Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Account Name. </label>
+                                    <label class="control-label col-md-2">Account Name </label>
                                     <div class="col-md-5">
                                         <input type="text" id="s_account_name" name="s_account_name"
-                                            class="form-control" placeholder="Name">
+                                            class="form-control" placeholder="AccountName">
                                     </div>
                                     <div class="col-md-5">
                                         <input type="text" id="s_account_no" name="s_account_no" class="form-control"

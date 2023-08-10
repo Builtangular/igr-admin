@@ -53,7 +53,7 @@
                                      $scope_name = $data->scope_name.' '.$data->report_name;
                                     //  var_dump($scope_name);die;
                                 /* Status */
-                                $status_details = "SELECT (status)  AS rd_status FROM tbl_rd_query_sale_status where query_id = ".$data->id;
+                                $status_details = "SELECT (status)  AS rd_status FROM tbl_rd_query_current_status where query_id = ".$data->id;
                                
                                 $query_status_details = $this->db->query($status_details);
                                 if($query_status_details->num_rows() > 0) { 

@@ -21,7 +21,7 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
-			$data['rmenu_active'] = "active menu-open";
+			$data['rjmenu_active'] = "active menu-open";
 			$data['elist'] = "active";
 			$data['employee_details'] = $this->Employee_Model->get_employee_details();
 			// var_dump($data['employee_details']); die;
@@ -50,111 +50,21 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$data['department']=$session_data['department'];
-			$data['type'] = $this->input->post('type');
-			$data['massage'] = $this->session->userdata('msg');
-			$data['type_details'] = $this->Employee_Model->get_emp_type_details();
-			$data['department_details'] = $this->Employee_Model->get_emp_dept_details();
-			$data['designation_details'] = $this->Employee_Model->get_emp_designation_details();
-			$postData = $this->input->post();
-			// $data['emp_details'] = $this->Employee_Model->get_emp_head_details($postData);
-			// $data['designation_data'] = $this->Employee_Model->get_emp_designation_data();
-			// $data['login_details'] = $this->Employee_Model->get_emp_head_details1($data['Role_id']);
-			// var_dump($data['designation_data']);die;
+			$data['massage'] = $this->session->userdata('msg'); 
+
 		    $this->load->view('admin/employee/add',$data);			
+			//$this->load->view('admin/employee/employment_form',$data);			
 		}else{			
 			$this->load->view('admin/login');
 		}
 	}	
-	public function get_head_name(){
-		$postData = $this->input->post();
-		// var_dump($postData);die;
-		$designation = $postData['designation'];
-		$department = $postData['department'];
-		$head_name = $postData['head_name'];
-		// var_dump($designation);die;
-		if($designation == "Manager"){
-			$designation = "Admin";
-		}else if($designation == "Team Lead"){
-			$designation = "Manager";
-		}else if($designation == "Sr. Research Analyst"){
-			$designation = "Admin";
-		}else if($designation == "Research Analyst"){
-			$designation = "Admin";
-		}else if($designation == "Sr. Research Associate"){
-			$designation = "Team Lead";
-		}else if($designation == "Research Associate"){
-			$designation = "Research Analyst";
-		}else if($designation == "Sr. Executive"){
-			$designation = "Research Associate";
-		}else if($designation == "Executive"){
-			$designation = "Sr. Executive";
-		}else if($designation == "Technology Lead"){
-			$designation = "Team Lead";
-		}else if($designation == "Sr. Web Developer"){
-			$designation = "Technology Lead";
-		}else if($designation == "Web Developer"){
-			$designation = "Sr. Web Developer";
-		}else if($designation == "Developer"){
-			$designation = "Sr. Web Developer";
-		}else if($designation == "Sr. Executive"){
-			$designation = "Technology Lead";
-		}else if($designation == "Executive"){
-			$designation = "Sr. Executive";
-		}else if($designation == "Executive"){
-			$designation = "Sr. Executive";
-		}else if($designation == "Sr. Marketing Executive"){
-			$designation = "Team Lead";
-		}else if($designation == "Marketing Executive"){
-			$designation = "Team Lead";
-		}else if($designation == "Sr. Executive"){
-			$designation = "Team Lead";
-		}else if($designation == "Executive"){
-			$designation = "Sr. Executive";
-		}else if($designation == "Sr. Client Relation Executive"){
-			$designation = "Team Lead";
-		}else if($designation == "Client Relation Executive"){
-			$designation = "Sr. Client Relation Executive";
-		}else if($designation == "Sr. Sales Executive"){
-			$designation = "Client Relation Executive";
-		}else if($designation == "Sales Executive"){
-			$designation = "Sr. Sales Executive";
-		}else if($designation == "Sr. HR"){
-			$designation = "Team Lead";
-		}else if($designation == "HR Executive"){
-			$designation = "Sr. HR";
-		}else if($designation == "Sr. Graphics Executive"){
-			$designation = "Admin";
-		}else if($designation == "Graphics Executive"){
-			$designation = "Sr. Graphics Executive";
-		}else if($designation == "Associate Manager"){
-			$designation = "Team Lead";
-		}else if($designation == "Associate Engineer"){
-			$designation = "Team Lead";
-		}else if($designation == "Sr. Executive"){
-			$designation = "Team Lead";
-		}else if($designation == "Executive"){
-			$designation = "Team Lead";
-		}else if($designation == "Back Office"){
-			$designation = "Admin";
-		}
-		$data = $this->Employee_Model->get_emp_head_details($department,$designation);
-		// var_dump($data);die;
-		echo json_encode($data);
-	}
-	public function get_designation_name(){
-		$postdata = $this->input->post();
-		$data = $this->Employee_Model->get_emp_designation_records($postdata);
-		// var_dump($data);die;
-		echo json_encode($data);
-	}
-	public function insert(){
-		// var_dump($_POST);die;
-		if($this->session->userdata('logged_in')){
+	public function insert()
+	{
+		if($this->session->userdata('logged_in'))
+	 	{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$department = $this->input->post('department');
 			/* Image Upload */
 			$file ='';
 			$config = array(
@@ -170,82 +80,9 @@ class Employee extends CI_Controller {
 				$error = array('error' => $this->upload->display_errors());	
 				$this->upload->display_errors();
 			}
-			$roleid = $this->input->post('designation');
-			$user_record = $this->Employee_Model->get_single_user_role_record($roleid);
-            $designation_type = $user_record->designation_type;
-            $role_id = $user_record->role_id;
-           
 			/* /. Image Upload */
-			$insert_employee_records = array(
-				'role_id'                       => $role_id,
-				'job_type'                      => $this->input->post('job_type'),
-                'emp_code'                      => $this->input->post('emp_code'),
-                'joining_date'                  => $this->input->post('joining_date'),
-                'appraisal_date'                => $this->input->post('appraisal_date'),
-                'prefix'                        => $this->input->post('prefix'),
-                'first_name'                    => $this->input->post('first_name'),
-                'middle_name'                   => $this->input->post('middle_name'),
-                'last_name'                     => $this->input->post('last_name'),
-                'date_of_birth'                 => $this->input->post('date_of_birth'),
-                'blood_group'                   => $this->input->post('blood_group'),
-                'gender'                        => $this->input->post('gender'),
-                'mobile_number'                 => $this->input->post('mobile_number'),
-                'alternate_mobile_no'           => $this->input->post('alternate_mobile_no'),
-                'personal_email_id'             => $this->input->post('personal_email_id'),
-                'official_email_id'             => $this->input->post('official_email_id'),
-                'marital_status'                => $this->input->post('marital_status'),
-                'spouse_name'                   => $this->input->post('spouse_name'),
-                'father_name'                   => $this->input->post('father_name'),
-                'permant_address'               => $this->input->post('permant_address'),
-                'current_address'               => $this->input->post('current_address'),
-                'relative_name'                 => $this->input->post('relative_name'),
-                'relative_contact_no'           => $this->input->post('relative_contact_no'),
-                'relation'                      => $this->input->post('relation'),
-                'emergency_name'                => $this->input->post('emergency_name'),
-                'emergency_contact_no'          => $this->input->post('emergency_contact_no'),
-                'emergency_relation'            => $this->input->post('emergency_relation'),
-                'aadhaar_no'                    => $this->input->post('aadhaar_no'),
-                'pan_no'                        => $this->input->post('pan_no'),
-                'passport_no'                   => $this->input->post('passport_no'),
-                'education_type'                => $this->input->post('education_type'),
-                'degree'                        => $this->input->post('degree'),
-                'resignation_date'              => $this->input->post('resignation_date'),
-                'passing_year'                  => $this->input->post('passing_year'),
-                'department'                    => $this->input->post('department'),
-                'designation'                   => $this->input->post('designation'),                
-                'head_name'                     => $this->input->post('head_name'),
-                'emp_status'                    => $this->input->post('emp_status'),                
-                'uan_no'                        => $this->input->post('uan_no'),
-                'pf_no'                         => $this->input->post('pf_no'),
-                'upload_image'                  => $file,
-                'user_type'                     => $this->input->post('user_type'),
-                'created_on'                    => date('Y-m-d'),
-                'updated_on'                    => date('Y-m-d'),
-			);
-			
-			$insert_id = $this->Employee_Model->insert_emp_personal_details($insert_employee_records);
-
-			$ASCIRangeFrom = 48;
-			$ASCITo   = 122;
-			$MakeRandomInText = "";
-			$MakeRandomInText_length = 8;
-			for ($i = 0; $i < $MakeRandomInText_length; $i++) {
-			$ascii_no = round( mt_rand( $ASCIRangeFrom , $ASCITo ) );
-			$MakeRandomInText .= chr( $ascii_no );
-			}
-			// echo $MakeRandomInText;
-			// var_dump($pw);die;
-			// return $pw;
-			$insert_user_details = array(
-                'user_id'                   => $insert_id,
-                'User_email_id'             => $this->input->post('personal_email_id'),
-                'Login_user_name'           => $this->input->post('first_name'),
-				'Login_password'            => $MakeRandomInText,
-                'Creation_date'             => date('Y-m-d'),
-            );
-			// var_dump($insert_user_details);die;
-			$insert_id = $this->Employee_Model->insert_user_login_details($insert_user_details);
-			// var_dump($insert_user_details);die;
+			$insert_id = $this->Employee_Model->insert_emp_personal_details($file);
+			// var_dump($insert_id);die;
 			if($insert_id)	{
 				$this->session->set_flashdata('msg', 'Data has been inserted successfully....!!!');
 			} else {
@@ -265,7 +102,6 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['employee_data'] = $this->Employee_Model->get_single_employee_data($id);
-			// var_dump($data['employee_data']);die;
 			$data['employment_details'] = $this->Employee_Model->get_employment_record($id);
 			$single_empolyment_data = $this->Employee_Model->get_single_employee_data($id);
 			$job_type = $single_empolyment_data->job_type;
@@ -309,24 +145,13 @@ class Employee extends CI_Controller {
 	}
 	public function edit($id)
 	{
-		// var_dump($_id);die;
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$data['type_details'] = $this->Employee_Model->get_emp_type_details();
-			$data['single_type'] = $this->Employee_Model->get_single_employee_type($id);
-			$data['department_details'] = $this->Employee_Model->get_emp_dept_details();
-			$data['designation_details'] = $this->Employee_Model->get_emp_designation_details();
 			$data['employee_data'] = $this->Employee_Model->get_single_employee_data($id);
-			$data['job_details'] = $this->Employee_Model->get_single_job_type($id);
-			$data['dept_details'] = $this->Employee_Model->get_single_dept_type($id);
-			$data['designation_data'] = $this->Employee_Model->get_single_designation_data($id);
-			$data['dept_id'] = $data['employee_data']->department;
-			$data['designation_records'] = $this->Employee_Model->get_designation_records($data['dept_id']);
-			// $data['dept_details'] = $this->Employee_Model->get_single_dept_type($id);
-			// var_dump($data['dept_id']);die;
+			// var_dump($data['employee_data']);die;
 			$this->load->view("admin/employee/edit",$data);
 		}else {
 			$this->load->view("admin/login");
@@ -339,20 +164,16 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$data['department_details'] = $this->Employee_Model->get_emp_dept_details();
-			$data['designation_details'] = $this->Employee_Model->get_emp_designation_details();
 			$file ='';
 			$config = array(
 				'upload_path' 	=> "assets/admin/emp_data/profile",
 				'allowed_types' => "*",
 				'encrypt_name'	=> false,
 			);
-			// var_dump($config);die;
             $this->upload->initialize($config);
 			if($this->upload->do_upload('upload_image')){
 				$data = $this->upload->data();	
-				$file = $data['file_name'];	
-					
+				$file = $data['file_name'];			
 			}else{
 				$error = array('error' => $this->upload->display_errors());	
 				$this->upload->display_errors();
@@ -363,31 +184,22 @@ class Employee extends CI_Controller {
 				$file = $this->input->post('exisiting_image');
 			}
 			/* /. Image Upload */
-			$result = $this->Employee_Model->update_emp_personal_data($id,$file);
-			// die;
-			if($result){
-				$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
-			}else{
-				$this->session->set_flashdata('msg', 'Sorry! Data not updated....!!!');
-			}
+			$this->Employee_Model->update_emp_personal_data($id, $file);
+			$this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
 			redirect('admin/employee');
 		}else {
 			$this->load->view("admin/login");
 		}
 	}
 	public function delete_employee($id){
-		// var_dump($id);die;
-		if($this->session->userdata('logged_in')){
+	    // var_dump($id); die;
+		if($this->session->userdata('logged_in'))
+		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$result = $this->Employee_Model->delete_employment_records($id);
-			$result1 = $this->Employee_Model->delete_employment_data($id);
-			if($result || $result1){
-				$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
-			}else{
-				$this->session->set_flashdata('msg', 'Sorry! Data not delete....!!!');
-			}
+			$data['delete_employee_data'] = $this->Employee_Model->delete_employee_data($id);
+			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
 			redirect('admin/employee');
 		}else {
 			$this->load->view("admin/login");
@@ -401,8 +213,10 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
-			$data['emp_id']=$id;		
+			$data['emp_id']=$id;
+			// var_dump($data['emp_id']);die;			
 			$data['employment_details'] = $this->Employee_Model->get_employment_record($id);
+			// var_dump($data['first_name']);die;
 			$this->load->view("admin/employee/employment/list", $data);
         }else{
             $this->load->view("admin/login");
@@ -484,13 +298,8 @@ class Employee extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 			$single_empolyment_data = $this->Employee_Model->get_single_empolyment_data($id);
 			$emp_id = $single_empolyment_data->emp_id;	
-			// $data['delete_employment'] = $this->Employee_Model->delete_employment_data($id);
-			$result = $this->Employee_Model->delete_employment_data($id);
-			if($result){
-				$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
-			}else{
-				$this->session->set_flashdata('msg', 'Sorry! Data not delete....!!!');
-			}
+			$data['delete_employment'] = $this->Employee_Model->delete_employment_data($id);
+			$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
 			redirect('admin/employee/employment_list/' .$emp_id);
 		}else {
 			$this->load->view("admin/login");
@@ -499,6 +308,7 @@ class Employee extends CI_Controller {
 	/* ./ Employment Management */
 	/* Salary Management */
 	public function salary_list($id){
+	    //var_dump($id);die;
         if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name'] = $session_data['Login_user_name'];	
@@ -515,6 +325,7 @@ class Employee extends CI_Controller {
 			}else{
 				$data['t_salary_details'] = $this->Employee_Model->get_t_salary_details($id);
 			}
+			// var_dump($data['p_salary_details']); die;
 			$this->load->view("admin/employee/salary/list", $data);
         }else{
             $this->load->view("admin/login");
@@ -544,7 +355,7 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
-
+			
 			$data['Emp_id'] = $id;
 			$single_empolyment_data = $this->Employee_Model->get_emp_personal_details($id);
 			$job_type = $single_empolyment_data->job_type;
@@ -564,14 +375,14 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function edit_salary($id){
-		// var_dump($id);die;
+	    //var_dump($id);die;
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
 			$emp_id = $this->input->post('emp_id');
-			// var_dump($emp_id);die;
+			//var_dump($emp_id);die;
 			$single_empolyment_data = $this->Employee_Model->get_emp_personal_details($emp_id);
 			$job_type = $single_empolyment_data->job_type;
 			if($job_type == "Full Time"){
@@ -587,6 +398,7 @@ class Employee extends CI_Controller {
 		}
 	}
 	public function update_salary($id){
+	    //var_dump($id);die;
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -594,7 +406,7 @@ class Employee extends CI_Controller {
 			$data['massage'] = $this->session->userdata('msg');
 			$emp_id = $this->input->post('emp_id');
 			$single_empolyment_data = $this->Employee_Model->get_emp_personal_details($emp_id);
-			// var_dump($single_empolyment_data); die;
+			//var_dump($single_empolyment_data); die;
 			$job_type = $single_empolyment_data->job_type;
 			if($job_type == "Full Time"){
 				$result = $this->Employee_Model->update_p_salary_breakup($id);
@@ -614,7 +426,6 @@ class Employee extends CI_Controller {
 	}
 	
 	public function delete_salary($id){
-		// var_dump($_POST);die;
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -628,7 +439,6 @@ class Employee extends CI_Controller {
 			}else{
 				$result = $this->Employee_Model->delete_tsalary($id);
 			}
-			// var_dump($emp_id);die;
 			if($result){
 				$this->session->set_flashdata('msg', 'Data has been delete successfully....!!!');
 			} else {
@@ -815,7 +625,6 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$data['department']=$session_data['department'];
 			$data['Emp_id'] = $id;
 			$data['employee_doc'] = $this->Employee_Model->get_employee_doc($id);
 			$data['doc_type'] = $doc_type;
@@ -1056,8 +865,6 @@ class Employee extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-			$data['rjmenu_active'] = "active menu-open";
-			$data['ellist'] = "active";
 			$data['massage'] = $this->session->userdata('msg');
 			$data['employee_details'] = $this->Employee_Model->get_permenent_employee_details();
 			// var_dump($data['employee_details']); die;
@@ -1115,7 +922,7 @@ class Employee extends CI_Controller {
 			$templateProcessor->setValue('JoningDate', htmlspecialchars($joiningdate));  
 			/* Salary */
 			if($job_type == "Full Time"){
-				$p_salary_details = $this->Employee_Model->get_single_psalary_data($emp_id);
+				$p_salary_details = $this->Employee_Model->get_single_psalary_data_for_letter($emp_id);
 				$gross_salary = $p_salary_details->gross_salary;
 				$basic_pay = $p_salary_details->gross_basic_salary;
 				$basic_hra = $p_salary_details->gross_hra;
@@ -1129,7 +936,7 @@ class Employee extends CI_Controller {
 				$employer_other = $p_salary_details->employer_other;
 				$ctc = $p_salary_details->ctc;
 			}
-
+            
 			$templateProcessor->setValue('GrossSalary', htmlspecialchars(number_format($gross_salary)));
 			$templateProcessor->setValue('AnnualGross', htmlspecialchars(number_format($gross_salary*12)));
 			$templateProcessor->setValue('BasicPay', htmlspecialchars(number_format($basic_pay)));
@@ -1223,7 +1030,7 @@ class Employee extends CI_Controller {
 			$templateProcessor->setValue('JoningDate', htmlspecialchars($joiningdate));  
 			/* Salary */
 			if($job_type == "Full Time"){
-				$p_salary_details = $this->Employee_Model->get_single_psalary_data($emp_id);
+				$p_salary_details = $this->Employee_Model->get_single_psalary_data_for_letter($emp_id);
 				$gross_salary = $p_salary_details->gross_salary;
 				$basic_pay = $p_salary_details->gross_basic_salary;
 				$basic_hra = $p_salary_details->gross_hra;
@@ -1426,35 +1233,6 @@ class Employee extends CI_Controller {
 	}
 	/* /. Employment Letters */
 		
-	public function filter_list(){
-		if($this->session->userdata('logged_in')){
-			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
-			$data['massage'] = $this->session->userdata('msg');
-			$data['emp_id']=$id;
-			// var_dump($data['emp_id']);die;			
-			$data['department'] = $this->Employee_Model->getdepartments();
-			$data['job_profiles'] = $this->Employee_Model->getprofile();
-			// var_dump($data['first_name']);die;
-			$this->load->view("admin/employee/filter_list", $data);
-        }else{
-            $this->load->view("admin/login");
-        }
-	}
-	public function filter_result(){
-	
-		$postData = $this->input->post();
-		// var_dump($postData);
-		$data = $this->Employee_Model->get_employee_details_with_profile($postData);
-		// $cities = $this->User_model->getCities();
-
-		// $data['cities'] = $cities;
-		// var_dump(json_encode($data));
-		// load view
-		echo json_encode($data);
-
-	}
 }
 
 ?>

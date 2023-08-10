@@ -261,10 +261,10 @@ class Country_rd_generate extends CI_Controller {
             /* ******************Word File Writing******************* */
 			$PHPWord = new PhpWord();
 			// $section = $PHPWord->addSection();
-			$section = $PHPWord->addSection(array('marginLeft'=>720, 'marginRight'=>720,'marginTop'=>1440,'marginBottom'=>1150, 'orientation' => 'landscape'));
+			/* $section = $PHPWord->addSection(array('marginLeft'=>720, 'marginRight'=>720,'marginTop'=>1440,'marginBottom'=>1150, 'orientation' => 'landscape')); */
 			 
 			/* ---------------------- Header ---------------------- */	
-			$PHPWord->addParagraphStyle('headerTitle', array('align'=>'left', 'spacing' => 72, 'spaceBefore' => 240, 'spaceAfter' => 240));
+			/* $PHPWord->addParagraphStyle('headerTitle', array('align'=>'left', 'spacing' => 72, 'spaceBefore' => 240, 'spaceAfter' => 240));
 			$PHPWord->addFontStyle('headerTitleFont', array('align'=>'left','name'=>'Franklin Gothic Medium', 'color'=>'#78777C', 'size' => 9, 'italic' =>true));
 			$header = $section->addHeader();
 			$table = $header->addTable();
@@ -275,7 +275,7 @@ class Country_rd_generate extends CI_Controller {
 			/* ./ ---------------------- Header ---------------------------- */
             
 			/* ---------------------- Footer ---------------------------- */
-			$PHPWord->addParagraphStyle('footerTitle', array('align'=>'right', 'spacing' => 72, 'spaceBefore' => 120, 'spaceAfter' => 240));
+			/* $PHPWord->addParagraphStyle('footerTitle', array('align'=>'right', 'spacing' => 72, 'spaceBefore' => 120, 'spaceAfter' => 240));
 			$PHPWord->addFontStyle('footerTitleFont', array('align'=>'left','name'=>'Franklin Gothic Medium', 'color'=>'#78777C', 'size' => 10.5));
 			$footer = $section->addFooter();
 			$table = $footer->addTable();
@@ -286,6 +286,43 @@ class Country_rd_generate extends CI_Controller {
 			$table->addCell(12700, array('borderTopSize' => 15, 'borderTopColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop' => 0.5,  'marginBottom' => 0.5))->addText(html_entity_decode($copyright), 'footerTitleFont', 'headerTitle');
 			$table->addCell(1300, array('borderTopSize' => 15, 'borderTopColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop'   => 0.5,  'marginBottom' => 0.5))->addPreserveText('Page {PAGE}', 'footerTitleFont', 'footerTitle');
 			/* ./ ---------------------- Footer ------------------------ */
+			
+			/* Header & Footer */
+			$PidPageSettings = array(
+				'headerHeight'=> \PhpOffice\PhpWord\Shared\Converter::inchToTwip(.2),
+				'footerHeight'=> \PhpOffice\PhpWord\Shared\Converter::inchToTwip(.0),
+				'marginLeft'  => 720,
+				'marginRight' => 720,
+				'marginTop'   => 0,
+				'marginBottom'=> 0,
+				'orientation' => 'landscape',
+			);
+			$section = $PHPWord->addSection($PidPageSettings);
+			/*----------------------Header -------------------------------*/	
+			$textAlign = new \PhpOffice\PhpWord\SimpleType\TextAlignment();
+			$PHPWord->addParagraphStyle('headerTitle', array('align'=>'left', 'spacing' => 72, 'spaceBefore' => 240, 'spaceAfter' => 120));
+			$PHPWord->addFontStyle('headerTitleFont', array('align'=>'left','name'=>'Franklin Gothic Medium', 'color'=>'#78777C', 'size' => 10.5, 'italic' =>true));
+			$header = $section->addHeader();
+			$table = $header->addTable();
+			$table->addRow();
+			$table->addCell(13700, array('borderBottomSize' => 15, 'borderBottomColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop'   => 0.5,  'marginBottom'=> 0.5, array('space' => array('before' => 160, 'after' => 80))))->addText(htmlspecialchars(ucwords($report_title).": ".htmlspecialchars($scope_name)." Industry Analysis, Trends, Market Size and Forecasts up to ".$forecast_to),'headerTitleFont', 'headerTitle');
+			$table->addCell(2300, array('borderBottomSize' => 15, 'borderBottomColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop'   => 0.5,  'marginBottom'=> 0.5, array('space' => array('before' => 160, 'after' => 80))))->addImage('images/new_logo.png', array('width'=>110, 'height'=>32, 'positioning' => 'relative'));
+			$header->addWatermark('images/sample.jpg', array('marginTop'   => 0.5, 'width'=>780, 'height'=>400));
+			/*----------------------Header -------------------------------*/
+
+			/*----------------------Footer -------------------------------*/
+			$PHPWord->addParagraphStyle('footerTitle', array('align'=>'right', 'spacing' => 72, 'spaceBefore' => 120, 'spaceAfter' => 240));
+			$PHPWord->addFontStyle('footerTitleFont', array('align'=>'left','name'=>'Franklin Gothic Medium', 'color'=>'#78777C', 'size' => 10.5));
+			$footer = $section->addFooter();
+			$table = $footer->addTable();
+			/* $table->addRow();
+			$table->addCell(14000); */
+			$table->addRow();
+			$copyright = "© Infinium Global Research LLP";
+			$table->addCell(13700, array('borderTopSize' => 15, 'borderTopColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop' => 0.5,  'marginBottom' => 0.5))->addText(html_entity_decode($copyright), 'footerTitleFont', 'headerTitle');
+			$table->addCell(2300, array('borderTopSize' => 15, 'borderTopColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop'   => 0.5,  'marginBottom' => 0.5))->addPreserveText('Page {PAGE}', 'footerTitleFont', 'footerTitle');
+			/*----------------------Footer -------------------------------*/
+			/* ./ Header & Footer */
 
 			/* Cover page */
 			$section->addText(htmlspecialchars(strtoupper($report_title_scope)), array('align'=>'left','name'=>'Roboto Condensed', 'color'=>'#78777C', 'size' => 28));
@@ -453,13 +490,13 @@ class Country_rd_generate extends CI_Controller {
 				$cmpProfile = $company->name;					
 				/* $section->addText('		'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
 				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style'); */	
-				$section->addText('	'.$cmpt.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
-				$section->addText('		'.$cmpt.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style');				
-				$section->addText('		'.$cmpt.'.'.$cmpsubchild.'.2	Company Snapshot', 'childpoint', 'P-Style');
-				$section->addText('		'.$cmpt.'.'.$cmpsubchild.'.3	Financial Snapshot', 'childpoint', 'P-Style');
-				$section->addText('		'.$cmpt.'.'.$cmpsubchild.'.4	Product Portfolio', 'childpoint', 'P-Style');	
-				$section->addText('		'.$cmpt.'.'.$cmpsubchild.'.5	Recent Developments', 'childpoint', 'P-Style');	
-				$cmpsubchild++;
+				$section->addText('	'.$cmpt.'.'.$cmpsub.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.1	Overview', 'childpoint', 'P-Style');				
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.2	Company Snapshot', 'childpoint', 'P-Style');
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.3	Financial Snapshot', 'childpoint', 'P-Style');
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.4	Product Portfolio', 'childpoint', 'P-Style');	
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.5	Recent Developments', 'childpoint', 'P-Style');	
+				$cmpsub++;
 			}
 			$section->addPageBreak();
 			/* ./ TOC Chapter 5 Company Profiles */

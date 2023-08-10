@@ -46,11 +46,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($reseller_details as $data){ $i++;
-                                    
-                                ?>
+                                <?php foreach($reseller_details as $data){ $i++; ?>
                                 <tr style="font-size: 14px;">
-                                    <td><?php echo $i++; ?></td>
+                                    <td><?php echo $i; ?></td>
                                     <td><?php echo $data->reseller_name; ?></td>
                                     <td><?php echo $data->reseller_email; ?></td>
                                     <td><?php echo $data->service_no; ?></td>

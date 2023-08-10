@@ -2,6 +2,10 @@
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', '0');
+require FCPATH . 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Custom_invoice extends CI_Controller {    
 	public function __construct(){
 		parent::__construct();		
@@ -20,6 +24,8 @@ class Custom_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
 			$data['massage'] = $this->session->userdata('msg');
 			$data['cimenu_active'] = "active menu-open";
 			$data['cilist'] = "active";
@@ -34,6 +40,8 @@ class Custom_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $data['cimenu_active'] = "active menu-open";
 			$data['ciadd'] = "active";
             $data['reseller_list'] = $this->Custom_invoice_Model->get_reseller_list();
@@ -48,6 +56,8 @@ class Custom_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             
             $data['id'] =$this->input->post('id');
             $invoiceno = $this->input->post('invoice_no');           
@@ -143,7 +153,7 @@ class Custom_invoice extends CI_Controller {
                 $num++; 
             }
              /* ./ insert multiple invoice title */
-            if($result){
+            if($custom_invoice || $Insert_custom_invoice){
                 $this->session->set_flashdata('msg', 'Data has been inserted successfully...!!!');
             }else {
                 $this->session->set_flashdata('msg', 'Sorry, Data has Not updated...!!!');
@@ -160,7 +170,8 @@ class Custom_invoice extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $data['Login_user_name']=$session_data['Login_user_name'];	
             $data['Role_id']=$session_data['Role_id'];
-
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $data['custom_invoice_data'] = $this->Custom_invoice_Model->get_single_custom_invoice_data($id);
             $data['custom_invoice_details'] = $this->Custom_invoice_Model->get_custom_invoice_details($id);
             $reseller_name = $data['custom_invoice_data']->reseller_name;
@@ -176,7 +187,8 @@ class Custom_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
-
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $invoice_no =  $this->input->post('invoice_no');
             $invoice_no = 'INVOICE#'.$invoice_no;
 
@@ -237,6 +249,8 @@ class Custom_invoice extends CI_Controller {
             $update_custom_invoice = array(
                 'order_title'                       => $this->input->post('order_title'),
                 'invoice_no'                        => $invoice_no,
+                'inward_no'                         => $this->input->post('inward_no'),
+                'inward_date'                       => $this->input->post('inward_date'),
                 'order_no'                          => $this->input->post('order_no'),
                 'order_date'                        => $this->input->post('order_date'),
                 'reseller_name'                     => $this->input->post('reseller_name'),
@@ -248,6 +262,7 @@ class Custom_invoice extends CI_Controller {
                 'total_amount'                      => $this->input->post('total_amount'),
                 'updated_at'                        => date('Y-m-d'),	
             );
+            // var_dump($update_custom_invoice);die;
             $update_custom_invoice1 = $this->Custom_invoice_Model->update($order_id, $update_custom_invoice);
             /* Updating invoice data */
             $invoice_id = $this->input->post('invoice_id');
@@ -295,6 +310,8 @@ class Custom_invoice extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
             $data['custom_invoice_details'] = $this->Custom_invoice_Model->get_custom_invoice_details($id);
             $custom_invoice = $this->Custom_invoice_Model->get_custom_invoice_records($id);
             $data['id'] = $custom_invoice->id;
@@ -427,7 +444,363 @@ class Custom_invoice extends CI_Controller {
         header('Content-Disposition: attachment; filename='.$filename);
         ob_clean();
         $templateProcessor->saveAs('php://output');	
-    }   
+    } 
+    public function filter(){
+        if($this->session->userdata('logged_in'))
+        {
+            $session_data = $this->session->userdata('logged_in');
+            $data['Login_user_name']=$session_data['Login_user_name'];	
+            $data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+            $data['list_data'] = $this->Custom_invoice_Model->getlist();
+            // var_dump($data['list_data']);die;
+            $this->load->view('admin/custom_invoice/filter',$data);	
+        }		
+        else
+        {			
+            $this->load->view('admin/login');
+        }
+    }
+    public function filter_list(){
+        if($this->session->userdata('logged_in'))
+        {
+            $session_data = $this->session->userdata('logged_in');
+            $data['Login_user_name']=$session_data['Login_user_name'];	
+            $data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+            $data['from_date'] = $this->input->post('from_date');
+            $data['to_date'] = $this->input->post('to_date');
+            $data['invoice_type'] = $this->input->post('invoice_type');
+            $data['custom_details'] = $this->Custom_invoice_Model->get_custom_details();
+            $data['list_data'] = $this->Custom_invoice_Model->getfilterdata($data['from_date'] ,$data['to_date']);
+            // var_dump($data['list_data']);die;
+            $this->load->view('admin/custom_invoice/filter_list',$data);			
+        }		
+        else
+        {			
+            $this->load->view('admin/login');
+        }
+    } 
+    public function export(){
+        if($this->session->userdata('logged_in'))
+        {
+            $session_data = $this->session->userdata('logged_in');
+            $data['Login_user_name']=$session_data['Login_user_name'];	
+            $data['Role_id']=$session_data['Role_id'];
+            $data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+            $data['list_data'] = $this->Custom_invoice_Model->getlist();
+            $data['from_date'] = $this->input->post('from_date');
+            $data['to_date'] = $this->input->post('to_date');
+            $list_data = $this->Custom_invoice_Model->getfilterdata($data['from_date'] ,$data['to_date']);
+            $rowCount = 1;
+            // var_dump($list_data);die;
+            foreach ($list_data as $list) {
+                // $order_title[]= $list['order_title'];
+                $reseller_name[]= $list->reseller_name;
+                $reseller_name1 = $reseller_name[0];
+                $reseller_name2 = $reseller_name[1];
+            }
+            // var_dump($reseller_name1);die;
+            foreach ($list_data as $list) {
+                $Reseller = $list->reseller_name;
+                if($Reseller == "Research and Markets"){
+                    $spreadsheet = new Spreadsheet();
+                    $sheet = $spreadsheet->getActiveSheet();
+                    $spreadsheet->getActivesheet()->setTitle('Research and Markets');
+                    $sheet->setCellValue('A1', 'Order Title');
+                    $sheet->getStyle('A1:B1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('B1', 'Invoice No.');
+                    $sheet->setCellValue('C1', 'Inward No.');
+                    $sheet->getStyle('C1:D1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('D1', 'Inward Date');
+                    $sheet->setCellValue('E1', 'Order No.');
+                    $sheet->getStyle('E1:F1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('F1', 'Order Date.');
+                    $sheet->setCellValue('G1', 'Reseller Name');
+                    $sheet->getStyle('G1:H1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('H1', 'Shipping Customer Name');
+                    $sheet->setCellValue('I1', 'Shipping Email Id');
+                    $sheet->getStyle('I1:J1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('J1', 'Currency');
+                    $sheet->setCellValue('K1', 'Discount Type');
+                    $sheet->getStyle('K1:L1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('L1', 'Discount Value');
+                    $sheet->setCellValue('M1', 'Total Amount');
+                    $sheet->getStyle('M1:N1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+
+                    $sheet->setCellValue('N1', 'Updated AT');
+                    $sheet->getStyle('A1:B1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('C1:D1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('E1:F1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('G1:H1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('I1:J1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('K1:L1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('M1:N1')->getAlignment()->setHorizontal('center');
+                    foreach ($list_data as $list) {
+                    $sheet->SetCellValue('A' . $rowCount, htmlspecialchars($list->order_title));
+                    $sheet->SetCellValue('B' . $rowCount, htmlspecialchars($list->invoice_no));
+                    $sheet->SetCellValue('C' . $rowCount, htmlspecialchars($list->inward_no));
+                    $sheet->SetCellValue('D' . $rowCount, htmlspecialchars($list->inward_date));
+                    $sheet->SetCellValue('E' . $rowCount, htmlspecialchars($list->order_no));
+                    $sheet->SetCellValue('F' . $rowCount, htmlspecialchars($list->order_date));
+                    $sheet->SetCellValue('G' . $rowCount, htmlspecialchars($list->reseller_name));
+                    $sheet->SetCellValue('H' . $rowCount, htmlspecialchars($list->shipping_customer_name));
+                    $sheet->SetCellValue('I' . $rowCount, htmlspecialchars($list->shipping_email_id));
+                    $sheet->SetCellValue('J' . $rowCount, htmlspecialchars($list->currency));
+                    $sheet->SetCellValue('K' . $rowCount, htmlspecialchars($list->discount_type));
+                    $sheet->SetCellValue('L' . $rowCount, htmlspecialchars($list->discount_value));
+                    $sheet->SetCellValue('M' . $rowCount, htmlspecialchars($list->total_amount));
+                    $sheet->SetCellValue('N' . $rowCount, htmlspecialchars($list->updated_at));
+                    $rowCount++;  
+                    }                  
+                }else if($Reseller == "Global Information Inc."){
+                    $spreadsheet = new Spreadsheet();
+                    $sheet = $spreadsheet->getActiveSheet();
+                    // $spreadsheet->createSheet();
+                    $spreadsheet->getActivesheet()->setTitle('Global Information Inc.');
+                    $sheet->setCellValue('A1', 'Order Title');
+                    $sheet->getStyle('A1:B1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('B1', 'Invoice No.');
+                    $sheet->setCellValue('C1', 'Inward No.');
+                    $sheet->getStyle('C1:D1')->applyFromArray(
+                        array(
+                            'fill' => array(
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'color' => [
+                                    'argb' => 'FFDD12',
+                                ]
+                            )
+                        )
+                    );
+                    $sheet->setCellValue('D1', 'Inward Date');
+                    $sheet->setCellValue('E1', 'Order No.');
+                    $sheet->setCellValue('F1', 'Order Date.');
+                    $sheet->setCellValue('G1', 'Reseller Name');
+                    $sheet->setCellValue('H1', 'Shipping Customer Name');
+                    $sheet->setCellValue('I1', 'Shipping Email Id');
+                    $sheet->setCellValue('J1', 'Currency');
+                    $sheet->setCellValue('K1', 'Discount Type');
+                    $sheet->setCellValue('L1', 'Discount Value');
+                    $sheet->setCellValue('M1', 'Total Amount');
+                    $sheet->setCellValue('N1', 'Updated AT');
+
+                    foreach ($list_data as $list) {
+                    $sheet->SetCellValue('A' . $rowCount, htmlspecialchars($list->order_title));
+                    $sheet->SetCellValue('B' . $rowCount, htmlspecialchars($list->invoice_no));
+                    $sheet->SetCellValue('C' . $rowCount, htmlspecialchars($list->inward_no));
+                    $sheet->SetCellValue('D' . $rowCount, htmlspecialchars($list->inward_date));
+                    $sheet->SetCellValue('E' . $rowCount, htmlspecialchars($list->order_no));
+                    $sheet->SetCellValue('F' . $rowCount, htmlspecialchars($list->order_date));
+                    $sheet->SetCellValue('G' . $rowCount, htmlspecialchars($list->reseller_name));
+                    $sheet->SetCellValue('H' . $rowCount, htmlspecialchars($list->shipping_customer_name));
+                    $sheet->SetCellValue('I' . $rowCount, htmlspecialchars($list->shipping_email_id));
+                    $sheet->SetCellValue('J' . $rowCount, htmlspecialchars($list->currency));
+                    $sheet->SetCellValue('K' . $rowCount, htmlspecialchars($list->discount_type));
+                    $sheet->SetCellValue('L' . $rowCount, htmlspecialchars($list->discount_value));
+                    $sheet->SetCellValue('M' . $rowCount, htmlspecialchars($list->total_amount));
+                    $sheet->SetCellValue('N' . $rowCount, htmlspecialchars($list->updated_at));
+                    $rowCount++; 
+                    }                   
+                }else if($Reseller == "Global Information Inc."){
+                    $spreadsheet = new Spreadsheet();
+                    $sheet = $spreadsheet->getActiveSheet();
+                    // $spreadsheet->createSheet();
+                    $spreadsheet->getActivesheet()->setTitle('Global Information Inc.');
+                    $sheet->setCellValue('A1', 'Order Title');
+                    $sheet->setCellValue('B1', 'Invoice No.');
+                    $sheet->setCellValue('C1', 'Inward No.');
+                    $sheet->setCellValue('D1', 'Inward Date');
+                    $sheet->setCellValue('E1', 'Order No.');
+                    $sheet->setCellValue('F1', 'Order Date.');
+                    $sheet->setCellValue('G1', 'Reseller Name');
+                    $sheet->setCellValue('H1', 'Shipping Customer Name');
+                    $sheet->setCellValue('I1', 'Shipping Email Id');
+                    $sheet->setCellValue('J1', 'Currency');
+                    $sheet->setCellValue('K1', 'Discount Type');
+                    $sheet->setCellValue('L1', 'Discount Value');
+                    $sheet->setCellValue('M1', 'Total Amount');
+                    $sheet->setCellValue('N1', 'Updated AT');
+
+                    $sheet->SetCellValue('A' . $rowCount, htmlspecialchars($list->order_title));
+                    $sheet->SetCellValue('B' . $rowCount, htmlspecialchars($list->invoice_no));
+                    $sheet->SetCellValue('C' . $rowCount, htmlspecialchars($list->inward_no));
+                    $sheet->SetCellValue('D' . $rowCount, htmlspecialchars($list->inward_date));
+                    $sheet->SetCellValue('E' . $rowCount, htmlspecialchars($list->order_no));
+                    $sheet->SetCellValue('F' . $rowCount, htmlspecialchars($list->order_date));
+                    $sheet->SetCellValue('G' . $rowCount, htmlspecialchars($list->reseller_name));
+                    $sheet->SetCellValue('H' . $rowCount, htmlspecialchars($list->shipping_customer_name));
+                    $sheet->SetCellValue('I' . $rowCount, htmlspecialchars($list->shipping_email_id));
+                    $sheet->SetCellValue('J' . $rowCount, htmlspecialchars($list->currency));
+                    $sheet->SetCellValue('K' . $rowCount, htmlspecialchars($list->discount_type));
+                    $sheet->SetCellValue('L' . $rowCount, htmlspecialchars($list->discount_value));
+                    $sheet->SetCellValue('M' . $rowCount, htmlspecialchars($list->total_amount));
+                    $sheet->SetCellValue('N' . $rowCount, htmlspecialchars($list->updated_at));
+                    $rowCount++;                    
+                }else if($Reseller == "Scott International"){
+                    $spreadsheet = new Spreadsheet();
+                    $sheet = $spreadsheet->getActiveSheet();
+                    // $spreadsheet->createSheet();
+                    $spreadsheet->getActivesheet()->setTitle('Scott International');
+                    $sheet->setCellValue('A1', 'Order Title');
+                    $sheet->setCellValue('B1', 'Invoice No.');
+                    $sheet->setCellValue('C1', 'Inward No.');
+                    $sheet->setCellValue('D1', 'Inward Date');
+                    $sheet->setCellValue('E1', 'Order No.');
+                    $sheet->setCellValue('F1', 'Order Date.');
+                    $sheet->setCellValue('G1', 'Reseller Name');
+                    $sheet->setCellValue('H1', 'Shipping Customer Name');
+                    $sheet->setCellValue('I1', 'Shipping Email Id');
+                    $sheet->setCellValue('J1', 'Currency');
+                    $sheet->setCellValue('K1', 'Discount Type');
+                    $sheet->setCellValue('L1', 'Discount Value');
+                    $sheet->setCellValue('M1', 'Total Amount');
+                    $sheet->setCellValue('N1', 'Updated AT');
+
+                    foreach ($list_data as $list) {
+                    $sheet->SetCellValue('A' . $rowCount, htmlspecialchars($list->order_title));
+                    $sheet->SetCellValue('B' . $rowCount, htmlspecialchars($list->invoice_no));
+                    $sheet->SetCellValue('C' . $rowCount, htmlspecialchars($list->inward_no));
+                    $sheet->SetCellValue('D' . $rowCount, htmlspecialchars($list->inward_date));
+                    $sheet->SetCellValue('E' . $rowCount, htmlspecialchars($list->order_no));
+                    $sheet->SetCellValue('F' . $rowCount, htmlspecialchars($list->order_date));
+                    $sheet->SetCellValue('G' . $rowCount, htmlspecialchars($list->reseller_name));
+                    $sheet->SetCellValue('H' . $rowCount, htmlspecialchars($list->shipping_customer_name));
+                    $sheet->SetCellValue('I' . $rowCount, htmlspecialchars($list->shipping_email_id));
+                    $sheet->SetCellValue('J' . $rowCount, htmlspecialchars($list->currency));
+                    $sheet->SetCellValue('K' . $rowCount, htmlspecialchars($list->discount_type));
+                    $sheet->SetCellValue('L' . $rowCount, htmlspecialchars($list->discount_value));
+                    $sheet->SetCellValue('M' . $rowCount, htmlspecialchars($list->total_amount));
+                    $sheet->SetCellValue('N' . $rowCount, htmlspecialchars($list->updated_at));
+                    $rowCount++; 
+                    }                   
+                }else if($Reseller == "Marketreasearch.com"){
+                    $spreadsheet = new Spreadsheet();
+                    $sheet = $spreadsheet->getActiveSheet();
+                    // $spreadsheet->createSheet();
+                    $spreadsheet->getActivesheet()->setTitle('Marketreasearch.com');
+                    $sheet->setCellValue('A1', 'Order Title');
+                    $sheet->setCellValue('B1', 'Invoice No.');
+                    $sheet->setCellValue('C1', 'Inward No.');
+                    $sheet->setCellValue('D1', 'Inward Date');
+                    $sheet->setCellValue('E1', 'Order No.');
+                    $sheet->setCellValue('F1', 'Order Date.');
+                    $sheet->setCellValue('G1', 'Reseller Name');
+                    $sheet->setCellValue('H1', 'Shipping Customer Name');
+                    $sheet->setCellValue('I1', 'Shipping Email Id');
+                    $sheet->setCellValue('J1', 'Currency');
+                    $sheet->setCellValue('K1', 'Discount Type');
+                    $sheet->setCellValue('L1', 'Discount Value');
+                    $sheet->setCellValue('M1', 'Total Amount');
+                    $sheet->setCellValue('N1', 'Updated AT');
+
+                    $sheet->SetCellValue('A' . $rowCount, htmlspecialchars($list->order_title));
+                    $sheet->SetCellValue('B' . $rowCount, htmlspecialchars($list->invoice_no));
+                    $sheet->SetCellValue('C' . $rowCount, htmlspecialchars($list->inward_no));
+                    $sheet->SetCellValue('D' . $rowCount, htmlspecialchars($list->inward_date));
+                    $sheet->SetCellValue('E' . $rowCount, htmlspecialchars($list->order_no));
+                    $sheet->SetCellValue('F' . $rowCount, htmlspecialchars($list->order_date));
+                    $sheet->SetCellValue('G' . $rowCount, htmlspecialchars($list->reseller_name));
+                    $sheet->SetCellValue('H' . $rowCount, htmlspecialchars($list->shipping_customer_name));
+                    $sheet->SetCellValue('I' . $rowCount, htmlspecialchars($list->shipping_email_id));
+                    $sheet->SetCellValue('J' . $rowCount, htmlspecialchars($list->currency));
+                    $sheet->SetCellValue('K' . $rowCount, htmlspecialchars($list->discount_type));
+                    $sheet->SetCellValue('L' . $rowCount, htmlspecialchars($list->discount_value));
+                    $sheet->SetCellValue('M' . $rowCount, htmlspecialchars($list->total_amount));
+                    $sheet->SetCellValue('N' . $rowCount, htmlspecialchars($list->updated_at));
+                    $rowCount++;                    
+                }
+            }
+                    $writer = new Xlsx($spreadsheet);
+                    $fileName = 'Custome Invoice Data-'.$data['from_date'] .' to '.$data['to_date'].'.xlsx'; 
+                    // $sheet = $objPHPExcel->getActiveSheet();
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: application/vnd.ms-excel');
+                    header('Content-Disposition: attachment; filename='.$fileName);
+                    header('Expires: 0');
+                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                    header('Pragma: public');
+                    header('Content-Length: ' . filesize($fileName));
+                    ob_clean();
+                    $writer->save('php://output'); // download file
+            }else{			
+                $this->load->view('admin/login');
+            }
+        
+    } 
 }
     
-
