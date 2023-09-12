@@ -22,7 +22,7 @@
     <section class="content">
         <!-- Your Page Content Here -->
         <div class='row'>
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h1 class="box-title">Segment Overview</h1>
@@ -30,11 +30,7 @@
                     <form action="<?php echo base_url(); ?>admin/segment_overview/update/<?php echo $report_id; ?>"
                         method="post" class="form-horizontal">
                         <div class="box-body">
-                            <div class="col-md-12">
-                                <?php
-                        
-                                foreach($get_rd_segment as $data){ 
-                                    
+                            <?php foreach($get_rd_segment as $data){                                     
                                     $segment_overview = "SELECT id, description FROM tbl_rd_segment_overview where segment_id = ".$data->id;
                                     $query_segment_overview = $this->db->query($segment_overview);
                                     if ($query_segment_overview->num_rows() > 0) {
@@ -42,29 +38,27 @@
                                         // var_dump($rd_segment_overview); 
                                      }
                                     ?>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2"><?php echo $data->name;?></label>
-                                    <div class="col-md-9">
-                                        <?php  if ($query_segment_overview->num_rows() > 0) { ?><textarea type="text"
-                                            name="description[]" rows="5"
-                                            class="form-control"><?php echo $rd_segment_overview->description;?></textarea>
-                                        <input type="hidden" name="overview_id[]" id="overview_id"
-                                            value="<?php echo $rd_segment_overview->id;?>" class="form-control">
-                                        <input type="hidden" name="seg_id[]" id="seg_id" value="<?php echo $data->id;?>"
-                                            class="form-control">
-                                        <?php } else { ?>
-                                        <textarea type="text" name="description_new[]" rows="5"
-                                            class="form-control"></textarea>
-                                        <input type="hidden" name="seg_id_new[]" id="seg_id_new" value="<?php echo $data->id;?>"
-                                            class="form-control">                                       
-                                        <?php } ?>
-                                        <input type="hidden" name="report_id" id="report_id"
-                                            value="<?php echo $report_id;?>" class="form-control">
-                                    </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2"><?php echo $data->name;?></label>
+                                <div class="col-md-10">
+                                    <?php  if ($query_segment_overview->num_rows() > 0) { ?><textarea type="text"
+                                        name="description[]" rows="5"
+                                        class="form-control"><?php echo $rd_segment_overview->description;?></textarea>
+                                    <input type="hidden" name="overview_id[]" id="overview_id"
+                                        value="<?php echo $rd_segment_overview->id;?>" class="form-control">
+                                    <input type="hidden" name="seg_id[]" id="seg_id" value="<?php echo $data->id;?>"
+                                        class="form-control">
+                                    <?php } else { ?>
+                                    <textarea type="text" name="description_new[]" rows="5"
+                                        class="form-control"></textarea>
+                                    <input type="hidden" name="seg_id_new[]" id="seg_id_new"
+                                        value="<?php echo $data->id;?>" class="form-control">
+                                    <?php } ?>
+                                    <input type="hidden" name="report_id" id="report_id"
+                                        value="<?php echo $report_id;?>" class="form-control">
                                 </div>
-                                <?php } ?>
-
                             </div>
+                            <?php } ?>
                         </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-info pull-right" value="Update">
@@ -72,6 +66,61 @@
                     </form>
                 </div>
             </div>
+            <!-- ./ col-md-8 -->
+            <!-- col-md-4 -->
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h1 class="box-title">Segments</h1>
+                    </div>
+                    <div class="box-body">
+                        <!-- main segment -->
+                        <ol>
+                            <?php foreach($main_segments as $data){ ?>
+                            <li><?php echo $data->name; ?>
+                                <!-- sub segment -->
+                                <?php $sql = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$data->id;
+								$query = $this->db->query($sql);
+								if ($query->num_rows() > 0) { ?>
+                                <ol>
+                                    <?php foreach ($query->result() as $sub_seg) {?>
+                                    <li><?php echo $sub_seg->name; ?>
+                                        <!-- child segment -->
+                                        <?php $sql1 = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$sub_seg->id;
+										$query1 = $this->db->query($sql1);
+										if ($query1->num_rows() > 0) { ?>
+                                        <ol>
+                                            <?php foreach ($query1->result() as $child_seg) {?>
+                                            <li><?php echo $child_seg->name; ?>
+                                                <!-- sub child segment -->
+                                                <?php $sql2 = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$child_seg->id;
+												$query2 = $this->db->query($sql2);
+												if ($query2->num_rows() > 0) { ?>
+                                                <ol>
+                                                    <?php foreach ($query2->result() as $sub_child_seg) {?>
+                                                    <li><?php echo $sub_child_seg->name; ?> </li>
+                                                    <?php } ?>
+                                                </ol>
+                                                <?php } ?>
+                                                <!-- sub child segment -->
+                                            </li>
+                                            <?php } ?>
+                                        </ol>
+                                        <?php } ?>
+                                        <!-- child segment -->
+                                    </li>
+                                    <?php } ?>
+                                </ol>
+                                <?php } ?>
+                                <!-- sub segment -->
+                            </li>
+                            <?php } ?>
+                        </ol>
+                        <!-- main segment -->
+                    </div>
+                </div>
+            </div>
+            <!-- ./ col-md-4 -->
         </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->

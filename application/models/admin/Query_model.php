@@ -9,7 +9,14 @@ class Query_model extends CI_Model {
     /* query management */
     public function get_user_details($role_id){
         $this->db->select('*');
-        $this->db->where('role_id',5);
+        $this->db->where('role_id',$role_id);
+        $this->db->from('tbl_registered_user_details');
+        $query = $this->db->get();
+        return $query->result();
+    } 
+    public function get_sales_user_details(){
+        $this->db->select('*');
+        $this->db->where('department','Sales');
         $this->db->from('tbl_registered_user_details');
         $query = $this->db->get();
         return $query->result();
@@ -25,6 +32,37 @@ class Query_model extends CI_Model {
         // echo $this->db->last_query();die;
         return $query->result();  
     }
+    public function get_todays_analyst_queries($Login_user_name,$date){
+        $this->db->select('*');
+        $this->db->from('tbl_query_assignment');
+        // $this->db->where(array('tbl_query_assignment.assigned_name'=>$Login_user_name,'tbl_query_assignment.status'=>1)); 
+        $this->db->where(array('tbl_rd_query_data.assign_to_team'=>1,'tbl_query_assignment.assigned_name'=>$Login_user_name,'tbl_query_assignment.status'=>1,'tbl_rd_query_data.updated_on'=>$date));//use date function
+        // $this->db->where(array('tbl_rd_query_data.assign_to_team'=>1,'tbl_query_assignment.assigned_name'=>$Login_user_name,'tbl_query_assignment.status'=>1)); 
+        $this->db->join('tbl_rd_query_data','tbl_query_assignment.query_id = tbl_rd_query_data.id');
+        $this->db->order_by('tbl_query_assignment.id',"DESC");
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result(); 
+    }
+   /*  public function get_research_details_assign_user($Login_user_name){
+    $this->db->select('*');
+    $this->db->from('tbl_rd_query_sale_status');
+    $this->db->where(array('tbl_rd_query_data.assign_to_team'=>1,'tbl_rd_query_sale_status.query_id'=>$Login_user_name)); 
+    $this->db->join('tbl_rd_query_data','tbl_rd_query_sale_status.query_id = tbl_rd_query_data.id');
+    // $this->db->order_by('tbl_rd_query_reseller_data.id',"DESC");
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->result(); 
+
+
+        $this->db->select('*');
+        $this->db->from('tbl_rd_query_sale_status');
+        $this->db->join('tbl_rd_query_data','tbl_rd_query_sale_status.query_id = tbl_rd_query_data.id');
+        $query = $this->db->get();
+        // echo $this->db->last_query();die;
+        return $query->result(); 
+    
+    } */
  
     public function get_single_details_marketer($Login_user_name){
         $this->db->select('*');
@@ -100,6 +138,12 @@ class Query_model extends CI_Model {
         // echo $this->db->last_query(); die;
         return $result->row();       
     }
+    public function get_query_research_assigned_data($id, $assigned_name){
+        $this->db->where(array('query_id'=>$id, 'assigned_name' => $assigned_name, 'status'=>1));  
+        $result = $this->db->get('tbl_query_assignment_research');
+        // echo $this->db->last_query(); die;
+        return $result->row();       
+    }
     public function update_query_details($id,$update_assignment){
         $this->db->where('id', $id);
         $result = $this->db->update('tbl_rd_query_data', $update_assignment);
@@ -146,6 +190,7 @@ class Query_model extends CI_Model {
         $this->db->join('tbl_query_assignment','tbl_rd_query_data.id = tbl_query_assignment.query_id');
         $this->db->order_by('query_id',"DESC");
         $query = $this->db->get();
+        // echo $this->db->last_query(); die;
         return $query->result();
     }
     public function delete($id) {
@@ -168,7 +213,7 @@ class Query_model extends CI_Model {
         $result = $this->db->delete('tbl_query_assignment');
         return $result;
     }
-     public function delete_query_data($id){
+    public function delete_query_data($id){
         $this->db->where('id',$id);
         $result = $this->db->delete('tbl_rd_query_data');
         return $result;
@@ -382,12 +427,6 @@ public function get_query_close_data(){
     return $query->result();
 }
 public function get_query_data1(){
-    // $this->db->select('*');
-    // $this->db->from('tbl_rd_query_data');
-    // // $this->db->where(array('status'));	
-    // $query = $this->db->get();
-    // return $query->result();
-
     $this->db->select('*');
     $this->db->from('tbl_rd_query_current_status');
     // $this->db->where(array('tbl_rd_query_data.assigned_name'=>$Login_user_name,'tbl_rd_query_data.status'=>1)); 
@@ -407,6 +446,24 @@ public function get_not_assigned_query_details(){
     // echo $this->db->last_query();die;
     return $query->result();
 }
+public function get_todays_queries($Login_user_name,$date){
+  /*   $this->db->select('*');
+    $this->db->from('tbl_rd_query_data');
+    $this->db->where(array('assign_analyst'=>1,'updated_on'=>$date));  
+    $this->db->order_by('id',"DESC");
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->result(); */
+
+    $this->db->select('*');
+    // $this->db->where(array('tbl_query_assignment_research.assigned_name!=' => $Login_user_name,'tbl_query_assignment_research.status'=>1));
+    $this->db->from('tbl_rd_query_data');
+    $this->db->where(array('tbl_query_assignment_research.status'=>1,'tbl_rd_query_data.updated_on'=>$date));
+    $this->db->join('tbl_query_assignment_research','tbl_rd_query_data.id = tbl_query_assignment_research.query_id');
+    $this->db->order_by('query_id',"DESC");
+    $query = $this->db->get();
+    return $query->result();
+}
 public function get_query_research_assign($id){
     $this->db->where(array('query_id'=>$id,'status'=>1));  
     $result = $this->db->get('tbl_query_assignment_research');
@@ -414,7 +471,8 @@ public function get_query_research_assign($id){
 }
 public function get_user_records(){
     $this->db->select('*');
-    $this->db->where(array('user_type'=>'Analyst'));  
+    // $this->db->where(array('user_type'=>'Analyst'));  
+    $this->db->where(array('department'=>'Research','status'=>1));  
     $this->db->from('tbl_registered_user_details');
     $query = $this->db->get();
     return $query->result();
@@ -442,9 +500,19 @@ public function get_research_assign_query_list($Login_user_name){
     $query = $this->db->get();
     return $query->result();  
 }
+public function get_research_daily_assigned_query_list($Login_user_name){
+    $this->db->select('*');
+    $this->db->from('tbl_query_assignment_research');
+    $this->db->where(array('tbl_rd_query_data.assign_to_team_analyst'=>1,'tbl_query_assignment_research.assigned_name'=>$Login_user_name,'tbl_query_assignment_research.status'=>1, 'tbl_query_assignment_research.created_at'=>date('Y-m-d')));
+    $this->db->join('tbl_rd_query_data','tbl_query_assignment_research.query_id = tbl_rd_query_data.id');
+    $this->db->order_by('tbl_query_assignment_research.id',"DESC");
+    $query = $this->db->get();
+    return $query->result();  
+}
 public function get_query_assigned_research_list($Login_user_name){
     $this->db->select('*');
-    $this->db->where(array('tbl_query_assignment_research.assigned_name!=' => $Login_user_name,'tbl_query_assignment_research.status'=>1));
+    // $this->db->where(array('tbl_query_assignment_research.assigned_name!=' => $Login_user_name,'tbl_query_assignment_research.status'=>1));
+    $this->db->where(array('tbl_query_assignment_research.status'=>1));
     $this->db->from('tbl_rd_query_data');
     $this->db->join('tbl_query_assignment_research','tbl_rd_query_data.id = tbl_query_assignment_research.query_id');
     $this->db->order_by('query_id',"DESC");
@@ -453,7 +521,8 @@ public function get_query_assigned_research_list($Login_user_name){
 }
 public function get_research_assign_user_details($User_Type){
     $this->db->select('*');
-    $this->db->where('user_type','Analyst');
+    // $this->db->where('user_type','Analyst');
+    $this->db->where(array('user_type'=>'Analyst','status'=>1)); 
     $this->db->from('tbl_registered_user_details');
     $query = $this->db->get();
     return $query->result();
@@ -482,6 +551,50 @@ public function get_view_query_details($Login_user_name,$id){
     // echo $this->db->last_query();die;
     return $query->row();
 }
+public function insert_query_comment_details($data){
+    $result = $this->db->insert('tbl_query_comment_analyst', $data);
+    return $result;
+}
+public function get_query_comment_data($id,$Login_user_name){
+    $where =  "query_id = '$id' AND (user_name = '$Login_user_name' OR comment_for = '$Login_user_name')";
+    // $where =  "query_id = '$id' AND `parent` IS NULL AND (user_name = '$Login_user_name' OR comment_for = '$Login_user_name')";
+    $this->db->where($where);
+    // $this->db->where(array('query_id'=>$id, 'user_name'=>$Login_user_name,'comment_for'=>$Login_user_name));  
+    $result = $this->db->get('tbl_query_comment_analyst');
+    // echo $this->db->last_query();die;
+    return $result->result();       
+}
+
+function tree_all($ne_id) {
+    $result = $this->db->query("SELECT * FROM tbl_query_comment_analyst where query_id = $ne_id")->result_array();
+    foreach ($result as $row) {
+        $data[] = $row;
+    }
+    return $data;
+}
+// to get child comments by entry id and parent id and news id
+function tree_by_parent($ne_id,$in_parent) {
+    $result = $this->db->query("SELECT * FROM tbl_query_comment_analyst where parent = $in_parent AND  query_id = $ne_id")->result_array();
+    foreach ($result as $row) {
+        $data[] = $row;
+    }
+    return $data;
+}
+
+public function get_query_comment_data1(){
+    $this->db->select('*');
+    $this->db->from('tbl_query_comment_analyst');
+    // $this->db->where(array('id', 'status'=>1));  
+    $result = $this->db->get();
+    return $result->result();       
+}
+public function get_assign_query_records(){
+    $this->db->select('*');
+    $this->db->from('tbl_query_assignment_research');
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->result();
+}
 /* /. Research Upcoming Queries */
 
 public function get_todays_followup_queries($Login_user_name){
@@ -494,8 +607,90 @@ public function get_todays_followup_queries($Login_user_name){
     // $this->db->where(array('tbl_rd_query_followup.followup_date' => date('Y-m-d'), 'tbl_query_assignment.assigned_name' => $Login_user_name, 'tbl_query_assignment.status' => 1));
     $this->db->where($where);
     $query = $this->db->get();
-    // echo $this->db->last_query();
+    // echo $this->db->last_query();die;
     return $query->result();
 }
+public function update_query_comment($id,$update_query_comment){
+    $this->db->where('id', $id);
+    $result = $this->db->update('tbl_query_comment_analyst', $update_query_comment);
+    // $insert_id = $this->db->insert_id();
+    return $result;
+}
+public function get_comment_details($id){
+    $this->db->select('*');
+    $this->db->from('tbl_query_comment_analyst');
+    $this->db->where('id', $id);
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->row();
+}
+public function comment_query_delete($id){
+    $this->db->where('id',$id);
+    $result = $this->db->delete('tbl_query_comment_analyst');
+    return $result;
+}
+public function insert_research_query_comment_details($data){
+    $result = $this->db->insert('tbl_query_comment_analyst', $data);
+    return $result;
+}
+public function get_single_query_comment($id){
+    $this->db->select('*');
+    $this->db->from('tbl_query_comment_analyst');
+    // $this->db->where(array('parent' => NULL,'query_id'=>$id));
+    $this->db->where(array('query_id'=>$id));
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->result();
+}
+public function get_single_query_status($id){
+    $this->db->select('*');
+    $this->db->from('tbl_query_comment_analyst');
+    $this->db->where(array('parent' =>$id));
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->result();
+}
+public function get_single_query_comment1($Login_user_name){
+    // $this->db->select('*');
+    // $this->db->from('tbl_query_comment_analyst');
+    // // $this->db->where('Login_user_name', $Login_user_name);
+    // // $this->db->where(array('Login_user_name'=>$Login_user_name)); 
+    // $query = $this->db->get();
+    // // echo $this->db->last_query();die;
+    // return $query->result();
+    $this->db->select('*');
+    $this->db->from('tbl_query_comment_analyst');
+    $where = "user_name = '$Login_user_name' OR comment_for = '$Login_user_name'";
+    // $this->db->where(array('parent' => NULL));
+    $this->db->where($where);
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->result();
+}
+public function get_single_query_records($Login_user_name){
+    $this->db->select('*');
+    $this->db->from('tbl_query_comment_analyst');
+    $where = "user_name = '$Login_user_name' OR comment_for = '$Login_user_name'";
+    $this->db->where($where);
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->row();
+}
+public function get_single_parent_query_comment(){
+    $this->db->select('*');
+    $this->db->from('tbl_query_comment_analyst');
+    $this->db->where(array('parent!=' => NULL)); 
+    $query = $this->db->get();
+    // echo $this->db->last_query();die;
+    return $query->result();
+}
+public function get_single_user_details(){
+    $this->db->select('*');
+    $this->db->where(array('role_id'=> 4, 'full_name'=> 'Prathamesh Shikhare'));
+    $this->db->from('tbl_registered_user_details');
+    $query = $this->db->get();
+    return $query->row();
+}
+/* /. Research Upcoming Queries */
 }
 ?>

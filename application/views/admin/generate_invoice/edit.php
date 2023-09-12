@@ -353,30 +353,31 @@ $("input[name='s_address_billing']").click(function() {
 
 /* / .hide and shipping information */
 
-function reSum() {
+function reSum() {    
     var percentage, result, result1, mult, multiplication, abs, dis, discount;
     var unit_price = parseFloat(document.getElementById("unit_price").value);
     var unit_no = parseInt(document.getElementById("unit_no").value);
     var percentage = parseFloat(document.getElementById("dis_percentage").value);
     var absolute_price = parseFloat(document.getElementById("absolute_price").value);
 
-    // console.log(absolute_price); 
+    // console.log(percentage); 
     multiplication = unit_price * unit_no;
     /* calculate discount */
     if (absolute_price) {
         discount = (absolute_price / multiplication * 100).toFixed(2);
         total_amt = multiplication - absolute_price;
+        console.log(discount);
         document.getElementById("absolute_price").value = absolute_price;
         document.getElementById("dis_percentage").value = discount;
         document.getElementById("total_amount").value = total_amt;
-    } else if (percentage) {
+    } else {
         absolute_val = (percentage / 100) * multiplication;
+        console.log(absolute_val);
         total_amt = multiplication - absolute_val;
         document.getElementById("dis_percentage").value = percentage;
         document.getElementById("absolute_price").value = absolute_val;
         document.getElementById("total_amount").value = total_amt;
     }
-
 }
 
 jQuery(function() {

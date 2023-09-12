@@ -17,7 +17,10 @@ class Report extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['title'] = "Published";
 
@@ -31,7 +34,10 @@ class Report extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$result = $this->Data_model->title_exists($this->input->get('name'));
 			if($result == true){
 				$data['message']="<p class=\"text-red\">Title already exists</p>";
@@ -47,7 +53,10 @@ class Report extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$data['Global_Rds']= $this->Data_model->get_global_rds();
@@ -60,7 +69,10 @@ class Report extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			/* automated sku */
 			$report_sku = $this->Data_model->get_report_count();			
 			$sku_code = explode('R', $report_sku->sku);
@@ -133,7 +145,10 @@ class Report extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$rd_data= $this->Data_model->get_rd_data($id);
@@ -179,7 +194,10 @@ class Report extends CI_Controller {
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$report_id = $this->input->post('report_id');
 			$country_status = $this->input->post('country_status');
 			if($country_status == 0){
@@ -301,7 +319,10 @@ class Report extends CI_Controller {
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 
 			$result = $this->Data_model->delete_rd_data($id);			
 			if($result){
@@ -327,7 +348,10 @@ class Report extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
-			$data['Role_id'] = $session_data['Role_id'];
+			$data['Role_id'] = $session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['title'] = "Under Study";
 
 			$data['Global_Rds']= $this->Data_model->get_drafted_global_rds($data['Login_user_name']);
@@ -341,7 +365,10 @@ class Report extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
-			$data['Role_id'] = $session_data['Role_id'];
+			$data['Role_id'] = $session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['scopes_data']= $this->Data_model->get_scope_master();
 			$data['category_data']= $this->Data_model->get_category_master();
 			$rd_data= $this->Data_model->get_rd_data($id);
@@ -391,7 +418,10 @@ class Report extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			// var_dump($data['Login_user_name']);die;
 			$report_id = $this->input->post('report_id');
 			$request = $this->input->post('request');			
@@ -532,15 +562,12 @@ class Report extends CI_Controller {
 				foreach($ScopeList as $scope){
 					if($scope->id == $scope_id){
 						$scope_name = $scope->name;
-						// var_dump($scope_name);
 					}
 				}
 				$MainSegments= $this->Data_model->get_main_segments($report_id);
-				// var_dump($MainSegments); die;
 				foreach($MainSegments as $segments)
 				{
 					$mainseg[] = $segments['name'];					
-					// var_dump($mainseg); 
 					$segment_details.= ltrim(rtrim($segments['name']))." - ";	
 					$SubSegments=$this->Data_model->get_sub_segments($report_id, $segments['id']);
 					// var_dump($SubSegments); die;
@@ -549,7 +576,6 @@ class Report extends CI_Controller {
 						$sub_seg1[] = $sub_seg['name'];					
 					}
 					$j= count($sub_seg1);
-					// var_dump($sub_seg1);
 					for($i = 0; $i< $j ; $i++)
 					{
 						if($i == $j-2)
@@ -605,7 +631,10 @@ class Report extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
-			$data['Role_id'] = $session_data['Role_id'];
+			$data['Role_id'] = $session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['title'] = "Verified";
 			$status = 2;
 			$data['Global_Rds']= $this->Data_model->get_global_published_rds($status);
@@ -619,11 +648,13 @@ class Report extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
-			$data['Role_id'] = $session_data['Role_id'];
+			$data['Role_id'] = $session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['title'] = "Assign / Generate ";
 			// $status = 3;
 			$data['Global_Rds'] = $this->RdData_model->get_global_rd_titles();
-			// var_dump($data['Global_Rds']); die;
 			$this->load->view('admin/report/assign_list',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -634,34 +665,36 @@ class Report extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$data['success_code'] = $this->session->userdata('success_code');
 			$data['Login_user_name'] = $session_data['Login_user_name'];
-			$data['Role_id'] = $session_data['Role_id'];
+			$data['Role_id'] = $session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['title'] = "Assign User";
-			// $status = 3;
-			// $data['Global_Rds'] = $this->RdData_model->get_global_rd_titles();
 			$data['single_rd_data'] = $this->RdData_model->get_single_rd_data($report_id);
 			/* get scope data */
 			$ScopeList = $this->Data_model->get_scope_master();	
-			// var_dump($data['single_rd_data']); die;
 			foreach($ScopeList as $scope){
 				if($scope->id == $data['single_rd_data']->scope_id){
 					$data['scope_name'] = $scope->name;
 				}
 			}
 			$data['user_details'] = $this->RdData_model->get_user_data();
+			var_dump($data['user_details']); die;	
 		   /* ./ get scope data */
-			// var_dump($data['user_details']); die;
 			$this->load->view('admin/report/assign_user',$data);			
 		}else{			
 			$this->load->view('admin/login');
 		}
 	}
 	public function update_assigned_user($report_id){
-		// var_dump($_POST); die;
 		if($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 			$data['title'] = "Update Assigned User";
 
 			$report_id = $report_id;
@@ -669,7 +702,6 @@ class Report extends CI_Controller {
 				'created_user'=>$this->input->post('user_name')
 			);
 			$result = $this->RdData_model->update_rd_user($updatedata, $report_id);
-			// echo $result;
 			redirect('admin/report/assign_rd');
 		}else{			
 			$this->load->view('admin/login');

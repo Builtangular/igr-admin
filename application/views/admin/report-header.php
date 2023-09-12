@@ -107,7 +107,7 @@
                                 <li class="header">You have <?php echo count($todays_followup); ?> notifications</li>
                                 <li>
                                     <ul class="menu">
-                                        <?php foreach($todays_followup as $followup){ ?>
+                                        <?php foreach($todays_followup as $followup){  ?>
                                         <li>
                                             <?php if($followup->id){ ?>
                                             <a
@@ -210,19 +210,12 @@
                     <?php } ?>
                     <?php if($Role_id == 3){ ?>
                     <li><a href="<?php echo base_url(); ?>analyst/report/published"><i
-                                class="fa fa-file-word-o"></i><span class="text-bold">Published Report</span></a></li>
+                                class="fa fa-file-pdf-o"></i><span class="text-bold">Published Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/processed"><i class="fa fa-files-o"></i><span
                                 class="text-bold">Processed Report</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/report/drafts"><i class="fa fa-file-code-o"></i><span
                                 class="text-bold">Drafts</span></a></li>
-                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
-                                Management</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="<?php echo base_url(); ?>admin/query/research_assign_query_list"><span>Assign
-                                        Queries
-                                    </span></a></li>
-                        </ul>
-                    </li>
+
                     <li><a href="<?php echo base_url(); ?>analyst/report/add"><i class="fa fa-plus"></i><span
                                 class="text-bold">Add New RD</span></a></li>
                     <li><a href="<?php echo base_url(); ?>analyst/generate-rd"><i class="fa fa-arrow-down"></i><span
@@ -239,7 +232,37 @@
                                         class="fa fa-circle-o"></i>List</a></li>
                         </ul>
                     </li>
-                    <?php } ?>
+                    <?php if($userid == 22){ ?>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
+                                Management</span></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/upcoming_research_query_list"><span>New
+                                        Queries <span
+                                            class="label label-primary pull-right"><?=$assign_count_status ?></span></span></a>
+                            </li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/research_assign_list"><span>Assigned
+                                        Queries</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/daily_queries"><span>Daily Queries
+                                    </span></a></li>
+                        </ul>
+                    </li>
+                    <?php }else{ ?>
+                    <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
+                                Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>admin/query/research_daily_assigned_query_list">
+                                    <span>Daily Queries</span>
+                                </a>
+                            </li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/research_assign_query_list">
+                                    <span>All Queries</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php } } ?>
+
                     <?php if($Role_id == 4){ ?>
                     <li><a href="<?php echo base_url(); ?>manager/report/published"><i
                                 class="fa fa-file-word-o"></i><span class="text-bold">Published RDs</span></a></li>
@@ -266,14 +289,17 @@
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"><i class="fa fa-table"></i><span class="text-bold">Query
-                                Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+                                Management</span></a>
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>admin/query/upcoming_research_query_list"><span>New
-                                        Queries</span></a></li>
+                                        Queries <span
+                                            class="label label-primary pull-right"><?= $assign_count_status ?></span></span></a>
+                            </li>
                             <li><a href="<?php echo base_url(); ?>admin/query/research_assign_list"><span>Assigned
                                         Queries</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/daily_queries"><span>Daily Queries
+                                    </span></a></li>
                         </ul>
-
                     </li>
                     <?php } ?>
                     <?php if($Role_id == 5 && $User_Type == "Sales" && $department == "Sales"){ ?>
@@ -308,6 +334,8 @@
                             <li><a href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/drafts"><span>Drafts</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/query/daily_analyst_query"><span>Daily Analyst
+                                        Queries</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/status/1"><span>Acknowledgement
                                         Sent</span></a></li>
                             <li><a href="<?php echo base_url(); ?>admin/query/status/2"><span>Sample Sent</span></a>
@@ -322,8 +350,18 @@
                     </li>
                     <li><a href="<?php echo base_url(); ?>admin/query/assign_list"><i class="fa fa-file-text"></i><span
                                 class="text-bold">Assigned Queries</span></a></li>
+                    <?php if($Role_id == 5){
+                        $query_count = "SELECT * FROM tbl_rd_query_data where assign_to_team = '0' AND assign_analyst = '0'";
+                        $query_count_details = $this->db->query($query_count);
+                        $count_status = $query_count_details->num_rows();
+                    ?>
                     <li><a href="<?php echo base_url(); ?>admin/query/upcoming_query_list"><i
-                                class="fa fa-file-text"></i><span class="text-bold">New Queries</span></a></li>
+                                class="fa fa-file-text"></i><span class="text-bold">New Queries</span>
+                            <?php if($count_status){ ?>
+                            <span class="label label-primary pull-right"><?=$count_status ?></span>
+                            <?php } ?></a>
+                    </li>
+                    <?php }?>
                     <li><a href="<?php echo base_url(); ?>admin/generate_invoice/list"><i
                                 class="fa fa-file-text"></i><span class="text-bold">Generate
                                 Invoice</span></a></li>
@@ -378,6 +416,9 @@
                             <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li class="<?php echo $slist;?>"><a
+                                    href="<?php echo base_url(); ?>admin/query/marketing_query_list"><span>Query
+                                        List</span></a></li>
+                            <li class="<?php echo $slist;?>"><a
                                     href="<?php echo base_url(); ?>admin/spam-mail/list"><span>Mail
                                         List</span></a></li>
                             <li class="<?php echo $sadd;?>"><a
@@ -394,27 +435,31 @@
                         <ul class="treeview-menu">
                             <li class="<?php echo $qadd;?>"><a
                                     href="<?php echo base_url(); ?>admin/query/add"><span>Add</span></a></li>
+                            <!-- <li class="<?php echo $qlist; ?>"><a
+                                    href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li> -->
                             <li class="<?php echo $qlist; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/query/list"><span>List</span></a></li>
-                            <li class="<?php echo $qlist; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/query/assign_list"><span>Assign List</span></a>
+                                    href="<?php echo base_url(); ?>admin/query/upcoming_query_list"><span>New
+                                        Queries</span></a></li>
+                            <li class="<?php echo $qalist; ?>"><a
+                                    href="<?php echo base_url(); ?>admin/query/assign_list"><span>Assigned
+                                        Queries</span></a>
                             </li>
-                            <li class="<?php echo $qlist; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/query/close_query_list"><span>Close
-                                        List</span></a></li>
+                            <li class="<?php echo $qclist; ?>"><a
+                                    href="<?php echo base_url(); ?>admin/query/close_query_list"><span>Closed
+                                        Queries</span></a></li>
                         </ul>
                     </li>
                     <li class="treeview <?php echo $gimenu_active;?>"><a href="#"><i class="fa fa-table"></i><span
                                 class="text-bold">Generate Invoice
                             </span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li class="<?php echo $gilist;?>"><a
+                            <li class="<?php echo $glist;?>"><a
                                     href="<?php echo base_url(); ?>admin/generate_invoice/list"><span>List</span></a>
                             </li>
-                            <li class="<?php echo $ilist;?>"><a
+                            <li class="<?php echo $gilist;?>"><a
                                     href="<?php echo base_url(); ?>admin/generate_invoice/generated_invoice_list"><span>Generated</span></a>
                             </li>
-                            <li class="<?php echo $ilist;?>"><a
+                            <li class="<?php echo $giflist;?>"><a
                                     href="<?php echo base_url(); ?>admin/generate_invoice/filter"><span>Export</span></a>
                             </li>
                         </ul>
@@ -427,7 +472,7 @@
                                     href="<?php echo base_url(); ?>admin/custom_invoice/add"><span>Add</span></a></li>
                             <li class="<?php echo $cilist;?>"><a
                                     href="<?php echo base_url(); ?>admin/custom_invoice/list"><span>List</span></a></li>
-                            <li class="<?php echo $cilist;?>"><a
+                            <li class="<?php echo $filter;?>"><a
                                     href="<?php echo base_url(); ?>admin/custom_invoice/filter"><span>Export</span></a>
                             </li>
                         </ul>

@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Assigned Queries
+            <?php echo $page_title; ?> Queries
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -18,13 +18,11 @@
     <!-- Main content -->
     <section class="content">
         <!-- Your Page Content Here -->
-
         <div class='row'>
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Assigned Query List</h3>
-                       
+                        <h3 class="box-title">Query List</h3>
                     </div>
                     <?php if($massage){ ?>
                     <div class="alert alert-success">
@@ -38,30 +36,26 @@
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
                                     <th>Report Name</th>
-                                    <th>Assigned To</th>
+                                    <th>Query Type</th>
+                                    <th>Client Name</th>
                                     <th>Company Name</th>
-                                    <th>Date</th>
-                                    <th>Follow Up</th>
+                                    <th>Lead Date</th>
                                     <th width="100px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach($query_list as $data){
-                                    $scope_name = $data->scope_name.' '.$data->report_name;
-                                /* Follow up  */                              
-                                   
-                                 /* ./ Follow up  */
+                                    $report_scope_name = $data->scope_name.' '.$data->report_name;
                                 ?>
-                              
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->query_code; ?></td>
-                                    <td><?php echo $scope_name; ?></td>
-                                    <td><?php echo $data->assigned_name; ?></td>
+                                    <td><?php echo $report_scope_name; ?></td>
+                                    <td><?php echo $data->type; ?></td>
+                                    <td><?php echo $data->client_email; ?></td>                                    
                                     <td><?php echo $data->company_name; ?></td>
-                                    <td><?php echo date("d-m-Y", strtotime($data->created_at)); ?></td>
-                                    <td class="text-center"> </td>
-                                    <td> 
-                                    <a href="<?php echo base_url();?>admin/query/view_research_assign_query/<?php echo $data->id;?>"
+                                    <td><?php echo date("d-m-Y", strtotime($data->lead_date)); ?></td>
+                                    <td>
+                                        <a href="<?php echo base_url();?>admin/query/view_research_assign_query/<?php echo $data->id;?>"
                                             class="btn btn-info"><i class="fa fa-eye"></i></b></a>
                                     </td>
                                 </tr>
@@ -71,10 +65,10 @@
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
                                     <th>Report Name</th>
-                                    <th>Assigned To</th>
+                                    <th>Query Type</th>
+                                    <th>Client Name</th>
                                     <th>Company Name</th>
-                                    <th>Date</th>
-                                    <th>Follow Up</th>
+                                    <th>Lead Date</th>
                                     <th width="100px">Action</th>
                                 </tr>
                             </tfoot>
@@ -107,7 +101,6 @@
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
-
 
 <script>
 $(document).ready(function() {

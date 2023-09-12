@@ -39,7 +39,7 @@
                                         <select class="form-control" name="user_name" required>
                                             <option value="">Select</option>
                                             <?php foreach($user_details as $user_name){?>
-                                            <option value="<?php echo  $user_name['Full_name'];; ?>"><?php echo $user_name['Full_name']; ?>
+                                            <option value="<?php echo  $user_name['full_name'];; ?>"><?php echo $user_name['full_name']; ?>
                                             </option>
                                             <?php } ?>
                                         </select>

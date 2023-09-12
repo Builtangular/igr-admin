@@ -42,6 +42,8 @@ class Segment extends CI_Controller
 
 			$data['report_id']=$id;	
             $data['segments']= $this->Data_model->get_rd_segments($id);
+			$data['main_segments']= $this->Data_model->get_rd_main_segments($id);
+			// var_dump($data['main_segments']); die;
 			$this->load->view('admin/segment/add',$data);			
 		}		
 		else
@@ -57,19 +59,26 @@ class Segment extends CI_Controller
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			
-			$postseg=array(				
-				'name'=>$this->input->post('name'),
-				'parent_id'=>$this->input->post('parent'),
-				'report_id'=>$id,
-				'updated_at'=> date('Y-m-d h:i:sa')
-			);
-			$inserted_id = $this->Data_model->insert_rd_segment($postseg);
-			if($inserted_id){
-				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");	
+			$button_type = $this->input->post('button');
+			// var_dump($button_type); die;
+			if($button_type == "Submit"){
+				$postseg=array(				
+					'name'=>$this->input->post('name'),
+					'parent_id'=>$this->input->post('parent'),
+					'report_id'=>$id,
+					'updated_at'=> date('Y-m-d h:i:sa')
+				);
+				$inserted_id = $this->Data_model->insert_rd_segment($postseg);
+				if($inserted_id){
+					$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");	
+				}else{
+					$this->session->set_flashdata("success_code","Sorry! Data has not inserted");		
+				}
+				redirect('admin/segment/add/'.$id);
+				
 			}else{
-				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");		
-			}
-            redirect('admin/segment/'.$id);
+				redirect('admin/segment/'.$id);
+			}	
 		}
 		else
 		{			
@@ -114,11 +123,11 @@ class Segment extends CI_Controller
 				'updated_at'=> date('Y-m-d h:i:sa')
 			);
 			$result = $this->Data_model->update_rd_segment($seg_id,$postcseg);
-
+            
 			/* Update RD Title */
 			if($result == 1){
-				
 				$rd_data = $this->Data_model->get_rd_data($report_id);
+				
 				$scope_id = $rd_data->scope_id;
 				$report_title = $rd_data->title;
 				$forecast_to = $rd_data->forecast_to;
@@ -129,34 +138,41 @@ class Segment extends CI_Controller
 						$scope_name = $scope->name;
 					}
 				}
+				// var_dump($scope_name); die;
 				$MainSegments = $this->Data_model->get_main_segments($report_id);
 				// var_dump($MainSegments); die;
 				foreach($MainSegments as $segments)
 				{
 					$mainseg[] = $segments['name'];		
+					
 					$segment_details.= ltrim(rtrim($segments['name']))." - ";	
+					
 					$SubSegments=$this->Data_model->get_sub_segments($report_id, $segments['id']);
+				
 					foreach($SubSegments as $sub_seg)
 					{
 						$sub_seg1[] = $sub_seg['name'];					
 					}
-					$j= count($sub_seg1);
-					for($i = 0; $i< $j ; $i++)
-					{
-						if($i == $j-2)
-						{
-							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", and ";
-						}
-						if($i == $j-1)
-						{
-							$segment_details.= ltrim(rtrim($sub_seg1[$i]))."; ";
-						}
-						if($i < $j-2)
-						{
-							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", ";
-						}						
-					}	
-					unset($sub_seg1);
+					if($sub_seg1 != NULL){	
+    					$j= count($sub_seg1);
+    					
+    					for($i = 0; $i< $j ; $i++)
+    					{
+    						if($i == $j-2)
+    						{
+    							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", and ";
+    						}
+    						if($i == $j-1)
+    						{
+    							$segment_details.= ltrim(rtrim($sub_seg1[$i]))."; ";
+    						}
+    						if($i < $j-2)
+    						{
+    							$segment_details.= ltrim(rtrim($sub_seg1[$i])).", ";
+    						}						
+    					}
+    					unset($sub_seg1);
+					}
 				}
 				unset($mainseg);
 				
@@ -173,7 +189,7 @@ class Segment extends CI_Controller
 					'rd_title' => $report_full_title,
 					'updated_at' => date('Y-m-d')
 				);
-				$result = $this->Data_model->update_published_rd_title($report_id, $update_rd_title);			
+				$result1 = $this->Data_model->update_published_rd_title($report_id, $update_rd_title);			
 			}
 			/* ./ Update RD Title */
 

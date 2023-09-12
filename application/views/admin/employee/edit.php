@@ -36,6 +36,8 @@ $Education_type = array('Diploma', 'Graduation', 'Post Graduation');
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h1 class="box-title"> Personal Details</h1>
+                        <a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $employee_data->id; ?>"
+                                            class="btn btn-danger pull-right"><b><i class="fa fa-trash"></i></b></a>
                     </div>
                     <form action="<?php echo base_url(); ?>admin/employee/update/<?php echo $employee_data->id; ?>"
                         method="post" class="form-horizontal" enctype="multipart/form-data">

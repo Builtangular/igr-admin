@@ -70,6 +70,42 @@ class Spam_Mail extends CI_Controller {
             $this->load->view('admin/login');
         }
 	}
+    public function edit($id){	
+        // var_dump($_POST); die;
+        if($this->session->userdata('logged_in'))
+		{
+            $session_data = $this->session->userdata('logged_in');
+            $data['Login_user_name']=$session_data['Login_user_name'];	
+            $data['Role_id']=$session_data['Role_id'];
+            $data['single_mail_data'] = $this->Spam_Model->get_single_spam_mail_data($id);
+            $data['spam_mail_count'] = $this->Spam_Model->spam_mail_count();
+            $data['unsubscribe_mail_count'] = $this->Spam_Model->unsubscribe_mail_count();
+            // var_dump($data['single_mail_data']); die;
+            $this->load->view('admin/spam_mail/edit',$data);	
+        } else {			
+            $this->load->view('admin/login');
+        }
+	}
+    public function update($id){
+        // var_dump($_POST); die;
+        if($this->session->userdata('logged_in'))
+        {
+           $session_data = $this->session->userdata('logged_in');
+           $data['Login_user_name']=$session_data['Login_user_name'];	
+           $data['Role_id']=$session_data['Role_id'];
+
+           $result = $this->Spam_Model->update_spam_mail($id);
+           if($result)
+           {
+                $this->session->set_flashdata('msg', 'Data has been updated successfully....!!!');
+           }else {
+                $this->session->set_flashdata('msg', 'Sorry! Data not updated');
+           }
+           redirect('admin/spam-mail/list');
+        }else{
+            $this->load->view("admin/login");
+        }
+    }
     public function delete($id){
         // var_dump($id);die;
         if($this->session->userdata('logged_in'))
@@ -147,7 +183,7 @@ class Spam_Mail extends CI_Controller {
                 'company' => isset($row[6]) ? $row[6] : '',
                 'extra' => isset($row[7]) ? $row[7] : '',
             );
-            // var_dump($email_address); die;
+             //var_dump($email_address); die;
             // Insert into database
             $result = $this->Spam_Model->insert_mail_data($data);
         }
@@ -274,6 +310,8 @@ class Spam_Mail extends CI_Controller {
             $data['Role_id']=$session_data['Role_id'];
             $data['User_type']=$session_data['User_type'];
             $data['department']=$session_data['department'];
+            $data['smenu_active'] = "active menu-open";
+			$data['supload'] = "active";
             /* email formater */                   
             $data['company_count'] = $this->Spam_Model->mail_format_company_count();
             $data['mail_count'] = $this->Spam_Model->mail_format_email_count();

@@ -16,19 +16,16 @@ class Genrate_Invoice_Model extends CI_Model {
     public function get_invoice_details(){
         $this->db->select('*');
         $this->db->from('tbl_order_invoice_data');
+        $this->db->where('invoice_type','Main');
         $query = $this->db->get();
         return $query->result();
     }
     public function get_query_details1(){
-        // $this->db->from('tbl_rd_query_data');
-        // $this->db->order_by('id',"DESC");
-        // $query = $this->db->get();
-        // return $query->result();
-
         $this->db->select('*');
         $this->db->from('tbl_rd_query_data');
+        $this->db->where('tbl_order_invoice_data.invoice_type','Main');
         $this->db->join('tbl_order_invoice_data','tbl_rd_query_data.id = tbl_order_invoice_data.query_id');
-        $this->db->order_by('tbl_rd_query_data.id',"DESC");
+        $this->db->order_by('tbl_order_invoice_data.order_date',"DESC");
         $query = $this->db->get();
         // echo $this->db->last_query();die;
         return $query->result();  
@@ -77,6 +74,9 @@ class Genrate_Invoice_Model extends CI_Model {
         'customer_gst_no'                   => $this->input->post('customer_gst_no'),
         'order_no'                          => $this->input->post('order_no'),
         'main_invoice_no'                   => $this->input->post('main_invoice_no'),
+        'inward_no'                         => $this->input->post('inward_no'),
+        'payment_mode'                      => $this->input->post('payment_mode'),
+        'inward_date'                       => $this->input->post('inward_date'),
         'billing_customer_name'             => $this->input->post('billing_customer_name'),
         'billing_company_name'              => $this->input->post('billing_company_name'),
         'billing_phone_no'                  => $this->input->post('billing_phone_no'),
@@ -91,12 +91,12 @@ class Genrate_Invoice_Model extends CI_Model {
         'shipping_email_id'                 => $s_email_address,
         'unit_price'                        => $this->input->post('unit_price'),
         'unit_no'                           => $this->input->post('unit_no'),
-        'discount'                          => $this->input->post('percentage'),
+        // 'discount'                          => $this->input->post('percentage'),
+        'percent_discount'                  => $this->input->post('percentage'),
+        'absolute_discount'                 => $this->input->post('absolute_price'),
         'total_amount'                      => $this->input->post('total_amount'),
-        'created_at'                        => date('Y-m-d'),
         'updated_at'                        => date('Y-m-d'),
        );
-    //    var_dump($update);die;
        $this->db->where('id', $id);
        return $this->db->update('tbl_order_invoice_data', $update);
     }
@@ -105,5 +105,22 @@ class Genrate_Invoice_Model extends CI_Model {
         $result = $this->db->delete('tbl_order_invoice_data');
         return $result;
     }
+     /* Filter date export data */
+    public function getlist(){
+        $result = $this->db->get('tbl_order_invoice_data');
+        $res = $result->result();
+        return $res;
+    }
+    public function getfilterdata($from_date,$to_date){
+        $this->db->select('*');
+        $this->db->from("tbl_rd_query_data");
+        $this->db->where('tbl_order_invoice_data.invoice_type','Main');
+        $this->db->where('tbl_order_invoice_data.order_date BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" and "'. date('Y-m-d', strtotime($to_date)).'"');
+        $this->db->join('tbl_order_invoice_data','tbl_rd_query_data.id = tbl_order_invoice_data.query_id');
+        $result = $this->db->get();
+        // echo $this->db->last_query();die;
+          return $result->result();
+    }
+  /* /.Filter date export data */
   
 }

@@ -36,7 +36,7 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
-			$data['rmenu_active'] = "active menu-open";
+			$data['rjmenu_active'] = "active menu-open";
 			$data['rlist'] = "active";
 			$data['employee_details'] = $this->Employee_Model->get_employee_resigned_list();
 			// var_dump($data['resigned_list']); die;
@@ -355,7 +355,7 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
-			
+
 			$data['Emp_id'] = $id;
 			$single_empolyment_data = $this->Employee_Model->get_emp_personal_details($id);
 			$job_type = $single_empolyment_data->job_type;
@@ -866,6 +866,8 @@ class Employee extends CI_Controller {
 			$data['Login_user_name']=$session_data['Login_user_name'];	
 			$data['Role_id']=$session_data['Role_id'];
 			$data['massage'] = $this->session->userdata('msg');
+			$data['rjmenu_active'] = "active menu-open";
+			$data['ellist'] = "active";
 			$data['employee_details'] = $this->Employee_Model->get_permenent_employee_details();
 			// var_dump($data['employee_details']); die;
 			$this->load->view("admin/employee/letters", $data);

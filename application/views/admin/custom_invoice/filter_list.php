@@ -43,7 +43,7 @@
                                     <th class="header">Inward No.</th>
                                     <th class="header">Inward Date</th>
                                     <th class="header">Order No.</th>
-                                    <th class="header">Order Date.</th>
+                                    <th class="header">Order Date</th>
                                     <th class="header">Reseller Name</th>
                                     <th class="header">Shipping Customer Name</th>
                                     <th class="header">Shipping Email Id</th>
@@ -87,7 +87,7 @@
                                     } else {
                                         ?>
                                 <tr>
-                                    <td colspan="5">There is no employee.</td>
+                                    <td colspan="5">There is no record.</td>
                                 </tr>
                                 <?php } ?>
 

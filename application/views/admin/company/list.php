@@ -53,10 +53,12 @@
                                         <a href="<?php echo base_url(); ?>admin/company/edit/<?php echo $data->id; ?>"
                                             class="btn btn-warning">Edit</a>
                                     </td>
-                                    <form action="<?php echo base_url(); ?>admin/company/delete/<?php echo $data->id; ?>" method="post"
-                                        class="form-horizontal">
+                                    <form
+                                        action="<?php echo base_url(); ?>admin/company/delete/<?php echo $data->id; ?>"
+                                        method="post" class="form-horizontal">
                                         <td>
-                                            <input type="hidden" name="report_id" value="<?php echo $data->report_id; ?>">
+                                            <input type="hidden" name="report_id"
+                                                value="<?php echo $data->report_id; ?>">
                                             <button class="btn btn-danger" type="submit">Delete</button>
                                         </td>
                                     </form>
@@ -65,8 +67,25 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h1 class="box-title">Companies</h1>
+                    </div>
+                    <div class="box-body">
+                        <!-- main segment -->
+                        <ol>
+                            <?php foreach($Companies as $data){ ?>
+                            <li>
+                                <?php echo $data->name; ?>
+                            </li>
+                            <?php } ?>
+                        </ol>
+                    </div>
                     <div class="box-footer">
-
+                        <input type="button" name="button" class="btn pull-left" value="Back" onclick="redirect()">
                     </div>
                 </div>
             </div>
@@ -75,6 +94,12 @@
         setTimeout(function() {
             $('#successMessage').fadeOut('fast');
         }, 3000);
+
+        function redirect() {
+            window.location.href = "<?php echo base_url(); ?>analyst/report/drafts";
+            // document.write(document.referrer);
+            // window.location.href = document.referrer;
+        }
         </script>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->

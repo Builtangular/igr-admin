@@ -32,6 +32,7 @@ class Company extends CI_Controller {
 			$data['success_code'] = $this->session->userdata('success_code');
 
 			$data['report_id']=$id;	
+			$data['Companies']= $this->Data_model->get_rd_companies($id);
 			$this->load->view('admin/company/add',$data);			
 		}else{			
 			$this->load->view('admin/login');
@@ -44,19 +45,24 @@ class Company extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];
 			$data['success_code'] = $this->session->userdata('success_code');
 
-			$postcomp=array(				
-				'name'=>$this->input->post('name'),
-				'report_id'=>$id,
-				'updated_at'=> date('Y-m-d h:i:sa')
-			);
-			$inserted_id = $this->Data_model->insert_rd_company_data($postcomp);
-			if($inserted_id){
-				$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");				
-				redirect('admin/company/'.$id);
+			$button_type = $this->input->post('button');
+			// var_dump($button_type); die;
+			if($button_type == "Submit"){
+				$postcomp=array(				
+					'name'=>$this->input->post('name'),
+					'report_id'=>$id,
+					'updated_at'=> date('Y-m-d h:i:sa')
+				);
+				$inserted_id = $this->Data_model->insert_rd_company_data($postcomp);
+				if($inserted_id){
+					$this->session->set_flashdata("success_code","Data has been inserted successfully..!!!");
+				}else{
+					$this->session->set_flashdata("success_code","Sorry! Data has not inserted");	
+				}
+				redirect('admin/company/add/'.$id);
 			}else{
-				$this->session->set_flashdata("success_code","Sorry! Data has not inserted");				
 				redirect('admin/company/'.$id);
-			}
+			}	
 		}		
 		else{			
 			$this->load->view('admin/login');
@@ -79,6 +85,7 @@ class Company extends CI_Controller {
 		}
 	}
 	public function update($cmp_id){
+
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
@@ -116,7 +123,7 @@ class Company extends CI_Controller {
 				$this->session->set_flashdata("success_code","Sorry! Record has not deleted");			
 			}	
 			redirect('admin/company/'.$report_id);
-		}else{			
+		}else{
 			$this->load->view('admin/login');
 		}
 	}

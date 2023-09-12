@@ -23,7 +23,10 @@ class Generate_rd extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 
             $data['Published_rds'] = $this->RdData_model->get_global_rd_titles();
             $this->load->view('admin/rd_view/list',$data);
@@ -38,7 +41,10 @@ class Generate_rd extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 
 			$single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
             /* RD base data extract */
@@ -364,7 +370,10 @@ class Generate_rd extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 
             $single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
             /* RD base data extract */
@@ -637,7 +646,10 @@ class Generate_rd extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 
             $single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
             /* RD base data extract */
@@ -731,6 +743,24 @@ class Generate_rd extends CI_Controller {
 				$section->addListItem(htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")).' Macro Indicator Analysis', 0, 'myOwnStyle', $listStyle, 'P-Style');
 				$section->addTextBreak(1);
 			}			
+
+			/* Chapter 7 - Company Profile */
+			$section->addListItem('Company Profiles and Competitive Landscape', 0, 'myOwnStyle', $listStyle, 'P-Style');			
+			$section->addListItem('Competitive Landscape in the '.ucfirst($scope_name).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 1, 'Header', $listStyle, 'P-Style');			
+			$section->addListItem('Companies Profiles', 1, 'Header', $listStyle, 'P-Style');	
+			$Get_rd_companies = $this->RdData_model->get_rd_companies($report_id);
+			foreach($Get_rd_companies as $company)
+			{
+				$cmpProfile=$company->name;				
+				$section->addListItem(htmlspecialchars($cmpProfile), 2, 'Header', $listStyle, 'P-Style');				
+				/* $section->addListItem('Overview', 3, 'Header', $listStyle, 'P-Style');				
+				$section->addListItem('Company Snapshot', 3, 'Header', $listStyle, 'P-Style');				
+				$section->addListItem('Financial Snapshot', 3, 'Header', $listStyle, 'P-Style');				
+				//$section->addListItem('DuPont Analysis', 3, 'Header', $listStyle, 'P-Style');				
+				$section->addListItem('Product Portfolio', 3, 'Header', $listStyle, 'P-Style');				
+				$section->addListItem('Recent Developments', 3, 'Header', $listStyle, 'P-Style'); */				
+			}
+			$section->addTextBreak(1);
 
 			/* Chapter 5 i.e. Segment Chapters */
 			foreach($main_segments as $segments)
@@ -837,24 +867,24 @@ class Generate_rd extends CI_Controller {
     			}
     			unset($ScReg);
 			}
-			$section->addTextBreak(1);
+			// $section->addTextBreak(1);
 
 			/* Chapter 7 - Company Profile */
-			$section->addListItem('Company Profiles and Competitive Landscape', 0, 'myOwnStyle', $listStyle, 'P-Style');			
+			/* $section->addListItem('Company Profiles and Competitive Landscape', 0, 'myOwnStyle', $listStyle, 'P-Style');			
 			$section->addListItem('Competitive Landscape in the '.ucfirst($scope_name).' '.htmlspecialchars(ucwords($report_name, " \t\r\n\f\v'")), 1, 'Header', $listStyle, 'P-Style');			
 			$section->addListItem('Companies Profiles', 1, 'Header', $listStyle, 'P-Style');	
 			$Get_rd_companies = $this->RdData_model->get_rd_companies($report_id);
 			foreach($Get_rd_companies as $company)
 			{
 				$cmpProfile=$company->name;				
-				$section->addListItem(htmlspecialchars($cmpProfile), 2, 'Header', $listStyle, 'P-Style');				
+				$section->addListItem(htmlspecialchars($cmpProfile), 2, 'Header', $listStyle, 'P-Style');	 */			
 				/* $section->addListItem('Overview', 3, 'Header', $listStyle, 'P-Style');				
 				$section->addListItem('Company Snapshot', 3, 'Header', $listStyle, 'P-Style');				
 				$section->addListItem('Financial Snapshot', 3, 'Header', $listStyle, 'P-Style');				
 				//$section->addListItem('DuPont Analysis', 3, 'Header', $listStyle, 'P-Style');				
 				$section->addListItem('Product Portfolio', 3, 'Header', $listStyle, 'P-Style');				
 				$section->addListItem('Recent Developments', 3, 'Header', $listStyle, 'P-Style'); */				
-			}
+			// }
 
 			/* Generate word file */
             $new_file_name=str_replace(" ","-", htmlspecialchars($Report_title_scope));		
@@ -886,8 +916,11 @@ class Generate_rd extends CI_Controller {
 		// var_dump($_GET["report_id"]); die;
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
-			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Login_user_name'] = $session_data['Login_user_name'];	
+			$data['Role_id'] = $session_data['Role_id'];	
+			$data['User_Type'] = $session_data['User_Type'];
+			$data['department'] = $session_data['department'];
+			$data['userid'] = $session_data['userid'];
 
             $single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
             /* RD base data extract */
@@ -1266,7 +1299,7 @@ class Generate_rd extends CI_Controller {
 			$section->addText('	2.2	'.htmlspecialchars(ucwords($Report_title_scope, " \t\r\n\f\v'")).' Projection', 'subpoint', 'P-Style');
 			if($scope_name == 'Global'){
 				$section->addText('	2.3	'.htmlspecialchars(ucwords($Report_title_scope, " \t\r\n\f\v'")).' CAGR, (USD '.htmlspecialchars($Value_unit).') Growth, By Regions', 'subpoint', 'P-Style');
-				$section->addText('	2.4	Most Lucrative Country Markets, '.htmlspecialchars($forecast_from), 'subpoint', 'P-Style');
+				// $section->addText('	2.4	Most Lucrative Country Markets, '.htmlspecialchars($forecast_from), 'subpoint', 'P-Style');
 			} 
 			/* TOC Chapter 3 */
 			$section->addText(htmlspecialchars('3.	Market Overview & Competitiveness'), 'ChapStyle', 'PStyle');
@@ -1347,12 +1380,33 @@ class Generate_rd extends CI_Controller {
 			/* TOC Chapter 4 */
 			if($scope_name == "Global"){
 				$section->addText('4.	'.htmlspecialchars($report_title.' Macro Indicator Analysis'), 'ChapStyle', 'PStyle');
-				$chap = 5;
+				$cmpt = 5;
+				$chap = 6;
 			} else {
 				$desc_scope_name = $scope_name;
-				$chap = 4;
+				$cmpt = 4;
+				$chap = 5;
 			}
             
+			/* Company Profiles */
+			$section->addText($cmpt.'.	Company Profiles and Competitive Landscape', 'ChapStyle', 'PStyle');	
+			$section->addText('	'.$cmpt.'.1	Competitive Landscape in the '.htmlspecialchars(ucwords($report_title, " \t\r\n\f\v'")), 'childpoint', 'P-Style');
+			$section->addText('	'.$cmpt.'.2	Companies Profiles', 'childpoint', 'P-Style');
+			$cmpsub = 2;
+			$cmpsubchild = 1;
+			$Get_rd_companies = $this->RdData_model->get_rd_companies($report_id);
+			foreach($Get_rd_companies as $company)
+			{				
+				$cmpProfile = $company->name;					
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style');				
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.2	Company Snapshot', 'childpoint', 'P-Style');
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.3	Product Portfolio', 'childpoint', 'P-Style');	
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.4	Recent Developments', 'childpoint', 'P-Style');	
+				$cmpsubchild++;
+			}
+			// $section->addPageBreak();
+			
 			/* TOC Chapter 5 Segment */
 			foreach($main_segments as $segments)
 			{
@@ -1496,7 +1550,7 @@ class Generate_rd extends CI_Controller {
 			}
 			
 			/* Company Profiles */
-			$section->addText($cmpt.'.	Company Profiles and Competitive Landscape', 'ChapStyle', 'PStyle');	
+			/* $section->addText($cmpt.'.	Company Profiles and Competitive Landscape', 'ChapStyle', 'PStyle');	
 			$section->addText('	'.$cmpt.'.1	Competitive Landscape in the '.htmlspecialchars(ucwords($report_title, " \t\r\n\f\v'")), 'childpoint', 'P-Style');
 			$section->addText('	'.$cmpt.'.2	Companies Profiles', 'childpoint', 'P-Style');
 			$cmpsub = 2;
@@ -1511,8 +1565,8 @@ class Generate_rd extends CI_Controller {
 				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.3	Product Portfolio', 'childpoint', 'P-Style');	
 				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.4	Recent Developments', 'childpoint', 'P-Style');	
 				$cmpsubchild++;
-			}
-			$section->addPageBreak();
+			} */
+			$section->addPageBreak(); 
 			
 			/* ************* /. Report TOC Writing ******************* */
 
@@ -2512,11 +2566,11 @@ class Generate_rd extends CI_Controller {
 			$section->addTextBreak(1);
 			$textbox = $section->addTextBox(array('align' => 'center', 'width' => 700, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
 			$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');			
-			$section->addTextBreak(1);
+			/* $section->addTextBreak(1);
 			$section->addListItem("Most Lucrative Country Markets, ".$forecast_from, 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addText(htmlspecialchars('This data point includes information on most lucrative country markets in '.$forecast_from), array('align'=>'left', 'bold'=>true, 'name'=>'Franklin Gothic Medium', 'color'=>'#000', 'size' => 10.5));
 			$section->addImage('images/top_10_countries.png', array('width'=>520, 'height'=>320, 'align'=>'center'));
-			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle'); */
 			$section->addPageBreak();
 		}
 			/* /. Sample Pages Chapter 2 */
@@ -2573,7 +2627,7 @@ class Generate_rd extends CI_Controller {
 			{
 				$Opportunity=$opportunity->description;
 				$section->addListItem(htmlspecialchars($Opportunity), 3, 'childSubpoint', $listStyle, 'Head 3');	
-				$section->addText(htmlspecialchars("Explanation of opportunity factor ".$opr." that provides an opportunity in the market and its impact over the period of ".$analysis_from." to ".$analysis_to.". Here the analysis for ".$analysis_from." and ".$Base_year." presents the historic trends of restraining factor ".$opr." and the analysis for ".$forecast_from." to ".$forecast_to." represents the future impact and trends of opportunity factor ".$opr." over this period. This is backed by supporting research or data."), 'r2Style', 'paragraphStyle');				
+				$section->addText(htmlspecialchars("Explanation of opportunity ".$opr." that provides an opportunity in the market and its impact over the period of ".$analysis_from." to ".$analysis_to.". Here the analysis for ".$analysis_from." and ".$Base_year." presents the historic trends of opportunity ".$opr." and the analysis for ".$forecast_from." to ".$forecast_to." represents the future impact and trends of opportunity ".$opr." over this period. This is backed by supporting research or data."), 'r2Style', 'paragraphStyle');				
 				$opr++;
 			}
 			$section->addTextBreak(1);
@@ -2592,14 +2646,14 @@ class Generate_rd extends CI_Controller {
 			$section->addListItem('IGR- Growth Matrix Analysis', 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addText(htmlspecialchars($growth_matrix_analysis_para1), 'r2Style', 'paragraphStyle');
 			$textlines = explode('\n', $growth_matrix_analysis_sub_point_data);
-			foreach($textlines as $line) 
+			foreach($textlines as $line)
 			{
 				$section->addText(htmlspecialchars($line), 'r2Style', 'Bullet');
 			}
 			$section->addTextBreak(1);
 			
-			$figure11="IGR-Growth Matrix Analysis";				
-			$parent= 0;				
+			$figure11="IGR-Growth Matrix Analysis";
+			$parent= 0;
 			$indexno= 0;				
 			$no = 0;				
 			$main_segments4 = $this->RdData_model->get_rd_segments($report_id, $parent);
@@ -2653,6 +2707,61 @@ class Generate_rd extends CI_Controller {
 			} 			
 			/* /. Sample Pages Chapter 4 */
 			
+			/* Sample Pages Chapter 7 - Company Profile */
+			$section->addListItem('Company Profiles and Competitive Landscape', 0, 'chaptHeading', $listStyle, 'Main Heading');	
+			$section->addListItem(htmlspecialchars('Competitive Landscape in the '.$report_title), 1, 'subPoint', $listStyle, 'Head 1');
+			$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+			$section->addTextBreak(1);
+			$section->addText(htmlspecialchars($report_compitative_landscape), 'r2Style', 'paragraphStyle');
+			$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+			$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');
+			$section->addListItem(htmlspecialchars('Companies Profiles'), 1, 'subPoint', $listStyle, 'Head 1');	
+			$rd_companies=$this->RdData_model->get_rd_companies($report_id);	
+			foreach($rd_companies as $companies)
+			{
+				$cmpProfile=$companies->name;	
+				$cmpProfile= ltrim(rtrim(ucwords(strtolower($cmpProfile))))." ";				
+				$section->addListItem(htmlspecialchars($cmpProfile), 2, 'childPoint', $listStyle, 'Head 2');				
+				$section->addListItem('Overview', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+				$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');	
+				$section->addTextBreak(1);					
+				$section->addListItem('Company Snapshot', 3, 'childSubpoint', $listStyle, 'Head 3');
+				//$section->addImage('images/Company_snapshot.png', array('width'=>700, 'height'=>520, 'align'=>'center'));
+				$section->addText('Add Company Snapshot Image of '.htmlspecialchars($cmpProfile), 'subPoint', 'sourceStyle');
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				$section->addTextBreak(1);
+				$section->addListItem('Financial Snapshot', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				$section->addTextBreak(1);
+				$section->addListItem('Product Portfolio', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+				$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');	
+				$section->addTextBreak(1);
+				$section->addListItem('Recent Developments', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$section->addImage('images/Recent_development_sample.png', array('width'=>760, 'height'=>220, 'align'=>'center'));
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				break;
+			}
+			$section->addTextBreak(1);
+			$rd['companies']=$this->RdData_model->get_rd_companies($report_id);
+			$c = 1;
+			foreach($rd['companies'] as $cmpname){
+				$company_names = $rd['companies'][$c];
+				if($company_names){
+					$section->addListItem(htmlspecialchars($company_names->name), 2, 'childPoint', $listStyle, 'Head 2');
+				}
+				$c++;							
+			}
+			$section->addText('(N.B.: Names of companies profiled in the report. Final report will contain the details of each company same as that of the above referenced)', 'noteFontSeg', 'noteStyle');	
+			$section->addPageBreak();
+			/* $section->addImage('images/our-expertise.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));
+			$section->addPageBreak();				
+			$section->addImage('images/infinium_disclaimer.jpg', array('width'=>520, 'height'=>600, 'align'=>'center')); */
+		/* /. Sample Pages Chapter 6 - Company Profile */
+
 			/* Sample Pages Chapter 5 (Segment) */		
 			/* -------------note style------------- */
 			$PHPWord->addParagraphStyle('noteStyle', array('align'=>'left', 'spacing'=>0, 'spaceBefore' => 120, 'spaceAfter' =>0));
@@ -4401,7 +4510,7 @@ class Generate_rd extends CI_Controller {
 		/* /. Sample Pages Chapter 6 - Region */
 
 		/* Sample Pages Chapter 7 - Company Profile */
-			$section->addListItem('Company Profiles and Competitive Landscape', 0, 'chaptHeading', $listStyle, 'Main Heading');	
+			/* $section->addListItem('Company Profiles and Competitive Landscape', 0, 'chaptHeading', $listStyle, 'Main Heading');	
 			$section->addListItem(htmlspecialchars('Competitive Landscape in the '.$report_title), 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -4452,6 +4561,10 @@ class Generate_rd extends CI_Controller {
 			$section->addPageBreak();
 			$section->addImage('images/our-expertise.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));
 			$section->addPageBreak();				
+			$section->addImage('images/infinium_disclaimer.jpg', array('width'=>520, 'height'=>600, 'align'=>'center')); */
+
+			$section->addImage('images/our-expertise.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));
+			$section->addPageBreak();				
 			$section->addImage('images/infinium_disclaimer.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));
 		/* /. Sample Pages Chapter 6 - Company Profile */
 		
@@ -4489,7 +4602,10 @@ class Generate_rd extends CI_Controller {
 		if($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$data['Login_user_name']=$session_data['Login_user_name'];	
-			$data['Role_id']=$session_data['Role_id'];
+			$data['Role_id']=$session_data['Role_id'];	
+			$data['User_Type']=$session_data['User_Type'];
+			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
 
 			$single_rd_data = $this->RdData_model->get_single_rd_data($_GET["report_id"]);
 			// var_dump($single_rd_data); die;

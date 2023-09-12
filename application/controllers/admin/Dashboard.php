@@ -19,6 +19,7 @@ class Dashboard extends CI_Controller {
 			$data['Role_id']=$session_data['Role_id'];	
 			$data['User_Type']=$session_data['User_Type'];
 			$data['department']=$session_data['department'];
+			$data['userid']=$session_data['userid'];
             $data['global_count'] = $this->Data_model->count_global_report();
 			$data['country_count'] = $this->Data_model->count_country_report();
             $data['region_count'] = $this->Data_model->count_region_report();

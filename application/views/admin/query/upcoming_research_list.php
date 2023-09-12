@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Upcoming Query List
+            New Queries
             <small></small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
@@ -25,48 +25,39 @@
                     <div class="box-header">
                         <h3 class="box-title">New Queries</h3>
                     </div>
-                    <?php if($massage){ ?>
-                    <div class="alert alert-success">
-                        <button type="button" class="close" data-dismiss="alert">x</button>
-                        <p><?php echo $massage; ?></p>
-                    </div>
-                    <?php } ?>
+                    <!-- box-body -->
                     <div class="box-body">
                         <table id="rddata" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="font-size: 14px;">
                                     <th width="100px">Query Id</th>
                                     <th>Report Name</th>
-                                    <th>Client Email</th>
+                                    <th>Query Type</th>
+                                    <th>Client Name</th>
                                     <th>Company Name</th>
                                     <th>Lead Date</th>
+                                    <th>Status</th>
                                     <th width="100px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($query_data as $data){ //var_dump($query_data);die;
-                                     $scope_name = $data->scope_name.' '.$data->report_name;
-                                     $user_name = $data->created_user; 
-                                     $sql = "SELECT full_name FROM `tbl_registered_user_details` WHERE `department` = 'Sales' AND `full_name` = '$user_name'";
-                                     $query = $this->db->query($sql);
-								        if ($query->num_rows() > 0) { 
-                                            $user_full_name = $query->row(); 
-                                        }
-                                     $register_user_name = $user_full_name->full_name;
-                                    //  var_dump($user_name);die;
+                                <?php foreach($query_data as $data){ 
+                                    if($data->priority == 1){
+                                        $priority_status = "<label class='text-blue'>High Priority</label>";
+                                    }else {
+                                        $priority_status = "<label class='text-yellow'>Priority</label>";
+                                    }
                                 ?>
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->query_code; ?></td>
-                                    <td><?php echo $scope_name; ?></td>
-                                    <td><?php echo $data->client_email; ?></td>
+                                    <td><?php echo $data->scope_name.' '.$data->report_name; ?></td>
+                                    <td><?php echo $data->type; ?></td>
+                                    <td><?php echo $data->client_name; ?></td>
                                     <td><?php echo $data->company_name; ?></td>
                                     <td><?php echo $data->lead_date; ?></td>
+                                    <td class="text-center"><?php echo $priority_status; ?></td>
                                     <td> <a href="<?php echo base_url();?>admin/query/upcoming_research_query_edit/<?php echo $data->id;?>"
-                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
-                                        <?php if ($Role_id == 10 || $Role_id == 5) { ?>
-                                        <a href="<?php echo base_url(); ?>admin/query/upcoming_query_delete/<?php echo $data->id; ?>"
-                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
-                                        <?php } ?>
+                                            class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>                                        
                                     </td>
                                 </tr>
                                 <?php  }  ?>
@@ -75,15 +66,17 @@
                                 <tr style="font-size: 14px;">
                                     <th width="100px">Query Id</th>
                                     <th>Report Name</th>
-                                    <th>Client Email</th>
+                                    <th>Query Type</th>
+                                    <th>Client Name</th>
                                     <th>Company Name</th>
                                     <th>Lead Date</th>
+                                    <th>Status</th>
                                     <th width="100px">Action</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-
+                    <!-- /.box-body -->
                 </div>
             </div>
         </div>
@@ -97,21 +90,19 @@
         Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2022 <a href="#">Infinium LLP</a>.</strong> All rights reserved.
+    <strong>Copyright © 2023 <a href="#">Infinium LLP</a>.</strong> All rights reserved.
 </footer>
 </div><!-- ./wrapper -->
 
 <!-- jQuery 2.1.3 -->
 <script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
 <!-- Bootstrap 3.3.2 JS -->
-
 <script src="<?php echo base_url(); ?>assets/admin/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/dataTables.bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/demo.js" type="text/javascript"></script>
-
 
 <script>
 $(document).ready(function() {
@@ -128,5 +119,4 @@ $(function() {
 })
 </script>
 </body>
-
 </html>

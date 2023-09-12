@@ -148,10 +148,10 @@
                                     <td><a href="<?php echo base_url(); ?>admin/employee/edit/<?php echo $data->id; ?>"
                                             class="btn btn-warning"><b><i class="fa fa-edit"></i></b></a> |
                                         <a href="<?php echo base_url(); ?>admin/employee/view/<?php echo $data->id; ?>"
-                                            class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> |
+                                            class="btn btn-info"><b><i class="fa fa-eye"></i></b></a> 
                                         <!-- <a href="<?php echo base_url(); ?>admin/report/edit/<?php echo $data->id; ?>" class="btn btn-success"><b><i class="fa fa-edit"></i></b></a> |  -->
-                                        <a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $data->id; ?>"
-                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a>
+                                        <!-- <a href="<?php echo base_url(); ?>admin/employee/delete_employee/<?php echo $data->id; ?>"
+                                            class="btn btn-danger"><b><i class="fa fa-trash"></i></b></a> -->
                                     </td>
                                 </tr>
                                 <?php $sr++; } ?>

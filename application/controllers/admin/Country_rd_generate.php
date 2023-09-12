@@ -305,7 +305,7 @@ class Country_rd_generate extends CI_Controller {
 			$header = $section->addHeader();
 			$table = $header->addTable();
 			$table->addRow();
-			$table->addCell(13700, array('borderBottomSize' => 15, 'borderBottomColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop'   => 0.5,  'marginBottom'=> 0.5, array('space' => array('before' => 160, 'after' => 80))))->addText(htmlspecialchars(ucwords($report_title).": ".htmlspecialchars($scope_name)." Industry Analysis, Trends, Market Size and Forecasts up to ".$forecast_to),'headerTitleFont', 'headerTitle');
+			$table->addCell(13700, array('borderBottomSize' => 15, 'borderBottomColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop'   => 0.5,  'marginBottom'=> 0.5, array('space' => array('before' => 160, 'after' => 80))))->addText(htmlspecialchars(ucwords($report_title_scope).": Prospects, Trends Analysis, Market Size and Forecasts up to ".$forecast_to),'headerTitleFont', 'headerTitle');
 			$table->addCell(2300, array('borderBottomSize' => 15, 'borderBottomColor' => '#E59C24', 'marginLeft'  => 0.5, 'marginRight' => 0.5, 'marginTop'   => 0.5,  'marginBottom'=> 0.5, array('space' => array('before' => 160, 'after' => 80))))->addImage('images/new_logo.png', array('width'=>110, 'height'=>32, 'positioning' => 'relative'));
 			$header->addWatermark('images/sample.jpg', array('marginTop'   => 0.5, 'width'=>780, 'height'=>400));
 			/*----------------------Header -------------------------------*/
@@ -427,8 +427,33 @@ class Country_rd_generate extends CI_Controller {
 			$rd_main_segments= $this->Country_model->get_country_rd_segments($report_id, $parent);			
             /* ./ get Rd segments */
 
+			/* TOC Chapter 4 Company Profiles */
+			$cmpt = 4;
+			// $section->addText($cmpt.'.	Company Profiles and Competitive Landscape', 'ChapStyle', 'PStyle');	
+			$section->addText($cmpt.'.	Company Profiles', 'ChapStyle', 'PStyle');	
+			// $section->addText('	'.$cmpt.'.1	Competitive Landscape', 'childpoint', 'P-Style');
+			// $section->addText('	'.$cmpt.'.1	Companies Profiles', 'childpoint', 'P-Style');
+			$cmpsub = 1;
+			$cmpsubchild = 1;
+			$Get_rd_companies = $this->Country_model->get_country_rd_companies($report_id);
+			foreach($Get_rd_companies as $company)
+			{				
+				$cmpProfile = $company->name;					
+				/* $section->addText('		'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
+				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style'); */	
+				$section->addText('	'.$cmpt.'.'.$cmpsub.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.1	Overview', 'childpoint', 'P-Style');				
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.2	Company Snapshot', 'childpoint', 'P-Style');
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.3	Financial Snapshot', 'childpoint', 'P-Style');
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.4	Product Portfolio', 'childpoint', 'P-Style');	
+				$section->addText('		'.$cmpt.'.'.$cmpsub.'.5	Recent Developments', 'childpoint', 'P-Style');	
+				$cmpsub++;
+			}
+			// $section->addPageBreak();
+			/* ./ TOC Chapter 4 Company Profiles */
+
             /* TOC Chapter 4 Segment */
-            $chap = 4;
+            $chap = 5;
             foreach($rd_main_segments as $segments)
 			{
 				$new_segment=$report_title_scope.' by '.htmlspecialchars(ucwords($segments->name, " \t\r\n\f\v'"));	
@@ -473,13 +498,13 @@ class Country_rd_generate extends CI_Controller {
 					$subpt++;
 				}
 				$chap++;
-				$cmpt = $chap;                
+				// $cmpt = $chap;                
             }
 			/* ./ TOC Chapter 4 Segment */
 
 			/* TOC Chapter 5 Company Profiles */
 			// $section->addText($cmpt.'.	Company Profiles and Competitive Landscape', 'ChapStyle', 'PStyle');	
-			$section->addText($cmpt.'.	Company Profiles', 'ChapStyle', 'PStyle');	
+			/* $section->addText($cmpt.'.	Company Profiles', 'ChapStyle', 'PStyle');	
 			// $section->addText('	'.$cmpt.'.1	Competitive Landscape', 'childpoint', 'P-Style');
 			// $section->addText('	'.$cmpt.'.1	Companies Profiles', 'childpoint', 'P-Style');
 			$cmpsub = 1;
@@ -488,8 +513,8 @@ class Country_rd_generate extends CI_Controller {
 			foreach($Get_rd_companies as $company)
 			{				
 				$cmpProfile = $company->name;					
-				/* $section->addText('		'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
-				$section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style'); */	
+				// $section->addText('		'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
+				// $section->addText('			'.$cmpt.'.'.$cmpsub.'.'.$cmpsubchild.'.1	Overview', 'childpoint', 'P-Style'); 
 				$section->addText('	'.$cmpt.'.'.$cmpsub.'	'.htmlspecialchars($cmpProfile), 'subpoint', 'P-Style');
 				$section->addText('		'.$cmpt.'.'.$cmpsub.'.1	Overview', 'childpoint', 'P-Style');				
 				$section->addText('		'.$cmpt.'.'.$cmpsub.'.2	Company Snapshot', 'childpoint', 'P-Style');
@@ -497,7 +522,7 @@ class Country_rd_generate extends CI_Controller {
 				$section->addText('		'.$cmpt.'.'.$cmpsub.'.4	Product Portfolio', 'childpoint', 'P-Style');	
 				$section->addText('		'.$cmpt.'.'.$cmpsub.'.5	Recent Developments', 'childpoint', 'P-Style');	
 				$cmpsub++;
-			}
+			} */
 			$section->addPageBreak();
 			/* ./ TOC Chapter 5 Company Profiles */
             
@@ -871,7 +896,7 @@ class Country_rd_generate extends CI_Controller {
 			$styleLastCell = array('bgColor'=>$bg_color, 'borderBottomColor'=>'#78777C', 'borderBottomSize'=>2);
 			$table->addRow();
 			$table->addCell(3000, $styleLastCell)->addText("Revenue", 'trStyle1', 'Table1_Left');
-			$table->addCell(6500, $styleLastCell)->addText("The revenues are provided in United Dollars (USD) Million.", 'trStyle', 'pStyle');	
+			$table->addCell(6500, $styleLastCell)->addText("The revenues are provided in United States Dollar (USD) Million.", 'trStyle', 'pStyle');	
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
 			$section->addTextBreak(1);
 
@@ -1200,7 +1225,61 @@ class Country_rd_generate extends CI_Controller {
 			$section->addPageBreak();	
 			/* /. Sample Pages Chapter 3 */
 
-			/* Sample Pages Chapter 4 */
+			/* Sample Pages Chapter 4 - Company Profile */
+			$section->addListItem('Company Profiles', 0, 'chaptHeading', $listStyle, 'Main Heading');	
+			/* $section->addListItem(htmlspecialchars('Competitive Landscape in the '.$report_title), 1, 'subPoint', $listStyle, 'Head 1');
+			$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+			$section->addTextBreak(1);
+			$section->addText(htmlspecialchars($report_compitative_landscape), 'r2Style', 'paragraphStyle');
+			$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+			$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle'); */
+			// $section->addListItem(htmlspecialchars('Companies Profiles'), 1, 'subPoint', $listStyle, 'Head 1');	
+			$rd_companies=$this->Country_model->get_rd_companies($report_id);	
+			foreach($rd_companies as $companies)
+			{
+				$cmpProfile=$companies->name;	
+				$cmpProfile= ltrim(rtrim(ucwords(strtolower($cmpProfile))))." ";				
+				// $section->addListItem(htmlspecialchars($cmpProfile), 2, 'childPoint', $listStyle, 'Head 2');				
+				$section->addListItem(htmlspecialchars($cmpProfile), 1, 'subPoint', $listStyle, 'Head 1');				
+				// $section->addListItem('Overview', 3, 'childSubpoint', $listStyle, 'Head 3');
+				$section->addListItem('Overview', 2, 'childPoint', $listStyle, 'Head 2');
+				$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+				$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');	
+				$section->addTextBreak(1);					
+				$section->addListItem('Company Snapshot', 2, 'childPoint', $listStyle, 'Head 2');
+				//$section->addImage('images/Company_snapshot.png', array('width'=>700, 'height'=>520, 'align'=>'center'));
+				$section->addText('Add Company Snapshot Image of '.htmlspecialchars($cmpProfile), 'subPoint', 'sourceStyle');
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				$section->addTextBreak(1);
+				$section->addListItem('Financial Snapshot', 2, 'childPoint', $listStyle, 'Head 2');
+				$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				$section->addTextBreak(1);
+				$section->addListItem('Product Portfolio', 2, 'childPoint', $listStyle, 'Head 2');
+				$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
+				$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle');	
+				$section->addTextBreak(1);
+				$section->addListItem('Recent Developments', 2, 'childPoint', $listStyle, 'Head 2');
+				$section->addImage('images/Recent_development_sample.png', array('width'=>760, 'height'=>220, 'align'=>'center'));
+				$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
+				break;
+			}
+			$section->addTextBreak(1);
+			$rd['companies']=$this->Country_model->get_rd_companies($report_id);
+			$c = 1;
+			foreach($rd['companies'] as $cmpname){
+				$company_names = $rd['companies'][$c];
+				if($company_names){
+					$section->addListItem(htmlspecialchars($company_names->name), 1, 'subPoint', $listStyle, 'Head 1');
+				}
+				$c++;							
+			}
+			$section->addText('(N.B.: Names of companies profiled in the report. Final report will contain the details of each company same as that of the above referenced)', 'noteFontSeg', 'noteStyle');	
+			$section->addPageBreak();
+			/* /. Sample Pages Chapter 4 - Company Profile */
+
+			/* Sample Pages Chapter 5 */
 			$parent = 0;
 			$main_segments5 = $this->Country_model->get_country_rd_segments($report_id, $parent);
 			foreach($main_segments5 as $segments5)
@@ -1817,10 +1896,10 @@ class Country_rd_generate extends CI_Controller {
 				/********* ./ End Sub Segments *************/
 			}
 			$section->addPageBreak(1);
-			/* ./ Sample Pages Chapter 4 */
+			/* ./ Sample Pages Chapter 5 */
 
 			/* Sample Pages Chapter 5 - Company Profile */
-			$section->addListItem('Company Profiles', 0, 'chaptHeading', $listStyle, 'Main Heading');	
+			// $section->addListItem('Company Profiles', 0, 'chaptHeading', $listStyle, 'Main Heading');	
 			/* $section->addListItem(htmlspecialchars('Competitive Landscape in the '.$report_title), 1, 'subPoint', $listStyle, 'Head 1');
 			$section->addImage('images/sample-figure.png', array('width'=>760, 'height'=>260, 'align'=>'center'));
 			$section->addText('Source: Infinium Global Research Analysis', 'Source Note', 'sourceStyle');
@@ -1829,7 +1908,7 @@ class Country_rd_generate extends CI_Controller {
 			$textbox = $section->addTextBox(array('align' => 'center', 'width' => 760, 'height' => 'auto', 'borderSize'  => 1, 'borderColor' => '#000',));
 			$textbox->addText(htmlspecialchars('Content removed from the sample'), array('bold'=>false, 'align'=>'center','name'=>'Franklin Gothic Medium','color'=> 'red','size'=>10), 'thStyle'); */
 			// $section->addListItem(htmlspecialchars('Companies Profiles'), 1, 'subPoint', $listStyle, 'Head 1');	
-			$rd_companies=$this->Country_model->get_rd_companies($report_id);	
+			/* $rd_companies=$this->Country_model->get_rd_companies($report_id);	
 			foreach($rd_companies as $companies)
 			{
 				$cmpProfile=$companies->name;	
@@ -1870,7 +1949,7 @@ class Country_rd_generate extends CI_Controller {
 				$c++;							
 			}
 			$section->addText('(N.B.: Names of companies profiled in the report. Final report will contain the details of each company same as that of the above referenced)', 'noteFontSeg', 'noteStyle');	
-			$section->addPageBreak();
+			$section->addPageBreak(); */
 			$section->addImage('images/our-expertise.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));
 			$section->addPageBreak();				
 			$section->addImage('images/infinium_disclaimer.jpg', array('width'=>520, 'height'=>600, 'align'=>'center'));

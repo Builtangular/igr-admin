@@ -29,7 +29,7 @@ class Generate_invoice extends CI_Controller {
 			$data['department']=$session_data['department'];
 			$data['massage'] = $this->session->userdata('msg');
             $data['gimenu_active'] = "active menu-open";
-			$data['gilist'] = "active";
+			$data['glist'] = "active";
 			$data['type'] = "list";
             if($data['Role_id'] == 1) {
                 $data['query_details'] = $this->Genrate_Invoice_Model->get_query_details();
@@ -723,6 +723,9 @@ public function filter(){
         $data['Role_id']=$session_data['Role_id'];
         $data['User_Type']=$session_data['User_Type'];
 		$data['department']=$session_data['department'];
+        $data['gimenu_active'] = "active menu-open";
+        $data['giflist'] = "active";
+        $data['type'] = "filter";
         $data['list_data'] = $this->Genrate_Invoice_Model->getlist();
         $this->load->view('admin/generate_invoice/filter',$data);	
     }		

@@ -451,15 +451,15 @@
 
                         <div class="box-footer">
                             <input type="hidden" name="report_id" class="form-control"
-                                value="<?php echo $report_id; ?>">
-                            <input type="submit" class="btn btn-info pull-left" name="request" value="Update">
+                                value="<?php echo $report_id; ?>">                            
                             <?php if($Role_id == 4){ ?>
-                            <input type="submit" class="btn btn-success pull-right" name="request" value="Verify">
+                            <input type="submit" class="btn btn-success pull-left" name="request" value="Verify">
                             <?php } else if($Role_id == 3){ ?>
-                            <input type="submit" class="btn btn-success pull-right" name="request" value="Process">
+                            <input type="submit" class="btn btn-success pull-left" name="request" value="Process">
                             <?php } else{ ?>
-                            <input type="submit" class="btn btn-success pull-right" name="request" value="Publish">
+                            <input type="submit" class="btn btn-success pull-left" name="request" value="Publish">
                             <?php }?>
+                            <input type="submit" class="btn btn-info pull-right" name="request" value="Update">
                         </div>
                     </form>
                 </div>

@@ -278,7 +278,6 @@ currency.addEventListener('change', function() {
     } else {
         my_div.classList.add('hide');
         my_div1.classList.add('hide');
-
     }
 })
 

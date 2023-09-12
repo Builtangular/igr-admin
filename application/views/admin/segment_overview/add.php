@@ -22,7 +22,7 @@
     <section class="content">
         <!-- Your Page Content Here -->
         <div class='row'>
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h1 class="box-title">Segment Overview</h1>
@@ -30,22 +30,17 @@
                     <form action="<?php echo base_url(); ?>admin/segment_overview/insert/<?php echo $report_id; ?>"
                         method="post" class="form-horizontal">
                         <div class="box-body">
-                            <div class="col-md-12">
-                                <?php
-                        
-                                foreach($get_rd_segment as $data){ ?>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2"><?php echo $data->name;?></label>
-                                    <div class="col-md-9">
-                                        <textarea type="text" name="description[]" rows="5"
-                                            class="form-control"></textarea>
-                                        <span></span>
-                                    </div>
-                                    <input type="hidden" name="seg_id[]" id="seg_id" value="<?php echo $data->id;?>"
-                                        class="form-control">
+                            <?php foreach($get_rd_segment as $data){ ?>
+                            <div class="form-group">
+                                <label class="control-label col-md-2"><?php echo $data->name;?></label>
+                                <div class="col-md-10">
+                                    <textarea type="text" name="description[]" rows="5" class="form-control"></textarea>
+                                    <span></span>
                                 </div>
-                                <?php } ?>
+                                <input type="hidden" name="seg_id[]" id="seg_id" value="<?php echo $data->id;?>"
+                                    class="form-control">
                             </div>
+                            <?php } ?>
                         </div>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-info pull-right" value="Submit">
@@ -53,93 +48,63 @@
                     </form>
                 </div>
             </div>
+            <!-- ./ col-md-8 -->
+            <!-- col-md-4 -->
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h1 class="box-title">Segments</h1>
+                    </div>
+                    <div class="box-body">
+                        <!-- main segment -->
+                        <ol>
+                            <?php foreach($main_segments as $data){ ?>
+                            <li><?php echo $data->name; ?>
+                                <!-- sub segment -->
+                                <?php $sql = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$data->id;
+								$query = $this->db->query($sql);
+								if ($query->num_rows() > 0) { ?>
+                                <ol>
+                                    <?php foreach ($query->result() as $sub_seg) {?>
+                                    <li><?php echo $sub_seg->name; ?>
+                                        <!-- child segment -->
+                                        <?php $sql1 = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$sub_seg->id;
+										$query1 = $this->db->query($sql1);
+										if ($query1->num_rows() > 0) { ?>
+                                        <ol>
+                                            <?php foreach ($query1->result() as $child_seg) {?>
+                                            <li><?php echo $child_seg->name; ?>
+                                                <!-- sub child segment -->
+                                                <?php $sql2 = "SELECT * FROM tbl_rd_segments where report_id = ".$data->report_id." AND parent_id = ".$child_seg->id;
+												$query2 = $this->db->query($sql2);
+												if ($query2->num_rows() > 0) { ?>
+                                                <ol>
+                                                    <?php foreach ($query2->result() as $sub_child_seg) {?>
+                                                    <li><?php echo $sub_child_seg->name; ?> </li>
+                                                    <?php } ?>
+                                                </ol>
+                                                <?php } ?>
+                                                <!-- sub child segment -->
+                                            </li>
+                                            <?php } ?>
+                                        </ol>
+                                        <?php } ?>
+                                        <!-- child segment -->
+                                    </li>
+                                    <?php } ?>
+                                </ol>
+                                <?php } ?>
+                                <!-- sub segment -->
+                            </li>
+                            <?php } ?>
+                        </ol>
+                        <!-- main segment -->
+                    </div>
+                </div>
+            </div>
+            <!-- ./ col-md-4 -->
         </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
-<!-- jQuery 2.1.3 -->
-<script src="http://localhost/igr_admin/assets/admin/js/jquery.min.js"></script>
-<!-- Bootstrap 3.3.2 JS -->
-<script>
-/* add new description */
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#definition_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_' + counter +
-            '"><label class="control-label col-md-2">Report Definition ' + counter +
-            '</label> <div class="col-md-9"><textarea type="text" name="Report_definition[]" rows="5" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_' +
-            counter + '" href="javascript:RemoveRow(' + counter +
-            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-        );
 
-        jQuery('#Definition').append(newRow);
-        i++;
-        console.log(newRow);
-    });
-});
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#description_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_' + counter +
-            '"><label class="control-label col-md-2">Report Description ' + counter +
-            '</label> <div class="col-md-9"> <textarea type="text" name="Report_description[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_' +
-            counter + '" href="javascript:RemoveRow(' + counter +
-            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-        );
-
-        jQuery('#Description').append(newRow);
-        i++;
-        console.log(newRow);
-    });
-});
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#summary_dro_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_' + counter +
-            '"><label class="control-label col-md-2">Summary - DRO Para ' + counter +
-            '</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_DRO[]" rows="8" class="form-control"></textarea></div><div class="col-md-1"><center><a id="Rmv_' +
-            counter + '" href="javascript:RemoveRow(' + counter +
-            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center></div></div>'
-        );
-
-        jQuery('#Summary_DRO').append(newRow);
-        i++;
-        console.log(newRow);
-    });
-});
-jQuery(function() {
-    var counter = 1;
-    var i = 2;
-    jQuery('#summary_regional_description_addrow').click(function(event) {
-        event.preventDefault();
-        counter++;
-        var newRow = jQuery(
-            '<div class="form-group" id="Row_' + counter +
-            '"><label class="control-label col-md-2">Summary - Regional Para ' + counter +
-            '</label> <div class="col-md-9"> <textarea type="text" name="Executive_summary_regional_description[]" rows="8" class="form-control"></textarea></div> <div class="col-md-1"><center><a id="Rmv_' +
-            counter + '" href="javascript:RemoveRow(' + counter +
-            ');"><span type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i></span></a></center> </div></div>'
-        );
-
-        jQuery('#Summary_regional_description').append(newRow);
-        i++;
-    });
-});
-
-function RemoveRow(rowID) {
-    jQuery('#Row_' + rowID).remove();
-
-}
-</script>
 <?php $this->load->view('admin/footer.php'); ?>

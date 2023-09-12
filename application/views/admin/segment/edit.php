@@ -27,9 +27,6 @@
                     </div>
                     <form autocomplete="off" action="<?php echo base_url(); ?>admin/segment/update/<?php echo $seg_id; ?>" method="post"
                         class="form-horizontal">
-
-                    <form action="<?php echo base_url(); ?>admin/segment/update/<?php echo $seg_id; ?>" method="post"
-                        class="form-horizontal" autocomplete="off">
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="control-label col-md-2">Name</label>
@@ -44,9 +41,9 @@
                                     <select class="form-control" name="parent">
                                         <option value="0">Select</option>
                                         <?php foreach($segments as $data){
-                                            if($data->id == $parent_id){ ?>
+                                            if ($data->id == $parent_id){ ?>
                                             <option value="<?php echo $data->id; ?>" Selected><?php echo $data->name; ?></option>
-                                        <?php } else { ?>
+                                        <?php }else{ ?>
                                             <option value="<?php echo $data->id; ?>"><?php echo $data->name; ?></option>
                                         <?php }} ?>
                                     </select>

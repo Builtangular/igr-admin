@@ -446,6 +446,7 @@ class Custom_invoice extends CI_Controller {
         $templateProcessor->saveAs('php://output');	
     } 
     public function filter(){
+        // var_dump('hii');die;
         if($this->session->userdata('logged_in'))
         {
             $session_data = $this->session->userdata('logged_in');
@@ -453,12 +454,12 @@ class Custom_invoice extends CI_Controller {
             $data['Role_id']=$session_data['Role_id'];
             $data['User_Type']=$session_data['User_Type'];
 			$data['department']=$session_data['department'];
-            $data['list_data'] = $this->Custom_invoice_Model->getlist();
+            $data['cimenu_active'] = "active menu-open";
+			$data['filter'] = "active";
+            // $data['list_data'] = $this->Custom_invoice_Model->getlist();
             // var_dump($data['list_data']);die;
             $this->load->view('admin/custom_invoice/filter',$data);	
-        }		
-        else
-        {			
+        } else {			
             $this->load->view('admin/login');
         }
     }

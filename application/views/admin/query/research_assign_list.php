@@ -37,55 +37,27 @@
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
                                     <th>Report Name</th>
-                                    <th>Assigned To</th>
+                                    <th>Query Type</th>
+                                    <th>Client Name</th>
                                     <th>Company Name</th>
-                                    <th>Date</th>
-                                    <th>Follow Up</th>
+                                    <th>Lead Date</th>
+                                    <th>Assigned To</th>
                                     <th width="100px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach($query_list as $data){
-                                    $scope_name = $data->scope_name.' '.$data->report_name;
-                                    /* Status */
-                                    $status_details = "SELECT * FROM tbl_rd_query_current_status where query_id = ".$data->query_id;
-                                    $query_status_details = $this->db->query($status_details);
-                                    $rd_status = $query_status_details->row();
-                                    $query_status = "<i class=\"fa fa-plus\"></i><br>Add";
-                                /* ./ Status  */
-                                /* Follow up  */                              
-                                    $followup_details = "SELECT COUNT(query_id) AS rd_followup FROM tbl_rd_query_followup where query_id = " . $data->query_id;
-                                    $query_followup_details = $this->db->query($followup_details);
-                                    if ($query_followup_details->num_rows() > 0) {
-                                        $rd_followup = $query_followup_details->row();
-                                    }
-                                 /* ./ Follow up  */                                 
+                                    $scope_report_name = $data->scope_name.' '.$data->report_name;                                    
                                 ?>
 
                                 <tr style="font-size: 14px;">
                                     <td class="text-center"><?php echo $data->query_code; ?></td>
-                                    <td><?php echo $scope_name; ?></td>
-                                    <td><?php echo $data->assigned_name; ?></td>
+                                    <td><?php echo $scope_report_name; ?></td>
+                                    <td><?php echo $data->type; ?></td>
+                                    <td><?php echo $data->client_email; ?></td>                                    
                                     <td><?php echo $data->company_name; ?></td>
-                                    <td><?php echo date("d-m-Y", strtotime($data->created_at)); ?></td>
-                                    <?php if ($Role_id == 5 || $Role_id == 7 || $Role_id == 1 || $Role_id == 4) { ?>
-                                    <td class="text-center">
-                                        <?php if($query_followup_details->num_rows() > 0){ ?>
-                                        <a
-                                            href="<?php echo base_url(); ?>admin/query/view_followup/<?php echo $data->query_id; ?>"><b><i
-                                                    class="fa fa-pencil"></i>
-                                                List</b></a><br><?php echo $rd_followup->rd_followup . " Followup"; ?>
-                                        <?php } else { ?>
-                                        <a
-                                            href="<?php echo base_url(); ?>admin/query/add_followup/<?php echo $data->query_id; ?>"><b><i
-                                                    class="fa fa-pencil"></i>
-                                                List</b></a><br><?php echo $rd_followup->rd_followup . " Followup"; ?>
-                                        <?php } ?>
-                                    </td>
-                                    <!-- <td class="text-center">
-                                            <a href="<?php echo base_url(); ?>admin/query/add_status/<?php echo $data->query_id; ?>"><b><?php echo $query_status; ?></b></a>
-                                        </td> -->
-                                    <?php }?>
+                                    <td><?php echo date("d-m-Y", strtotime($data->lead_date)); ?></td>
+                                    <td><?php echo $data->assigned_name; ?></td>
                                     <td>
                                         <a href="<?php echo base_url();?>admin/query/research_assign_edit/<?php echo $data->query_id;?>"
                                             class="btn btn-success"><b><i class="fa fa-edit"></i></b></a>
@@ -101,11 +73,11 @@
                                 <tr style="font-size: 14px;">
                                     <th>Query Id</th>
                                     <th>Report Name</th>
-                                    <th>Assigned To</th>
+                                    <th>Query Type</th>
+                                    <th>Client Name</th>
                                     <th>Company Name</th>
-                                    <th>Date</th>
-                                    <th>Follow Up</th>
-                                    <!-- <th>Status</th> -->
+                                    <th>Lead Date</th>
+                                    <th>Assigned To</th>
                                     <th width="100px">Action</th>
                                 </tr>
                             </tfoot>
